@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+
+  micro_empresas_postgres16:
+    container_name: micro_empresas_postgres16
+    image: postgres:16.0
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - POSTGRES_DB=micro_empresas
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - data-postgresql:/var/lib/postgresql/data
+
+  micro_empresas:
+    container_name: micro_empresas
+    build:
+      context: ./
+      dockerfile: ./micro_empresas/Dockerfile
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    env_file:
+      - ./micro_empresas/.env
+    depends_on:
+      - micro_empresas_postgres16
+
+
+
+
+
+volumes:
+  data-postgresql:
+    name: data-postgresql
+
+networks:
+  mercado_financeiro_net:
+    name: mercado_financeiro_net
+    driver: bridge
+
