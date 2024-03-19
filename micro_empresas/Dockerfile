@@ -1,32 +1,32 @@
-ARG DIRETORIO_MICRO=micro_empresas
+ARG BUILD_HOME=micro_empresas
 
-FROM amazoncorretto:21.0.1-al2023-headful AS builder
+# Estágio de construção
+FROM gradle:jdk21-alpine AS build-image
 
 LABEL authors="juniormartins"
 
-ARG DIRETORIO_MICRO
-WORKDIR /app/$DIRETORIO_MICRO
+ARG BUILD_HOME
+ENV APP_HOME=$BUILD_HOME
+WORKDIR $APP_HOME
 
-COPY ./$DIRETORIO_MICRO/build.gradle ./settings.gradle /app/
-COPY ./$DIRETORIO_MICRO/src ./src
+# Copia os arquivos Gradle e o código-fonte
+COPY ./$BUILD_HOME/gradle ./gradle
+COPY ./$BUILD_HOME/build.gradle ./$BUILD_HOME/settings.gradle ./$BUILD_HOME/gradlew ./
+COPY ./$BUILD_HOME/src src
 
+# Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test
 
 
-#COPY ./$DIRETORIO_MICRO/src ./src
-#
-#RUN rm -rf /app/$DIRETORIO_MICRO/build
+# Estágio de execução
+FROM gradle:jdk21-alpine
 
+ARG BUILD_HOME
+ENV APP_HOME=$BUILD_HOME
 
-FROM amazoncorretto:21.0.1-al2023-headful
+# Copia o arquivo JAR gerado pelo estágio anterior
+COPY --from=build-image ./$APP_HOME/build/libs/micro_empresas-0.0.1-SNAPSHOT-plain.jar app.jar
 
-ARG DIRETORIO_MICRO
-WORKDIR /app
-
-ARG DIRETORIO_TARGET=/app/$DIRETORIO_MICRO/build/libs
-
-COPY --from=builder $DIRETORIO_TARGET/micro_empresas-0.0.1-SNAPSHOT.jar .
-
-
-ENTRYPOINT ["java", "-jar", "micro_empresas-0.0.1-SNAPSHOT.jar"]
+# Define o comando de entrada para executar o aplicativo
+ENTRYPOINT java -jar app.jar
 
