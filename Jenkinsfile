@@ -1,5 +1,4 @@
 pipeline {
-    agent none
 
     stages{
         stage('1 - Build') {
@@ -9,7 +8,6 @@ pipeline {
             steps {
                 echo 'Building the application...'
                 sh "./gradlew build -x test"
-//                 sh "mvn package -Dmaven.test.skip=true"
             }
         }
         stage('2 - Test') {
@@ -17,8 +15,8 @@ pipeline {
                 docker { image 'gradle:jdk21-alpine'}
             }
             steps {
-                echo 'Building the application...'
-                sh "./gradlew clean build"
+                echo 'Testing the application...'
+                sh "./gradlew clean test"
             }
         }
         stage('3 - Deploy') {
