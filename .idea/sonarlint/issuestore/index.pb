@@ -13,3 +13,5 @@ N
 micro_empresas/settings.gradle,d/9/d9d697d56c55473793fae8ce3d5af2e80633844b
 J
 micro_empresas/gradlew.bat,7/f/7fb65239c038ede01e69849f8666e8def1a6a1b4
+;
+Jenkinsfile,0/c/0c2c5c506cef0ed2d3ad2b7e45e97980b66f5520

@@ -38,10 +38,31 @@ services:
 
 
 
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts-jdk21
+    privileged: true
+    user: root
+    ports:
+      - "9090:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+#      - jenkins-docker:/usr/local/bin/docker
+    networks:
+      - mercado_financeiro_net
+
 
 volumes:
   data-postgresql:
     name: data-postgresql
+
+  jenkins-home:
+    name: jenkins-home
+#  jenkins-docker:
+#    name: jenkins-docker
+
 
 networks:
   mercado_financeiro_net:
