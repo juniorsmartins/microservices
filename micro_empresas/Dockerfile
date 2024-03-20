@@ -1,38 +1,26 @@
-ARG BUILD_HOME=micro_empresas
-
-# Estágio de construção
-FROM gradle:jdk21-alpine AS build-image
+# Estágio de construção - 1
+FROM gradle:jdk21-alpine AS builder
 
 LABEL authors="juniormartins"
 
-ARG BUILD_HOME
-WORKDIR $BUILD_HOME
-
-# Cria o diretório build/libs
-RUN mkdir -p ./build/libs
+WORKDIR /compile
 
 # Copia os arquivos Gradle e o código-fonte
-COPY ./$BUILD_HOME/gradle ./gradle
-COPY ./$BUILD_HOME/build.gradle ./$BUILD_HOME/settings.gradle ./$BUILD_HOME/gradlew ./
-COPY ./$BUILD_HOME/src src
-#COPY ./$BUILD_HOME/. .
+COPY ./micro_empresas/. /compile
 
 # Compila o projeto com o Gradle
-RUN ./gradlew clean build -x test
-#RUN ./gradlew clean bootJar
-
-COPY ./$BUILD_HOME/build/libs/*.jar ./build/libs
+RUN ./gradlew clean build -x test --no-daemon
 
 
-# Estágio de execução
-#FROM gradle:jdk21-alpine
-FROM gradle:jdk21-alpine
+# Estágio de execução - 2
+FROM amazoncorretto:21.0.1-al2023-headful
 
-ARG BUILD_HOME
+WORKDIR /app
+VOLUME /tmp
 
 # Copia o arquivo JAR gerado pelo estágio anterior
-COPY --from=build-image $BUILD_HOME/build/libs/*.jar app.jar
+COPY --from=builder /compile/build/libs/micro_empresas-0.0.1-SNAPSHOT.jar api.jar
 
 # Define o comando de entrada para executar o aplicativo
-ENTRYPOINT java -jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/api.jar"]
 
