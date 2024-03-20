@@ -5,8 +5,6 @@ K
 micro_empresas/build.gradle,2/d/2d44a5e6494441b43523dcf2810c283e23e1b37f
 C
 docker-compose.yaml,e/f/ef8def03dc8f162799089e9b5f4321201c8810d5
-M
-micro_empresas/src/Dockerfile,e/b/ebe690ba08b76a4e490e0ca50f52370447dfced6
 I
 micro_empresas/Dockerfile,d/3/d3769fc96d422785b61f7dd53cb77b53ef677914
 C
