@@ -15,7 +15,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - data-postgresql:/var/lib/postgresql/data
+      - micro-empresas-postgresql-data:/var/lib/postgresql/data
 
   micro_empresas:
     container_name: micro_empresas
@@ -36,6 +36,35 @@ services:
       - micro_empresas_postgres16
 
 
+  sonarqube_postgres16:
+    container_name: sonarqube_postgres16
+    image: postgres:16.0
+    networks:
+      - mercado_financeiro_net
+    environment:
+#      - POSTGRES_DB=sonarqube
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - sonarqube-postgresql:/var/lib/postgresql
+      - sonarqube-postgresql-data:/var/lib/postgresql/data
+
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube:9.9.4-community
+    ports:
+      - "9000:9000"
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - sonar.jdbc.url=jdbc:postgresql://sonarqube_postgres16:5432/sonar
+    depends_on:
+      - sonarqube_postgres16
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
 
 
   jenkins:
@@ -49,14 +78,28 @@ services:
     volumes:
       - jenkins-home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-#      - jenkins-docker:/usr/local/bin/docker
+    #      - jenkins-docker:/usr/local/bin/docker
     networks:
       - mercado_financeiro_net
 
 
 volumes:
-  data-postgresql:
-    name: data-postgresql
+  micro-empresas-postgresql-data:
+    name: micro-empresas-postgresql-data
+
+  sonarqube-postgresql:
+    name: sonarqube-postgresql
+  sonarqube-postgresql-data:
+    name: sonarqube-postgresql-data
+
+  sonarqube_conf:
+    name: sonarqube_conf
+  sonarqube_data:
+    name: sonarqube_data
+  sonarqube_extensions:
+    name: sonarqube_extensions
+  sonarqube_bundled-plugins:
+    name: sonarqube_bundled-plugins
 
   jenkins-home:
     name: jenkins-home
