@@ -1,6 +1,10 @@
 pipeline {
-    agent {
-        docker { image 'gradle:jdk21-alpine'}
+    agent any
+
+    tools {
+        jdk21 'amazoncorretto:21.0.1-al2023-headful'
+        gradle 'gradle:jdk21-alpine'
+//         docker { image 'gradle:jdk21-alpine'}
     }
 
     stages{
