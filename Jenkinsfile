@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'jdk21'}
+        docker { image 'jdk'}
 //         jdk 'amazoncorretto:21.0.1-al2023-headful'
 //         gradle 'jdk21-alpine'
     }
