@@ -59,3 +59,11 @@ Wmicro_empresas/src/main/java/microservices/micro_empresas/MicroEmpresasApplicat
 Ämicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/dto/request/EmpresaCreateDtoRequestUnitTest.java,8/9/8952c53aa330d060f777553aac3a50b725bfe3b7
 q
 Amicro_empresas/src/test/java/util/AbstractTestcontainersTest.java,0/7/0763fcc979b263b9db0efde275b14da030ee6205
+ú
+lmicro_empresas/src/main/java/microservices/micro_empresas/application/port/input/EmpresaDeleteInputPort.java,8/2/82b2115e8649eeb268783d2cb0f4aefdf95833bf
+ú
+lmicro_empresas/src/main/java/microservices/micro_empresas/application/core/usecase/EmpresaDeleteUseCase.java,9/6/9604d7fdc58777f62248fac22be2863d1b559a16
+û
+nmicro_empresas/src/main/java/microservices/micro_empresas/application/port/output/EmpresaDeleteOutputPort.java,9/8/9827ea0a5f55852a1de31147071b0d0351366dc8
+è
+_micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/EmpresaDeleteAdapter.java,5/1/51e9589931ab22c7f064992bfb65b046c6719856

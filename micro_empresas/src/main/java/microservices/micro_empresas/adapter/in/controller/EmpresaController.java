@@ -7,13 +7,12 @@ import microservices.micro_empresas.adapter.in.controller.dto.request.EmpresaCre
 import microservices.micro_empresas.adapter.in.controller.dto.response.EmpresaCreateDtoResponse;
 import microservices.micro_empresas.adapter.mapper.MapperIn;
 import microservices.micro_empresas.application.port.input.EmpresaCreateInputPort;
+import microservices.micro_empresas.application.port.input.EmpresaDeleteInputPort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Slf4j
@@ -23,6 +22,8 @@ import java.util.Optional;
 public class EmpresaController {
 
     private final EmpresaCreateInputPort empresaCreateInputPort;
+
+    private final EmpresaDeleteInputPort empresaDeleteInputPort;
 
     private final MapperIn mapperIn;
 
@@ -38,6 +39,19 @@ public class EmpresaController {
         return ResponseEntity
             .created(URI.create("/api/v1/empresas" + response.id()))
             .body(response);
+    }
+
+    @DeleteMapping(path = {"/{empresaId}"})
+    public ResponseEntity<Void> delete(@PathVariable(name = "empresaId") final Long id) {
+
+        Optional.ofNullable(id)
+            .ifPresentOrElse(this.empresaDeleteInputPort::delete,
+                () -> {throw new NoSuchElementException();}
+            );
+
+        return ResponseEntity
+            .noContent()
+            .build();
     }
 
 }
