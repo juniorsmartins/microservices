@@ -16,7 +16,7 @@ pipeline {
         }
         stage('3 - Sonar Analysis') {
             steps {
-                echo '...'
+                echo '....'
             }
         }
         stage('4 - Quality Gate') {
