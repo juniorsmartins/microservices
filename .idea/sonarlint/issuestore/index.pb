@@ -53,3 +53,5 @@ jmicro_empresas/src/main/java/microservices/micro_empresas/adapter/out/repositor
 Wmicro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/MapperOut.java,6/1/612cf650477cb9d19c2ee9b703c1a6be889a9c69
 ‡
 Wmicro_empresas/src/main/java/microservices/micro_empresas/MicroEmpresasApplication.java,f/2/f2ed052bd92964538ae1c64cd23131e1e812834a
+Œ
+\micro_empresas/src/test/java/microservices/micro_empresas/MicroEmpresasApplicationTests.java,4/d/4de913ea1207ffbfe7f93ec8b8d9a27033403b12
