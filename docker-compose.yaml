@@ -83,6 +83,7 @@ services:
       - mercado_financeiro_net
 
 
+
 volumes:
   micro-empresas-postgresql-data:
     name: micro-empresas-postgresql-data
