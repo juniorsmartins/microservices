@@ -12,7 +12,7 @@ pipeline {
 
                     // Para cada projeto encontrado, execute o comando Gradle
                     for (def project in projects) {
-                        sh "cd ${project} && ./gradlew build -x test"
+                        sh "cd ${project} && ./gradlew clean build -x test"
                     }
                 }
             }
