@@ -4,19 +4,19 @@ pipeline {
     stages{
         stage('1 - Build Back-end') {
             steps {
-                bat 'echo Building the application...'
+                echo 'Building the application...'
 //                 sh "./gradlew build -x test"
             }
         }
         stage('2 - Unit Tests') {
             steps {
-                bat 'echo Testing the application...'
+                echo 'Testing the application...'
 //                 sh "./gradlew clean test"
             }
         }
         stage('3 - Sonar Analysis') {
             steps {
-                bat 'echo ...'
+                echo '...'
             }
         }
         stage('4 - Quality Gate') {
