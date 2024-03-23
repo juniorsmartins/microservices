@@ -1,40 +1,26 @@
-ARG DIRETORIO_MICRO=micro_emails
-
-FROM amazoncorretto:21.0.1-al2023-headful AS builder
+# Estágio de construção - 1
+FROM gradle:jdk21-alpine AS builder
 
 LABEL authors="juniormartins"
 
-ARG DIRETORIO_MICRO
-WORKDIR /app/$DIRETORIO_MICRO
+WORKDIR /compile
 
-COPY ./$DIRETORIO_MICRO/.mvn ./.mvn
-COPY ./$DIRETORIO_MICRO/mvnw .
-COPY ./$DIRETORIO_MICRO/pom.xml .
+# Copia os arquivos Gradle e o código-fonte
+COPY ./micro_emails/. /compile
 
-RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
-#RUN ./mvnw dependency:go-offline
-
-COPY ./$DIRETORIO_MICRO/src ./src
-
-RUN ./mvnw clean package -DskipTests
+# Compila o projeto com o Gradle
+RUN ./gradlew clean build -x test --no-daemon
 
 
-
+# Estágio de execução - 2
 FROM amazoncorretto:21.0.1-al2023-headful
 
-ARG DIRETORIO_MICRO
 WORKDIR /app
+VOLUME /tmp
 
-# add logging.file.path=/app/logs no application.yml
-#RUN mkdir ./logs
+# Copia o arquivo JAR gerado pelo estágio anterior
+COPY --from=builder /compile/build/libs/micro_emails-0.0.1-SNAPSHOT.jar api.jar
 
-ARG DIRETORIO_TARGET=/app/$DIRETORIO_MICRO/target
-
-COPY --from=builder $DIRETORIO_TARGET/micro_emails-0.0.1-SNAPSHOT.jar .
-
-#ARG PORT_APP=8001
-#ENV PORT $PORT_APP
-#EXPOSE $PORT
-
-ENTRYPOINT ["java", "-jar", "micro_emails-0.0.1-SNAPSHOT.jar"]
+# Define o comando de entrada para executar o aplicativo
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/api.jar"]
 

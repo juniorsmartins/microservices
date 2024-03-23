@@ -9,15 +9,10 @@ pipeline {
                 script {
                     // Comando find para localizar os arquivos build.gradle e pom.xml em cada subdiretório
                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
-                    def mavenProjects = sh(script: 'find . -name pom.xml -exec dirname {} \\;', returnStdout: true).trim().split('\n')
 
                     // Para cada projeto encontrado, execute o comando Gradle ou Maven, dependendo do que for encontrado
                     for (def project in gradleProjects) {
                         sh "cd ${project} && ./gradlew clean build -x test"
-                    }
-
-                    for (def project in mavenProjects) {
-                        sh "cd ${project} && mvn clean package -DskipTests"
                     }
                 }
             }
