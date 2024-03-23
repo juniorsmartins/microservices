@@ -4,9 +4,9 @@ pipeline {
     stages{
         stage('1 - Build Back-end') {
             steps {
-                echo 'Building the application...'
+                echo 'Limpar e construir os arquivos .jar'
 
-                // Use o comando find para localizar os arquivos build.gradle em cada subdiretório
+                // Comando find para localizar os arquivos build.gradle em cada subdiretório
                 script {
                     def projects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
 
@@ -20,7 +20,7 @@ pipeline {
         stage('2 - Unit Tests') {
             steps {
                 echo 'Testing the application...'
-//                 sh "./gradlew clean test"
+//                 sh "./gradlew test"
             }
         }
         stage('3 - Sonar Analysis') {
