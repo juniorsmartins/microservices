@@ -41,9 +41,16 @@ pipeline {
 
             steps {
                 echo '....'
-                withSonarQubeEnv('') {
-                    bat "${sonarqubeScanner}/bin/sonar-scanner -e -Dsonar.projectKey=jenkins_mercado_financeiro -Dsonar.host.url=http://localhost:9000 -Dsonar.login= -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
-                }
+//                 withSonarQubeEnv('') {
+                    sh """
+                        ${sonarqubeScanner}/bin/sonar-scanner
+                        -e -Dsonar.projectKey=jenkins_mercado_financeiro
+                        -Dsonar.host.url=http://localhost:9000
+                        -Dsonar.login=
+                        -Dsonar.java.binaries=target
+                        -Dsonar.coverage.exclusions=**/build/**,**/src/test/**,**/model/**,**Application.java
+                    """
+//                 }
             }
         }
 
