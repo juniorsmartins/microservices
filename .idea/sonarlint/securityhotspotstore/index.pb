@@ -53,3 +53,9 @@ lmicro_empresas/src/main/java/microservices/micro_empresas/application/core/usec
 nmicro_empresas/src/main/java/microservices/micro_empresas/application/port/output/EmpresaDeleteOutputPort.java,9/8/9827ea0a5f55852a1de31147071b0d0351366dc8
 è
 _micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/EmpresaDeleteAdapter.java,5/1/51e9589931ab22c7f064992bfb65b046c6719856
+D
+micro_emails/pom.xml,c/0/c02e1bca3294690d4bc034e62ad750ec1f8a5097
+A
+micro_emails/.env,4/c/4c56ef0703d1efbf40c8026880702f83150ba9b8
+G
+micro_emails/Dockerfile,9/9/99b71f6228810774cdeefaa517c8435cac092029
