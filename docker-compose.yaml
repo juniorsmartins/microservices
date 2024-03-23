@@ -88,7 +88,7 @@ services:
 
   jenkins:
     container_name: jenkins
-    image: jenkins/jenkins:lts-jdk21
+    image: jenkins/jenkins:2.430-jdk21
     privileged: true
     user: root
     ports:

@@ -17,7 +17,7 @@ pipeline {
                     }
 
                     for (def project in mavenProjects) {
-                        sh "cd ${project} && mvn clean package -DskipTests"
+                        sh "cd ${project} && mvn clean package -DskipTests=true"
                     }
                 }
             }
