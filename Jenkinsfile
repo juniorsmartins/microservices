@@ -40,7 +40,7 @@ pipeline {
             }
 
             steps {
-                echo '....'
+                echo 'Sonarqube roda análise estática do código'
 
                 script {
                     // Comando find para localizar os arquivos build.gradle e pom.xml em cada subdiretório
