@@ -17,6 +17,7 @@ pipeline {
                 }
             }
         }
+
         stage('2 - Unit Tests') {
             steps {
                 echo 'Rodar os testes automatizados'
@@ -32,41 +33,56 @@ pipeline {
                 }
             }
         }
+
         stage('3 - Sonar Analysis') {
+            environment {
+                sonarqubeScanner = tool 'SONARQUBE_SCANNER_MERCADO_FINANCEIRO'
+            }
+
             steps {
                 echo '....'
+                withSonarQubeEnv('') {
+                    bat "${sonarqubeScanner}/bin/sonar-scanner -e -Dsonar.projectKey=jenkins_mercado_financeiro -Dsonar.host.url=http://localhost:9000 -Dsonar.login= -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
+                }
             }
         }
+
         stage('4 - Quality Gate') {
             steps {
                 echo '...'
             }
         }
+
         stage('5 - Deploy Back-end') {
             steps {
                 echo 'deploying the application...'
             }
         }
+
         stage('6 - API Tests') {
             steps {
                 echo '...'
             }
         }
+
         stage('7 - Deploy Front-end') {
             steps {
                 echo '...'
             }
         }
+
         stage('8 - Functional Tests') {
             steps {
                 echo '...'
             }
         }
+
         stage('9 - Deploy Prod') {
             steps {
                 echo '...'
             }
         }
+
         stage('10 - Health Check') {
             steps {
                 echo '...'
