@@ -36,7 +36,7 @@ pipeline {
 
         stage('3 - Sonar Analysis') {
             environment {
-                sonarqubeScanner = tool 'SONARQUBE_SCANNER_MERCADO_FINANCEIRO'
+                sonarqubeScanner = tool 'SONARQUBE_JENKINS'
             }
 
             steps {
