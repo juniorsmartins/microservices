@@ -20,7 +20,6 @@ pipeline {
                         sh "cd ${project} && mvn clean package -DskipTests"
                     }
                 }
-
             }
         }
         stage('2 - Unit Tests') {
