@@ -35,6 +35,25 @@ services:
     depends_on:
       - micro_empresas_postgres16
 
+  micro_emails:
+    container_name: micro_emails
+    build:
+      context: ./
+      dockerfile: ./micro_emails/Dockerfile
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 256M
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    env_file:
+      - ./micro_emails/.env
+  #    depends_on:
+  #      - micro_emails_postgres16
+
+
 
   sonarqube_postgres16:
     container_name: sonarqube_postgres16
