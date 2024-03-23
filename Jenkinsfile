@@ -48,6 +48,7 @@ pipeline {
 
                     // Para cada projeto encontrado, execute o comando Gradle ou Maven, dependendo do que for encontrado
                     for (def project in gradleProjects) {
+
                         sh """
                             cd ${project} &&
                             ${sonarqubeScanner}/bin/sonar-scanner
