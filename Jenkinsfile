@@ -50,10 +50,7 @@ pipeline {
                     for (def project in gradleProjects) {
 
 //                         sh "./gradlew sonar"
-
-                        withSonarQubeEnv() {
-                          sh "cd ${project} && ./gradlew sonar"
-                        }
+                        sh "cd ${project} && ./gradlew sonar"
 //                         sh """
 //                             cd ${project} &&
 //                             ${sonarqubeScanner}/bin/sonar-scanner
