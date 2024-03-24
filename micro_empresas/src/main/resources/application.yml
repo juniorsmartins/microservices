@@ -42,5 +42,8 @@ spring:
     generate-ddl: true
     show-sql: true
 
-
+systemProp:
+  sonar:
+    host:
+      url: http://localhost:9000
 
