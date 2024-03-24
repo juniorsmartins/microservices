@@ -22,17 +22,23 @@ pipeline {
             }
         }
 
-        stage('3 - Sonar Analysis and Quality Gate') {
+        stage('3 - Sonar Analysis') {
             steps {
-                echo 'Sonarqube faz análise estática e verifica condições de qualidade'
+                echo 'Sonarqube faz análise estática de código'
 
                 script {
-                    // Tarefa Sonarqube
                     withSonarQubeEnv() {
                         sh "cd micro_emails && ./gradlew sonar"
                     }
+                }
+            }
+        }
 
-                    // Tarefa Quality Gate
+        stage('4 - Sonar Quality Gate') {
+            steps {
+                echo 'Sonarqube checa condições de qualidade de código'
+
+                script {
                     sleep(5)
                     timeout(time: 1, unit: 'MINUTES') {
                         waitForQualityGate abortPipeline: true
@@ -41,37 +47,37 @@ pipeline {
             }
         }
 
-        stage('4 - Deploy Back-end') {
+        stage('5 - Deploy Back-end') {
             steps {
                 echo 'deploying the application...'
             }
         }
 
-        stage('5 - API Tests') {
+        stage('6 - API Tests') {
             steps {
                 echo '...'
             }
         }
 
-        stage('6 - Deploy Front-end') {
+        stage('7 - Deploy Front-end') {
             steps {
                 echo '...'
             }
         }
 
-        stage('7 - Functional Tests') {
+        stage('8 - Functional Tests') {
             steps {
                 echo '...'
             }
         }
 
-        stage('8 - Deploy Prod') {
+        stage('9 - Deploy Prod') {
             steps {
                 echo '...'
             }
         }
 
-        stage('9 - Health Check') {
+        stage('10 - Health Check') {
             steps {
                 echo '...'
             }
