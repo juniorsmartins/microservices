@@ -49,9 +49,9 @@ pipeline {
                     for (def project in gradleProjects) {
 
 //                         sh "cd ${project} && ./gradlew sonar"
-                        withSonarQubeEnv('sonarqube') {
+//                         withSonarQubeEnv('sonarqube') {
                             sh "cd ${project} && ${sonarqubeScanner}/bin/sonar-scanner sonar.projectKey=jenkins_mercado_financeiro sonar.host.url=http://127.0.0.1:9000 sonar.login=squ_35c655e2667a2228326356b315a3cfec80a8c92d sonar.java.binaries=build"
-                        }
+//                         }
                     }
                 }
             }
