@@ -7,7 +7,7 @@ pipeline {
                 echo 'Limpar e construir os arquivos .jar'
 
                 script {
-                    sh "./gradlew clean build -x test"
+                    sh "cd micro_empresas && ./gradlew clean build -x test"
                 }
             }
         }
