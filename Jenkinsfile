@@ -57,7 +57,7 @@ pipeline {
                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
 
                     for (def project in gradleProjects) {
-
+                        sleep(5)
                         timeout(time: 1, unit: 'MINUTES') {
                             waitForQualityGate abortPipeline: true
                         }
