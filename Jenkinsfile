@@ -51,25 +51,8 @@ pipeline {
 
 //                         sh "./gradlew sonar"
 //                         sh "cd ${project} && ./gradlew sonarqubeScanner"
-                        sh """
-                            cd ${project} &&
-                            ${sonarqubeScanner}/bin/sonar-scanner
-                            -e -Dsonar.projectKey=jenkins_mercado_financeiro
-                            -Dsonar.host.url=http://localhost:9000/
-                            -Dsonar.java.binaries=/build/libs
-                        """
                     }
                 }
-//                 withSonarQubeEnv('') {
-//                     sh """
-//                         ${sonarqubeScanner}/bin/sonar-scanner
-//                         -e -Dsonar.projectKey=jenkins_mercado_financeiro
-//                         -Dsonar.host.url=http://localhost:9000
-//                         -Dsonar.login=
-//                         -Dsonar.java.binaries=target
-//                         -Dsonar.coverage.exclusions=**/build/**,**/src/test/**,**/model/**,**Application.java
-//                     """
-//                 }
             }
         }
 
