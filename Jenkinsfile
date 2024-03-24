@@ -32,9 +32,9 @@ pipeline {
             }
         }
 
-        stage('3 - Sonar Analysis') {
+        stage('3 - Sonar Analysis and Quality Gate') {
             steps {
-                echo 'Sonarqube roda análise estática do código'
+                echo 'Sonarqube roda análise estática do código e '
 
                 script {
                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
@@ -44,19 +44,6 @@ pipeline {
                         withSonarQubeEnv() {
                             sh "cd ${project} && ./gradlew sonar"
                         }
-                    }
-                }
-            }
-        }
-
-        stage('4 - Quality Gate') {
-            steps {
-                echo 'Sonarqube verifica qualidade de código'
-
-                script {
-                    def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
-
-                    for (def project in gradleProjects) {
                         sleep(5)
                         timeout(time: 1, unit: 'MINUTES') {
                             waitForQualityGate abortPipeline: true
@@ -65,6 +52,23 @@ pipeline {
                 }
             }
         }
+
+//         stage('4 - Quality Gate') {
+//             steps {
+//                 echo 'Sonarqube verifica qualidade de código'
+//
+//                 script {
+//                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
+//
+//                     for (def project in gradleProjects) {
+//                         sleep(5)
+//                         timeout(time: 1, unit: 'MINUTES') {
+//                             waitForQualityGate abortPipeline: true
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
         stage('5 - Deploy Back-end') {
             steps {
