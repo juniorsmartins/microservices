@@ -17,7 +17,7 @@ pipeline {
                 echo 'Rodar os testes automatizados'
 
                 script {
-                    sh "./gradlew test"
+                    sh "cd micro_empresas && ./gradlew test"
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
                 script {
                     // Tarefa Sonarqube
                     withSonarQubeEnv() {
-                        sh "./gradlew sonar"
+                        sh "cd micro_empresas && ./gradlew sonar"
                     }
 
                     // Tarefa Quality Gate
