@@ -61,6 +61,7 @@ services:
     networks:
       - mercado_financeiro_net
     environment:
+      - POSTGRES_DB=sonarqube
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
@@ -75,7 +76,7 @@ services:
     networks:
       - mercado_financeiro_net
     environment:
-      - sonar.jdbc.url=jdbc:postgresql://sonarqube_postgres16:5432/sonar
+      - sonar.jdbc.url=jdbc:postgresql://sonarqube_postgres16:5432/sonarqube
     depends_on:
       - sonarqube_postgres16
     volumes:
