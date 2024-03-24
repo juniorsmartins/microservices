@@ -15,6 +15,7 @@ java {
 sonar {
 	properties {
 		property "sonar.projectKey", "jenkins_mercado_financeiro"
+		property "sonar.login", "squ_35c655e2667a2228326356b315a3cfec80a8c92d"
 	}
 }
 
