@@ -23,10 +23,8 @@ pipeline {
                 echo 'Rodar os testes automatizados'
 
                 script {
-                    // Comando find para localizar os arquivos build.gradle e pom.xml em cada subdiretório
                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
 
-                    // Para cada projeto encontrado, execute o comando Gradle ou Maven, dependendo do que for encontrado
                     for (def project in gradleProjects) {
                         sh "cd ${project} && ./gradlew test"
                     }
@@ -39,10 +37,8 @@ pipeline {
                 echo 'Sonarqube roda análise estática do código'
 
                 script {
-                    // Comando find para localizar os arquivos build.gradle e pom.xml em cada subdiretório
                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
 
-                    // Para cada projeto encontrado, execute o comando Gradle ou Maven, dependendo do que for encontrado
                     for (def project in gradleProjects) {
 
                         withSonarQubeEnv() {
@@ -55,7 +51,18 @@ pipeline {
 
         stage('4 - Quality Gate') {
             steps {
-                echo '...'
+                echo 'Sonarqube verifica qualidade de código'
+
+                script {
+                    def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
+
+                    for (def project in gradleProjects) {
+
+                        timeout(time: 1, unit: 'MINUTES') {
+                            waitForQualityGate abortPipeline: true
+                        }
+                    }
+                }
             }
         }
 
