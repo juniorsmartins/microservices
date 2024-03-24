@@ -34,16 +34,19 @@ pipeline {
 
         stage('3 - Sonar Analysis and Quality Gate') {
             steps {
-                echo 'Sonarqube roda análise estática do código e verifica qualidade de código'
+                echo 'Sonarqube faz análise estática e verifica condições de qualidade'
 
                 script {
                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
 
                     for (def project in gradleProjects) {
 
+                        // Tarefa Sonarqube
                         withSonarQubeEnv() {
                             sh "cd ${project} && ./gradlew sonar"
                         }
+
+                        // Tarefa Quality Gate
                         sleep(5)
                         timeout(time: 1, unit: 'MINUTES') {
                             waitForQualityGate abortPipeline: true
