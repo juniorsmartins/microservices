@@ -1,0 +1,87 @@
+pipeline {
+    agent any
+
+    stages{
+        stage('1 - Build Back-end') {
+            steps {
+                echo 'Limpar e construir os arquivos .jar'
+
+                script {
+                    sh "cd micro_emails && ./gradlew clean build -x test"
+                }
+            }
+        }
+
+        stage('2 - Unit Tests') {
+            steps {
+                echo 'Rodar os testes automatizados'
+
+                script {
+                    sh "cd micro_emails && ./gradlew test"
+                }
+            }
+        }
+
+        stage('3 - Sonar Analysis') {
+            steps {
+                echo 'Sonarqube faz análise estática de código'
+
+                script {
+                    withSonarQubeEnv() {
+                        sh "cd micro_emails && ./gradlew sonar"
+                    }
+                }
+            }
+        }
+
+        stage('4 - Sonar Quality Gate') {
+            steps {
+                echo 'Sonarqube checa condições de qualidade de código'
+
+                script {
+                    sleep(5)
+                    timeout(time: 1, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
+            }
+        }
+
+        stage('5 - Deploy Back-end') {
+            steps {
+                echo 'deploying the application...'
+            }
+        }
+
+        stage('6 - API Tests') {
+            steps {
+                echo '...'
+            }
+        }
+
+        stage('7 - Deploy Front-end') {
+            steps {
+                echo '...'
+            }
+        }
+
+        stage('8 - Functional Tests') {
+            steps {
+                echo '...'
+            }
+        }
+
+        stage('9 - Deploy Prod') {
+            steps {
+                echo '...'
+            }
+        }
+
+        stage('10 - Health Check') {
+            steps {
+                echo '...'
+            }
+        }
+    }
+}
+
