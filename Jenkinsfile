@@ -34,7 +34,7 @@ pipeline {
 
         stage('3 - Sonar Analysis and Quality Gate') {
             steps {
-                echo 'Sonarqube roda análise estática do código e '
+                echo 'Sonarqube roda análise estática do código e verifica qualidade de código'
 
                 script {
                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
@@ -53,54 +53,37 @@ pipeline {
             }
         }
 
-//         stage('4 - Quality Gate') {
-//             steps {
-//                 echo 'Sonarqube verifica qualidade de código'
-//
-//                 script {
-//                     def gradleProjects = sh(script: 'find . -name build.gradle -exec dirname {} \\;', returnStdout: true).trim().split('\n')
-//
-//                     for (def project in gradleProjects) {
-//                         sleep(5)
-//                         timeout(time: 1, unit: 'MINUTES') {
-//                             waitForQualityGate abortPipeline: true
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-
-        stage('5 - Deploy Back-end') {
+        stage('4 - Deploy Back-end') {
             steps {
                 echo 'deploying the application...'
             }
         }
 
-        stage('6 - API Tests') {
+        stage('5 - API Tests') {
             steps {
                 echo '...'
             }
         }
 
-        stage('7 - Deploy Front-end') {
+        stage('6 - Deploy Front-end') {
             steps {
                 echo '...'
             }
         }
 
-        stage('8 - Functional Tests') {
+        stage('7 - Functional Tests') {
             steps {
                 echo '...'
             }
         }
 
-        stage('9 - Deploy Prod') {
+        stage('8 - Deploy Prod') {
             steps {
                 echo '...'
             }
         }
 
-        stage('10 - Health Check') {
+        stage('9 - Health Check') {
             steps {
                 echo '...'
             }
