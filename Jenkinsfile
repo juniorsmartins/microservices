@@ -49,15 +49,18 @@ pipeline {
                     // Para cada projeto encontrado, execute o comando Gradle ou Maven, dependendo do que for encontrado
                     for (def project in gradleProjects) {
 
-                        sh """
-                            cd ${project} &&
-                            ${sonarqubeScanner}/bin/sonar-scanner
-                            -e -Dsonar.projectKey=jenkins_mercado_financeiro
-                            -Dsonar.host.url=http://localhost:9000/
-                            -Dsonar.login=squ_35c655e2667a2228326356b315a3cfec80a8c92d
-                            -Dsonar.java.binaries=/build/libs
-                            -Dsonar.coverage.exclusions=**/build/**,**/src/test/**,**/model/**,**Application.java
-                        """
+                        withSonarQubeEnv() {
+                          sh "./gradlew sonar"
+                        }
+//                         sh """
+//                             cd ${project} &&
+//                             ${sonarqubeScanner}/bin/sonar-scanner
+//                             -e -Dsonar.projectKey=jenkins_mercado_financeiro
+//                             -Dsonar.host.url=http://localhost:9000/
+//                             -Dsonar.login=squ_35c655e2667a2228326356b315a3cfec80a8c92d
+//                             -Dsonar.java.binaries=/build/libs
+//                             -Dsonar.coverage.exclusions=**/build/**,**/src/test/**,**/model/**,**Application.java
+//                         """
                     }
                 }
 //                 withSonarQubeEnv('') {
