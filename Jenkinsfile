@@ -50,16 +50,14 @@ pipeline {
                     for (def project in gradleProjects) {
 
 //                         sh "./gradlew sonar"
-                        sh "cd ${project} && ./gradlew sonarqubeScanner"
-//                         sh """
-//                             cd ${project} &&
-//                             ${sonarqubeScanner}/bin/sonar-scanner
-//                             -e -Dsonar.projectKey=jenkins_mercado_financeiro
-//                             -Dsonar.host.url=http://localhost:9000/
-//                             -Dsonar.login=squ_35c655e2667a2228326356b315a3cfec80a8c92d
-//                             -Dsonar.java.binaries=/build/libs
-//                             -Dsonar.coverage.exclusions=**/build/**,**/src/test/**,**/model/**,**Application.java
-//                         """
+//                         sh "cd ${project} && ./gradlew sonarqubeScanner"
+                        sh """
+                            cd ${project} &&
+                            ${sonarqubeScanner}/bin/sonar-scanner
+                            -e -Dsonar.projectKey=jenkins_mercado_financeiro
+                            -Dsonar.host.url=http://localhost:9000/
+                            -Dsonar.java.binaries=/build/libs
+                        """
                     }
                 }
 //                 withSonarQubeEnv('') {
