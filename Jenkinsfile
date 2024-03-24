@@ -35,9 +35,9 @@ pipeline {
         }
 
         stage('3 - Sonar Analysis') {
-            environment {
-                sonarqubeScanner = tool 'SONARQUBE_JENKINS'
-            }
+//             environment {
+//                 sonarqubeScanner = tool 'SONARQUBE_JENKINS'
+//             }
             steps {
                 echo 'Sonarqube roda análise estática do código'
 
@@ -48,12 +48,8 @@ pipeline {
                     // Para cada projeto encontrado, execute o comando Gradle ou Maven, dependendo do que for encontrado
                     for (def project in gradleProjects) {
 
-                        withSonarQubeEnv() {
-                            sh "cd ${project} && ./gradlew sonar"
-                        }
-//                         sh "cd ${project} && ./gradlew sonar"
-//                         withSonarQubeEnv('sonarqube') {
-//                             sh "cd ${project} && ${sonarqubeScanner}/bin/sonar-scanner sonar.projectKey=jenkins_mercado_financeiro sonar.host.url=http://127.0.0.1:9000 sonar.login=squ_35c655e2667a2228326356b315a3cfec80a8c92d sonar.java.binaries=build"
+//                         withSonarQubeEnv() {
+                            sh "cd ${project} && ./gradle sonar"
 //                         }
                     }
                 }
