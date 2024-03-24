@@ -38,7 +38,6 @@ pipeline {
             environment {
                 sonarqubeScanner = tool 'SONARQUBE_JENKINS'
             }
-
             steps {
                 echo 'Sonarqube roda análise estática do código'
 
@@ -50,7 +49,7 @@ pipeline {
                     for (def project in gradleProjects) {
 
 //                         sh "cd ${project} && ./gradlew sonar"
-                        sh "cd ${project} && ${sonarqubeScanner}/bin/sonar-scanner -e -Dsonar.projectKey=jenkins_mercado_financeiro"
+                        sh "cd ${project} && ${sonarqubeScanner}/bin/sonar-scanner -e -Dsonar.projectKey=jenkins_mercado_financeiro -Dsonar.host.url=http://localhost:9000/"
                     }
                 }
             }
