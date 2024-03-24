@@ -49,13 +49,11 @@ pipeline {
                     // Para cada projeto encontrado, execute o comando Gradle ou Maven, dependendo do que for encontrado
                     for (def project in gradleProjects) {
 
-                        withGradle(tool: 'GRADLE_JENKINS') {
-                            sh "./gradlew sonar"
-                        }
+//                         sh "./gradlew sonar"
 
-//                         withSonarQubeEnv() {
-//                           sh "./gradlew sonar"
-//                         }
+                        withSonarQubeEnv() {
+                          sh "cd ${project} && ./gradlew sonar"
+                        }
 //                         sh """
 //                             cd ${project} &&
 //                             ${sonarqubeScanner}/bin/sonar-scanner
