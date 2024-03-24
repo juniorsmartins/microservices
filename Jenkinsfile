@@ -49,7 +49,7 @@ pipeline {
                     for (def project in gradleProjects) {
 
 //                         withSonarQubeEnv() {
-                            sh "cd ${project} && ./gradle sonar"
+                            sh "cd ${project} && ./gradlew sonar"
 //                         }
                     }
                 }
