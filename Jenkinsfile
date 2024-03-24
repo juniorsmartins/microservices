@@ -35,9 +35,9 @@ pipeline {
         }
 
         stage('3 - Sonar Analysis') {
-//             environment {
-//                 sonarqubeScanner = tool 'SONARQUBE_JENKINS'
-//             }
+            environment {
+                sonarqubeScanner = tool 'SONARQUBE_JENKINS'
+            }
             steps {
                 echo 'Sonarqube roda análise estática do código'
 
