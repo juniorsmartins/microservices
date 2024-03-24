@@ -12,9 +12,9 @@ java {
 	sourceCompatibility = '21'
 }
 
-sonarqube {
+sonar {
 	properties {
-		property "sonarqube.projectKey", "jenkins_mercado_financeiro"
+		property "sonar.projectKey", "jenkins_mercado_financeiro"
 	}
 }
 
