@@ -22,6 +22,8 @@ services:
     build:
       context: ./
       dockerfile: ./micro_empresas/Dockerfile
+    ports:
+      - "8081:8081"
     deploy:
       resources:
         limits:
@@ -40,6 +42,8 @@ services:
     build:
       context: ./
       dockerfile: ./micro_emails/Dockerfile
+    ports:
+      - "8082:8082"
     deploy:
       resources:
         limits:
@@ -85,19 +89,33 @@ services:
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
 
-
   jenkins:
     container_name: jenkins
     image: jenkins/jenkins:2.440.2-lts-jdk21
     privileged: true
     user: root
     ports:
-      - "9090:8080"
+      - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins-home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     #      - jenkins-docker:/usr/local/bin/docker
+    networks:
+      - mercado_financeiro_net
+
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.51.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+#      - ./prometheus:/etc/prometheus
+#      - prometheus_data:/prometheus
+#      - prometheus_config:/fragments/
+    restart: always
     networks:
       - mercado_financeiro_net
 
@@ -120,6 +138,11 @@ volumes:
     name: sonarqube_extensions
   sonarqube_bundled-plugins:
     name: sonarqube_bundled-plugins
+
+#  prometheus_data:
+#    name: prometheus_data
+#  prometheus_config:
+#    name: prometheus_config
 
   jenkins-home:
     name: jenkins-home
