@@ -115,9 +115,22 @@ services:
 #      - ./prometheus:/etc/prometheus
 #      - prometheus_data:/prometheus
 #      - prometheus_config:/fragments/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"
     restart: always
     networks:
       - mercado_financeiro_net
+
+#  grafana:
+#    container_name: grafana
+#    image: grafana/grafana:10.3.5-ubuntu
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=admin
+#      - GF_SECURITY_ADMIN_PASSWORD=admin
+#    networks:
+#      - mercado_financeiro_net
 
 
 

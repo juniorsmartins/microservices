@@ -42,3 +42,12 @@ spring:
     generate-ddl: true
     show-sql: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true

@@ -14,7 +14,7 @@ scrape_configs:
     scrape_timeout: 10s
     metrics_path: /metrics
     static_configs:
-      - targets: ["localhost:8081"]
+      - targets: ["micro_empresas:8081"]
 
 #alerting:
 #  alertmanagers:
