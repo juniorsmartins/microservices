@@ -42,3 +42,19 @@ spring:
     generate-ddl: true
     show-sql: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+info:
+  app: Microsserviços com Java e Spring Boot.
+  website: https://babystepsdev.com
+  github: https://github.com/juniorsmartins/microservices_mercado_financeiro
+
+

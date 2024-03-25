@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping(path = {"/api/v1/empresas"})
+@RequestMapping(path = "/api/v1/empresas")
 @RequiredArgsConstructor
 public class EmpresaController {
 
