@@ -14,7 +14,14 @@ scrape_configs:
     scrape_timeout: 10s
     metrics_path: /actuator/prometheus
     static_configs:
-      - targets: ['192.168.1.24:8081']
+      - targets: ['192.168.1.24:8081', 'host.docker.internal:8081']
+
+  - job_name: micro_emails
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['192.168.1.24:8082', 'host.docker.internal:8082']
 
 #alerting:
 #  alertmanagers:

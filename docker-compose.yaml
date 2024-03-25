@@ -47,8 +47,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 256M
+          cpus: '0.3'
+          memory: 512M
     restart: always
     networks:
       - mercado_financeiro_net
@@ -100,7 +100,6 @@ services:
     volumes:
       - jenkins-home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-    #      - jenkins-docker:/usr/local/bin/docker
     networks:
       - mercado_financeiro_net
 
@@ -112,25 +111,22 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
-#      - ./prometheus:/etc/prometheus
-#      - prometheus_data:/prometheus
-#      - prometheus_config:/fragments/
     command:
       - "--config.file=/etc/prometheus/prometheus.yaml"
     restart: always
     networks:
       - mercado_financeiro_net
 
-#  grafana:
-#    container_name: grafana
-#    image: grafana/grafana:10.3.5-ubuntu
-#    ports:
-#      - "3000:3000"
-#    environment:
-#      - GF_SECURITY_ADMIN_USER=admin
-#      - GF_SECURITY_ADMIN_PASSWORD=admin
-#    networks:
-#      - mercado_financeiro_net
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.3.5-ubuntu
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - mercado_financeiro_net
 
 
 
@@ -152,15 +148,8 @@ volumes:
   sonarqube_bundled-plugins:
     name: sonarqube_bundled-plugins
 
-#  prometheus_data:
-#    name: prometheus_data
-#  prometheus_config:
-#    name: prometheus_config
-
   jenkins-home:
     name: jenkins-home
-#  jenkins-docker:
-#    name: jenkins-docker
 
 
 networks:
