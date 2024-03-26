@@ -69,7 +69,3 @@ _
 /micro_emails/src/main/resources/application.yml,c/0/c0cd533bbd24249fdaf19e50ff815cb482bc614c
 Å
 Qmicro_emails/src/main/java/microservices/micro_emails/MicroEmailsApplication.java,4/7/476909e98edddb692da26bdc4384eab26f36f436
-N
-micro_empresas/prometheus.yaml,e/a/ea63cb264bfa19bf9c299924972e5f7049b44bce
-è
-_micro_empresas/src/main/java/microservices/micro_empresas/config/beans/MonitoramentoConfig.java,7/9/79a606022c77b38ec9d88bdd811e87ce8b5f284d
