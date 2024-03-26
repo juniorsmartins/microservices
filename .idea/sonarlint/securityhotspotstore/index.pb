@@ -77,3 +77,7 @@ xmicro_empresas/src/main/java/microservices/micro_empresas/adapter/in/controller
 lmicro_empresas/src/main/java/microservices/micro_empresas/application/port/output/EmpresaListOutputPort.java,d/5/d575c0a00754f1ead7a72b58f0365e563b2897b2
 ö
 jmicro_empresas/src/main/java/microservices/micro_empresas/application/port/input/EmpresaListInputPort.java,a/4/a4e5bcf60aa8ff53ee57abeecbe01675d09ba88f
+ö
+jmicro_empresas/src/main/java/microservices/micro_empresas/application/core/usecase/EmpresaListUseCase.java,8/7/8703aa26e8c8cd8c8cafd201ba2750dd7b0f715e
+ç
+]micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/EmpresaListAdapter.java,5/1/51846d429b91f8355a4ebc4809d05e5e7b2de472
