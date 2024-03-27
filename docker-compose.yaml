@@ -98,7 +98,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '0.8'
           memory: 4G
     volumes:
       - jenkins-docker-certs:/certs/client
