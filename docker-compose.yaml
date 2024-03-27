@@ -22,6 +22,8 @@ services:
     build:
       context: ./
       dockerfile: ./micro_empresas/Dockerfile
+    ports:
+      - "8081:8081"
     deploy:
       resources:
         limits:
@@ -40,18 +42,18 @@ services:
     build:
       context: ./
       dockerfile: ./micro_emails/Dockerfile
+    ports:
+      - "8082:8082"
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 256M
+          cpus: '0.3'
+          memory: 512M
     restart: always
     networks:
       - mercado_financeiro_net
     env_file:
       - ./micro_emails/.env
-  #    depends_on:
-  #      - micro_emails_postgres16
 
 
 
@@ -77,14 +79,13 @@ services:
       - mercado_financeiro_net
     environment:
       - sonar.jdbc.url=jdbc:postgresql://sonarqube_postgres16:5432/sonarqube
-    depends_on:
-      - sonarqube_postgres16
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
-
+    depends_on:
+      - sonarqube_postgres16
 
   jenkins:
     container_name: jenkins
@@ -92,14 +93,53 @@ services:
     privileged: true
     user: root
     ports:
-      - "9090:8080"
+      - "8080:8080"
       - "50000:50000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 4G
     volumes:
+      - jenkins-docker-certs:/certs/client
       - jenkins-home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-    #      - jenkins-docker:/usr/local/bin/docker
+    restart: always
     networks:
       - mercado_financeiro_net
+    depends_on:
+      - sonarqube
+
+
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.51.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - prometheus-storage:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"
+    restart: always
+    networks:
+      - mercado_financeiro_net
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.3.5-ubuntu
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - mercado_financeiro_net
+    depends_on:
+      - prometheus
 
 
 
@@ -121,11 +161,15 @@ volumes:
   sonarqube_bundled-plugins:
     name: sonarqube_bundled-plugins
 
+  jenkins-docker-certs:
+    name: jenkins-docker-certs
   jenkins-home:
     name: jenkins-home
-#  jenkins-docker:
-#    name: jenkins-docker
 
+  prometheus-storage:
+    name: prometheus-storage
+  grafana-storage:
+    name: grafana-storage
 
 networks:
   mercado_financeiro_net:
