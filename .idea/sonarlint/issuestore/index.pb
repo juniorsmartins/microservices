@@ -81,3 +81,5 @@ jmicro_empresas/src/main/java/microservices/micro_empresas/application/core/usec
 ]micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/EmpresaListAdapter.java,5/1/51846d429b91f8355a4ebc4809d05e5e7b2de472
 ¤
 tmicro_empresas/src/test/java/microservices/micro_empresas/application/core/usecase/EmpresaCreateUseCaseUnitTest.java,a/2/a201c1cdd9fd49462253d414527469c216f6861f
+¤
+tmicro_empresas/src/test/java/microservices/micro_empresas/application/core/usecase/EmpresaDeleteUseCaseUnitTest.java,a/3/a328e953c917b1164900a09280f652858122e96d
