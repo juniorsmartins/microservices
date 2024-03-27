@@ -79,3 +79,5 @@ jmicro_empresas/src/main/java/microservices/micro_empresas/application/port/inpu
 jmicro_empresas/src/main/java/microservices/micro_empresas/application/core/usecase/EmpresaListUseCase.java,8/7/8703aa26e8c8cd8c8cafd201ba2750dd7b0f715e
 ç
 ]micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/EmpresaListAdapter.java,5/1/51846d429b91f8355a4ebc4809d05e5e7b2de472
+§
+tmicro_empresas/src/test/java/microservices/micro_empresas/application/core/usecase/EmpresaCreateUseCaseUnitTest.java,a/2/a201c1cdd9fd49462253d414527469c216f6861f
