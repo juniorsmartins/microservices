@@ -95,11 +95,6 @@ services:
     ports:
       - "8080:8080"
       - "50000:50000"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.8'
-          memory: 4G
     volumes:
       - jenkins-docker-certs:/certs/client
       - jenkins-home:/var/jenkins_home
