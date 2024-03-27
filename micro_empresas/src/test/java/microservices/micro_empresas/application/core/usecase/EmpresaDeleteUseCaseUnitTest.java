@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import util.AbstractTestcontainersTest;
 
 import java.util.NoSuchElementException;
 
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @DisplayName("Unit - EmpresaDeleteUseCase")
-class EmpresaDeleteUseCaseUnitTest {
+class EmpresaDeleteUseCaseUnitTest extends AbstractTestcontainersTest {
 
     @Mock
     private EmpresaDeleteAdapter empresaDeleteAdapter;
@@ -31,7 +32,7 @@ class EmpresaDeleteUseCaseUnitTest {
     @Test
     @DisplayName("nulo")
     void dadoIdNulo_quandoDelete_EntaoLancarException() {
-        Executable acao = () -> this.empresaDeleteAdapter.delete(null);
+        Executable acao = () -> this.empresaDeleteUseCase.delete(null);
         Assertions.assertThrows(NoSuchElementException.class, acao);
         Mockito.verifyNoInteractions(this.empresaDeleteAdapter);
     }
