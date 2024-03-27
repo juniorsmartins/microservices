@@ -69,8 +69,6 @@ _
 /micro_emails/src/main/resources/application.yml,c/0/c0cd533bbd24249fdaf19e50ff815cb482bc614c
 Å
 Qmicro_emails/src/main/java/microservices/micro_emails/MicroEmailsApplication.java,4/7/476909e98edddb692da26bdc4384eab26f36f436
-ì
-cmicro_empresas/src/main/java/microservices/micro_empresas/adapter/in/controller/dto/response/e.java,0/a/0a66b5ccb6bb890d82de32e28720d9b3b30ecfc2
 ®
 xmicro_empresas/src/main/java/microservices/micro_empresas/adapter/in/controller/dto/response/EmpresaListDtoResponse.java,2/2/22f61aba90ebf7d0d1fbf950d9463bb6a4e5b278
 ú
