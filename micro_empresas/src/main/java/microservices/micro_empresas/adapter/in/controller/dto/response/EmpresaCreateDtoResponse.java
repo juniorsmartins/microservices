@@ -1,13 +1,19 @@
 package microservices.micro_empresas.adapter.in.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record EmpresaCreateDtoResponse(
+public final class EmpresaCreateDtoResponse {
 
-    Long id,
+    private Long id;
 
-    String nome
+    private String nome;
 
-) { }
+}
 
