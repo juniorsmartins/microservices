@@ -83,20 +83,12 @@ jmicro_empresas/src/main/java/microservices/micro_empresas/application/core/usec
 tmicro_empresas/src/test/java/microservices/micro_empresas/application/core/usecase/EmpresaCreateUseCaseUnitTest.java,a/2/a201c1cdd9fd49462253d414527469c216f6861f
 ¤
 tmicro_empresas/src/test/java/microservices/micro_empresas/application/core/usecase/EmpresaDeleteUseCaseUnitTest.java,a/3/a328e953c917b1164900a09280f652858122e96d
-œ
-lmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/EmpresaSaveAdapterIntegrationTest.java,a/e/aece0126c57c08025d3a8f0ba650439fe119dec6
 ¦
 vmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/repository/EmpresaRepositoryIntegrationTest.java,4/f/4f6e65c18a68161cae30cc6f6ca659623a0e2fd1
 j
 :micro_empresas/src/test/java/util/FactoryObjectMother.java,b/8/b852cfbb73bd944ec702b63217d908f2e607a358
-@
-artifactory/.env,e/e/eeebd239d3ddd4e79149edafd156ff09146762e5
-W
-'volumes/artifactory/var/etc/system.yaml,9/9/997f198f943e9adab6545b74628c368c9b11c7e5
 4
 .env,3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
-T
-$data/artifactory/var/etc/system.yaml,1/6/16f8c8fa72cca64f28a5442571b3354d3e52ae4c
 ;
 system.yaml,e/2/e276ae1374cc9775d58ee11917673cda3dae499c
 ¢
@@ -105,7 +97,5 @@ rmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/repositor
 umicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/EmpresaControllerIntegrationTest.java,9/6/96005fa9c99e9ad3999ae1e25d92d30589b4e5f6
 ž
 nmicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/EmpresaControllerUnitTest.java,4/0/40144e7b93dc348cb383993a4406b31e9853ba37
-b
-2micro_empresas/src/test/java/util/TestConfigs.java,a/b/ab7959e5cf6b77aef9d6e3ca57888a8e0853fd79
 a
 1micro_empresas/src/test/java/util/TestConfig.java,2/4/247ab3ef097c3b13680c2851a1496e385c3b460d

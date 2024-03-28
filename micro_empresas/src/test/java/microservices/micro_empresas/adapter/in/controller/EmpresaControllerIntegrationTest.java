@@ -141,7 +141,7 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
                 .then()
                     .log().all()
                     .statusCode(200)
-                    .body("totalElements", Matchers.equalTo(2));
+                    .body("", Matchers.hasSize(2));
         }
     }
 
