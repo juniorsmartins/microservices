@@ -87,6 +87,7 @@ services:
     depends_on:
       - sonarqube_postgres16
 
+
   artifactory_postgres16:
     container_name: artifactory_postgres16
     image: postgres:16.0
