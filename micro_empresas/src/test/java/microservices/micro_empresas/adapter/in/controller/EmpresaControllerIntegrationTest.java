@@ -8,6 +8,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import microservices.micro_empresas.adapter.in.controller.dto.response.EmpresaCreateDtoResponse;
 import microservices.micro_empresas.adapter.out.repository.EmpresaRepository;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -62,11 +63,11 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
     }
 
     @Nested
-    @DisplayName("Post Create")
+    @DisplayName("Post")
     class PostCreate {
 
         @Test
-        @DisplayName("persistência")
+        @DisplayName("dados válidos")
         void dadoEmpresaValida_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
 
             var dtoIn = factory.gerarEmpresaCreateDtoRequest().build();
@@ -97,8 +98,8 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
     class DeleteTest {
 
         @Test
-        @DisplayName("válido")
-        void dadoIdValido_quandoDelete_entaoRetornarHttp204NoContent() throws IOException {
+        @DisplayName("id válido")
+        void dadoIdValido_quandoDelete_entaoRetornarHttp204NoContent() {
 
             var empresaEntidade = factory.gerarEmpresaEntityBuilder().build();
             var empresaSalva = empresaRepository.save(empresaEntidade);
@@ -115,6 +116,32 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
             var persistido = empresaRepository.findById(empresaSalva.getId());
 
             Assertions.assertTrue(persistido.isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("Get List")
+    class GetList {
+
+        @Test
+        @DisplayName("all")
+        void dadoRequisicaoValida_quandoList_entaoRetornarListaComDoisItens() {
+
+            var empresaEntidade1 = factory.gerarEmpresaEntityBuilder().build();
+            var empresaEntidade2 = factory.gerarEmpresaEntityBuilder().build();
+
+            empresaRepository.save(empresaEntidade1);
+            empresaRepository.save(empresaEntidade2);
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                .when()
+                    .get()
+                .then()
+                    .log().all()
+                    .statusCode(200)
+                    .body("totalElements", Matchers.equalTo(2));
         }
     }
 
