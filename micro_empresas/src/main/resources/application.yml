@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8091
 
 spring:
 
@@ -45,6 +45,8 @@ spring:
 
 
 management:
+  server:
+    port: 9091
   endpoints:
     web:
       exposure:

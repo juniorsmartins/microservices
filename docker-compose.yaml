@@ -23,7 +23,7 @@ services:
       context: ./
       dockerfile: ./micro_empresas/Dockerfile
     ports:
-      - "8083:8083"
+      - "8091:8091"
     deploy:
       resources:
         limits:
@@ -43,7 +43,7 @@ services:
       context: ./
       dockerfile: ./micro_emails/Dockerfile
     ports:
-      - "8084:8084"
+      - "8092:8092"
     deploy:
       resources:
         limits:
@@ -86,6 +86,78 @@ services:
       - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
     depends_on:
       - sonarqube_postgres16
+
+  artifactory_postgres16:
+    container_name: artifactory_postgres16
+    image: postgres:16.0
+    environment:
+      - POSTGRES_DB=artifactory
+      - POSTGRES_USER=artifactory
+      - POSTGRES_PASSWORD=artifactory
+    ports:
+      - "5533:5432"
+    restart: always
+    volumes:
+      - artifactory-postgresql-data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 500m
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+
+  artifactory:
+    container_name: artifactory
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.8
+    environment:
+      - ENABLE_MIGRATION=y
+      - JF_SHARED_DATABASE_TYPE=postgresql
+      # The following must match the POSTGRES_USER and POSTGRES_PASSWORD values passed to PostgreSQL
+      - JF_SHARED_DATABASE_USERNAME=artifactory
+      - JF_SHARED_DATABASE_PASSWORD=artifactory
+      - JF_SHARED_DATABASE_URL=jdbc:postgresql://artifactory_postgres16:5432/artifactory
+      - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
+      - JF_SHARED_NODE_IP=${JF_SHARED_NODE_IP}
+      - JF_SHARED_NODE_ID=${JF_SHARED_NODE_ID}
+      - JF_SHARED_NODE_NAME=${JF_SHARED_NODE_NAME}
+      - JF_ROUTER_ENTRYPOINTS_EXTERNALPORT=${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
+    ports:
+      - ${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}:${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
+      - "8081:8081"
+#      - "8082:8082"
+    volumes:
+      - artifactory-storage:/var/opt/jfrog/artifactory
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 4G
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+    depends_on:
+      - artifactory_postgres16
 
   jenkins:
     container_name: jenkins
@@ -156,6 +228,13 @@ volumes:
   sonarqube_bundled-plugins:
     name: sonarqube_bundled-plugins
 
+  artifactory-postgresql-data:
+    name: artifactory-postgresql-data
+#    external: true
+  artifactory-storage:
+    name: artifactory-storage
+#    external: true
+
   jenkins-docker-certs:
     name: jenkins-docker-certs
   jenkins-home:
@@ -170,4 +249,17 @@ networks:
   mercado_financeiro_net:
     name: mercado_financeiro_net
     driver: bridge
+
+
+# PORTAS
+# Micro_emails - 8092
+# Micro_empresas - 8091
+# Actuator - 9091
+# Prometheus - 9090
+# Grafana - 3000
+# Sonarqube - 9000
+# Artifactory - 8082
+# Artifactory - 8081
+# Jenkins - 8080
+
 
