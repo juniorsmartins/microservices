@@ -93,10 +93,12 @@ services:
     environment:
       - POSTGRES_DB=artifactory
       - POSTGRES_USER=artifactory
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=artifactory
     ports:
-      - "5432:5432"
+      - "5532:5432"
     restart: always
+    networks:
+      - mercado_financeiro_net
     volumes:
       - artifactory-postgresql-data:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
@@ -124,7 +126,7 @@ services:
       - JF_SHARED_DATABASE_TYPE=postgresql
       # The following must match the POSTGRES_USER and POSTGRES_PASSWORD values passed to PostgreSQL
       - JF_SHARED_DATABASE_USERNAME=artifactory
-      - JF_SHARED_DATABASE_PASSWORD=password
+      - JF_SHARED_DATABASE_PASSWORD=artifactory
       - JF_SHARED_DATABASE_URL=jdbc:postgresql://artifactory_postgres16:5432/artifactory
       - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
       - JF_SHARED_NODE_IP=${JF_SHARED_NODE_IP}
@@ -254,7 +256,8 @@ networks:
 # PORTAS
 # Micro_emails - 8092
 # Micro_empresas - 8091
-# Actuator - 9091
+# Actuator micro_emails - 9092
+# Actuator micro_empresas - 9091
 # Prometheus - 9090
 # Grafana - 3000
 # Sonarqube - 9000
