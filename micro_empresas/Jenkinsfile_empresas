@@ -39,7 +39,7 @@ pipeline {
                 echo 'Sonarqube checa condições de qualidade de código'
 
                 script {
-                    sleep(5)
+                    sleep(15)
                     timeout(time: 1, unit: 'MINUTES') {
                         waitForQualityGate abortPipeline: true
                     }
