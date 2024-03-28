@@ -16,8 +16,6 @@ import util.AbstractTestcontainersTest;
 
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @DisplayName("Unit - EmpresaDeleteUseCase")
