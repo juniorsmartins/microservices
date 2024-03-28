@@ -124,7 +124,6 @@ services:
     environment:
       - ENABLE_MIGRATION=y
       - JF_SHARED_DATABASE_TYPE=postgresql
-      # The following must match the POSTGRES_USER and POSTGRES_PASSWORD values passed to PostgreSQL
       - JF_SHARED_DATABASE_USERNAME=artifactory
       - JF_SHARED_DATABASE_PASSWORD=artifactory
       - JF_SHARED_DATABASE_URL=jdbc:postgresql://artifactory_postgres16:5432/artifactory
@@ -136,7 +135,6 @@ services:
     ports:
       - ${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}:${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
       - "8081:8081"
-#      - "8082:8082"
     volumes:
       - artifactory-storage:/var/opt/jfrog/artifactory
       - /etc/localtime:/etc/localtime:ro
@@ -232,10 +230,8 @@ volumes:
 
   artifactory-postgresql-data:
     name: artifactory-postgresql-data
-#    external: true
   artifactory-storage:
     name: artifactory-storage
-#    external: true
 
   jenkins-docker-certs:
     name: jenkins-docker-certs
