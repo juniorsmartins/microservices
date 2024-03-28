@@ -42,7 +42,7 @@ public class EmpresaController {
             .orElseThrow();
 
         return ResponseEntity
-            .created(URI.create("/api/v1/empresas" + response.id()))
+            .created(URI.create("/api/v1/empresas" + response.getId()))
             .body(response);
     }
 

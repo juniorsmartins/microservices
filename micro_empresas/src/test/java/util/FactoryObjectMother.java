@@ -1,5 +1,6 @@
 package util;
 
+import microservices.micro_empresas.adapter.in.controller.dto.request.EmpresaCreateDtoRequest;
 import microservices.micro_empresas.adapter.out.repository.entity.EmpresaEntity;
 import net.datafaker.Faker;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
@@ -28,6 +29,11 @@ public final class FactoryObjectMother {
     // Padrão Builder
     public EmpresaEntity.EmpresaEntityBuilder gerarEmpresaEntityBuilder() {
         return EmpresaEntity.builder()
+            .nome(faker.lorem().characters(20, 70));
+    }
+
+    public EmpresaCreateDtoRequest.EmpresaCreateDtoRequestBuilder gerarEmpresaCreateDtoRequest() {
+        return EmpresaCreateDtoRequest.builder()
             .nome(faker.lorem().characters(20, 70));
     }
 
