@@ -105,3 +105,7 @@ rmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/repositor
 umicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/EmpresaControllerIntegrationTest.java,9/6/96005fa9c99e9ad3999ae1e25d92d30589b4e5f6
 ž
 nmicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/EmpresaControllerUnitTest.java,4/0/40144e7b93dc348cb383993a4406b31e9853ba37
+b
+2micro_empresas/src/test/java/util/TestConfigs.java,a/b/ab7959e5cf6b77aef9d6e3ca57888a8e0853fd79
+a
+1micro_empresas/src/test/java/util/TestConfig.java,2/4/247ab3ef097c3b13680c2851a1496e385c3b460d
