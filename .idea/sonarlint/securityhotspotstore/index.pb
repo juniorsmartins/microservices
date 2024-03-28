@@ -99,3 +99,9 @@ T
 $data/artifactory/var/etc/system.yaml,1/6/16f8c8fa72cca64f28a5442571b3354d3e52ae4c
 ;
 system.yaml,e/2/e276ae1374cc9775d58ee11917673cda3dae499c
+¢
+rmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/repository/entity/EmpresaEntityUnitTest.java,4/b/4b40d321e02b4210da1c5daa8123d79e778a53f5
+¥
+umicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/EmpresaControllerIntegrationTest.java,9/6/96005fa9c99e9ad3999ae1e25d92d30589b4e5f6
+ž
+nmicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/EmpresaControllerUnitTest.java,4/0/40144e7b93dc348cb383993a4406b31e9853ba37
