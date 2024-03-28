@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.DeserializationFeature;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +23,7 @@ import util.TestConfig;
 
 import java.io.IOException;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @DisplayName("Integration - EmpresaController")
 class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
@@ -32,6 +33,9 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
     private static RequestSpecification requestSpecification;
 
     private static ObjectMapper objectMapper;
+
+    @LocalServerPort // Esta anotação injeta a porta selecionada pelo Spring Boot
+    private int port;
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
@@ -44,9 +48,9 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); // Usar somente nos testes para manter a segurança da API - Isso é usado quanto temos Hateoas
 
         requestSpecification = new RequestSpecBuilder()
-//            .addHeader(TestConfig.HEADER_PARAM_ORIGIN, null)
+            .addHeader(TestConfig.HEADER_PARAM_ORIGIN, TestConfig.ORIGIN_BABYSTEPS)
             .setBasePath(BASE_PATH)
-            .setPort(TestConfig.SERVER_PORT)
+            .setPort(port)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
             .build();
@@ -85,6 +89,32 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
 
             Assertions.assertEquals(dtoOut.getId(), persistido.getId());
             Assertions.assertEquals(dtoOut.getNome(), persistido.getNome());
+        }
+    }
+
+    @Nested
+    @DisplayName("Delete")
+    class DeleteTest {
+
+        @Test
+        @DisplayName("válido")
+        void dadoIdValido_quandoDelete_entaoRetornarHttp204NoContent() throws IOException {
+
+            var empresaEntidade = factory.gerarEmpresaEntityBuilder().build();
+            var empresaSalva = empresaRepository.save(empresaEntidade);
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                .when()
+                    .delete("/" + empresaSalva.getId())
+                .then()
+                    .log().all()
+                    .statusCode(204);
+
+            var persistido = empresaRepository.findById(empresaSalva.getId());
+
+            Assertions.assertTrue(persistido.isEmpty());
         }
     }
 
