@@ -2,6 +2,7 @@ package util;
 
 import microservices.micro_empresas.adapter.in.controller.dto.request.EmpresaCreateDtoRequest;
 import microservices.micro_empresas.adapter.out.repository.entity.EmpresaEntity;
+import microservices.micro_empresas.application.core.domain.Empresa;
 import net.datafaker.Faker;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
@@ -32,11 +33,17 @@ public final class FactoryObjectMother {
             .nome(faker.lorem().characters(20, 70));
     }
 
-    public EmpresaCreateDtoRequest.EmpresaCreateDtoRequestBuilder gerarEmpresaCreateDtoRequest() {
+    // Padrão Builder
+    public EmpresaCreateDtoRequest.EmpresaCreateDtoRequestBuilder gerarEmpresaCreateDtoRequestBuilder() {
         return EmpresaCreateDtoRequest.builder()
             .nome(faker.lorem().characters(20, 70));
     }
 
+    // Padrão Builder
+    public Empresa.EmpresaBuilder gerarEmpresaBuilder() {
+        return Empresa.builder()
+            .nome(faker.lorem().characters(20, 70));
+    }
 
 }
 

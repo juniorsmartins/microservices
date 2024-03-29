@@ -1,6 +1,5 @@
 package microservices.micro_empresas.adapter.in.controller;
 
-import microservices.micro_empresas.application.port.input.EmpresaCreateInputPort;
 import microservices.micro_empresas.application.port.input.EmpresaDeleteInputPort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
