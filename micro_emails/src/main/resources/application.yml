@@ -1,0 +1,28 @@
+server:
+  port: 8092
+
+spring:
+
+  application:
+    name: micro_emails
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
+    metrics:
+      enabled: true
+      tags:
+        application: ${spring.application.name}
+    prometheus:
+      enabled: true
+
+info:
+  app: Microsserviços com Java e Spring Boot.
+  website: https://babystepsdev.com
+  github: https://github.com/juniorsmartins/microservices_mercado_financeiro
+
+
