@@ -101,3 +101,5 @@ a
 1micro_empresas/src/test/java/util/TestConfig.java,2/4/247ab3ef097c3b13680c2851a1496e385c3b460d
 –
 fmicro_empresas/src/test/java/microservices/micro_empresas/application/core/domain/EmpresaUnitTest.java,0/4/04554efbc81aaee9c58e254ab8366c48e88205da
+—
+gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/EmpresaDeleteAdapterUnitTest.java,a/e/ae05cb1c9ecd46bff23a77f3dce5dc5ef795392f

@@ -56,8 +56,16 @@ class EmpresaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("iguais")
         void dadoEmpresasIguais_quandoCompararToStrings_entaoRetornarEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaBuilder().id(1L).nome(empresa1.getNome()).build();
+            var nomeIgual = "Petróleo Brasileiro S/A";
+
+            var empresa1 = new Empresa();
+            empresa1.setId(1L);
+            empresa1.setNome(nomeIgual);
+
+            var empresa2 = new Empresa();
+            empresa2.setId(1L);
+            empresa2.setNome(nomeIgual);
+
             Assertions.assertEquals(empresa1.toString(), empresa2.toString());
         }
     }

@@ -1,5 +1,6 @@
 package microservices.micro_empresas.adapter.out.repository.entity;
 
+import microservices.micro_empresas.application.core.domain.Empresa;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -54,8 +55,16 @@ class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("iguais")
         void dadoEmpresasIguais_quandoCompararToStrings_entaoRetornarEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaEntityBuilder().id(1L).nome(empresa1.getNome()).build();
+            var nomeIgual = "Petróleo Brasileiro S/A";
+
+            var empresa1 = new EmpresaEntity();
+            empresa1.setId(1L);
+            empresa1.setNome(nomeIgual);
+
+            var empresa2 = new EmpresaEntity();
+            empresa2.setId(1L);
+            empresa2.setNome(nomeIgual);
+
             Assertions.assertEquals(empresa1.toString(), empresa2.toString());
         }
     }
