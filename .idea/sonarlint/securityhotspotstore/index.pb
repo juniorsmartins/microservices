@@ -103,3 +103,9 @@ a
 fmicro_empresas/src/test/java/microservices/micro_empresas/application/core/domain/EmpresaUnitTest.java,0/4/04554efbc81aaee9c58e254ab8366c48e88205da
 ó
 gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/EmpresaDeleteAdapterUnitTest.java,a/e/ae05cb1c9ecd46bff23a77f3dce5dc5ef795392f
+é
+^micro_empresas/src/test/java/microservices/micro_empresas/adapter/mapper/MapperInUnitTest.java,e/5/e586f85fec34d1841fda8eb93a6eeb807d1f5654
+è
+_micro_empresas/src/test/java/microservices/micro_empresas/adapter/mapper/MapperOutUnitTest.java,c/4/c4ef3585073c40e108916fac565d7dcfe44fc2f1
+è
+_micro_empresas/src/test/java/microservices/micro_empresas/MicroEmpresasApplicationUnitTest.java,9/8/98f1388098dfcae2b27afe9832dc111dbb3385f3
