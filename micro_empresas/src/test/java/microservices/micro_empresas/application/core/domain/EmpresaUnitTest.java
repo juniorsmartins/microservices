@@ -1,6 +1,5 @@
-package microservices.micro_empresas.adapter.out.repository.entity;
+package microservices.micro_empresas.application.core.domain;
 
-import microservices.micro_empresas.application.core.domain.Empresa;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,10 +11,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import util.AbstractTestcontainersTest;
 import util.FactoryObjectMother;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Unit - EmpresaEntity")
-class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
+@DisplayName("Unit - Empresa")
+class EmpresaUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
@@ -25,17 +26,17 @@ class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("ids diferentes")
-        void dadoEmpresasEntityComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaEntityBuilder().id(2L).build();
+        void dadoEmpresasComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
+            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().id(2L).build();
             Assertions.assertNotEquals(empresa1, empresa2);
         }
 
         @Test
         @DisplayName("ids iguais")
-        void dadoEmpresasEntityComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaEntityBuilder().id(1L).build();
+        void dadoEmpresasComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
+            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().id(1L).build();
             Assertions.assertEquals(empresa1, empresa2);
         }
     }
@@ -47,8 +48,8 @@ class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("nomes diferentes")
         void dadoEmpresasComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaEntityBuilder().id(1L).build();
+            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().id(1L).build();
             Assertions.assertNotEquals(empresa1.toString(), empresa2.toString());
         }
 
@@ -57,17 +58,16 @@ class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
         void dadoEmpresasIguais_quandoCompararToStrings_entaoRetornarEqualsTrue() {
             var nomeIgual = "Petróleo Brasileiro S/A";
 
-            var empresa1 = new EmpresaEntity();
+            var empresa1 = new Empresa();
             empresa1.setId(1L);
             empresa1.setNome(nomeIgual);
 
-            var empresa2 = new EmpresaEntity();
+            var empresa2 = new Empresa();
             empresa2.setId(1L);
             empresa2.setNome(nomeIgual);
 
             Assertions.assertEquals(empresa1.toString(), empresa2.toString());
         }
     }
-
 }
 

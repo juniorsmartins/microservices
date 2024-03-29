@@ -1,6 +1,6 @@
-package microservices.micro_empresas.application.core.usecase;
+package microservices.micro_empresas.adapter.out;
 
-import microservices.micro_empresas.adapter.out.EmpresaDeleteAdapter;
+import microservices.micro_empresas.adapter.out.repository.EmpresaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,24 +16,25 @@ import util.AbstractTestcontainersTest;
 
 import java.util.NoSuchElementException;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Unit - EmpresaDeleteUseCase")
-class EmpresaDeleteUseCaseUnitTest extends AbstractTestcontainersTest {
+@DisplayName("Unit - EmpresaDeleteAdapter")
+class EmpresaDeleteAdapterUnitTest extends AbstractTestcontainersTest {
 
     @Mock
-    private EmpresaDeleteAdapter empresaDeleteAdapter;
+    private EmpresaRepository empresaRepository;
 
     @InjectMocks
-    private EmpresaDeleteUseCase empresaDeleteUseCase;
+    private EmpresaDeleteAdapter empresaDeleteAdapter;
 
     @Test
-    @DisplayName("nulo")
+    @DisplayName("id nulo")
     void dadoIdNulo_quandoDelete_entaoLancarException() {
-        Executable acao = () -> this.empresaDeleteUseCase.delete(null);
+        Executable acao = () -> this.empresaDeleteAdapter.delete(null);
         Assertions.assertThrows(NoSuchElementException.class, acao);
-        Mockito.verifyNoInteractions(this.empresaDeleteAdapter);
+        Mockito.verifyNoInteractions(empresaRepository);
     }
-
 }
 

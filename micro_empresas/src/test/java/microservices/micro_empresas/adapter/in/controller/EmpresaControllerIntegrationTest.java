@@ -70,7 +70,7 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
         @DisplayName("dados válidos")
         void dadoEmpresaValida_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
 
-            var dtoIn = factory.gerarEmpresaCreateDtoRequest().build();
+            var dtoIn = factory.gerarEmpresaCreateDtoRequestBuilder().build();
 
             var response = RestAssured
                 .given().spec(requestSpecification)
