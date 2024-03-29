@@ -12,3 +12,5 @@ shared:
 router:
   entrypoints:
     externalPort: 8082
+
+
