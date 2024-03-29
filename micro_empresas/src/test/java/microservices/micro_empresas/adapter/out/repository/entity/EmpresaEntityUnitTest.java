@@ -44,8 +44,8 @@ class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
     class TesteDeToString {
 
         @Test
-        @DisplayName("diferentes")
-        void dadoEmpresasComNomesDiferentes_quandoCompararToString_entaoRetornarNotEqualsTrue() {
+        @DisplayName("nomes diferentes")
+        void dadoEmpresasComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
             var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
             var empresa2 = factory.gerarEmpresaEntityBuilder().id(1L).build();
             Assertions.assertNotEquals(empresa1.toString(), empresa2.toString());
@@ -53,7 +53,7 @@ class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("iguais")
-        void dadoEmpresasIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
+        void dadoEmpresasIguais_quandoCompararToStrings_entaoRetornarEqualsTrue() {
             var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
             var empresa2 = factory.gerarEmpresaEntityBuilder().id(1L).nome(empresa1.getNome()).build();
             Assertions.assertEquals(empresa1.toString(), empresa2.toString());

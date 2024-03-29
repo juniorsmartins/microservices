@@ -41,6 +41,25 @@ class EmpresaUnitTest extends AbstractTestcontainersTest {
         }
     }
 
+    @Nested
+    @DisplayName("ToString")
+    class TesteDeToString {
 
+        @Test
+        @DisplayName("nomes diferentes")
+        void dadoEmpresasComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
+            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().id(1L).build();
+            Assertions.assertNotEquals(empresa1.toString(), empresa2.toString());
+        }
+
+        @Test
+        @DisplayName("iguais")
+        void dadoEmpresasIguais_quandoCompararToStrings_entaoRetornarEqualsTrue() {
+            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().id(1L).nome(empresa1.getNome()).build();
+            Assertions.assertEquals(empresa1.toString(), empresa2.toString());
+        }
+    }
 }
 
