@@ -2,7 +2,9 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.4'
-	id "org.sonarqube" version "4.4.1.3373"
+	id 'org.sonarqube' version '4.4.1.3373'
+//	id 'com.jfrog.artifactory' version '4.0.0'
+//	id "com.gradle.publish"
 }
 
 group = 'microservices'
@@ -33,6 +35,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
+//	implementation "gradle.plugin.com.jfrog.artifactory:artifactory-gradle-plugin:5.1.14"
+	implementation group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '5.2.0'
+
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	testImplementation 'org.mapstruct:mapstruct:1.5.5.Final'
@@ -62,10 +67,52 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+//buildscript {
+//	repositories {
+//		mavenCentral()
+//	}
+//	dependencies {
+//		classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:5.2.0'
+//	}
+//}
+
+//apply plugin: "com.jfrog.artifactory"
+apply plugin: "java"
+//apply plugin: "com.gradle.publish"
+
+//publishing {
+//	publications {
+//		mavenJava(MavenPublication) {
+//			from components.java
+//		}
+//	}
+//}
+
+//artifactory {
+//	contextUrl = 'http://localhost:8082/artifactory'
+//	publish {
+//		repository {
+//			repoKey = 'libs-snapshot-local'
+//			username = "artifactory"
+//			password = "artifactory"
+//		}
+//		defaults {
+//			publications()
+//			publishArtifacts = true
+//			properties = ['qa.level': 'basic', 'dev.team' : 'core']
+//			publishPom = true
+//		}
+//	}
+//	resolve {
+//		repoKey = 'mavenCentral'
+//	}
+//}
+
 sonar {
 	properties {
 		property "sonar.projectKey", "jenkins_mercado_financeiro"
 		property "sonar.login", "squ_35c655e2667a2228326356b315a3cfec80a8c92d"
+		property 'sonar.gradle.skipCompile', 'true'
 	}
 }
 
