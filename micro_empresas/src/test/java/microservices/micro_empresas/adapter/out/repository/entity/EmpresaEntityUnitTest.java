@@ -13,21 +13,29 @@ import util.FactoryObjectMother;
 
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Unit Entity - Noticia")
+@DisplayName("Unit - EmpresaEntity")
 class EmpresaEntityUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @Nested
-    @DisplayName("Ids")
-    class TesteDeIds {
+    @DisplayName("Equals")
+    class TesteDeEquals {
 
         @Test
         @DisplayName("ids diferentes")
-        void dadoEmpresasComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
+        void dadoEmpresasEntityComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
             var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
             var empresa2 = factory.gerarEmpresaEntityBuilder().id(2L).build();
             Assertions.assertNotEquals(empresa1, empresa2);
+        }
+
+        @Test
+        @DisplayName("ids iguais")
+        void dadoEmpresasEntityComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
+            var empresa1 = factory.gerarEmpresaEntityBuilder().id(1L).build();
+            var empresa2 = factory.gerarEmpresaEntityBuilder().id(1L).build();
+            Assertions.assertEquals(empresa1, empresa2);
         }
     }
 
