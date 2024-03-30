@@ -33,7 +33,7 @@ class EmpresaRepositoryIntegrationTest extends AbstractTestcontainersTest {
         void dadoEmpresaValida_quandoSave_entaoRetornarDadosCompletos() {
             var entidade = factory.gerarEmpresaEntityBuilder().build();
             var response = empresaRepository.save(entidade);
-            Assertions.assertTrue(response.getId() > 0);
+            Assertions.assertTrue(response.getEmpresaId() > 0);
             Assertions.assertEquals(entidade.getNome(), response.getNome());
         }
 
