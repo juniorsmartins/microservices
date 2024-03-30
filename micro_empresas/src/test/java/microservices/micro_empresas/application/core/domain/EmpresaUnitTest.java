@@ -11,8 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import util.AbstractTestcontainersTest;
 import util.FactoryObjectMother;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @DisplayName("Unit - Empresa")
@@ -27,16 +25,16 @@ class EmpresaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("ids diferentes")
         void dadoEmpresasComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaBuilder().id(2L).build();
+            var empresa1 = factory.gerarEmpresaBuilder().empresaId(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().empresaId(2L).build();
             Assertions.assertNotEquals(empresa1, empresa2);
         }
 
         @Test
         @DisplayName("ids iguais")
         void dadoEmpresasComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaBuilder().id(1L).build();
+            var empresa1 = factory.gerarEmpresaBuilder().empresaId(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().empresaId(1L).build();
             Assertions.assertEquals(empresa1, empresa2);
         }
     }
@@ -48,8 +46,8 @@ class EmpresaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("nomes diferentes")
         void dadoEmpresasComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
-            var empresa1 = factory.gerarEmpresaBuilder().id(1L).build();
-            var empresa2 = factory.gerarEmpresaBuilder().id(1L).build();
+            var empresa1 = factory.gerarEmpresaBuilder().empresaId(1L).build();
+            var empresa2 = factory.gerarEmpresaBuilder().empresaId(1L).build();
             Assertions.assertNotEquals(empresa1.toString(), empresa2.toString());
         }
 
@@ -59,11 +57,11 @@ class EmpresaUnitTest extends AbstractTestcontainersTest {
             var nomeIgual = "Petróleo Brasileiro S/A";
 
             var empresa1 = new Empresa();
-            empresa1.setId(1L);
+            empresa1.setEmpresaId(1L);
             empresa1.setNome(nomeIgual);
 
             var empresa2 = new Empresa();
-            empresa2.setId(1L);
+            empresa2.setEmpresaId(1L);
             empresa2.setNome(nomeIgual);
 
             Assertions.assertEquals(empresa1.toString(), empresa2.toString());

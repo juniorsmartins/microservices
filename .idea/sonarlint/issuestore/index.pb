@@ -113,3 +113,5 @@ gmicro_empresas/src/main/java/microservices/micro_empresas/adapter/out/repositor
 _micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/entity/EmpresaEntity.java,2/d/2d90b956d2e76451f05ae514d6392088be21704a
 Œ
 \micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/entity/BaseEntity.java,a/6/a6cd524e479852cd3546fa7e889d30ba267d8305
+—
+gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/entity/EmpresaEntityUnitTest.java,b/0/b0f22c59a5e9bc6d9e6c74d1ed3ee06166b427f9
