@@ -86,9 +86,9 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
                         .asString();
 
             var dtoOut = objectMapper.readValue(response, EmpresaCreateDtoResponse.class);
-            var persistido = empresaRepository.findById(dtoOut.getId()).orElseThrow();
+            var persistido = empresaRepository.findById(dtoOut.getEmpresaId()).orElseThrow();
 
-            Assertions.assertEquals(dtoOut.getId(), persistido.getId());
+            Assertions.assertEquals(dtoOut.getEmpresaId(), persistido.getEmpresaId());
             Assertions.assertEquals(dtoOut.getNome(), persistido.getNome());
         }
     }
@@ -108,12 +108,12 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
                 .when()
-                    .delete("/" + empresaSalva.getId())
+                    .delete("/" + empresaSalva.getEmpresaId())
                 .then()
                     .log().all()
                     .statusCode(204);
 
-            var persistido = empresaRepository.findById(empresaSalva.getId());
+            var persistido = empresaRepository.findById(empresaSalva.getEmpresaId());
 
             Assertions.assertTrue(persistido.isEmpty());
         }

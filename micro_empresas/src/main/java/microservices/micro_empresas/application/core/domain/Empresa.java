@@ -2,6 +2,8 @@ package microservices.micro_empresas.application.core.domain;
 
 import lombok.*;
 
+import java.time.OffsetDateTime;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,9 +13,17 @@ import lombok.*;
 @EqualsAndHashCode(of = {"id"})
 public final class Empresa {
 
-    private Long id;
+    private Long empresaId;
 
     private String nome;
+
+    private OffsetDateTime createdAt;
+
+    private String createdBy;
+
+    private OffsetDateTime updatedAt;
+
+    private String updatedBy;
 
 }
 

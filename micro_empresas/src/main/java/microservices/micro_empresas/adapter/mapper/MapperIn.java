@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface MapperIn {
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "empresaId", ignore = true)
     Empresa toEmpresa(EmpresaCreateDtoRequest empresaCreateDtoRequest);
 
     EmpresaCreateDtoResponse toEmpresaCreateDtoResponse(Empresa empresa);

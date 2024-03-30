@@ -1,7 +1,10 @@
 CREATE TABLE IF NOT EXISTS empresas(
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(200) NOT NULL,
-    CONSTRAINT nome_empresa_unique UNIQUE (nome)
+    empresa_id SERIAL PRIMARY KEY,
+    nome VARCHAR(200) NOT NULL INDEX idx_empresas_nome,
+    created_at timestamptz NOT NULL,
+    created_by VARCHAR(20) NOT NULL,
+    updated_at timestamptz DEFAULT NULL,
+    updated_by VARCHAR(20) DEFAULT NULL
 )
 
 

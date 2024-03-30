@@ -10,6 +10,7 @@ import microservices.micro_empresas.adapter.mapper.MapperIn;
 import microservices.micro_empresas.application.port.input.EmpresaCreateInputPort;
 import microservices.micro_empresas.application.port.input.EmpresaDeleteInputPort;
 import microservices.micro_empresas.application.port.input.EmpresaListInputPort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class EmpresaController {
 
     private final MapperIn mapperIn;
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<EmpresaCreateDtoResponse> create(@RequestBody @Valid EmpresaCreateDtoRequest empresaCreateDtoIn) {
 
         var response = Optional.ofNullable(empresaCreateDtoIn)
@@ -42,7 +43,7 @@ public class EmpresaController {
             .orElseThrow();
 
         return ResponseEntity
-            .created(URI.create("/api/v1/empresas" + response.getId()))
+            .created(URI.create("/api/v1/empresas" + response.getEmpresaId()))
             .body(response);
     }
 
@@ -59,7 +60,7 @@ public class EmpresaController {
             .build();
     }
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<EmpresaListDtoResponse>> list() {
 
         var response = this.empresaListInputPort.list()

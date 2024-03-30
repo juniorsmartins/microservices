@@ -107,3 +107,11 @@ gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/EmpresaDe
 ^micro_empresas/src/test/java/microservices/micro_empresas/adapter/mapper/MapperInUnitTest.java,e/5/e586f85fec34d1841fda8eb93a6eeb807d1f5654
 è
 _micro_empresas/src/test/java/microservices/micro_empresas/adapter/mapper/MapperOutUnitTest.java,c/4/c4ef3585073c40e108916fac565d7dcfe44fc2f1
+ó
+gmicro_empresas/src/main/java/microservices/micro_empresas/adapter/out/repository/entity/BaseEntity.java,5/3/53c09d7c5cdc26b25979dea07311b262678375a4
+è
+_micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/entity/EmpresaEntity.java,2/d/2d90b956d2e76451f05ae514d6392088be21704a
+å
+\micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/entity/BaseEntity.java,a/6/a6cd524e479852cd3546fa7e889d30ba267d8305
+ó
+gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/entity/EmpresaEntityUnitTest.java,b/0/b0f22c59a5e9bc6d9e6c74d1ed3ee06166b427f9
