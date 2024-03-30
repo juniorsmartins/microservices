@@ -1,6 +1,6 @@
 package microservices.micro_empresas.adapter.out.repository.entity;
 
-import microservices.micro_empresas.application.core.domain.Empresa;
+import microservices.micro_empresas.adapter.out.entity.EmpresaEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
