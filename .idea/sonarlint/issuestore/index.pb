@@ -125,3 +125,5 @@ nmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/Busi
 wmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_409/BusinessRuleViolationException.java,9/f/9fad2fe49edb0a718af3462a9fde3884e4ed4e15
 §
 wmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_500/InternalServerFailureException.java,7/4/74a4238428fbb706ea530532a74ca0c02cb16f6f
+•
+emicro_empresas/src/main/java/microservices/micro_empresas/config/beans/InternacionalizacaoConfig.java,b/2/b2838a0b0dbecdc6b7c6409af3037199ebd98a7e
