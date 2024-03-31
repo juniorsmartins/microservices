@@ -16,6 +16,11 @@ public class EmpresaCreateUseCase implements EmpresaCreateInputPort {
 
     private final EmpresaSaveOutputPort empresaSaveOutputPort;
 
+    /**
+     *
+     * @param empresa
+     * @return
+     */
     @Override
     public Empresa create(Empresa empresa) {
 

@@ -35,8 +35,6 @@ lmicro_empresas/src/main/java/microservices/micro_empresas/application/port/outp
 ]micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/EmpresaSaveAdapter.java,0/4/040ad9b7a1524e9225a6741ae50a2c7fc8c9b731
 ó
 gmicro_empresas/src/main/java/microservices/micro_empresas/adapter/out/repository/EmpresaRepository.java,f/b/fb33b53bab275e4c5deafe3cb75fa11f8fb895e3
-ö
-jmicro_empresas/src/main/java/microservices/micro_empresas/adapter/out/repository/entity/EmpresaEntity.java,2/4/245332cd6258b4f25ac6c60c163ef69fd7a6864d
 á
 Wmicro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/MapperOut.java,6/1/612cf650477cb9d19c2ee9b703c1a6be889a9c69
 á
@@ -91,8 +89,6 @@ j
 .env,3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
 ;
 system.yaml,e/2/e276ae1374cc9775d58ee11917673cda3dae499c
-¢
-rmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/repository/entity/EmpresaEntityUnitTest.java,4/b/4b40d321e02b4210da1c5daa8123d79e778a53f5
 •
 umicro_empresas/src/test/java/microservices/micro_empresas/adapter/in/controller/EmpresaControllerIntegrationTest.java,9/6/96005fa9c99e9ad3999ae1e25d92d30589b4e5f6
 û
@@ -107,11 +103,13 @@ gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/EmpresaDe
 ^micro_empresas/src/test/java/microservices/micro_empresas/adapter/mapper/MapperInUnitTest.java,e/5/e586f85fec34d1841fda8eb93a6eeb807d1f5654
 è
 _micro_empresas/src/test/java/microservices/micro_empresas/adapter/mapper/MapperOutUnitTest.java,c/4/c4ef3585073c40e108916fac565d7dcfe44fc2f1
-ó
-gmicro_empresas/src/main/java/microservices/micro_empresas/adapter/out/repository/entity/BaseEntity.java,5/3/53c09d7c5cdc26b25979dea07311b262678375a4
 è
 _micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/entity/EmpresaEntity.java,2/d/2d90b956d2e76451f05ae514d6392088be21704a
 å
 \micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/entity/BaseEntity.java,a/6/a6cd524e479852cd3546fa7e889d30ba267d8305
 ó
 gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/entity/EmpresaEntityUnitTest.java,b/0/b0f22c59a5e9bc6d9e6c74d1ed3ee06166b427f9
+ä
+Zmicro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/MapperInImpl.java,1/6/165e14a258f7688f3b7f61d1d4ca9b888fe7a20b
+ã
+[micro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/MapperOutImpl.java,c/6/c69360b23f96ed4fb64ebbc4dc15e8ff4545fd4c
