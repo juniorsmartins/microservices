@@ -113,3 +113,17 @@ gmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/entity/Em
 Zmicro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/MapperInImpl.java,1/6/165e14a258f7688f3b7f61d1d4ca9b888fe7a20b
 ‹
 [micro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/MapperOutImpl.java,c/6/c69360b23f96ed4fb64ebbc4dc15e8ff4545fd4c
+–
+fmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/ExceptionGlobalHandler.java,5/2/527d77b9b90da8ae2be14fea1ab343859bc14d95
+¡
+qmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_404/RecursoNotFoundException.java,b/d/bd4ee712b67baddcdcd3cad89d6522b0fc287fba
+ƒ
+Smicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_409,5/d/5d45953995ef5b82b88c5b24660473e751ab115e
+ž
+nmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/BusinessRuleViolationException.java,4/5/45550d210472330ec7d0f46ef86def7484f4bc84
+§
+wmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_409/BusinessRuleViolationException.java,9/f/9fad2fe49edb0a718af3462a9fde3884e4ed4e15
+§
+wmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_500/InternalServerFailureException.java,7/4/74a4238428fbb706ea530532a74ca0c02cb16f6f
+•
+emicro_empresas/src/main/java/microservices/micro_empresas/config/beans/InternacionalizacaoConfig.java,b/2/b2838a0b0dbecdc6b7c6409af3037199ebd98a7e
