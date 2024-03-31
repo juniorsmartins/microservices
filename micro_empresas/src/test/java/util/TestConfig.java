@@ -2,6 +2,8 @@ package util;
 
 public class TestConfig {
 
+    private TestConfig() {}
+
     public static final String HEADER_PARAM_AUTHORIZATION = "Authorization";
 
     public static final String HEADER_PARAM_ORIGIN = "Origin";
