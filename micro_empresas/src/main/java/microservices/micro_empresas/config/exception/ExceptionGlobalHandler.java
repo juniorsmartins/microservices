@@ -25,8 +25,9 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
 
     private final MessageSource messageSource;
 
+    // ---------- PARA CAPITURAR TODAS AS EXCEÇÕES SEM TRATAMENTO ESPECÍFICO ---------- //
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ProblemDetail> handleResourceNotFound(Exception ex, WebRequest webRequest) {
+    public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest) {
 
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
