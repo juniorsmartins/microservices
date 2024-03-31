@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "empresas", indexes = {@Index(name = "idx_empresas_nome", columnList = "nome")})
@@ -14,7 +15,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"empresaId"})
 public final class EmpresaEntity extends BaseEntity implements Serializable {
 
     @Serial
@@ -27,6 +28,18 @@ public final class EmpresaEntity extends BaseEntity implements Serializable {
 
     @Column(name = "nome", nullable = false, length = 200)
     private String nome;
+
+    @PrePersist
+    private void prePersist() {
+        this.setCreatedAt(OffsetDateTime.now());
+        this.setCreatedBy("anônimo");
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.setUpdatedAt(OffsetDateTime.now());
+        this.setUpdatedBy("anônimo");
+    }
 
 }
 
