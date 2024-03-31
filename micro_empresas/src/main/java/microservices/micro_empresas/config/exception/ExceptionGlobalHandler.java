@@ -1,7 +1,7 @@
 package microservices.micro_empresas.config.exception;
 
 import lombok.RequiredArgsConstructor;
-import microservices.micro_empresas.config.exception.http_404.RecursoNotFoundException;
+import microservices.micro_empresas.config.exception.http_404.ResourceNotFoundException;
 import microservices.micro_empresas.config.exception.http_409.BusinessRuleViolationException;
 import microservices.micro_empresas.config.exception.http_500.InternalServerFailureException;
 import org.springframework.context.MessageSource;
@@ -59,8 +59,8 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
 
 
     // ---------- TRATAMENTO DE EXCEÇÕES CUSTOM ---------- //
-    @ExceptionHandler(RecursoNotFoundException.class)
-    public ResponseEntity<ProblemDetail> handleResourceNotFound(RecursoNotFoundException ex, WebRequest webRequest) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceNotFoundException ex, WebRequest webRequest) {
 
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
