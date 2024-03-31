@@ -6,7 +6,10 @@ import microservices.micro_empresas.adapter.mapper.MapperOut;
 import microservices.micro_empresas.adapter.out.repository.EmpresaRepository;
 import microservices.micro_empresas.application.core.domain.Empresa;
 import microservices.micro_empresas.application.port.output.EmpresaSaveOutputPort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -20,7 +23,8 @@ public class EmpresaSaveAdapter implements EmpresaSaveOutputPort {
 
     private final MapperOut mapperOut;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+    @Modifying
     @Override
     public Empresa save(Empresa empresa) {
 
