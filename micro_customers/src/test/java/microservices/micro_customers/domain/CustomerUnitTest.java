@@ -1,8 +1,8 @@
-package microservices.micro_customers.entity;
+package microservices.micro_customers.domain;
 
 import microservices.micro_customers.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.domain.enums.TipoTelefoneEnum;
-import microservices.micro_customers.entity.value_objects.TelefoneVo;
+import microservices.micro_customers.domain.tipos.*;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.Assertions;
@@ -19,8 +19,8 @@ import java.util.Set;
 
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Unit - CustomerEntity")
-class CustomerEntityUnitTest extends AbstractTestcontainersTest {
+@DisplayName("Unit - Customer")
+class CustomerUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
@@ -30,15 +30,13 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("ids diferentes")
-        void dadoCustomerEntityComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            var customer1 = factory.gerarCustomerEntityBuilder()
+        void dadoCustomerComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
+            var customer1 = factory.gerarCustomerBuilder()
                 .customerId(1L)
-                .statusCadastro(StatusCadastroEnum.INICIADO)
                 .build();
 
             var customer2 = factory.gerarCustomerEntityBuilder()
                 .customerId(2L)
-                .statusCadastro(StatusCadastroEnum.INICIADO)
                 .build();
 
             Assertions.assertNotEquals(customer1, customer2);
@@ -46,15 +44,13 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("ids iguais")
-        void dadoCustomerEntityComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
+        void dadoCustomerComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
             var customer1 = factory.gerarCustomerEntityBuilder()
                 .customerId(1L)
-                .statusCadastro(StatusCadastroEnum.INICIADO)
                 .build();
 
             var customer2 = factory.gerarCustomerEntityBuilder()
                 .customerId(1L)
-                .statusCadastro(StatusCadastroEnum.INICIADO)
                 .build();
 
             Assertions.assertEquals(customer1, customer2);
@@ -70,12 +66,10 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
             var customer1 = factory.gerarCustomerEntityBuilder()
                 .customerId(1L)
-                .statusCadastro(StatusCadastroEnum.INICIADO)
                 .build();
 
             var customer2 = factory.gerarCustomerEntityBuilder()
                 .customerId(1L)
-                .statusCadastro(StatusCadastroEnum.INICIADO)
                 .build();
 
             Assertions.assertNotEquals(customer1.toString(), customer2.toString());
@@ -89,7 +83,8 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
             var data = LocalDate.now();
             var status = StatusCadastroEnum.CONCLUIDO;
             var emailIgual = "fowler@teste.com";
-            var telefones = Set.of(new TelefoneVo("1199995555", TipoTelefoneEnum.FIXO));
+            var telefones = Set.of(new Telefone("1199995555", TipoTelefoneEnum.FIXO));
+
             var cep = "78000000";
             var estado = "SP";
             var cidade = "São Paulo";
@@ -98,38 +93,35 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
             var numero = "5577";
             var complemento = "Entrada pela porta amarela da direita.";
 
-            var customer1 = factory.gerarCustomerEntityBuilder()
+            var endereco = new Endereco();
+            endereco.setCep(cep);
+            endereco.setEstado(estado);
+            endereco.setCidade(cidade);
+            endereco.setBairro(bairro);
+            endereco.setLogradouro(logradouro);
+            endereco.setNumero(numero);
+            endereco.setComplemento(complemento);
+
+            var customer1 = factory.gerarCustomerBuilder()
                 .customerId(1L)
                 .nomeCompleto(nomeIgual)
-                .cpf(cpfIgual)
-                .dataNascimento(data)
+                .cpf(new CadastroPessoaFisica(cpfIgual))
+                .dataNascimento(new DataNascimento(data))
                 .statusCadastro(status)
-                .email(emailIgual)
+                .email(new CorreioEletronico(emailIgual))
                 .telefones(telefones)
-                    .cep(cep)
-                    .estado(estado)
-                    .cidade(cidade)
-                    .bairro(bairro)
-                    .logradouro(logradouro)
-                    .numero(numero)
-                    .complemento(complemento)
+                .endereco(endereco)
                 .build();
 
-            var customer2 = new CustomerEntity();
+            var customer2 = new Customer();
             customer2.setCustomerId(1L);
             customer2.setNomeCompleto(nomeIgual);
-            customer2.setCpf(cpfIgual);
-            customer2.setDataNascimento(data);
+            customer2.setCpf(new CadastroPessoaFisica(cpfIgual));
+            customer2.setDataNascimento(new DataNascimento(data));
             customer2.setStatusCadastro(status);
-            customer2.setEmail(emailIgual);
+            customer2.setEmail(new CorreioEletronico(emailIgual));
             customer2.setTelefones(telefones);
-            customer2.setCep(cep);
-            customer2.setEstado(estado);
-            customer2.setCidade(cidade);
-            customer2.setBairro(bairro);
-            customer2.setLogradouro(logradouro);
-            customer2.setNumero(numero);
-            customer2.setComplemento(complemento);
+            customer2.setEndereco(endereco);
 
             Assertions.assertEquals(customer1.toString(), customer2.toString());
         }

@@ -21,17 +21,17 @@ public final class Customer {
 
     private String nomeCompleto;
 
-    private CadastroPessoaFisica cpf; // 1
+    private CadastroPessoaFisica cpf;
 
-    private DataNascimento dataNascimento; // 1
+    private DataNascimento dataNascimento;
 
     private StatusCadastroEnum statusCadastro;
 
-    private CorreioEletronico email; // 1
+    private CorreioEletronico email;
 
-    private Set<Telefone> telefones; // N
+    private Set<Telefone> telefones;
 
-    private Endereco endereco; // 1
+    private Endereco endereco;
 
 }
 
