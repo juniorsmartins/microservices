@@ -1,8 +1,6 @@
 package microservices.micro_customers.entity.value_objects;
 
-import microservices.micro_customers.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.domain.enums.TipoTelefoneEnum;
-import microservices.micro_customers.entity.CustomerEntity;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.Assertions;
@@ -13,9 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
