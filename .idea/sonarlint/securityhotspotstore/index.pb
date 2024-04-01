@@ -123,3 +123,11 @@ wmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http
 wmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_500/InternalServerFailureException.java,7/4/74a4238428fbb706ea530532a74ca0c02cb16f6f
 •
 emicro_empresas/src/main/java/microservices/micro_empresas/config/beans/InternacionalizacaoConfig.java,b/2/b2838a0b0dbecdc6b7c6409af3037199ebd98a7e
+b
+2micro_customers/src/main/resources/application.yml,a/1/a109dd7cb2c2dd0ca6fa42ac7ed6db546a65b580
+L
+micro_customers/build.gradle,d/d/ddbb00b6e13e8e807c2826697922dd8d9a6ef38f
+D
+micro_customers/.env,d/b/db4d2cbf0ed3869528de70313b8a7f0e6c3126c9
+J
+micro_customers/Dockerfile,e/2/e2484c2da7c79458cb7b1fbea274476ef40d7773

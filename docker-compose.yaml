@@ -55,6 +55,24 @@ services:
     env_file:
       - ./micro_emails/.env
 
+  micro_customers:
+    container_name: micro_customers
+    build:
+      context: ./
+      dockerfile: ./micro_customers/Dockerfile
+    ports:
+      - "8093:8093"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    env_file:
+      - ./micro_customers/.env
+
 
 
   sonarqube_postgres16:
@@ -251,8 +269,10 @@ networks:
 
 
 # PORTAS
+# Micro_customers - 8093
 # Micro_emails - 8092
 # Micro_empresas - 8091
+# Micro_customers -
 # Actuator micro_emails - 9092
 # Actuator micro_empresas - 9091
 # Prometheus - 9090
