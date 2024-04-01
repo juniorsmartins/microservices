@@ -191,3 +191,5 @@ Pmicro_customers/src/test/java/microservices/micro_customers/util/TestConfig.jav
 Vmicro_customers/src/main/java/microservices/micro_customers/domain/tipos/Telefone.java,1/7/17f703e6b506fa6cbaa323b51cd92fd1439a9a15
 ˜
 hmicro_customers/src/test/java/microservices/micro_customers/entity/value_objects/TelefoneVoUnitTest.java,a/1/a1caa98b00ac60411f384ede325b8ae7835ded80
+ˆ
+Xmicro_customers/src/test/java/microservices/micro_customers/domain/CustomerUnitTest.java,c/6/c6a2928da9245a47b19daa5cbeb548f2db6d743f
