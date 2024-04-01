@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.io.Serial;
 
 @Getter
-public abstract class RecursoNotFoundException extends RuntimeException {
+public abstract class ResourceNotFoundException extends RuntimeException {
 
   @Serial
   private static final long serialVersionUID = 1L;
@@ -14,7 +14,7 @@ public abstract class RecursoNotFoundException extends RuntimeException {
 
   private final String messageKey;
 
-  protected RecursoNotFoundException(String messageKey, final Long id) {
+  protected ResourceNotFoundException(String messageKey, final Long id) {
     super(messageKey);
     this.messageKey = messageKey;
     this.id = id;
