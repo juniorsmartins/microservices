@@ -103,5 +103,15 @@ public final class FactoryObjectMother {
            .endereco(gerarEnderecoBuilder().build());
     }
 
+    public CadastroPessoaFisica.CadastroPessoaFisicaBuilder gerarCadastroPessoaFisicaValidoBuilder() {
+        return CadastroPessoaFisica.builder()
+            .cpf(faker.cpf().valid());
+    }
+
+    public CadastroPessoaFisica.CadastroPessoaFisicaBuilder gerarCadastroPessoaFisicaInvalidoBuilder() {
+        return CadastroPessoaFisica.builder()
+            .cpf(faker.cpf().invalid());
+    }
+
 }
 

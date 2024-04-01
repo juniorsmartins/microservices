@@ -211,3 +211,11 @@ fmicro_customers/src/main/java/microservices/micro_customers/exception/http_409/
 fmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/CpfInvalidxception.java,e/4/e4fb1f4b373e08f82e25255aa4bd9c412a8571b3
 §
 tmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/PoorlyRequestFormulatedException.java,c/d/cd629fbfd23c9e11b746c907784bf5bcd8930ef1
+ö
+jmicro_customers/src/test/java/microservices/micro_customers/domain/tipos/CadastroPessoaFisicaUnitTest.java,8/2/821099ecda7f5a36a34d5404b61058b1bfe6c783
+ó
+gmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/CpfInvalidException.java,4/e/4eb2e50796949a3be13c5c8c8344974ceb98b27a
+è
+_micro_customers/src/main/java/microservices/micro_customers/domain/tipos/CorreioEletronico.java,0/b/0b7403f365af0a0e9711c5fb1949650e2acca16a
+ó
+gmicro_customers/src/test/java/microservices/micro_customers/domain/tipos/CorreioEletronicoUnitTest.java,d/a/daf12983182d77e6506a42016dae90d3e9fe3392
