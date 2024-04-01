@@ -1,7 +1,6 @@
 package microservices.micro_customers.exception.http_409;
 
 import lombok.Getter;
-import microservices.micro_customers.exception.http_400.CpfInvalidxception;
 
 import java.io.Serial;
 

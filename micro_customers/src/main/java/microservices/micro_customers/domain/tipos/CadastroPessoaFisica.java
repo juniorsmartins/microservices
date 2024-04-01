@@ -1,7 +1,7 @@
 package microservices.micro_customers.domain.tipos;
 
 import lombok.*;
-import microservices.micro_customers.exception.http_400.CpfInvalidxception;
+import microservices.micro_customers.exception.http_400.CpfInvalidException;
 
 import java.io.Serializable;
 
@@ -17,7 +17,7 @@ public class CadastroPessoaFisica implements Serializable {
 
     public CadastroPessoaFisica(String cpf) {
         if (!this.ehValido(cpf)) {
-            throw new CpfInvalidxception(cpf);
+            throw new CpfInvalidException(cpf);
         }
         this.cpf = cpf;
     }
