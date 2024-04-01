@@ -219,3 +219,5 @@ gmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/
 _micro_customers/src/main/java/microservices/micro_customers/domain/tipos/CorreioEletronico.java,0/b/0b7403f365af0a0e9711c5fb1949650e2acca16a
 —
 gmicro_customers/src/test/java/microservices/micro_customers/domain/tipos/CorreioEletronicoUnitTest.java,d/a/daf12983182d77e6506a42016dae90d3e9fe3392
+™
+imicro_customers/src/main/java/microservices/micro_customers/exception/http_400/EmailInvalidException.java,c/a/cab5e5446b0a8914d291aac9d110e6820ed0cad5

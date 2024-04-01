@@ -5,7 +5,8 @@ import lombok.Getter;
 import java.io.Serial;
 
 @Getter
-public abstract sealed class PoorlyRequestFormulatedException extends RuntimeException permits CpfInvalidException {
+public abstract sealed class PoorlyRequestFormulatedException extends RuntimeException permits CpfInvalidException,
+      EmailInvalidException {
 
   @Serial
   private static final long serialVersionUID = 1L;

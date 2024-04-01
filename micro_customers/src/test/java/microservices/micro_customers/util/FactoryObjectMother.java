@@ -113,5 +113,15 @@ public final class FactoryObjectMother {
             .cpf(faker.cpf().invalid());
     }
 
+    public CorreioEletronico.CorreioEletronicoBuilder gerarCorreioEletronicoValidoBuilder() {
+        return CorreioEletronico.builder()
+            .email(faker.internet().emailAddress());
+    }
+
+    public CorreioEletronico.CorreioEletronicoBuilder gerarCorreioEletronicoInvalidoBuilder() {
+        return CorreioEletronico.builder()
+            .email(faker.lorem().characters(15, 30));
+    }
+
 }
 
