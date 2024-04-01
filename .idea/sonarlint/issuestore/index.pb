@@ -115,12 +115,8 @@ Zmicro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/Mapper
 [micro_empresas/src/main/java/microservices/micro_empresas/adapter/mapper/MapperOutImpl.java,c/6/c69360b23f96ed4fb64ebbc4dc15e8ff4545fd4c
 –
 fmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/ExceptionGlobalHandler.java,5/2/527d77b9b90da8ae2be14fea1ab343859bc14d95
-¡
-qmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_404/RecursoNotFoundException.java,b/d/bd4ee712b67baddcdcd3cad89d6522b0fc287fba
 ƒ
 Smicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_409,5/d/5d45953995ef5b82b88c5b24660473e751ab115e
-ž
-nmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/BusinessRuleViolationException.java,4/5/45550d210472330ec7d0f46ef86def7484f4bc84
 §
 wmicro_empresas/src/main/java/microservices/micro_empresas/config/exception/http_409/BusinessRuleViolationException.java,9/f/9fad2fe49edb0a718af3462a9fde3884e4ed4e15
 §
