@@ -185,3 +185,9 @@ bmicro_customers/src/main/java/microservices/micro_customers/entity/value_object
 `micro_customers/src/main/java/microservices/micro_customers/entity/value_objects/TelefoneVo.java,e/0/e0b294f5a7843ef9ee6bc58478ca5591117c67dc
 €
 Pmicro_customers/src/test/java/microservices/micro_customers/util/TestConfig.java,9/4/94b073ece4de8a5700f3fea4ef82ac6376e31dd5
+Ž
+^micro_customers/src/main/java/microservices/micro_customers/domain/enums/TipoTelefoneEnum.java,5/5/5524cd92d7e103bd3c0c12349c5df483920b5a4b
+†
+Vmicro_customers/src/main/java/microservices/micro_customers/domain/tipos/Telefone.java,1/7/17f703e6b506fa6cbaa323b51cd92fd1439a9a15
+˜
+hmicro_customers/src/test/java/microservices/micro_customers/entity/value_objects/TelefoneVoUnitTest.java,a/1/a1caa98b00ac60411f384ede325b8ae7835ded80
