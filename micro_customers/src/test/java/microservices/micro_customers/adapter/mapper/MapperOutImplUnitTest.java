@@ -1,5 +1,7 @@
 package microservices.micro_customers.adapter.mapper;
 
+import groovy.transform.ToString;
+import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.Assertions;
@@ -30,13 +32,44 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
     class TestToCustomerEntity {
 
         @Test
-        @DisplayName("nulo")
+        @DisplayName("customer nulo")
         void dadoCustomerNulo_quandoToCustomerEntity_entaoLancarException() {
             Executable acao = () -> mapperOut.toCustomerEntity(null);
             Assertions.assertThrows(NoSuchElementException.class, acao);
         }
 
+        @Test
+        @DisplayName("customer válido")
+        void dadoCustomerValido_quandoToCustomerEntity_entaoConverterNormal() {
+            var customer = factory.gerarCustomerBuilder().build();
+            var entity = mapperOut.toCustomerEntity(customer);
+            Assertions.assertTrue(entity instanceof CustomerEntity);
 
+            Assertions.assertEquals(customer.getCustomerId(), entity.getCustomerId());
+            Assertions.assertEquals(customer.getNomeCompleto(), entity.getNomeCompleto());
+            Assertions.assertEquals(customer.getCpf().getCpf(), entity.getCpf());
+            Assertions.assertEquals(customer.getDataNascimento().getDataNascimentoLocalDate(), entity.getDataNascimento());
+            Assertions.assertEquals(customer.getStatusCadastro(), entity.getStatusCadastro());
+            Assertions.assertEquals(customer.getEmail().getEmail(), entity.getEmail());
+
+            Assertions.assertEquals(customer.getTelefones().size(), entity.getTelefones().size());
+
+            Assertions.assertEquals(customer.getEndereco().getCep(), entity.getCep());
+            Assertions.assertEquals(customer.getEndereco().getEstado(), entity.getEstado());
+            Assertions.assertEquals(customer.getEndereco().getCidade(), entity.getCidade());
+            Assertions.assertEquals(customer.getEndereco().getBairro(), entity.getBairro());
+            Assertions.assertEquals(customer.getEndereco().getLogradouro(), entity.getLogradouro());
+            Assertions.assertEquals(customer.getEndereco().getNumero(), entity.getNumero());
+            Assertions.assertEquals(customer.getEndereco().getComplemento(), entity.getComplemento());
+        }
+
+        @Test
+        @DisplayName("telefones nulo")
+        void dadoCustomerComTelefonesNulo_quandoToCustomerEntity_entaoConverterNormal() {
+            var customer = factory.gerarCustomerBuilder().telefones(null).build();
+            var entity = mapperOut.toCustomerEntity(customer);
+            Assertions.assertTrue(entity instanceof CustomerEntity);
+        }
     }
 
 }
