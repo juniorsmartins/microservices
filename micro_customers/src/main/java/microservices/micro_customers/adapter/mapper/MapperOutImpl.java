@@ -6,6 +6,7 @@ import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.tipos.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,11 +17,11 @@ public class MapperOutImpl implements MapperOut {
     @Override
     public CustomerEntity toCustomerEntity(Customer customer) {
         return Optional.ofNullable(customer)
-            .map(this::toEntity)
+            .map(this::entity)
             .orElseThrow();
     }
 
-    private CustomerEntity toEntity(Customer customer) {
+    private CustomerEntity entity(Customer customer) {
         var telefonesVo = this.toTelefoneVo(customer);
 
         return CustomerEntity.builder()
@@ -42,35 +43,25 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<TelefoneVo> toTelefoneVo(Customer customer) {
-        Set<TelefoneVo> telefonesVo = null;
         if (customer.getTelefones() != null && !customer.getTelefones().isEmpty()) {
-            telefonesVo = customer.getTelefones()
+            return customer.getTelefones()
                 .stream()
                 .map(fone -> new TelefoneVo(fone.getTelefone(), fone.getTipo()))
                 .collect(Collectors.toSet());
         }
-        return telefonesVo;
+        return Collections.emptySet();
     }
 
     @Override
     public Customer toCustomer(CustomerEntity entity) {
-        Set<Telefone> telefones = null;
-        if (entity.getTelefones() != null && !entity.getTelefones().isEmpty()) {
-            telefones = entity.getTelefones()
-                .stream()
-                .map(fone -> new Telefone(fone.getTelefone(), fone.getTipo()))
-                .collect(Collectors.toSet());
-        }
+        return Optional.ofNullable(entity)
+            .map(this::customer)
+            .orElseThrow();
+    }
 
-        var endereco = Endereco.builder()
-            .cep(entity.getCep())
-            .estado(entity.getEstado())
-            .cidade(entity.getCidade())
-            .bairro(entity.getBairro())
-            .logradouro(entity.getLogradouro())
-            .numero(entity.getNumero())
-            .complemento(entity.getComplemento())
-            .build();
+    private Customer customer(CustomerEntity entity) {
+        var telefones = this.toTelefone(entity);
+        var endereco = this.toEndereco(entity);
 
         return Customer.builder()
             .customerId(entity.getCustomerId())
@@ -81,6 +72,28 @@ public class MapperOutImpl implements MapperOut {
             .email(new CorreioEletronico(entity.getEmail()))
             .telefones(telefones)
             .endereco(endereco)
+            .build();
+    }
+
+    private Set<Telefone> toTelefone(CustomerEntity entity) {
+        if (entity.getTelefones() != null && !entity.getTelefones().isEmpty()) {
+            return entity.getTelefones()
+                .stream()
+                .map(fone -> new Telefone(fone.getTelefone(), fone.getTipo()))
+                .collect(Collectors.toSet());
+        }
+        return Collections.emptySet();
+    }
+
+    private Endereco toEndereco(CustomerEntity entity) {
+        return Endereco.builder()
+            .cep(entity.getCep())
+            .estado(entity.getEstado())
+            .cidade(entity.getCidade())
+            .bairro(entity.getBairro())
+            .logradouro(entity.getLogradouro())
+            .numero(entity.getNumero())
+            .complemento(entity.getComplemento())
             .build();
     }
 

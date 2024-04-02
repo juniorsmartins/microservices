@@ -25,10 +25,12 @@ public final class DataNascimento {
             throw new DataNascimentoInvalidException(dataNascimentoString);
         }
         this.dataNascimentoLocalDate = LocalDate.parse(dataNascimentoString, FORMATO_DATA);
+        this.dataNascimentoString = dataNascimentoString;
     }
 
     public DataNascimento(LocalDate dataNascimentoLocalDate) {
         this.dataNascimentoString = dataNascimentoLocalDate.format(FORMATO_DATA);
+        this.dataNascimentoLocalDate = dataNascimentoLocalDate;
     }
 
     public boolean ehValido(String dataNascimentoString) {

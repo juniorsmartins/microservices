@@ -245,3 +245,7 @@ omicro_customers/src/test/java/microservices/micro_customers/application/core/do
 omicro_customers/src/test/java/microservices/micro_customers/application/core/domain/tipos/TelefoneUnitTest.java,c/e/ceb63b7f17bd44362404a0a3ed321fb7cdfb6dc3
 ô
 imicro_customers/src/test/java/microservices/micro_customers/application/core/domain/CustomerUnitTest.java,c/8/c8938a7b70e1f528b4adaf21dc279b07e54e12ad
+ó
+gmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/Telefone.java,3/9/3989b706d984bd9c72b78d0c0cf934ebc17d1327
+ù
+mmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/DataNascimento.java,1/3/13522b8dfe7ba9d1819ae7d8974b847308ffefc5
