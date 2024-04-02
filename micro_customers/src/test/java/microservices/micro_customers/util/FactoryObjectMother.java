@@ -1,11 +1,11 @@
 package microservices.micro_customers.util;
 
-import microservices.micro_customers.domain.Customer;
-import microservices.micro_customers.domain.enums.StatusCadastroEnum;
-import microservices.micro_customers.domain.enums.TipoTelefoneEnum;
-import microservices.micro_customers.domain.tipos.*;
-import microservices.micro_customers.entity.CustomerEntity;
-import microservices.micro_customers.entity.value_objects.TelefoneVo;
+import microservices.micro_customers.application.core.domain.*;
+import microservices.micro_customers.adapter.out.entity.CustomerEntity;
+import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
+import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
+import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
+import microservices.micro_customers.application.core.domain.tipos.*;
 import net.datafaker.Faker;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
@@ -36,13 +36,13 @@ public final class FactoryObjectMother {
 
     public TelefoneVo.TelefoneVoBuilder gerarTelefoneVoFixoBuilder() {
         return TelefoneVo.builder()
-            .telefone(faker.phoneNumber().phoneNumber())
+            .telefone(gerarNumeroAleatorioComOnzeDigitos())
             .tipo(TipoTelefoneEnum.FIXO);
     }
 
     public TelefoneVo.TelefoneVoBuilder gerarTelefoneVoCelularBuilder() {
         return TelefoneVo.builder()
-            .telefone(faker.phoneNumber().cellPhone())
+            .telefone(gerarNumeroAleatorioComOnzeDigitos())
             .tipo(TipoTelefoneEnum.CELULAR);
     }
 
@@ -61,11 +61,13 @@ public final class FactoryObjectMother {
     private String gerarNumeroAleatorioComOnzeDigitos() {
         Random random = new Random();
 
-        // Gerando um número aleatório entre 10000000000 e 99999999999
-        var numeroAleatorio = random.nextLong(90000000001L) + 10000000000L;
+        StringBuilder onzeDigitos = new StringBuilder();
+        for (int i = 1; i <= 11; i++) {
+            int digito = random.nextInt(9) + 1; // Gera um dígito aleatório de 0 a 9
+            onzeDigitos.append(digito);
+        }
 
-        // Formatando o número como string com 11 dígitos
-        return String.format("%011d", numeroAleatorio);
+        return onzeDigitos.toString();
     }
 
     // Padrão Builder
