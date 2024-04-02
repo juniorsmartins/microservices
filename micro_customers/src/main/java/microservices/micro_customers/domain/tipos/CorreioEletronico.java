@@ -1,15 +1,16 @@
 package microservices.micro_customers.domain.tipos;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import microservices.micro_customers.exception.http_400.EmailInvalidException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Builder
-@NoArgsConstructor
 @Getter
-@Setter
 @ToString
 @EqualsAndHashCode(of = {"email"})
 public final class CorreioEletronico {
