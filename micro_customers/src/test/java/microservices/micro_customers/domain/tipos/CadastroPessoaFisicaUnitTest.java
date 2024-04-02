@@ -61,10 +61,9 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("ids iguais")
         void dadoCadastroPessoaFisicaComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var cpfIgual = "67817568006";
-            var cpf1 = new CadastroPessoaFisica(cpfIgual);
-            var cpf2 = new CadastroPessoaFisica();
-            cpf2.setCpf(cpfIgual);
+            var igual = "67817568006";
+            var cpf1 = new CadastroPessoaFisica(igual);
+            var cpf2 = new CadastroPessoaFisica(igual);
             Assertions.assertEquals(cpf1, cpf2);
         }
     }
@@ -84,10 +83,9 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("dados iguais")
         void dadoCadastroPessoaFisicaComDadosIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            var cpfIgual = "67817568006";
-            var cpf1 = new CadastroPessoaFisica(cpfIgual);
-            var cpf2 = new CadastroPessoaFisica();
-            cpf2.setCpf(cpfIgual);
+            var igual = "67817568006";
+            var cpf1 = new CadastroPessoaFisica(igual);
+            var cpf2 = new CadastroPessoaFisica(igual);
             Assertions.assertEquals(cpf1.toString(), cpf2.toString());
         }
     }

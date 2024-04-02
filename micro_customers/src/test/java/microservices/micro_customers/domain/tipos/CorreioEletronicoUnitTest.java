@@ -47,10 +47,9 @@ class CorreioEletronicoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("emails iguais")
         void dadoEmailsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var emailIgual = "robert_martin@test.com";
-            var email1 = new CorreioEletronico(emailIgual);
-            var email2 = new CorreioEletronico();
-            email2.setEmail(emailIgual);
+            var igual = "robert_martin@test.com";
+            var email1 = new CorreioEletronico(igual);
+            var email2 = new CorreioEletronico(igual);
             Assertions.assertEquals(email1, email2);
         }
     }
@@ -70,10 +69,9 @@ class CorreioEletronicoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("emails iguais")
         void dadoEmailsIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            var emailIgual = "robert_martin@test.com";
-            var email1 = new CorreioEletronico(emailIgual);
-            var email2 = new CorreioEletronico();
-            email2.setEmail(emailIgual);
+            var igual = "robert_martin@test.com";
+            var email1 = new CorreioEletronico(igual);
+            var email2 = new CorreioEletronico(igual);
             Assertions.assertEquals(email1.toString(), email2.toString());
         }
     }
