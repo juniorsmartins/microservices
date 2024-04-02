@@ -39,6 +39,13 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         }
 
         @Test
+        @DisplayName("primeiro digito verificador inválido")
+        void dadoCpfComPrimeiroDigitoVerificadorInvalido_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
+            Executable acao = () -> CadastroPessoaFisica.builder().cpf("71970296011").build();
+            Assertions.assertThrows(CpfInvalidException.class, acao);
+        }
+
+        @Test
         @DisplayName("digitos iguais")
         void dadoCpfComDigitosIguais_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
             Executable acao = () -> CadastroPessoaFisica.builder().cpf("11111111111").build();
