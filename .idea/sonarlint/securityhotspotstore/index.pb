@@ -249,3 +249,7 @@ imicro_customers/src/test/java/microservices/micro_customers/application/core/do
 gmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/Telefone.java,3/9/3989b706d984bd9c72b78d0c0cf934ebc17d1327
 ù
 mmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/DataNascimento.java,1/3/13522b8dfe7ba9d1819ae7d8974b847308ffefc5
+°
+qmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/enums/StatusCadastroEnum.java,4/b/4b4c35c0eb066bda9819385624bb229f50d05bd1
+ü
+omicro_customers/src/main/java/microservices/micro_customers/application/core/domain/enums/TipoTelefoneEnum.java,f/1/f176862dbaf83e24ececa6c2fab40d3e0d5387b6
