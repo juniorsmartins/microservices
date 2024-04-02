@@ -253,3 +253,9 @@ mmicro_customers/src/main/java/microservices/micro_customers/application/core/do
 qmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/enums/StatusCadastroEnum.java,4/b/4b4c35c0eb066bda9819385624bb229f50d05bd1
 Ÿ
 omicro_customers/src/main/java/microservices/micro_customers/application/core/domain/enums/TipoTelefoneEnum.java,f/1/f176862dbaf83e24ececa6c2fab40d3e0d5387b6
+Ÿ
+omicro_customers/src/main/java/microservices/micro_customers/application/port/input/CustomerCreateInputPort.java,0/7/07e15a277204bed16fbcef6266883b6ae4805082
+Ÿ
+omicro_customers/src/main/java/microservices/micro_customers/application/core/usecase/CustomerCreateUseCase.java,7/9/79b447ca885d973bde21233347e0cd94ef6652ed
+§
+wmicro_customers/src/test/java/microservices/micro_customers/application/core/usecase/CustomerCreateUseUnitCaseTest.java,d/2/d229cdd15d73b3ed77bacfcae7f144bb09fe3d5f
