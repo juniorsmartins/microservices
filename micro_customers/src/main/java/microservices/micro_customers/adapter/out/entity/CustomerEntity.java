@@ -2,7 +2,7 @@ package microservices.micro_customers.adapter.out.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import microservices.micro_customers.domain.enums.StatusCadastroEnum;
+import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 
 import java.io.Serial;

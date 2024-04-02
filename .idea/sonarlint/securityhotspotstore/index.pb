@@ -195,3 +195,19 @@ pmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/
 ^micro_customers/src/test/java/microservices/micro_customers/domain/tipos/TelefoneUnitTest.java,b/1/b17d62b373a40423ecaa703154e8afc6f7a69f0b
 U
 %micro_customers/Jenkinsfile_customers,d/b/db29119f0648919e1cf71931c44181fc1f87a463
+œ
+lmicro_customers/src/main/java/microservices/micro_customers/adapter/out/entity/value_objects/TelefoneVo.java,9/a/9a99b09db4c21e353153e079fe0424c17fe01f7d
+¦
+vmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/value_objects/TelefoneVoTesttetttt.java,d/3/d39db8b0daddc4628cb5fa595eaa72a8a68b8797
+’
+bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/entity/CustomerEntity.java,9/4/9480f113a9983ad9ff758c045cf7c4d503762363
+ž
+nmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/CustomerEntityTesttttttttt.java,8/4/84620672d097e23b4204cb208e1cf974f5839fbb
+£
+smicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/CadastroPessoaFisica.java,b/a/baff7b050deee616d100b969097f2889acaeb418
+¯
+micro_customers/src/test/java/microservices/micro_customers/application/core/domain/tipos/CadastroPessoaFisicaTesttttttttt.java,c/f/cfe6ed0db4dafaa5b16720f59f71633aea9c10dc
+‘
+amicro_customers/src/main/java/microservices/micro_customers/application/core/domain/Customer.java,b/2/b28d948bb11467c521d2a8744ce1fa06856583e3
+ 
+pmicro_customers/src/test/java/microservices/micro_customers/application/core/domain/CustomerTestttttttttttt.java,1/3/137dc84395c2028bed9df44f571c6aab25142755

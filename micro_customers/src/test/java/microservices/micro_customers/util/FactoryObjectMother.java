@@ -1,11 +1,11 @@
 package microservices.micro_customers.util;
 
-import microservices.micro_customers.domain.Customer;
-import microservices.micro_customers.domain.enums.StatusCadastroEnum;
-import microservices.micro_customers.domain.enums.TipoTelefoneEnum;
-import microservices.micro_customers.domain.tipos.*;
+import microservices.micro_customers.application.core.domain.*;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
+import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
+import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
+import microservices.micro_customers.application.core.domain.tipos.*;
 import net.datafaker.Faker;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 

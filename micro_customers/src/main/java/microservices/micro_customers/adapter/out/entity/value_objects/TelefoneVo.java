@@ -5,7 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
-import microservices.micro_customers.domain.enums.TipoTelefoneEnum;
+import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 
 import java.io.Serializable;
 
