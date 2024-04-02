@@ -193,3 +193,5 @@ lmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/
 pmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/TelefoneWithoutTypeException.java,7/d/7daaf2e3ecd39f9fae4d09703e15f6daad8c3496
 Ž
 ^micro_customers/src/test/java/microservices/micro_customers/domain/tipos/TelefoneUnitTest.java,b/1/b17d62b373a40423ecaa703154e8afc6f7a69f0b
+U
+%micro_customers/Jenkinsfile_customers,d/b/db29119f0648919e1cf71931c44181fc1f87a463

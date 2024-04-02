@@ -4,8 +4,8 @@ import microservices.micro_customers.domain.Customer;
 import microservices.micro_customers.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.domain.tipos.*;
-import microservices.micro_customers.entity.CustomerEntity;
-import microservices.micro_customers.entity.value_objects.TelefoneVo;
+import microservices.micro_customers.adapter.out.entity.CustomerEntity;
+import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 import net.datafaker.Faker;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 

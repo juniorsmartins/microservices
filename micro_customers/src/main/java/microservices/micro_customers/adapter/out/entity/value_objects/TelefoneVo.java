@@ -1,4 +1,4 @@
-package microservices.micro_customers.entity.value_objects;
+package microservices.micro_customers.adapter.out.entity.value_objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
