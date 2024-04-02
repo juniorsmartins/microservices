@@ -6,7 +6,7 @@ import java.io.Serial;
 
 @Getter
 public abstract sealed class PoorlyRequestFormulatedException extends RuntimeException permits CpfInvalidException,
-      EmailInvalidException {
+      EmailInvalidException, DataNascimentoInvalidException, TelefoneInvalidException, TelefoneWithoutTypeException {
 
   @Serial
   private static final long serialVersionUID = 1L;

@@ -10,6 +10,7 @@ import net.datafaker.Faker;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.Set;
 
 // Padrão Object Mother
@@ -47,14 +48,24 @@ public final class FactoryObjectMother {
 
     public Telefone.TelefoneBuilder gerarTelefoneFixoBuilder() {
         return Telefone.builder()
-            .telefone(faker.phoneNumber().phoneNumber())
+            .telefone(gerarNumeroAleatorioComOnzeDigitos())
             .tipo(TipoTelefoneEnum.FIXO);
     }
 
     public Telefone.TelefoneBuilder gerarTelefoneCelularBuilder() {
         return Telefone.builder()
-            .telefone(faker.phoneNumber().cellPhone())
+            .telefone(gerarNumeroAleatorioComOnzeDigitos())
             .tipo(TipoTelefoneEnum.CELULAR);
+    }
+
+    private String gerarNumeroAleatorioComOnzeDigitos() {
+        Random random = new Random();
+
+        // Gerando um número aleatório entre 10000000000 e 99999999999
+        var numeroAleatorio = random.nextLong(90000000001L) + 10000000000L;
+
+        // Formatando o número como string com 11 dígitos
+        return String.format("%011d", numeroAleatorio);
     }
 
     // Padrão Builder

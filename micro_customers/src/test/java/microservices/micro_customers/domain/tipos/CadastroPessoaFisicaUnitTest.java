@@ -39,6 +39,13 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         }
 
         @Test
+        @DisplayName("primeiro digito verificador inválido")
+        void dadoCpfComPrimeiroDigitoVerificadorInvalido_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
+            Executable acao = () -> CadastroPessoaFisica.builder().cpf("71970296011").build();
+            Assertions.assertThrows(CpfInvalidException.class, acao);
+        }
+
+        @Test
         @DisplayName("digitos iguais")
         void dadoCpfComDigitosIguais_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
             Executable acao = () -> CadastroPessoaFisica.builder().cpf("11111111111").build();
@@ -61,10 +68,9 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("ids iguais")
         void dadoCadastroPessoaFisicaComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var cpfIgual = "67817568006";
-            var cpf1 = new CadastroPessoaFisica(cpfIgual);
-            var cpf2 = new CadastroPessoaFisica();
-            cpf2.setCpf(cpfIgual);
+            var igual = "67817568006";
+            var cpf1 = new CadastroPessoaFisica(igual);
+            var cpf2 = new CadastroPessoaFisica(igual);
             Assertions.assertEquals(cpf1, cpf2);
         }
     }
@@ -84,10 +90,9 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("dados iguais")
         void dadoCadastroPessoaFisicaComDadosIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            var cpfIgual = "67817568006";
-            var cpf1 = new CadastroPessoaFisica(cpfIgual);
-            var cpf2 = new CadastroPessoaFisica();
-            cpf2.setCpf(cpfIgual);
+            var igual = "67817568006";
+            var cpf1 = new CadastroPessoaFisica(igual);
+            var cpf2 = new CadastroPessoaFisica(igual);
             Assertions.assertEquals(cpf1.toString(), cpf2.toString());
         }
     }

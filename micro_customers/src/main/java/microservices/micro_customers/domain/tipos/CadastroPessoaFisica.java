@@ -1,14 +1,15 @@
 package microservices.micro_customers.domain.tipos;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import microservices.micro_customers.exception.http_400.CpfInvalidException;
 
 import java.io.Serializable;
 
 @Builder
-@NoArgsConstructor
 @Getter
-@Setter
 @ToString
 @EqualsAndHashCode(of = {"cpf"})
 public class CadastroPessoaFisica implements Serializable {
