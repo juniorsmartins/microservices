@@ -1,6 +1,5 @@
 package microservices.micro_customers.application.core.domain.tipos;
 
-import microservices.micro_customers.application.core.domain.tipos.DataNascimento;
 import microservices.micro_customers.config.exception.http_400.DataNascimentoInvalidException;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import org.junit.jupiter.api.Assertions;

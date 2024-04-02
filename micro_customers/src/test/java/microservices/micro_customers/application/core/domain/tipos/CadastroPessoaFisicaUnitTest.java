@@ -1,6 +1,5 @@
 package microservices.micro_customers.application.core.domain.tipos;
 
-import microservices.micro_customers.application.core.domain.tipos.CadastroPessoaFisica;
 import microservices.micro_customers.config.exception.http_400.CpfInvalidException;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;

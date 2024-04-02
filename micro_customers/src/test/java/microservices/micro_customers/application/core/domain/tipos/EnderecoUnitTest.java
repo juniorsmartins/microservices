@@ -1,6 +1,5 @@
 package microservices.micro_customers.application.core.domain.tipos;
 
-import microservices.micro_customers.application.core.domain.tipos.Endereco;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.Assertions;

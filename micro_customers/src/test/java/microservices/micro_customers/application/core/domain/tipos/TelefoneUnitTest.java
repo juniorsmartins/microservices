@@ -1,6 +1,5 @@
 package microservices.micro_customers.application.core.domain.tipos;
 
-import microservices.micro_customers.application.core.domain.tipos.Telefone;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.config.exception.http_400.TelefoneInvalidException;
 import microservices.micro_customers.config.exception.http_400.TelefoneWithoutTypeException;

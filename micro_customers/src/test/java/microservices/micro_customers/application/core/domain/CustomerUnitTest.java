@@ -1,6 +1,5 @@
 package microservices.micro_customers.application.core.domain;
 
-import microservices.micro_customers.application.core.domain.*;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.application.core.domain.tipos.*;
