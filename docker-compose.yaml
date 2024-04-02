@@ -212,6 +212,7 @@ services:
       - mercado_financeiro_net
     depends_on:
       - sonarqube
+      - artifactory
 
 
 
