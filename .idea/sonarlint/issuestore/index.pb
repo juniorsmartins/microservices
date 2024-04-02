@@ -183,3 +183,7 @@ imicro_customers/src/main/java/microservices/micro_customers/exception/http_400/
 dmicro_customers/src/test/java/microservices/micro_customers/domain/tipos/DataNascimentoUnitTest.java,7/2/722bb6b7673e30e30e6e1f1fb8dc9e74980a5435
 ¢
 rmicro_customers/src/main/java/microservices/micro_customers/exception/http_400/DataNascimentoInvalidException.java,3/b/3b028175d4ec05a6b059af65f2eea4243dfbf730
+†
+Vmicro_customers/src/main/java/microservices/micro_customers/domain/tipos/Endereco.java,6/a/6ab2d5e75f4af3ac45eacffedb5b5e74e4eeb228
+Ž
+^micro_customers/src/test/java/microservices/micro_customers/domain/tipos/EnderecoUnitTest.java,6/7/678a9d132fd62cde1e5d42e5aa09b87d242ff1b9
