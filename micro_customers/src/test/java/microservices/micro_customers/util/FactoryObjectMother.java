@@ -1,5 +1,8 @@
 package microservices.micro_customers.util;
 
+import microservices.micro_customers.adapter.in.dto.request.CustomerCreateDtoRequest;
+import microservices.micro_customers.adapter.in.dto.EnderecoDto;
+import microservices.micro_customers.adapter.in.dto.TelefoneDto;
 import microservices.micro_customers.application.core.domain.*;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
@@ -113,7 +116,7 @@ public final class FactoryObjectMother {
             .statusCadastro(StatusCadastroEnum.INICIADO)
             .email(new CorreioEletronico(faker.internet().emailAddress()))
             .telefones(Set.of(telefone1, telefone2))
-           .endereco(gerarEnderecoBuilder().build());
+            .endereco(gerarEnderecoBuilder().build());
     }
 
     public CadastroPessoaFisica.CadastroPessoaFisicaBuilder gerarCadastroPessoaFisicaValidoBuilder() {
@@ -134,6 +137,42 @@ public final class FactoryObjectMother {
     public CorreioEletronico.CorreioEletronicoBuilder gerarCorreioEletronicoInvalidoBuilder() {
         return CorreioEletronico.builder()
             .email(faker.lorem().characters(15, 30));
+    }
+
+    public CustomerCreateDtoRequest.CustomerCreateDtoRequestBuilder gerarCustomerCreateDtoRequestBuilder() {
+        var telefone1 = gerarTelefoneDtoFixoBuilder().build();
+        var telefone2 = gerarTelefoneDtoCelularBuilder().build();
+
+        return CustomerCreateDtoRequest.builder()
+            .nomeCompleto(faker.lorem().characters(20, 100))
+            .cpf(faker.cpf().valid())
+            .dataNascimento("27/10/2000")
+            .email(faker.internet().emailAddress())
+            .telefones(Set.of(telefone1, telefone2))
+            .endereco(this.gerarEnderecoDtoBuilder().build());
+    }
+
+    public TelefoneDto.TelefoneDtoBuilder gerarTelefoneDtoFixoBuilder() {
+        return TelefoneDto.builder()
+            .telefone(gerarNumeroAleatorioComOnzeDigitos())
+            .tipo(TipoTelefoneEnum.FIXO);
+    }
+
+    public TelefoneDto.TelefoneDtoBuilder gerarTelefoneDtoCelularBuilder() {
+        return TelefoneDto.builder()
+            .telefone(gerarNumeroAleatorioComOnzeDigitos())
+            .tipo(TipoTelefoneEnum.CELULAR);
+    }
+
+    public EnderecoDto.EnderecoDtoBuilder gerarEnderecoDtoBuilder() {
+        return EnderecoDto.builder()
+            .cep(faker.address().zipCode())
+            .estado(faker.address().state())
+            .cidade(faker.address().city())
+            .bairro(faker.lorem().characters(10, 20))
+            .logradouro(faker.address().streetAddress())
+            .numero(faker.address().buildingNumber())
+            .complemento(faker.lorem().characters(30, 200));
     }
 
 }

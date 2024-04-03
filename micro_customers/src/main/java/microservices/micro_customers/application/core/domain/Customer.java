@@ -15,8 +15,6 @@ import java.util.Set;
 @EqualsAndHashCode(of = {"customerId"})
 public final class Customer {
 
-    private Long version;
-
     private Long customerId;
 
     private String nomeCompleto;
