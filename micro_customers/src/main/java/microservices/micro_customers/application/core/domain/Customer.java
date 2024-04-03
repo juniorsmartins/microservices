@@ -4,6 +4,7 @@ import lombok.*;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.tipos.*;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Builder
@@ -30,6 +31,14 @@ public final class Customer {
     private Set<Telefone> telefones;
 
     private Endereco endereco;
+
+    private OffsetDateTime createdAt;
+
+    private String createdBy;
+
+    private OffsetDateTime updatedAt;
+
+    private String updatedBy;
 
 }
 

@@ -1,11 +1,11 @@
 package microservices.micro_customers.util;
 
-import microservices.micro_customers.adapter.in.dto.request.CustomerCreateDtoRequest;
 import microservices.micro_customers.adapter.in.dto.EnderecoDto;
 import microservices.micro_customers.adapter.in.dto.TelefoneDto;
-import microservices.micro_customers.application.core.domain.*;
+import microservices.micro_customers.adapter.in.dto.request.CustomerCreateDtoRequest;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
+import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.application.core.domain.tipos.*;

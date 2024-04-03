@@ -2,10 +2,7 @@ package microservices.micro_customers.application.core.domain.tipos;
 
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +15,16 @@ class EnderecoUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
+    private Endereco endereco1;
+
+    private Endereco endereco2;
+
+    @BeforeEach
+    void setUp() {
+        endereco1 = factory.gerarEnderecoBuilder().build();
+        endereco2 = factory.gerarEnderecoBuilder().build();
+    }
+
     @Nested
     @DisplayName("Equals")
     class EqualsTest {
@@ -25,24 +32,21 @@ class EnderecoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("diferente")
         void dadoEnderecosDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            var valor1 = factory.gerarEnderecoBuilder().build();
-            var valor2 = factory.gerarEnderecoBuilder().build();
-            Assertions.assertNotEquals(valor1, valor2);
+            Assertions.assertNotEquals(endereco1, endereco2);
         }
 
         @Test
         @DisplayName("iguais")
         void dadoEnderecosIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var valor1 = factory.gerarEnderecoBuilder().build();
-            var valor2 = new Endereco();
-            valor2.setCep(valor1.getCep());
-            valor2.setEstado(valor1.getEstado());
-            valor2.setCidade(valor1.getCidade());
-            valor2.setBairro(valor1.getBairro());
-            valor2.setLogradouro(valor1.getLogradouro());
-            valor2.setNumero(valor1.getNumero());
-            valor2.setComplemento(valor1.getComplemento());
-            Assertions.assertEquals(valor1, valor2);
+            var endereco2 = new Endereco();
+            endereco2.setCep(endereco1.getCep());
+            endereco2.setEstado(endereco1.getEstado());
+            endereco2.setCidade(endereco1.getCidade());
+            endereco2.setBairro(endereco1.getBairro());
+            endereco2.setLogradouro(endereco1.getLogradouro());
+            endereco2.setNumero(endereco1.getNumero());
+            endereco2.setComplemento(endereco1.getComplemento());
+            Assertions.assertEquals(endereco1, endereco2);
         }
     }
 
@@ -53,24 +57,21 @@ class EnderecoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("diferentes")
         void dadoEnderecosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
-            var valor1 = factory.gerarEnderecoBuilder().build();
-            var valor2 = factory.gerarEnderecoBuilder().build();
-            Assertions.assertNotEquals(valor1.toString(), valor2.toString());
+            Assertions.assertNotEquals(endereco1.toString(), endereco2.toString());
         }
 
         @Test
         @DisplayName("iguais")
         void dadoEnderecosIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            var valor1 = factory.gerarEnderecoBuilder().build();
-            var valor2 = new Endereco();
-            valor2.setCep(valor1.getCep());
-            valor2.setEstado(valor1.getEstado());
-            valor2.setCidade(valor1.getCidade());
-            valor2.setBairro(valor1.getBairro());
-            valor2.setLogradouro(valor1.getLogradouro());
-            valor2.setNumero(valor1.getNumero());
-            valor2.setComplemento(valor1.getComplemento());
-            Assertions.assertEquals(valor1.toString(), valor2.toString());
+            var endereco2 = new Endereco();
+            endereco2.setCep(endereco1.getCep());
+            endereco2.setEstado(endereco1.getEstado());
+            endereco2.setCidade(endereco1.getCidade());
+            endereco2.setBairro(endereco1.getBairro());
+            endereco2.setLogradouro(endereco1.getLogradouro());
+            endereco2.setNumero(endereco1.getNumero());
+            endereco2.setComplemento(endereco1.getComplemento());
+            Assertions.assertEquals(endereco1.toString(), endereco2.toString());
         }
     }
 

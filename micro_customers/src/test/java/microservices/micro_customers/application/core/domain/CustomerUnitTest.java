@@ -5,10 +5,7 @@ import microservices.micro_customers.application.core.domain.enums.TipoTelefoneE
 import microservices.micro_customers.application.core.domain.tipos.*;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,36 +21,38 @@ class CustomerUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
+    private Customer customer1;
+
+    private Customer customer2;
+
+    @BeforeEach
+    void setUp() {
+        customer1 = factory.gerarCustomerBuilder()
+            .customerId(1L)
+            .build();
+
+        customer2 = factory.gerarCustomerBuilder()
+            .customerId(1L)
+            .build();
+    }
+
     @Nested
     @DisplayName("Equals")
     class EqualsTest {
 
         @Test
-        @DisplayName("ids diferentes")
-        void dadoCustomerComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            var customer1 = factory.gerarCustomerBuilder()
-                .customerId(1L)
-                .build();
-
-            var customer2 = factory.gerarCustomerEntityBuilder()
-                .customerId(2L)
-                .build();
-
-            Assertions.assertNotEquals(customer1, customer2);
+        @DisplayName("ids iguais")
+        void dadoCustomerComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
+            Assertions.assertEquals(customer1, customer2);
         }
 
         @Test
-        @DisplayName("ids iguais")
-        void dadoCustomerComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var customer1 = factory.gerarCustomerEntityBuilder()
-                .customerId(1L)
+        @DisplayName("ids diferentes")
+        void dadoCustomerComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
+            var customer2 = factory.gerarCustomerBuilder()
+                .customerId(2L)
                 .build();
-
-            var customer2 = factory.gerarCustomerEntityBuilder()
-                .customerId(1L)
-                .build();
-
-            Assertions.assertEquals(customer1, customer2);
+            Assertions.assertNotEquals(customer1, customer2);
         }
     }
 
@@ -64,64 +63,21 @@ class CustomerUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("dados diferentes")
         void dadoCustomerComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
-            var customer1 = factory.gerarCustomerEntityBuilder()
-                .customerId(1L)
-                .build();
-
-            var customer2 = factory.gerarCustomerEntityBuilder()
-                .customerId(1L)
-                .build();
-
             Assertions.assertNotEquals(customer1.toString(), customer2.toString());
         }
 
         @Test
         @DisplayName("dados iguais")
         void dadoCustomerComDadosIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            var nomeIgual = "Martin Fowler";
-            var cpfIgual = "29879485068";
-            var data = LocalDate.now();
-            var status = StatusCadastroEnum.CONCLUIDO;
-            var emailIgual = "fowler@teste.com";
-            var telefones = Set.of(new Telefone("1199995555", TipoTelefoneEnum.FIXO));
-
-            var cep = "78000000";
-            var estado = "SP";
-            var cidade = "São Paulo";
-            var bairro = "Centro";
-            var logradouro = "Avenida Paulista";
-            var numero = "5577";
-            var complemento = "Entrada pela porta amarela da direita.";
-
-            var endereco = new Endereco();
-            endereco.setCep(cep);
-            endereco.setEstado(estado);
-            endereco.setCidade(cidade);
-            endereco.setBairro(bairro);
-            endereco.setLogradouro(logradouro);
-            endereco.setNumero(numero);
-            endereco.setComplemento(complemento);
-
-            var customer1 = factory.gerarCustomerBuilder()
-                .customerId(1L)
-                .nomeCompleto(nomeIgual)
-                .cpf(new CadastroPessoaFisica(cpfIgual))
-                .dataNascimento(new DataNascimento(data))
-                .statusCadastro(status)
-                .email(new CorreioEletronico(emailIgual))
-                .telefones(telefones)
-                .endereco(endereco)
-                .build();
-
             var customer2 = new Customer();
-            customer2.setCustomerId(1L);
-            customer2.setNomeCompleto(nomeIgual);
-            customer2.setCpf(new CadastroPessoaFisica(cpfIgual));
-            customer2.setDataNascimento(new DataNascimento(data));
-            customer2.setStatusCadastro(status);
-            customer2.setEmail(new CorreioEletronico(emailIgual));
-            customer2.setTelefones(telefones);
-            customer2.setEndereco(endereco);
+            customer2.setCustomerId(customer1.getCustomerId());
+            customer2.setNomeCompleto(customer1.getNomeCompleto());
+            customer2.setCpf(new CadastroPessoaFisica(customer1.getCpf().getCpf()));
+            customer2.setDataNascimento(new DataNascimento(customer1.getDataNascimento().getDataNascimentoLocalDate()));
+            customer2.setStatusCadastro(customer1.getStatusCadastro());
+            customer2.setEmail(new CorreioEletronico(customer1.getEmail().getEmail()));
+            customer2.setTelefones(customer1.getTelefones());
+            customer2.setEndereco(customer1.getEndereco());
 
             Assertions.assertEquals(customer1.toString(), customer2.toString());
         }

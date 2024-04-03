@@ -109,6 +109,9 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(dtoOut.endereco().logradouro(), persistido.getLogradouro());
             Assertions.assertEquals(dtoOut.endereco().numero(), persistido.getNumero());
             Assertions.assertEquals(dtoOut.endereco().complemento(), persistido.getComplemento());
+
+            Assertions.assertNotNull(dtoOut.createdAt());
+            Assertions.assertNotNull(dtoOut.createdBy());
         }
     }
 

@@ -73,6 +73,10 @@ public class MapperOutImpl implements MapperOut {
             .email(new CorreioEletronico(entity.getEmail()))
             .telefones(telefones)
             .endereco(endereco)
+            .createdAt(entity.getCreatedAt())
+            .createdBy(entity.getCreatedBy())
+            .updatedAt(entity.getUpdatedAt())
+            .updatedBy(entity.getUpdatedBy())
             .build();
     }
 

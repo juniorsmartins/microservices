@@ -217,3 +217,7 @@ nmicro_customers/src/main/java/microservices/micro_customers/config/exception/ht
 tmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/value_objects/TelefoneVoUnitTest.java,7/a/7a18f253d9dc8f1d69204dde3cd5d8b88f602d99
 š
 jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/CustomerEntityUnitTest.java,a/b/abf61febe25cf5a99119caabd006282022e7eadd
+Ž
+^micro_customers/src/main/java/microservices/micro_customers/adapter/out/entity/BaseEntity.java,4/7/47e5691e0dc68056567ab6e5310f6505c5e63a3a
+ª
+zmicro_customers/src/test/java/microservices/micro_customers/adapter/in/dto/response/CustomerCreateDtoResponseUnitTest.java,f/1/f1aa8de4769b772651d3c01cb92f3b9a6c6a7dfa
