@@ -2,6 +2,7 @@ package microservices.micro_customers.adapter.out.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 
@@ -55,7 +56,7 @@ public final class CustomerEntity implements Serializable {
     private String email;
 
 
-    // ----- Element Collection Telefone ----- //
+    // ----- Element Collection Telefones ----- //
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "customer_telefones",
         joinColumns = @JoinColumn(name = "customer_id"))
@@ -63,30 +64,15 @@ public final class CustomerEntity implements Serializable {
     private Set<TelefoneVo> telefones;
 
 
-    // ----- Secondary Table Endereço ----- //
-    @Column(name = "cep", table = "customer_endereco")
-    private String cep;
-
-    @Column(name = "estado", table = "customer_endereco")
-    private String estado;
-
-    @Column(name = "cidade", table = "customer_endereco")
-    private String cidade;
-
-    @Column(name = "bairro", table = "customer_endereco")
-    private String bairro;
-
-    @Column(name = "logradouro", table = "customer_endereco")
-    private String logradouro;
-
-    @Column(name = "numero", table = "customer_endereco")
-    private String numero;
-
-    @Column(name = "complemento", table = "customer_endereco")
-    private String complemento;
+    // ----- Element Collection Endereços ----- //
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "customer_enderecos",
+        joinColumns = @JoinColumn(name = "customer_id"))
+    @Column(name = "enderecos")
+    private Set<EnderecoVo> enderecos;
 
 
-    // ----- Dados para Auditoria ----- //
+    // ----- Metadados para Auditoria ----- //
     @Column(name = "created_at", nullable = false, insertable = true, updatable = false)
     private OffsetDateTime createdAt;
 

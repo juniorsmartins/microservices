@@ -101,14 +101,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(dtoOut.email(), persistido.getEmail());
 
             Assertions.assertEquals(dtoOut.telefones().size(), persistido.getTelefones().size());
-
-            Assertions.assertEquals(dtoOut.endereco().cep(), persistido.getCep());
-            Assertions.assertEquals(dtoOut.endereco().estado(), persistido.getEstado());
-            Assertions.assertEquals(dtoOut.endereco().cidade(), persistido.getCidade());
-            Assertions.assertEquals(dtoOut.endereco().bairro(), persistido.getBairro());
-            Assertions.assertEquals(dtoOut.endereco().logradouro(), persistido.getLogradouro());
-            Assertions.assertEquals(dtoOut.endereco().numero(), persistido.getNumero());
-            Assertions.assertEquals(dtoOut.endereco().complemento(), persistido.getComplemento());
+            Assertions.assertEquals(dtoOut.enderecos().size(), persistido.getEnderecos().size());
 
             Assertions.assertNotNull(dtoOut.createdAt());
             Assertions.assertNotNull(dtoOut.createdBy());

@@ -30,7 +30,7 @@ public final class Customer {
 
     private Set<Telefone> telefones;
 
-    private Endereco endereco;
+    private Set<Endereco> enderecos;
 
     private OffsetDateTime createdAt;
 

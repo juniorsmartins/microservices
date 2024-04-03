@@ -54,14 +54,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(dtoRequest.email(), customer.getEmail().getEmail());
 
             Assertions.assertEquals(dtoRequest.telefones().size(), customer.getTelefones().size());
-
-            Assertions.assertEquals(dtoRequest.endereco().cep(), customer.getEndereco().getCep());
-            Assertions.assertEquals(dtoRequest.endereco().estado(), customer.getEndereco().getEstado());
-            Assertions.assertEquals(dtoRequest.endereco().cidade(), customer.getEndereco().getCidade());
-            Assertions.assertEquals(dtoRequest.endereco().bairro(), customer.getEndereco().getBairro());
-            Assertions.assertEquals(dtoRequest.endereco().logradouro(), customer.getEndereco().getLogradouro());
-            Assertions.assertEquals(dtoRequest.endereco().numero(), customer.getEndereco().getNumero());
-            Assertions.assertEquals(dtoRequest.endereco().complemento(), customer.getEndereco().getComplemento());
+            Assertions.assertEquals(dtoRequest.enderecos().size(), customer.getEnderecos().size());
         }
 
         @Test
@@ -83,13 +76,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertTrue(customer.getTelefones().isEmpty());
             Assertions.assertNull(dtoRequest.telefones());
 
-            Assertions.assertEquals(dtoRequest.endereco().cep(), customer.getEndereco().getCep());
-            Assertions.assertEquals(dtoRequest.endereco().estado(), customer.getEndereco().getEstado());
-            Assertions.assertEquals(dtoRequest.endereco().cidade(), customer.getEndereco().getCidade());
-            Assertions.assertEquals(dtoRequest.endereco().bairro(), customer.getEndereco().getBairro());
-            Assertions.assertEquals(dtoRequest.endereco().logradouro(), customer.getEndereco().getLogradouro());
-            Assertions.assertEquals(dtoRequest.endereco().numero(), customer.getEndereco().getNumero());
-            Assertions.assertEquals(dtoRequest.endereco().complemento(), customer.getEndereco().getComplemento());
+            Assertions.assertEquals(dtoRequest.enderecos().size(), customer.getEnderecos().size());
         }
     }
 
@@ -119,14 +106,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(dtoResponse.email(), customer.getEmail().getEmail());
 
             Assertions.assertEquals(dtoResponse.telefones().size(), customer.getTelefones().size());
-
-            Assertions.assertEquals(dtoResponse.endereco().cep(), customer.getEndereco().getCep());
-            Assertions.assertEquals(dtoResponse.endereco().estado(), customer.getEndereco().getEstado());
-            Assertions.assertEquals(dtoResponse.endereco().cidade(), customer.getEndereco().getCidade());
-            Assertions.assertEquals(dtoResponse.endereco().bairro(), customer.getEndereco().getBairro());
-            Assertions.assertEquals(dtoResponse.endereco().logradouro(), customer.getEndereco().getLogradouro());
-            Assertions.assertEquals(dtoResponse.endereco().numero(), customer.getEndereco().getNumero());
-            Assertions.assertEquals(dtoResponse.endereco().complemento(), customer.getEndereco().getComplemento());
+            Assertions.assertEquals(dtoResponse.enderecos().size(), customer.getEnderecos().size());
         }
 
         @Test
@@ -146,13 +126,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertNull(customer.getTelefones());
             Assertions.assertTrue(dtoResponse.telefones().isEmpty());
 
-            Assertions.assertEquals(dtoResponse.endereco().cep(), customer.getEndereco().getCep());
-            Assertions.assertEquals(dtoResponse.endereco().estado(), customer.getEndereco().getEstado());
-            Assertions.assertEquals(dtoResponse.endereco().cidade(), customer.getEndereco().getCidade());
-            Assertions.assertEquals(dtoResponse.endereco().bairro(), customer.getEndereco().getBairro());
-            Assertions.assertEquals(dtoResponse.endereco().logradouro(), customer.getEndereco().getLogradouro());
-            Assertions.assertEquals(dtoResponse.endereco().numero(), customer.getEndereco().getNumero());
-            Assertions.assertEquals(dtoResponse.endereco().complemento(), customer.getEndereco().getComplemento());
+            Assertions.assertEquals(dtoResponse.enderecos().size(), customer.getEnderecos().size());
         }
     }
 

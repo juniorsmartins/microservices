@@ -25,7 +25,7 @@ public class MapperInImpl implements MapperIn {
     }
 
     private Customer customer(CustomerCreateDtoRequest dto) {
-        var endereco = this.toEndereco(dto);
+        var enderecos = this.toEndereco(dto);
         var telefones = this.toTelefone(dto);
 
         return Customer.builder()
@@ -34,7 +34,7 @@ public class MapperInImpl implements MapperIn {
             .dataNascimento(new DataNascimento(dto.dataNascimento()))
             .email(new CorreioEletronico(dto.email()))
             .telefones(telefones)
-            .endereco(endereco)
+            .enderecos(enderecos)
             .build();
     }
 
@@ -49,16 +49,23 @@ public class MapperInImpl implements MapperIn {
             .collect(Collectors.toSet());
     }
 
-    private Endereco toEndereco(CustomerCreateDtoRequest dto) {
-        return Endereco.builder()
-            .cep(dto.endereco().cep())
-            .estado(dto.endereco().estado())
-            .cidade(dto.endereco().cidade())
-            .bairro(dto.endereco().bairro())
-            .logradouro(dto.endereco().logradouro())
-            .numero(dto.endereco().numero())
-            .complemento(dto.endereco().complemento())
-            .build();
+    private Set<Endereco> toEndereco(CustomerCreateDtoRequest dto) {
+        if (dto.enderecos() == null || dto.enderecos().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        return dto.enderecos()
+            .stream()
+            .map(address -> Endereco.builder()
+                .cep(address.cep())
+                .estado(address.estado())
+                .cidade(address.cidade())
+                .bairro(address.bairro())
+                .logradouro(address.logradouro())
+                .numero(address.numero())
+                .complemento(address.complemento())
+                .build())
+            .collect(Collectors.toSet());
     }
 
     @Override
@@ -71,7 +78,7 @@ public class MapperInImpl implements MapperIn {
 
     private CustomerCreateDtoResponse customerCreateDtoResponse(Customer customer) {
         var telefonesDto = this.toTelefoneDto(customer);
-        var enderecoDto = this.toEnderecoDto(customer);
+        var enderecosDto = this.toEnderecoDto(customer);
 
         return CustomerCreateDtoResponse.builder()
             .customerId(customer.getCustomerId())
@@ -81,7 +88,7 @@ public class MapperInImpl implements MapperIn {
             .statusCadastro(customer.getStatusCadastro())
             .email(customer.getEmail().getEmail())
             .telefones(telefonesDto)
-            .endereco(enderecoDto)
+            .enderecos(enderecosDto)
             .createdAt(customer.getCreatedAt())
             .createdBy(customer.getCreatedBy())
             .updatedAt(customer.getUpdatedAt())
@@ -100,16 +107,23 @@ public class MapperInImpl implements MapperIn {
             .collect(Collectors.toSet());
     }
 
-    private EnderecoDto toEnderecoDto(Customer customer) {
-        return EnderecoDto.builder()
-            .cep(customer.getEndereco().getCep())
-            .estado(customer.getEndereco().getEstado())
-            .cidade(customer.getEndereco().getCidade())
-            .bairro(customer.getEndereco().getBairro())
-            .logradouro(customer.getEndereco().getLogradouro())
-            .numero(customer.getEndereco().getNumero())
-            .complemento(customer.getEndereco().getComplemento())
-            .build();
+    private Set<EnderecoDto> toEnderecoDto(Customer customer) {
+        if (customer.getEnderecos() == null || customer.getEnderecos().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        return customer.getEnderecos()
+            .stream()
+            .map(address -> EnderecoDto.builder()
+                .cep(address.getCep())
+                .estado(address.getEstado())
+                .cidade(address.getCidade())
+                .bairro(address.getBairro())
+                .logradouro(address.getLogradouro())
+                .numero(address.getNumero())
+                .complemento(address.getComplemento())
+                .build())
+            .collect(Collectors.toSet());
     }
 
 }

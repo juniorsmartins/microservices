@@ -221,3 +221,5 @@ jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/
 ^micro_customers/src/main/java/microservices/micro_customers/adapter/out/entity/BaseEntity.java,4/7/47e5691e0dc68056567ab6e5310f6505c5e63a3a
 ª
 zmicro_customers/src/test/java/microservices/micro_customers/adapter/in/dto/response/CustomerCreateDtoResponseUnitTest.java,f/1/f1aa8de4769b772651d3c01cb92f3b9a6c6a7dfa
+œ
+lmicro_customers/src/main/java/microservices/micro_customers/adapter/out/entity/value_objects/EnderecoVo.java,8/e/8e0c4ce0b5f2580d26fe148ebbb047d5a98d8d19

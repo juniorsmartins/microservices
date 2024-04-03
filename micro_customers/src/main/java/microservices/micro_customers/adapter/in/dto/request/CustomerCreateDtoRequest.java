@@ -19,7 +19,7 @@ public record CustomerCreateDtoRequest(
 
     Set<TelefoneDto> telefones,
 
-    EnderecoDto endereco
+    Set<EnderecoDto> enderecos
 
 ) { }
 

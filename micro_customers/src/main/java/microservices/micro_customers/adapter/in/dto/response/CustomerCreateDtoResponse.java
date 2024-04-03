@@ -27,7 +27,7 @@ public record CustomerCreateDtoResponse(
 
         Set<TelefoneDto> telefones,
 
-        EnderecoDto endereco,
+        Set<EnderecoDto> enderecos,
 
         OffsetDateTime createdAt,
 

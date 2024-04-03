@@ -53,14 +53,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(customer.getEmail().getEmail(), entity.getEmail());
 
             Assertions.assertEquals(customer.getTelefones().size(), entity.getTelefones().size());
-
-            Assertions.assertEquals(customer.getEndereco().getCep(), entity.getCep());
-            Assertions.assertEquals(customer.getEndereco().getEstado(), entity.getEstado());
-            Assertions.assertEquals(customer.getEndereco().getCidade(), entity.getCidade());
-            Assertions.assertEquals(customer.getEndereco().getBairro(), entity.getBairro());
-            Assertions.assertEquals(customer.getEndereco().getLogradouro(), entity.getLogradouro());
-            Assertions.assertEquals(customer.getEndereco().getNumero(), entity.getNumero());
-            Assertions.assertEquals(customer.getEndereco().getComplemento(), entity.getComplemento());
+            Assertions.assertEquals(customer.getEnderecos().size(), entity.getEnderecos().size());
         }
 
         @Test
@@ -80,13 +73,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertTrue(entity.getTelefones().isEmpty());
             Assertions.assertNull(customer.getTelefones());
 
-            Assertions.assertEquals(customer.getEndereco().getCep(), entity.getCep());
-            Assertions.assertEquals(customer.getEndereco().getEstado(), entity.getEstado());
-            Assertions.assertEquals(customer.getEndereco().getCidade(), entity.getCidade());
-            Assertions.assertEquals(customer.getEndereco().getBairro(), entity.getBairro());
-            Assertions.assertEquals(customer.getEndereco().getLogradouro(), entity.getLogradouro());
-            Assertions.assertEquals(customer.getEndereco().getNumero(), entity.getNumero());
-            Assertions.assertEquals(customer.getEndereco().getComplemento(), entity.getComplemento());
+            Assertions.assertEquals(customer.getEnderecos().size(), entity.getEnderecos().size());
         }
     }
 
@@ -116,14 +103,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(customer.getEmail().getEmail(), entity.getEmail());
 
             Assertions.assertEquals(customer.getTelefones().size(), entity.getTelefones().size());
-
-            Assertions.assertEquals(customer.getEndereco().getCep(), entity.getCep());
-            Assertions.assertEquals(customer.getEndereco().getEstado(), entity.getEstado());
-            Assertions.assertEquals(customer.getEndereco().getCidade(), entity.getCidade());
-            Assertions.assertEquals(customer.getEndereco().getBairro(), entity.getBairro());
-            Assertions.assertEquals(customer.getEndereco().getLogradouro(), entity.getLogradouro());
-            Assertions.assertEquals(customer.getEndereco().getNumero(), entity.getNumero());
-            Assertions.assertEquals(customer.getEndereco().getComplemento(), entity.getComplemento());
+            Assertions.assertEquals(customer.getEnderecos().size(), entity.getEnderecos().size());
         }
 
         @Test
@@ -143,13 +123,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertNull(entity.getTelefones());
             Assertions.assertTrue(customer.getTelefones().isEmpty());
 
-            Assertions.assertEquals(customer.getEndereco().getCep(), entity.getCep());
-            Assertions.assertEquals(customer.getEndereco().getEstado(), entity.getEstado());
-            Assertions.assertEquals(customer.getEndereco().getCidade(), entity.getCidade());
-            Assertions.assertEquals(customer.getEndereco().getBairro(), entity.getBairro());
-            Assertions.assertEquals(customer.getEndereco().getLogradouro(), entity.getLogradouro());
-            Assertions.assertEquals(customer.getEndereco().getNumero(), entity.getNumero());
-            Assertions.assertEquals(customer.getEndereco().getComplemento(), entity.getComplemento());
+            Assertions.assertEquals(customer.getEnderecos().size(), entity.getEnderecos().size());
         }
     }
 
