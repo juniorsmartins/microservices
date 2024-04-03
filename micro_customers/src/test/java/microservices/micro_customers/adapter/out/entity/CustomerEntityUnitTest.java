@@ -1,9 +1,8 @@
 package microservices.micro_customers.adapter.out.entity;
 
-import microservices.micro_customers.adapter.out.entity.CustomerEntity;
+import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
-import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.Assertions;

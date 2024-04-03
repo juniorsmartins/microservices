@@ -213,3 +213,7 @@ dmicro_customers/src/test/java/microservices/micro_customers/adapter/mapper/Mapp
 {micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/PoorlyRequestFormulatedException.java,9/c/9c09d571e8e749ad0b7807756370d826b2d12fc1
 ž
 nmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/CpfInvalidException.java,6/a/6a4a147869b8a79056652a098f247f4f07a89814
+¤
+tmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/value_objects/TelefoneVoUnitTest.java,7/a/7a18f253d9dc8f1d69204dde3cd5d8b88f602d99
+š
+jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/CustomerEntityUnitTest.java,a/b/abf61febe25cf5a99119caabd006282022e7eadd
