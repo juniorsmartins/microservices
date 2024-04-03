@@ -3,12 +3,11 @@ package microservices.micro_customers.application.core.domain.tipos;
 import microservices.micro_customers.config.exception.http_400.CpfInvalidException;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -19,6 +18,16 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
+
+    private CadastroPessoaFisica cpf1;
+
+    private CadastroPessoaFisica cpf2;
+
+    @BeforeEach
+    void setUp() {
+        cpf1 = factory.gerarCadastroPessoaFisicaValidoBuilder().build();
+        cpf2 = factory.gerarCadastroPessoaFisicaValidoBuilder().build();
+    }
 
     @Nested
     @DisplayName("cpf")
@@ -31,24 +40,11 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
             Assertions.assertThrows(CpfInvalidException.class, acao);
         }
 
-        @Test
-        @DisplayName("10 digitos")
-        void dadoCpfComDezDigitos_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
-            Executable acao = () -> CadastroPessoaFisica.builder().cpf("1234567890").build();
-            Assertions.assertThrows(CpfInvalidException.class, acao);
-        }
-
-        @Test
-        @DisplayName("primeiro digito verificador inválido")
-        void dadoCpfComPrimeiroDigitoVerificadorInvalido_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
-            Executable acao = () -> CadastroPessoaFisica.builder().cpf("71970296011").build();
-            Assertions.assertThrows(CpfInvalidException.class, acao);
-        }
-
-        @Test
-        @DisplayName("digitos iguais")
-        void dadoCpfComDigitosIguais_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
-            Executable acao = () -> CadastroPessoaFisica.builder().cpf("11111111111").build();
+        @ParameterizedTest
+        @ValueSource(strings = {"1234567890", "71970296011", "11111111111"})
+        @DisplayName("dez dígitos, primeiro dígito inválido e dígitos iguais")
+        void dadoCpfComTresErrosDistintos_quandoInstanciarCadastroPessoaFisica_entaoLancarException(String valor) {
+            Executable acao = () -> CadastroPessoaFisica.builder().cpf(valor).build();
             Assertions.assertThrows(CpfInvalidException.class, acao);
         }
     }
@@ -60,17 +56,13 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("cpfs diferentes")
         void dadoCadastroPessoaFisicaComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            var cpf1 = factory.gerarCadastroPessoaFisicaValidoBuilder().build();
-            var cpf2 = factory.gerarCadastroPessoaFisicaValidoBuilder().build();
             Assertions.assertNotEquals(cpf1, cpf2);
         }
 
         @Test
         @DisplayName("ids iguais")
         void dadoCadastroPessoaFisicaComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var igual = "67817568006";
-            var cpf1 = new CadastroPessoaFisica(igual);
-            var cpf2 = new CadastroPessoaFisica(igual);
+            var cpf2 = new CadastroPessoaFisica(cpf1.getCpf());
             Assertions.assertEquals(cpf1, cpf2);
         }
     }
@@ -82,17 +74,13 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("dados diferentes")
         void dadoCadastroPessoaFisicaComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
-            var cpf1 = factory.gerarCadastroPessoaFisicaValidoBuilder().build();
-            var cpf2 = factory.gerarCadastroPessoaFisicaValidoBuilder().build();
             Assertions.assertNotEquals(cpf1.toString(), cpf2.toString());
         }
 
         @Test
         @DisplayName("dados iguais")
         void dadoCadastroPessoaFisicaComDadosIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            var igual = "67817568006";
-            var cpf1 = new CadastroPessoaFisica(igual);
-            var cpf2 = new CadastroPessoaFisica(igual);
+            var cpf2 = new CadastroPessoaFisica(cpf1.getCpf());
             Assertions.assertEquals(cpf1.toString(), cpf2.toString());
         }
     }

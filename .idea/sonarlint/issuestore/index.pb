@@ -207,3 +207,17 @@ pmicro_customers/src/main/java/microservices/micro_customers/adapter/in/dto/requ
 rmicro_customers/src/main/java/microservices/micro_customers/adapter/in/dto/response/CustomerCreateDtoResponse.java,3/6/36c702cf75169f7d8638eca1235912593817bbf6
 Œ
 \micro_customers/src/main/java/microservices/micro_customers/adapter/mapper/MapperInImpl.java,0/1/0143c1d01af65c93acb8790eb8d1b6cc00517b43
+”
+dmicro_customers/src/test/java/microservices/micro_customers/adapter/mapper/MapperInImplUnitTest.java,e/4/e4a8bbd1b733c7a0526f7c939902f56f6d4d6496
+«
+{micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/PoorlyRequestFormulatedException.java,9/c/9c09d571e8e749ad0b7807756370d826b2d12fc1
+ž
+nmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/CpfInvalidException.java,6/a/6a4a147869b8a79056652a098f247f4f07a89814
+¤
+tmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/value_objects/TelefoneVoUnitTest.java,7/a/7a18f253d9dc8f1d69204dde3cd5d8b88f602d99
+š
+jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/CustomerEntityUnitTest.java,a/b/abf61febe25cf5a99119caabd006282022e7eadd
+Ž
+^micro_customers/src/main/java/microservices/micro_customers/adapter/out/entity/BaseEntity.java,4/7/47e5691e0dc68056567ab6e5310f6505c5e63a3a
+ª
+zmicro_customers/src/test/java/microservices/micro_customers/adapter/in/dto/response/CustomerCreateDtoResponseUnitTest.java,f/1/f1aa8de4769b772651d3c01cb92f3b9a6c6a7dfa

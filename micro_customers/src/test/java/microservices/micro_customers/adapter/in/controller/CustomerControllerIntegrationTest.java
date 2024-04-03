@@ -39,10 +39,10 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @LocalServerPort // Esta anotação injeta a porta selecionada pelo Spring Boot
-    private int port;
+    int port;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    CustomerRepository customerRepository;
 
     @BeforeEach
     void setUp() {
@@ -109,6 +109,9 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(dtoOut.endereco().logradouro(), persistido.getLogradouro());
             Assertions.assertEquals(dtoOut.endereco().numero(), persistido.getNumero());
             Assertions.assertEquals(dtoOut.endereco().complemento(), persistido.getComplemento());
+
+            Assertions.assertNotNull(dtoOut.createdAt());
+            Assertions.assertNotNull(dtoOut.createdBy());
         }
     }
 

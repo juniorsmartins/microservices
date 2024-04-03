@@ -1,12 +1,8 @@
 package microservices.micro_customers.adapter.out.entity.value_objects;
 
-import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +15,16 @@ class TelefoneVoUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
+    private TelefoneVo telefoneVo1;
+
+    private TelefoneVo telefoneVo2;
+
+    @BeforeEach
+    void setUp() {
+        telefoneVo1 = factory.gerarTelefoneVoFixoBuilder().build();
+        telefoneVo2 = factory.gerarTelefoneVoCelularBuilder().build();
+    }
+
     @Nested
     @DisplayName("Equals")
     class EqualsTest {
@@ -26,18 +32,14 @@ class TelefoneVoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("diferentes")
         void dadoTelefoneVoDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            var telefone1 = factory.gerarTelefoneVoFixoBuilder().build();
-            var telefone2 = factory.gerarTelefoneVoCelularBuilder().build();
-            Assertions.assertNotEquals(telefone1, telefone2);
+            Assertions.assertNotEquals(telefoneVo1, telefoneVo2);
         }
 
         @Test
         @DisplayName("iguais")
         void dadoTelefoneVoIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            var telefone1 = factory.gerarTelefoneVoFixoBuilder().build();
-            var telefone2 = factory.gerarTelefoneVoCelularBuilder()
-                .telefone(telefone1.getTelefone()).build();
-            Assertions.assertEquals(telefone1, telefone2);
+            telefoneVo2.setTelefone(telefoneVo1.getTelefone());
+            Assertions.assertEquals(telefoneVo1, telefoneVo2);
         }
     }
 
@@ -48,19 +50,15 @@ class TelefoneVoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("dados diferentes")
         void dadoTelefoneVoComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
-            var telefone1 = factory.gerarTelefoneVoFixoBuilder().build();
-            var telefone2 = factory.gerarTelefoneVoCelularBuilder().build();
-            Assertions.assertNotEquals(telefone1.toString(), telefone2.toString());
+            Assertions.assertNotEquals(telefoneVo1.toString(), telefoneVo2.toString());
         }
 
         @Test
         @DisplayName("dados iguais")
         void dadoTelefoneVoComDadosIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            var telefone1 = new TelefoneVo();
-            telefone1.setTelefone("8899993333");
-            telefone1.setTipo(TipoTelefoneEnum.FIXO);
-            var telefone2 = new TelefoneVo(telefone1.getTelefone(), TipoTelefoneEnum.FIXO);
-            Assertions.assertEquals(telefone1.toString(), telefone2.toString());
+            telefoneVo2.setTelefone(telefoneVo1.getTelefone());
+            telefoneVo2.setTipo(telefoneVo1.getTipo());
+            Assertions.assertEquals(telefoneVo1.toString(), telefoneVo2.toString());
         }
     }
 

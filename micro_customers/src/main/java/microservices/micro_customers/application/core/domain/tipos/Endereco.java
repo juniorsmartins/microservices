@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"cep", "estado", "cidade", "bairro", "logradouro", "numero"})
+@EqualsAndHashCode(of = {"cep", "estado", "cidade", "bairro", "logradouro", "numero", "complemento"})
 public final class Endereco {
 
     private String cep;

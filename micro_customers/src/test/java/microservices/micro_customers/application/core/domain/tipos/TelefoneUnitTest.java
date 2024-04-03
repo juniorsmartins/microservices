@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -20,20 +22,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class TelefoneUnitTest extends AbstractTestcontainersTest {
 
     @Nested
-    @DisplayName("inválido")
+    @DisplayName("exceções")
     class TelefoneInvalido {
 
-        @Test
-        @DisplayName("número inválido < 10")
-        void dadoTelefoneInvalidoMenorDezDigitos_quandoInstanciar_entaoLancarException() {
-            Executable acao = () -> new Telefone("123456789", TipoTelefoneEnum.FIXO);
-            Assertions.assertThrows(TelefoneInvalidException.class, acao);
-        }
-
-        @Test
-        @DisplayName("número inválido > 11")
-        void dadoTelefoneInvalidoMaiorOnzeDigitos_quandoInstanciar_entaoLancarException() {
-            Executable acao = () -> new Telefone("123456789102", TipoTelefoneEnum.CELULAR);
+        @ParameterizedTest
+        @ValueSource(strings = {"123456789", "123456789102"})
+        @DisplayName("número inválido < 10 e número inválido > 11")
+        void dadoTelefoneInvalidoMenorDezAndMaiorOnzeDigitos_quandoInstanciar_entaoLancarException(String numero) {
+            Executable acao = () -> new Telefone(numero, TipoTelefoneEnum.FIXO);
             Assertions.assertThrows(TelefoneInvalidException.class, acao);
         }
 
