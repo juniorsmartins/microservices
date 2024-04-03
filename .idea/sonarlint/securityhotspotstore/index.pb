@@ -207,3 +207,5 @@ pmicro_customers/src/main/java/microservices/micro_customers/adapter/in/dto/requ
 rmicro_customers/src/main/java/microservices/micro_customers/adapter/in/dto/response/CustomerCreateDtoResponse.java,3/6/36c702cf75169f7d8638eca1235912593817bbf6
 Œ
 \micro_customers/src/main/java/microservices/micro_customers/adapter/mapper/MapperInImpl.java,0/1/0143c1d01af65c93acb8790eb8d1b6cc00517b43
+”
+dmicro_customers/src/test/java/microservices/micro_customers/adapter/mapper/MapperInImplUnitTest.java,e/4/e4a8bbd1b733c7a0526f7c939902f56f6d4d6496
