@@ -209,3 +209,7 @@ rmicro_customers/src/main/java/microservices/micro_customers/adapter/in/dto/resp
 \micro_customers/src/main/java/microservices/micro_customers/adapter/mapper/MapperInImpl.java,0/1/0143c1d01af65c93acb8790eb8d1b6cc00517b43
 ”
 dmicro_customers/src/test/java/microservices/micro_customers/adapter/mapper/MapperInImplUnitTest.java,e/4/e4a8bbd1b733c7a0526f7c939902f56f6d4d6496
+«
+{micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/PoorlyRequestFormulatedException.java,9/c/9c09d571e8e749ad0b7807756370d826b2d12fc1
+ž
+nmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/CpfInvalidException.java,6/a/6a4a147869b8a79056652a098f247f4f07a89814

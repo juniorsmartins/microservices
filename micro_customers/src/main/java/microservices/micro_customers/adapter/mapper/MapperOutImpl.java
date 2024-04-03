@@ -43,13 +43,14 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<TelefoneVo> toTelefoneVo(Customer customer) {
-        if (customer.getTelefones() != null && !customer.getTelefones().isEmpty()) {
-            return customer.getTelefones()
-                .stream()
-                .map(fone -> new TelefoneVo(fone.getTelefone(), fone.getTipo()))
-                .collect(Collectors.toSet());
+        if (customer.getTelefones() == null || customer.getTelefones().isEmpty()) {
+            return Collections.emptySet();
         }
-        return Collections.emptySet();
+
+        return customer.getTelefones()
+            .stream()
+            .map(fone -> new TelefoneVo(fone.getTelefone(), fone.getTipo()))
+            .collect(Collectors.toSet());
     }
 
     @Override
@@ -76,13 +77,14 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<Telefone> toTelefone(CustomerEntity entity) {
-        if (entity.getTelefones() != null && !entity.getTelefones().isEmpty()) {
-            return entity.getTelefones()
-                .stream()
-                .map(fone -> new Telefone(fone.getTelefone(), fone.getTipo()))
-                .collect(Collectors.toSet());
+        if (entity.getTelefones() == null || entity.getTelefones().isEmpty()) {
+            return Collections.emptySet();
         }
-        return Collections.emptySet();
+
+        return entity.getTelefones()
+            .stream()
+            .map(fone -> new Telefone(fone.getTelefone(), fone.getTipo()))
+            .collect(Collectors.toSet());
     }
 
     private Endereco toEndereco(CustomerEntity entity) {
