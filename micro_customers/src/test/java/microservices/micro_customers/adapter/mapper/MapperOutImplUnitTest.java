@@ -25,7 +25,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @Autowired
-    private MapperOut mapperOut;
+    MapperOut mapperOut;
 
     @Nested
     @DisplayName("ToCustomerEntity")
@@ -43,7 +43,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerValido_quandoToCustomerEntity_entaoConverterNormal() {
             var customer = factory.gerarCustomerBuilder().build();
             var entity = mapperOut.toCustomerEntity(customer);
-            Assertions.assertTrue(entity instanceof CustomerEntity);
+            Assertions.assertInstanceOf(CustomerEntity.class, entity);
 
             Assertions.assertEquals(customer.getCustomerId(), entity.getCustomerId());
             Assertions.assertEquals(customer.getNomeCompleto(), entity.getNomeCompleto());
@@ -68,7 +68,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerValidoComTelefonesNulo_quandoToCustomerEntity_entaoConverterNormal() {
             var customer = factory.gerarCustomerBuilder().telefones(null).build();
             var entity = mapperOut.toCustomerEntity(customer);
-            Assertions.assertTrue(entity instanceof CustomerEntity);
+            Assertions.assertInstanceOf(CustomerEntity.class, entity);
 
             Assertions.assertEquals(customer.getCustomerId(), entity.getCustomerId());
             Assertions.assertEquals(customer.getNomeCompleto(), entity.getNomeCompleto());
@@ -106,7 +106,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerEntityValido_quandoToCustomer_entaoConverterNormal() {
             var entity = factory.gerarCustomerEntityBuilder().build();
             var customer = mapperOut.toCustomer(entity);
-            Assertions.assertTrue(customer instanceof Customer);
+            Assertions.assertInstanceOf(Customer.class, customer);
 
             Assertions.assertEquals(customer.getCustomerId(), entity.getCustomerId());
             Assertions.assertEquals(customer.getNomeCompleto(), entity.getNomeCompleto());
@@ -131,7 +131,7 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerValidoComTelefonesNulo_quandoToCustomerEntity_entaoConverterNormal() {
             var entity = factory.gerarCustomerEntityBuilder().telefones(null).build();
             var customer = mapperOut.toCustomer(entity);
-            Assertions.assertTrue(customer instanceof Customer);
+            Assertions.assertInstanceOf(Customer.class, customer);
 
             Assertions.assertEquals(customer.getCustomerId(), entity.getCustomerId());
             Assertions.assertEquals(customer.getNomeCompleto(), entity.getNomeCompleto());

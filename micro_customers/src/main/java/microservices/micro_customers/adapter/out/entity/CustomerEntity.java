@@ -2,12 +2,13 @@ package microservices.micro_customers.adapter.out.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
+import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Entity
@@ -23,7 +24,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"customerId"})
+@EqualsAndHashCode(of = {"customerId"}, callSuper = false)
 public final class CustomerEntity implements Serializable {
 
     @Serial
@@ -53,12 +54,14 @@ public final class CustomerEntity implements Serializable {
     @Column(name = "email", nullable = false)
     private String email;
 
+
     // ----- Element Collection Telefone ----- //
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "customer_telefones",
         joinColumns = @JoinColumn(name = "customer_id"))
     @Column(name = "telefones")
     private Set<TelefoneVo> telefones;
+
 
     // ----- Secondary Table Endereço ----- //
     @Column(name = "cep", table = "customer_endereco")
@@ -81,6 +84,33 @@ public final class CustomerEntity implements Serializable {
 
     @Column(name = "complemento", table = "customer_endereco")
     private String complemento;
+
+
+    // ----- Dados para Auditoria ----- //
+    @Column(name = "created_at", nullable = false, insertable = true, updatable = false)
+    private OffsetDateTime createdAt;
+
+    @Column(name = "created_by", nullable = false, insertable = true, updatable = false)
+    private String createdBy;
+
+    @Column(name = "updated_at", nullable = true, insertable = false, updatable = true)
+    private OffsetDateTime updatedAt;
+
+    @Column(name = "updated_by", nullable = true, insertable = false, updatable = true)
+    private String updatedBy;
+
+
+    @PrePersist
+    private void prePersist() {
+        this.setCreatedAt(OffsetDateTime.now());
+        this.setCreatedBy("anônimo");
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.setUpdatedAt(OffsetDateTime.now());
+        this.setUpdatedBy("anônimo");
+    }
 
 }
 

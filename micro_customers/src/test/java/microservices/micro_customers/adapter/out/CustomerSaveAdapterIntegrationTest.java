@@ -19,7 +19,7 @@ class CustomerSaveAdapterIntegrationTest extends AbstractTestcontainersTest {
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @Autowired
-    private CustomerSaveAdapter customerSaveAdapter;
+    CustomerSaveAdapter customerSaveAdapter;
 
     @Test
     @DisplayName("customer válido")

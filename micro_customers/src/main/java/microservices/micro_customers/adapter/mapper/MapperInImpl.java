@@ -82,6 +82,10 @@ public class MapperInImpl implements MapperIn {
             .email(customer.getEmail().getEmail())
             .telefones(telefonesDto)
             .endereco(enderecoDto)
+            .createdAt(customer.getCreatedAt())
+            .createdBy(customer.getCreatedBy())
+            .updatedAt(customer.getUpdatedAt())
+            .updatedBy(customer.getUpdatedBy())
             .build();
     }
 
