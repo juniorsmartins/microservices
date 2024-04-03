@@ -1,6 +1,7 @@
 package microservices.micro_empresas.adapter.in.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -18,11 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.DeserializationFeature;
 import util.AbstractTestcontainersTest;
 import util.FactoryObjectMother;
 import util.TestConfig;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,10 +36,10 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
 
     private static ObjectMapper objectMapper;
 
+    private final FactoryObjectMother factory = FactoryObjectMother.singleton();
+
     @LocalServerPort // Esta anotação injeta a porta selecionada pelo Spring Boot
     private int port;
-
-    private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @Autowired
     private EmpresaRepository empresaRepository;
