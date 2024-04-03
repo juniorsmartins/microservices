@@ -54,7 +54,7 @@ public final class CustomerEntity implements Serializable {
     private String email;
 
     // ----- Element Collection Telefone ----- //
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "customer_telefones",
         joinColumns = @JoinColumn(name = "customer_id"))
     @Column(name = "telefones")
