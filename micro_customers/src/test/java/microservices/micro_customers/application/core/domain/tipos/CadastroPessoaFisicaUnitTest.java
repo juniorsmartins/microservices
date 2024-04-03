@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -31,24 +33,11 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
             Assertions.assertThrows(CpfInvalidException.class, acao);
         }
 
-        @Test
-        @DisplayName("10 digitos")
-        void dadoCpfComDezDigitos_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
-            Executable acao = () -> CadastroPessoaFisica.builder().cpf("1234567890").build();
-            Assertions.assertThrows(CpfInvalidException.class, acao);
-        }
-
-        @Test
-        @DisplayName("primeiro digito verificador inválido")
-        void dadoCpfComPrimeiroDigitoVerificadorInvalido_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
-            Executable acao = () -> CadastroPessoaFisica.builder().cpf("71970296011").build();
-            Assertions.assertThrows(CpfInvalidException.class, acao);
-        }
-
-        @Test
-        @DisplayName("digitos iguais")
-        void dadoCpfComDigitosIguais_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
-            Executable acao = () -> CadastroPessoaFisica.builder().cpf("11111111111").build();
+        @ParameterizedTest
+        @ValueSource(strings = {"1234567890", "71970296011", "11111111111"})
+        @DisplayName("dez dígitos, primeiro dígito inválido e dígitos iguais")
+        void dadoCpfComTresErrosDistintos_quandoInstanciarCadastroPessoaFisica_entaoLancarException(String valor) {
+            Executable acao = () -> CadastroPessoaFisica.builder().cpf(valor).build();
             Assertions.assertThrows(CpfInvalidException.class, acao);
         }
     }
