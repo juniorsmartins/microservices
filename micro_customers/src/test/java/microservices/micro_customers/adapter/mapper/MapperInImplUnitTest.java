@@ -26,7 +26,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @Autowired
-    private MapperIn mapperIn;
+    MapperIn mapperIn;
 
     @Nested
     @DisplayName("ToCustomer")
@@ -44,13 +44,13 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerCreateDtoRequestValido_quandoToCustomer_entaoConverterNormal() {
             var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder().build();
             var customer = mapperIn.toCustomer(dtoRequest);
-            Assertions.assertTrue(customer instanceof Customer);
+            Assertions.assertInstanceOf(Customer.class, customer);
 
-            Assertions.assertTrue(customer.getCustomerId() == null);
+            Assertions.assertNull(customer.getCustomerId());
             Assertions.assertEquals(dtoRequest.nomeCompleto(), customer.getNomeCompleto());
             Assertions.assertEquals(dtoRequest.cpf(), customer.getCpf().getCpf());
             Assertions.assertEquals(dtoRequest.dataNascimento(), customer.getDataNascimento().getDataNascimentoString());
-            Assertions.assertTrue(customer.getStatusCadastro() == null);
+            Assertions.assertNull(customer.getStatusCadastro());
             Assertions.assertEquals(dtoRequest.email(), customer.getEmail().getEmail());
 
             Assertions.assertEquals(dtoRequest.telefones().size(), customer.getTelefones().size());
@@ -71,7 +71,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
             var customer = mapperIn.toCustomer(dtoRequest);
             customer.setCustomerId(1L);
             customer.setStatusCadastro(StatusCadastroEnum.INICIADO);
-            Assertions.assertTrue(customer instanceof Customer);
+            Assertions.assertInstanceOf(Customer.class, customer);
 
             Assertions.assertTrue(customer.getCustomerId() > 0);
             Assertions.assertEquals(dtoRequest.nomeCompleto(), customer.getNomeCompleto());
@@ -109,7 +109,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerValido_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
             var customer = factory.gerarCustomerBuilder().build();
             var dtoResponse = mapperIn.toCustomerCreateDtoResponse(customer);
-            Assertions.assertTrue(dtoResponse instanceof CustomerCreateDtoResponse);
+            Assertions.assertInstanceOf(CustomerCreateDtoResponse.class, dtoResponse);
 
             Assertions.assertEquals(dtoResponse.customerId(), customer.getCustomerId());
             Assertions.assertEquals(dtoResponse.nomeCompleto(), customer.getNomeCompleto());
@@ -134,7 +134,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerValidoComTelefonesNulo_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
             var customer = factory.gerarCustomerBuilder().telefones(null).build();
             var dtoResponse = mapperIn.toCustomerCreateDtoResponse(customer);
-            Assertions.assertTrue(dtoResponse instanceof CustomerCreateDtoResponse);
+            Assertions.assertInstanceOf(CustomerCreateDtoResponse.class, dtoResponse);
 
             Assertions.assertEquals(dtoResponse.customerId(), customer.getCustomerId());
             Assertions.assertEquals(dtoResponse.nomeCompleto(), customer.getNomeCompleto());
