@@ -28,14 +28,23 @@ public class MapperInImpl implements MapperIn {
         var enderecos = this.toEndereco(dto);
         var telefones = this.toTelefone(dto);
 
-        return Customer.builder()
-            .nomeCompleto(dto.nomeCompleto())
-            .cpf(new CadastroPessoaFisica(dto.cpf()))
-            .dataNascimento(new DataNascimento(dto.dataNascimento()))
-            .email(new CorreioEletronico(dto.email()))
-            .telefones(telefones)
-            .enderecos(enderecos)
-            .build();
+        var customer = new Customer();
+        customer.setNomeCompleto(dto.nomeCompleto());
+        customer.setCpf(new CadastroPessoaFisica(dto.cpf()));
+        customer.setDataNascimento(new DataNascimento(dto.dataNascimento()));
+        customer.setEmail(new CorreioEletronico(dto.email()));
+        customer.setTelefones(telefones);
+        customer.setEnderecos(enderecos);
+
+        return customer;
+//        return Customer.builder()
+//            .nomeCompleto(dto.nomeCompleto())
+//            .cpf(new CadastroPessoaFisica(dto.cpf()))
+//            .dataNascimento(new DataNascimento(dto.dataNascimento()))
+//            .email(new CorreioEletronico(dto.email()))
+//            .telefones(telefones)
+//            .enderecos(enderecos)
+//            .build();
     }
 
     private Set<Telefone> toTelefone(CustomerCreateDtoRequest dto) {

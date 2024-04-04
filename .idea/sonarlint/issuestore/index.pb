@@ -261,3 +261,5 @@ hmicro_customers/src/main/java/microservices/micro_customers/config/exception/Ex
 {micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/NullAttributeNotAllowedException.java,f/2/f2638f64df9b5d52535bb03858929e8e8c32b710
  
 pmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/CorreioEletronico.java,6/a/6ad9f98c559cf3819cdc71386e0e48f47cdd0259
+—
+gmicro_customers/src/main/java/microservices/micro_customers/config/beans/InternacionalizacaoConfig.java,0/6/0645f1dcb6ee14070a6c610ca309e4733002f65d

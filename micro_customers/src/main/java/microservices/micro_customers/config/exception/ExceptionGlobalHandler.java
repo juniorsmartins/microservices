@@ -27,7 +27,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
 
     private final MessageSource messageSource;
 
-    // ---------- PARA CAPITURAR TODAS AS EXCEÇÕES SEM TRATAMENTO ESPECÍFICO ---------- //
+    // ---------- PARA CAPTURAR TODAS AS EXCEÇÕES SEM TRATAMENTO ESPECÍFICO ---------- //
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest) {
 
@@ -74,7 +74,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
     }
 
 
-    // ---------- TRATAMENTO DE EXCEÇÕES CUSTOM ---------- //
+    // ---------- TRATAMENTO DE EXCEÇÕES CUSTOMIZADAS ---------- //
     @ExceptionHandler(RequestWithDataInIncorrectFormatException.class)
     public ResponseEntity<ProblemDetail> handlePoorlyRequestFormulated(RequestWithDataInIncorrectFormatException ex,
                                                                        WebRequest webRequest) {
@@ -105,8 +105,8 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var valorAtributo = ex.getValorAtributo();
         var tamanhoMaximo = ex.getTamanhoMaximo();
 
-        var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{},
-                LocaleContextHolder.getLocale());
+        var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]
+                        {nomeAtributo, valorAtributo, tamanhoMaximo}, LocaleContextHolder.getLocale());
 
         problemDetail.setTitle(String.format(mensagem, nomeAtributo, valorAtributo, tamanhoMaximo));
 
