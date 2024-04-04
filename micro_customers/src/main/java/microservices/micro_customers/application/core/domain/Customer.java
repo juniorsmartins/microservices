@@ -65,16 +65,6 @@ public final class Customer {
         );
     }
 
-    public void setStatusCadastro(StatusCadastroEnum statusCadastro) {
-        Optional.ofNullable(statusCadastro)
-            .ifPresentOrElse(status -> {
-                    this.attributeValidator(Constants.STATUS_CADASTRO, status.getValue(), Constants.MAX_CARACTERES_CUSTOMER_STATUSCADASTRO);
-                    this.statusCadastro = status;
-                },
-                () -> {throw new NullAttributeNotAllowedException(Constants.STATUS_CADASTRO);}
-            );
-    }
-
     private void attributeValidator(String nomeAtributo, String valorAtributo, int tamanhoMaximo) {
         if (valorAtributo.isBlank()) {
             throw new ProhibitedEmptyOrBlankAttributeException(nomeAtributo);

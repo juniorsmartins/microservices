@@ -51,7 +51,7 @@ public final class CustomerEntity implements Serializable {
     private LocalDate dataNascimento;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_cadastro", nullable = false, length = Constants.MAX_CARACTERES_CUSTOMER_STATUSCADASTRO)
+    @Column(name = "status_cadastro", nullable = false)
     private StatusCadastroEnum statusCadastro;
 
     @Column(name = "email", nullable = false, length = Constants.MAX_CARACTERES_CUSTOMER_EMAIL)
