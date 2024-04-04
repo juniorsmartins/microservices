@@ -19,11 +19,11 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = {"telefone"})
 public final class TelefoneVo implements Serializable {
 
-    @Column(name = "telefone")
+    @Column(name = "telefone", length = 14)
     private String telefone;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
+    @Column(name = "tipo", length = 10)
     private TipoTelefoneEnum tipo;
 
 }

@@ -19,22 +19,22 @@ public final class EnderecoVo implements Serializable {
     @Column(name = "cep")
     private String cep;
 
-    @Column(name = "estado")
+    @Column(name = "estado", length = 2)
     private String estado;
 
-    @Column(name = "cidade")
+    @Column(name = "cidade", length = 150)
     private String cidade;
 
-    @Column(name = "bairro")
+    @Column(name = "bairro", length = 150)
     private String bairro;
 
-    @Column(name = "logradouro")
+    @Column(name = "logradouro", length = 150)
     private String logradouro;
 
-    @Column(name = "numero")
+    @Column(name = "numero", length = 10)
     private String numero;
 
-    @Column(name = "complemento")
+    @Column(name = "complemento", length = 250)
     private String complemento;
 
 }
