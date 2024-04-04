@@ -1,7 +1,8 @@
 package microservices.micro_customers.config.exception;
 
 import lombok.RequiredArgsConstructor;
-import microservices.micro_customers.config.exception.http_400.PoorlyRequestFormulatedException;
+import microservices.micro_customers.config.exception.http_400.RequestWithDataInIncorrectFormatException;
+import microservices.micro_customers.config.exception.http_400.RequestWithDataOutsideTheRulesException;
 import microservices.micro_customers.config.exception.http_404.ResourceNotFoundException;
 import microservices.micro_customers.config.exception.http_409.BusinessRuleViolationException;
 import microservices.micro_customers.config.exception.http_500.InternalServerFailureException;
@@ -74,8 +75,8 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
 
 
     // ---------- TRATAMENTO DE EXCEÇÕES CUSTOM ---------- //
-    @ExceptionHandler(PoorlyRequestFormulatedException.class)
-    public ResponseEntity<ProblemDetail> handlePoorlyRequestFormulated(PoorlyRequestFormulatedException ex,
+    @ExceptionHandler(RequestWithDataInIncorrectFormatException.class)
+    public ResponseEntity<ProblemDetail> handlePoorlyRequestFormulated(RequestWithDataInIncorrectFormatException ex,
                                                                        WebRequest webRequest) {
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
@@ -87,6 +88,27 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
             LocaleContextHolder.getLocale());
 
         problemDetail.setTitle(String.format(mensagem, valor));
+
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(problemDetail);
+    }
+
+    @ExceptionHandler(RequestWithDataOutsideTheRulesException.class)
+    public ResponseEntity<ProblemDetail> handleRequestWithDataOutsideTheRules(RequestWithDataOutsideTheRulesException ex,
+                                                                       WebRequest webRequest) {
+        // ProblemDetail RFC 7807
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setType(URI.create("https://babystepsdev.com/erros/requisicao-mal-formulada"));
+
+        var nomeAtributo = ex.getNomeAtributo();
+        var valorAtributo = ex.getValorAtributo();
+        var tamanhoMaximo = ex.getTamanhoMaximo();
+
+        var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{},
+                LocaleContextHolder.getLocale());
+
+        problemDetail.setTitle(String.format(mensagem, nomeAtributo, valorAtributo, tamanhoMaximo));
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
