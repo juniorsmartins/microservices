@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/micro_customers.main.iml" filepath="$PROJECT_DIR$/.idea/modules/micro_customers.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/micro_customers.test.iml" filepath="$PROJECT_DIR$/.idea/modules/micro_customers.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/micro_emails.main.iml" filepath="$PROJECT_DIR$/.idea/modules/micro_emails.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/micro_empresas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/micro_empresas.main.iml" />

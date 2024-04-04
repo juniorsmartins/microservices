@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode(of = {"cep", "estado", "cidade", "bairro", "logradouro", "numero", "complemento"})
@@ -27,6 +26,17 @@ public final class Endereco {
     private String numero;
 
     private String complemento;
+
+    public Endereco(String cep, String estado, String cidade, String bairro,
+                    String logradouro, String numero, String complemento) {
+        this.setCep(cep);
+        this.setEstado(estado);
+        this.setCidade(cidade);
+        this.setBairro(bairro);
+        this.setLogradouro(logradouro);
+        this.setNumero(numero);
+        this.setComplemento(complemento);
+    }
 
     public void setCep(String cep) {
         Optional.ofNullable(cep)

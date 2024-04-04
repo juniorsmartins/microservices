@@ -16,7 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @ToString
 @EqualsAndHashCode(of = {"customerId"})
 public final class Customer {
@@ -45,14 +44,8 @@ public final class Customer {
 
     private String updatedBy;
 
-    public Customer addStatusCadastroIniciado() {
-        this.statusCadastro = StatusCadastroEnum.INICIADO;
-        return this;
-    }
-
-    public Customer addStatusCadastroConcluido() {
-        this.statusCadastro = StatusCadastroEnum.CONCLUIDO;
-        return this;
+    public void setCustomerId(Long id) {
+        this.customerId = id;
     }
 
     public void setNomeCompleto(String nomeCompleto) {
@@ -65,6 +58,46 @@ public final class Customer {
         );
     }
 
+    public void setCpf(CadastroPessoaFisica cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setDataNascimento(DataNascimento data) {
+        this.dataNascimento = data;
+    }
+
+    public void setStatusCadastro(StatusCadastroEnum status) {
+        this.statusCadastro = status;
+    }
+
+    public void setEmail(CorreioEletronico email) {
+        this.email = email;
+    }
+
+    public void setTelefones(Set<Telefone> telefones) {
+        this.telefones = telefones;
+    }
+
+    public void setEnderecos(Set<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
     private void attributeValidator(String nomeAtributo, String valorAtributo, int tamanhoMaximo) {
         if (valorAtributo.isBlank()) {
             throw new ProhibitedEmptyOrBlankAttributeException(nomeAtributo);
@@ -72,6 +105,16 @@ public final class Customer {
         if (valorAtributo.length() > tamanhoMaximo) {
             throw new AttributeWithInvalidMaximumSizeException(nomeAtributo, valorAtributo, tamanhoMaximo);
         }
+    }
+
+    public Customer addStatusCadastroIniciado() {
+        this.statusCadastro = StatusCadastroEnum.INICIADO;
+        return this;
+    }
+
+    public Customer addStatusCadastroConcluido() {
+        this.statusCadastro = StatusCadastroEnum.CONCLUIDO;
+        return this;
     }
 
 }
