@@ -1,8 +1,8 @@
 package microservices.micro_customers.application.core.domain;
 
-import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
-import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
-import microservices.micro_customers.application.core.domain.tipos.*;
+import microservices.micro_customers.application.core.domain.tipos.CadastroPessoaFisica;
+import microservices.micro_customers.application.core.domain.tipos.CorreioEletronico;
+import microservices.micro_customers.application.core.domain.tipos.DataNascimento;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.*;
@@ -10,9 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
@@ -77,7 +74,7 @@ class CustomerUnitTest extends AbstractTestcontainersTest {
             customer2.setStatusCadastro(customer1.getStatusCadastro());
             customer2.setEmail(new CorreioEletronico(customer1.getEmail().getEmail()));
             customer2.setTelefones(customer1.getTelefones());
-            customer2.setEndereco(customer1.getEndereco());
+            customer2.setEnderecos(customer1.getEnderecos());
 
             Assertions.assertEquals(customer1.toString(), customer2.toString());
         }

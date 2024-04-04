@@ -9,7 +9,7 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
-import microservices.micro_customers.adapter.in.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
@@ -71,7 +71,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("dados válidos")
-        void dadoCustomerCompletoValido_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
+        void dadoCustomerCreateDtoRequestCompletoAndValido_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
 
             var dtoIn = factory.gerarCustomerCreateDtoRequestBuilder().build();
 
@@ -101,14 +101,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             Assertions.assertEquals(dtoOut.email(), persistido.getEmail());
 
             Assertions.assertEquals(dtoOut.telefones().size(), persistido.getTelefones().size());
-
-            Assertions.assertEquals(dtoOut.endereco().cep(), persistido.getCep());
-            Assertions.assertEquals(dtoOut.endereco().estado(), persistido.getEstado());
-            Assertions.assertEquals(dtoOut.endereco().cidade(), persistido.getCidade());
-            Assertions.assertEquals(dtoOut.endereco().bairro(), persistido.getBairro());
-            Assertions.assertEquals(dtoOut.endereco().logradouro(), persistido.getLogradouro());
-            Assertions.assertEquals(dtoOut.endereco().numero(), persistido.getNumero());
-            Assertions.assertEquals(dtoOut.endereco().complemento(), persistido.getComplemento());
+            Assertions.assertEquals(dtoOut.enderecos().size(), persistido.getEnderecos().size());
 
             Assertions.assertNotNull(dtoOut.createdAt());
             Assertions.assertNotNull(dtoOut.createdBy());

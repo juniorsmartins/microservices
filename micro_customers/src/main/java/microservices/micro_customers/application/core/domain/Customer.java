@@ -30,7 +30,7 @@ public final class Customer {
 
     private Set<Telefone> telefones;
 
-    private Endereco endereco;
+    private Set<Endereco> enderecos;
 
     private OffsetDateTime createdAt;
 
@@ -39,6 +39,16 @@ public final class Customer {
     private OffsetDateTime updatedAt;
 
     private String updatedBy;
+
+    public Customer addStatusCadastroIniciado() {
+        this.statusCadastro = StatusCadastroEnum.INICIADO;
+        return this;
+    }
+
+    public Customer addStatusCadastroConcluido() {
+        this.statusCadastro = StatusCadastroEnum.CONCLUIDO;
+        return this;
+    }
 
 }
 

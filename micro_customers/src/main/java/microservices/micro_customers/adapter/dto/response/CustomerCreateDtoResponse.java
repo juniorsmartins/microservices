@@ -1,9 +1,9 @@
-package microservices.micro_customers.adapter.in.dto.response;
+package microservices.micro_customers.adapter.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
-import microservices.micro_customers.adapter.in.dto.EnderecoDto;
-import microservices.micro_customers.adapter.in.dto.TelefoneDto;
+import microservices.micro_customers.adapter.dto.EnderecoDto;
+import microservices.micro_customers.adapter.dto.TelefoneDto;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 
 import java.time.OffsetDateTime;
@@ -27,7 +27,7 @@ public record CustomerCreateDtoResponse(
 
         Set<TelefoneDto> telefones,
 
-        EnderecoDto endereco,
+        Set<EnderecoDto> enderecos,
 
         OffsetDateTime createdAt,
 

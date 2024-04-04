@@ -1,6 +1,7 @@
 package microservices.micro_customers.adapter.mapper;
 
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
+import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.tipos.*;
@@ -23,6 +24,7 @@ public class MapperOutImpl implements MapperOut {
 
     private CustomerEntity entity(Customer customer) {
         var telefonesVo = this.toTelefoneVo(customer);
+        var enderecosVo = this.toEnderecoVo(customer);
 
         return CustomerEntity.builder()
             .customerId(customer.getCustomerId())
@@ -32,13 +34,7 @@ public class MapperOutImpl implements MapperOut {
             .statusCadastro(customer.getStatusCadastro())
             .email(customer.getEmail().getEmail())
             .telefones(telefonesVo)
-            .cep(customer.getEndereco().getCep())
-            .estado(customer.getEndereco().getEstado())
-            .cidade(customer.getEndereco().getCidade())
-            .bairro(customer.getEndereco().getBairro())
-            .logradouro(customer.getEndereco().getLogradouro())
-            .numero(customer.getEndereco().getNumero())
-            .complemento(customer.getEndereco().getComplemento())
+            .enderecos(enderecosVo)
             .build();
     }
 
@@ -53,6 +49,25 @@ public class MapperOutImpl implements MapperOut {
             .collect(Collectors.toSet());
     }
 
+    private Set<EnderecoVo> toEnderecoVo(Customer customer) {
+        if (customer.getEnderecos() == null || customer.getEnderecos().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        return customer.getEnderecos()
+            .stream()
+            .map(address -> EnderecoVo.builder()
+                .cep(address.getCep())
+                .estado(address.getEstado())
+                .cidade(address.getCidade())
+                .bairro(address.getBairro())
+                .logradouro(address.getLogradouro())
+                .numero(address.getNumero())
+                .complemento(address.getComplemento())
+                .build())
+            .collect(Collectors.toSet());
+    }
+
     @Override
     public Customer toCustomer(CustomerEntity entity) {
         return Optional.ofNullable(entity)
@@ -62,7 +77,7 @@ public class MapperOutImpl implements MapperOut {
 
     private Customer customer(CustomerEntity entity) {
         var telefones = this.toTelefone(entity);
-        var endereco = this.toEndereco(entity);
+        var enderecos = this.toEndereco(entity);
 
         return Customer.builder()
             .customerId(entity.getCustomerId())
@@ -72,7 +87,7 @@ public class MapperOutImpl implements MapperOut {
             .statusCadastro(entity.getStatusCadastro())
             .email(new CorreioEletronico(entity.getEmail()))
             .telefones(telefones)
-            .endereco(endereco)
+            .enderecos(enderecos)
             .createdAt(entity.getCreatedAt())
             .createdBy(entity.getCreatedBy())
             .updatedAt(entity.getUpdatedAt())
@@ -91,16 +106,23 @@ public class MapperOutImpl implements MapperOut {
             .collect(Collectors.toSet());
     }
 
-    private Endereco toEndereco(CustomerEntity entity) {
-        return Endereco.builder()
-            .cep(entity.getCep())
-            .estado(entity.getEstado())
-            .cidade(entity.getCidade())
-            .bairro(entity.getBairro())
-            .logradouro(entity.getLogradouro())
-            .numero(entity.getNumero())
-            .complemento(entity.getComplemento())
-            .build();
+    private Set<Endereco> toEndereco(CustomerEntity entity) {
+        if (entity.getEnderecos() == null || entity.getEnderecos().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        return entity.getEnderecos()
+            .stream()
+            .map(address -> Endereco.builder()
+                .cep(address.getCep())
+                .estado(address.getEstado())
+                .cidade(address.getCidade())
+                .bairro(address.getBairro())
+                .logradouro(address.getLogradouro())
+                .numero(address.getNumero())
+                .complemento(address.getComplemento())
+                .build())
+            .collect(Collectors.toSet());
     }
 
 }
