@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
+import microservices.micro_customers.application.core.constant.Constants;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 
 import java.io.Serializable;
@@ -19,11 +20,11 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = {"telefone"})
 public final class TelefoneVo implements Serializable {
 
-    @Column(name = "telefone")
+    @Column(name = "telefone", length = Constants.MAX_CARACTERES_CUSTOMER_TELEFONE_NUMERO)
     private String telefone;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
+    @Column(name = "tipo", length = Constants.MAX_CARACTERES_CUSTOMER_TELEFONE_TIPO)
     private TipoTelefoneEnum tipo;
 
 }

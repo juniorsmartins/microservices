@@ -17,13 +17,13 @@ public class CadastroPessoaFisica implements Serializable {
     private String cpf;
 
     public CadastroPessoaFisica(String cpf) {
-        if (!this.ehValido(cpf)) {
+        if (!this.hasValidFormat(cpf)) {
             throw new CpfInvalidException(cpf);
         }
         this.cpf = cpf;
     }
 
-    public boolean ehValido(String cpf) {
+    public boolean hasValidFormat(String cpf) {
 
         // Remove qualquer caractere que não seja dígito (0-9)
         cpf = cpf.replaceAll("\\D", "");

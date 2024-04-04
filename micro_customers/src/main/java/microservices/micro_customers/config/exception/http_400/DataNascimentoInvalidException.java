@@ -1,6 +1,6 @@
 package microservices.micro_customers.config.exception.http_400;
 
-public final class DataNascimentoInvalidException extends PoorlyRequestFormulatedException {
+public final class DataNascimentoInvalidException extends RequestWithDataInIncorrectFormatException {
 
   public static final long serialVersionUID = 1L;
 
