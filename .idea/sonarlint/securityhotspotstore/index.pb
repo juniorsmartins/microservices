@@ -231,3 +231,7 @@ Xmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/Enderec
 Xmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/TelefoneDto.java,9/5/95ea677880dbb549486c8149a11043348c0ba093
 ¥
 umicro_customers/src/main/java/microservices/micro_customers/adapter/out/entity/value_objects/MetadadoAuditoriaVo.java,a/3/a3cb81d89fc9ef6682b2f687395d6e8254649eb2
+ª
+zmicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerCreateDtoRequestUnitTestttttt.java,3/f/3fb954b2eeadf9cc29f3cfeea1bbe8f7e8732fbb
+¥
+umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerCreateDtoRequestUnitTest.java,e/c/ecf9a3ea4c68214534374a29a67ca72ca85476b9

@@ -3,7 +3,6 @@ package microservices.micro_customers.application.core.usecase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.application.core.domain.Customer;
-import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.port.input.CustomerCreateInputPort;
 import microservices.micro_customers.application.port.output.CustomerSaveOutputPort;
 import org.springframework.stereotype.Service;
@@ -21,14 +20,9 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
     public Customer create(Customer customer) {
 
         return Optional.ofNullable(customer)
-            .map(this::addStatusCadastro)
+            .map(Customer::addStatusCadastroIniciado)
             .map(this.customerSaveOutputPort::save)
             .orElseThrow();
-    }
-
-    private Customer addStatusCadastro(Customer customer) {
-        customer.setStatusCadastro(StatusCadastroEnum.INICIADO);
-        return customer;
     }
 
 }

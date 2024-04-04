@@ -40,5 +40,15 @@ public final class Customer {
 
     private String updatedBy;
 
+    public Customer addStatusCadastroIniciado() {
+        this.statusCadastro = StatusCadastroEnum.INICIADO;
+        return this;
+    }
+
+    public Customer addStatusCadastroConcluido() {
+        this.statusCadastro = StatusCadastroEnum.CONCLUIDO;
+        return this;
+    }
+
 }
 

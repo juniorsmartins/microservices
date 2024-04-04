@@ -71,7 +71,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("dados válidos")
-        void dadoCustomerCompletoValido_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
+        void dadoCustomerCreateDtoRequestCompletoAndValido_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
 
             var dtoIn = factory.gerarCustomerCreateDtoRequestBuilder().build();
 
