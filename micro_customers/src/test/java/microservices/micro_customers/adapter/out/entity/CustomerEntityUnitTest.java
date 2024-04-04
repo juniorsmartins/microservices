@@ -1,5 +1,6 @@
 package microservices.micro_customers.adapter.out.entity;
 
+import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
@@ -76,7 +77,6 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
             var data = LocalDate.now();
             var status = StatusCadastroEnum.CONCLUIDO;
             var emailIgual = "fowler@teste.com";
-            var telefones = Set.of(new TelefoneVo("1199995555", TipoTelefoneEnum.FIXO));
 
             var cep = "78000000";
             var estado = "SP";
@@ -85,6 +85,17 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
             var logradouro = "Avenida Paulista";
             var numero = "5577";
             var complemento = "Entrada pela porta amarela da direita.";
+
+            var telefonesVo = Set.of(new TelefoneVo("1199995555", TipoTelefoneEnum.FIXO));
+            var enderecosVo = Set.of(EnderecoVo.builder()
+                .cep(cep)
+                .estado(estado)
+                .cidade(cidade)
+                .bairro(bairro)
+                .logradouro(logradouro)
+                .numero(numero)
+                .complemento(complemento)
+                .build());
 
             var createdAt = OffsetDateTime.now();
             var createdBy = "anônimo";
@@ -96,17 +107,11 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
                 .dataNascimento(data)
                 .statusCadastro(status)
                 .email(emailIgual)
-                .telefones(telefones)
-                    .cep(cep)
-                    .estado(estado)
-                    .cidade(cidade)
-                    .bairro(bairro)
-                    .logradouro(logradouro)
-                    .numero(numero)
-                    .complemento(complemento)
+                .telefones(telefonesVo)
+                .enderecos(enderecosVo)
+                .createdAt(createdAt)
+                .createdBy(createdBy)
                 .build();
-            customer1.setCreatedAt(createdAt);
-            customer1.setCreatedBy(createdBy);
 
             var customer2 = new CustomerEntity();
             customer2.setCustomerId(1L);
@@ -115,14 +120,8 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
             customer2.setDataNascimento(data);
             customer2.setStatusCadastro(status);
             customer2.setEmail(emailIgual);
-            customer2.setTelefones(telefones);
-            customer2.setCep(cep);
-            customer2.setEstado(estado);
-            customer2.setCidade(cidade);
-            customer2.setBairro(bairro);
-            customer2.setLogradouro(logradouro);
-            customer2.setNumero(numero);
-            customer2.setComplemento(complemento);
+            customer2.setTelefones(telefonesVo);
+            customer2.setEnderecos(enderecosVo);
             customer2.setCreatedAt(createdAt);
             customer2.setCreatedBy(createdBy);
 
