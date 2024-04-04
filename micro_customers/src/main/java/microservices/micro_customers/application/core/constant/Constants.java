@@ -4,9 +4,15 @@ public final class Constants {
 
     private Constants() { }
 
+    public static final String NOME_COMPLETO = "NomeCompleto";
+
     public static final int MAX_CARACTERES_CUSTOMER_NOMECOMPLETO = 100;
 
+    public static final String CPF = "CPF";
+
     public static final int MAX_CARACTERES_CUSTOMER_CPF = 14;
+
+    public static final String STATUS_CADASTRO = "StatusCadastro";
 
     public static final int MAX_CARACTERES_CUSTOMER_STATUSCADASTRO = 20;
 
@@ -29,7 +35,6 @@ public final class Constants {
     public static final int MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO = 10;
 
     public static final int MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO = 250;
-
 
 }
 

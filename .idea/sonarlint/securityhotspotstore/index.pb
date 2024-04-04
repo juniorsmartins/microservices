@@ -247,3 +247,15 @@ Zmicro_customers/src/main/java/microservices/micro_customers/adapter/in/Customer
 bmicro_customers/src/main/java/microservices/micro_customers/adapter/in/filters/CustomerFilter.java,1/8/1830d3e53aa7bd969fbe7834067780448939b37c
 ”
 dmicro_customers/src/main/java/microservices/micro_customers/application/core/constant/Constants.java,9/b/9b5fb34769289261f04705fce3b412a71657c8af
+´
+ƒmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/ProhibitedEmptyOrBlankAttributeException.java,d/a/da35f415b71d4d0aef39e882c10d3e62937d33c8
+´
+ƒmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/AttributeWithInvalidMaximumSizeException.java,1/3/1380fa77418642c4cf7100eebaa959a51dad4d9d
+˜
+hmicro_customers/src/main/java/microservices/micro_customers/config/exception/ExceptionGlobalHandler.java,f/5/f54e30e33121241db64dab693ae24dc9a01c31c3
+³
+‚micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/RequestWithDataOutsideTheRulesException.java,3/5/35db732e382978871c8b07b05864d9900ef49c79
+µ
+„micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/RequestWithDataInIncorrectFormatException.java,6/6/66be9e3454d4b9b169a3be702deed483dc654468
+«
+{micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/NullAttributeNotAllowedException.java,f/2/f2638f64df9b5d52535bb03858929e8e8c32b710
