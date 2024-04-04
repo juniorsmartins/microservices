@@ -25,10 +25,11 @@ public class InternacionalizacaoConfig implements WebMvcConfigurer {
     }
 
     // Define como receber a escolha do idioma do usuário (pode armazenar em Cookie, Sessão ou via requisição - Accept-Language)
+    // Também define a localização padrão
     @Bean
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.US);
+        localeResolver.setDefaultLocale(new Locale("pt", "BR"));
         return localeResolver;
     }
 

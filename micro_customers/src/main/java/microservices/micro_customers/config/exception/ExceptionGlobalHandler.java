@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.net.URI;
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -87,7 +88,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{valor},
             LocaleContextHolder.getLocale());
 
-        problemDetail.setTitle(String.format(mensagem, valor));
+        problemDetail.setTitle(MessageFormat.format(mensagem, valor));
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
