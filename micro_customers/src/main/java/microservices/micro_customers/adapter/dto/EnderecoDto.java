@@ -1,4 +1,4 @@
-package microservices.micro_customers.adapter.in.dto;
+package microservices.micro_customers.adapter.dto;
 
 import lombok.Builder;
 

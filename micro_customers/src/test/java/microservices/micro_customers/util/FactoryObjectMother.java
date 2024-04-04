@@ -1,8 +1,8 @@
 package microservices.micro_customers.util;
 
-import microservices.micro_customers.adapter.in.dto.EnderecoDto;
-import microservices.micro_customers.adapter.in.dto.TelefoneDto;
-import microservices.micro_customers.adapter.in.dto.request.CustomerCreateDtoRequest;
+import microservices.micro_customers.adapter.dto.EnderecoDto;
+import microservices.micro_customers.adapter.dto.TelefoneDto;
+import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;

@@ -1,6 +1,6 @@
 package microservices.micro_customers.adapter.mapper;
 
-import microservices.micro_customers.adapter.in.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.util.AbstractTestcontainersTest;

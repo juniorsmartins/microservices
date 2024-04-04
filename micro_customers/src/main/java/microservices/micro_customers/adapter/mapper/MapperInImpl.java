@@ -1,9 +1,9 @@
 package microservices.micro_customers.adapter.mapper;
 
-import microservices.micro_customers.adapter.in.dto.EnderecoDto;
-import microservices.micro_customers.adapter.in.dto.TelefoneDto;
-import microservices.micro_customers.adapter.in.dto.request.CustomerCreateDtoRequest;
-import microservices.micro_customers.adapter.in.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.dto.EnderecoDto;
+import microservices.micro_customers.adapter.dto.TelefoneDto;
+import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
+import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.tipos.*;
 import org.springframework.stereotype.Service;

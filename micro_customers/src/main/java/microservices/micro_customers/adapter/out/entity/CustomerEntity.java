@@ -15,17 +15,18 @@ import java.util.Set;
 @Entity
 @Table(name = "customers", indexes = {
     @Index(name = "idx_customers_nome_completo", columnList = "nome_completo"),
-    @Index(name = "idx_customers_cpf", columnList = "cpf")
+    @Index(name = "idx_customers_cpf", columnList = "cpf"),
+    @Index(name = "idx_customers_email", columnList = "email")
 })
-@SecondaryTable(name = "customer_endereco", pkJoinColumns = @PrimaryKeyJoinColumn(name = "customer_id"),
-    foreignKey = @ForeignKey(name = "fk_customer_endereco"))
+@SecondaryTable(name = "customer_metadados", pkJoinColumns = @PrimaryKeyJoinColumn(name = "customer_id"),
+    foreignKey = @ForeignKey(name = "fk_customer_metadados"))
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"customerId"}, callSuper = false)
+@EqualsAndHashCode(of = {"customerId"})
 public final class CustomerEntity implements Serializable {
 
     @Serial
@@ -72,19 +73,18 @@ public final class CustomerEntity implements Serializable {
     private Set<EnderecoVo> enderecos;
 
 
-    // ----- Metadados para Auditoria ----- //
-    @Column(name = "created_at", nullable = false, insertable = true, updatable = false)
+    // ----- Secondary Table de Metadados para Auditoria ----- //
+    @Column(name = "created_at", nullable = false, insertable = true, updatable = false, table = "customer_metadados")
     private OffsetDateTime createdAt;
 
-    @Column(name = "created_by", nullable = false, insertable = true, updatable = false)
+    @Column(name = "created_by", nullable = false, insertable = true, updatable = false, table = "customer_metadados")
     private String createdBy;
 
-    @Column(name = "updated_at", nullable = true, insertable = false, updatable = true)
+    @Column(name = "updated_at", nullable = true, insertable = false, updatable = true, table = "customer_metadados")
     private OffsetDateTime updatedAt;
 
-    @Column(name = "updated_by", nullable = true, insertable = false, updatable = true)
+    @Column(name = "updated_by", nullable = true, insertable = false, updatable = true, table = "customer_metadados")
     private String updatedBy;
-
 
     @PrePersist
     private void prePersist() {
