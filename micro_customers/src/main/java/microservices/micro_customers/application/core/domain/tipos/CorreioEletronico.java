@@ -4,8 +4,12 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 import microservices.micro_customers.config.exception.http_400.EmailInvalidException;
+import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,20 +19,30 @@ import java.util.regex.Pattern;
 @EqualsAndHashCode(of = {"email"})
 public final class CorreioEletronico {
 
-    public static final long serialVersionUID = 1L;
-
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
     private String email;
 
-    public CorreioEletronico(String email) {
-        if (!this.ehValido(email)) {
-            throw new EmailInvalidException(email);
-        }
-        this.email = email;
+    public CorreioEletronico(String correioEletronico) {
+        Optional.ofNullable(correioEletronico)
+            .ifPresentOrElse(email -> {
+                    this.attributeValidator(Constants.EMAIL, email, Constants.MAX_CARACTERES_CUSTOMER_EMAIL);
+                    if (!this.hasValidFormat(email)) {
+                        throw new EmailInvalidException(email);
+                    }
+                    this.email = email;
+                },
+                () -> {throw new NullAttributeNotAllowedException(Constants.EMAIL);}
+            );
     }
 
-    public boolean ehValido(String email) {
+    private void attributeValidator(String nomeAtributo, String valorAtributo, int tamanhoMaximo) {
+        if (valorAtributo.length() > tamanhoMaximo) {
+            throw new AttributeWithInvalidMaximumSizeException(nomeAtributo, valorAtributo, tamanhoMaximo);
+        }
+    }
+
+    public boolean hasValidFormat(String email) {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();

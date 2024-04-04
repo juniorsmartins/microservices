@@ -259,3 +259,5 @@ hmicro_customers/src/main/java/microservices/micro_customers/config/exception/Ex
 „micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/RequestWithDataInIncorrectFormatException.java,6/6/66be9e3454d4b9b169a3be702deed483dc654468
 «
 {micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/NullAttributeNotAllowedException.java,f/2/f2638f64df9b5d52535bb03858929e8e8c32b710
+ 
+pmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/CorreioEletronico.java,6/a/6ad9f98c559cf3819cdc71386e0e48f47cdd0259

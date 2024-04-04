@@ -71,7 +71,7 @@ public final class Customer {
                     this.attributeValidator(Constants.STATUS_CADASTRO, status.getValue(), Constants.MAX_CARACTERES_CUSTOMER_STATUSCADASTRO);
                     this.statusCadastro = status;
                 },
-                () -> {throw new NullAttributeNotAllowedException(Constants.NOME_COMPLETO);}
+                () -> {throw new NullAttributeNotAllowedException(Constants.STATUS_CADASTRO);}
             );
     }
 
