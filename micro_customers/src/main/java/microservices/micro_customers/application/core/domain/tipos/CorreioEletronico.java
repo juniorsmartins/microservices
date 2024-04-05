@@ -8,6 +8,7 @@ import microservices.micro_customers.application.core.constant.Constants;
 import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 import microservices.micro_customers.config.exception.http_400.EmailInvalidException;
 import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
+import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -37,6 +38,9 @@ public final class CorreioEletronico {
     }
 
     private void attributeValidator(String nomeAtributo, String valorAtributo, int tamanhoMaximo) {
+        if (valorAtributo.isBlank()) {
+            throw new ProhibitedEmptyOrBlankAttributeException(nomeAtributo);
+        }
         if (valorAtributo.length() > tamanhoMaximo) {
             throw new AttributeWithInvalidMaximumSizeException(nomeAtributo, valorAtributo, tamanhoMaximo);
         }

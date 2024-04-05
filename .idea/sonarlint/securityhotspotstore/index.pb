@@ -245,3 +245,9 @@ hmicro_customers/src/main/java/microservices/micro_customers/config/exception/Ex
 pmicro_customers/src/main/java/microservices/micro_customers/application/core/domain/tipos/CorreioEletronico.java,6/a/6ad9f98c559cf3819cdc71386e0e48f47cdd0259
 —
 gmicro_customers/src/main/java/microservices/micro_customers/config/beans/InternacionalizacaoConfig.java,0/6/0645f1dcb6ee14070a6c610ca309e4733002f65d
+ 
+pmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/EmailInvalidException.java,4/a/4a2755a5992c5e70e14eeb278c99210875a4dfe5
+£
+smicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/TelefoneInvalidException.java,1/9/191aa6e49dad5e51bd864553e3e4acdfbc048241
+§
+wmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/TelefoneWithoutTypeException.java,8/b/8b0af32e51cbae12b5661cf1bc229c88cce0ace0

@@ -112,7 +112,7 @@ public class MapperInImpl implements MapperIn {
 
         return customer.getTelefones()
             .stream()
-            .map(fone -> new TelefoneDto(fone.getTelefone(), fone.getTipo()))
+            .map(fone -> new TelefoneDto(fone.getNumero(), fone.getTipo()))
             .collect(Collectors.toSet());
     }
 
