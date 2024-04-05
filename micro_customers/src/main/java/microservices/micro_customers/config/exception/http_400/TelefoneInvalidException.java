@@ -8,7 +8,7 @@ public final class TelefoneInvalidException extends RequestWithDataInIncorrectFo
     private static final long serialVersionUID = 1L;
 
     public TelefoneInvalidException(String telefone) {
-        super("exception.request.format.invalid.telefone", telefone);
+        super("exception.request.format.invalid.telefone.numero", telefone);
     }
 
 }

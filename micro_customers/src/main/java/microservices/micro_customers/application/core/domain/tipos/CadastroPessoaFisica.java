@@ -4,9 +4,14 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 import microservices.micro_customers.config.exception.http_400.CpfInvalidException;
+import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
+import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @Builder
 @Getter
@@ -16,11 +21,27 @@ public class CadastroPessoaFisica implements Serializable {
 
     private String cpf;
 
-    public CadastroPessoaFisica(String cpf) {
-        if (!this.hasValidFormat(cpf)) {
-            throw new CpfInvalidException(cpf);
+    public CadastroPessoaFisica(String cadastroPessoaFisica) {
+
+        Optional.ofNullable(cadastroPessoaFisica)
+            .ifPresentOrElse(cadastroPF -> {
+                    this.attributeValidator(Constants.CPF, cadastroPF, Constants.MAX_CARACTERES_CUSTOMER_CPF);
+                    if (!this.hasValidFormat(cadastroPF)) {
+                        throw new CpfInvalidException(cadastroPF);
+                    }
+                    this.cpf = cadastroPF;
+                },
+                () -> {throw new NullAttributeNotAllowedException(Constants.CPF);}
+            );
+    }
+
+    private void attributeValidator(String nomeAtributo, String valorAtributo, int tamanhoMaximo) {
+        if (valorAtributo.isBlank()) {
+            throw new ProhibitedEmptyOrBlankAttributeException(nomeAtributo);
         }
-        this.cpf = cpf;
+        if (valorAtributo.length() > tamanhoMaximo) {
+            throw new AttributeWithInvalidMaximumSizeException(nomeAtributo, valorAtributo, tamanhoMaximo);
+        }
     }
 
     public boolean hasValidFormat(String cpf) {

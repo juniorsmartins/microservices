@@ -8,6 +8,7 @@ import microservices.micro_customers.config.exception.http_400.DataNascimentoInv
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Optional;
 
 @Getter
 @ToString
@@ -21,19 +22,27 @@ public final class DataNascimento {
     private LocalDate dataNascimentoLocalDate;
 
     public DataNascimento(String dataNascimentoString) {
-        if (!this.ehValido(dataNascimentoString)) {
-            throw new DataNascimentoInvalidException(dataNascimentoString);
-        }
-        this.dataNascimentoLocalDate = LocalDate.parse(dataNascimentoString, FORMATO_DATA);
-        this.dataNascimentoString = dataNascimentoString;
+        Optional.ofNullable(dataNascimentoString)
+            .ifPresent(data -> {
+                if (!this.hasValidFormat(data)) {
+                    throw new DataNascimentoInvalidException(data);
+                }
+                this.dataNascimentoLocalDate = LocalDate.parse(data, FORMATO_DATA);
+                this.dataNascimentoString = data;
+            }
+        );
     }
 
     public DataNascimento(LocalDate dataNascimentoLocalDate) {
-        this.dataNascimentoString = dataNascimentoLocalDate.format(FORMATO_DATA);
-        this.dataNascimentoLocalDate = dataNascimentoLocalDate;
+        Optional.ofNullable(dataNascimentoLocalDate)
+            .ifPresent(data -> {
+                this.dataNascimentoString = data.format(FORMATO_DATA);
+                this.dataNascimentoLocalDate = data;
+            }
+        );
     }
 
-    public boolean ehValido(String dataNascimentoString) {
+    public boolean hasValidFormat(String dataNascimentoString) {
         try {
             LocalDate.parse(dataNascimentoString, FORMATO_DATA);
             return true;

@@ -45,7 +45,7 @@ public class MapperOutImpl implements MapperOut {
 
         return customer.getTelefones()
             .stream()
-            .map(fone -> new TelefoneVo(fone.getTelefone(), fone.getTipo()))
+            .map(fone -> new TelefoneVo(fone.getNumero(), fone.getTipo()))
             .collect(Collectors.toSet());
     }
 

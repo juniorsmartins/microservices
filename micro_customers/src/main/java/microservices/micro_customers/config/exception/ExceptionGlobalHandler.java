@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.net.URI;
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
 
     private final MessageSource messageSource;
 
-    // ---------- PARA CAPITURAR TODAS AS EXCEÇÕES SEM TRATAMENTO ESPECÍFICO ---------- //
+    // ---------- PARA CAPTURAR TODAS AS EXCEÇÕES SEM TRATAMENTO ESPECÍFICO ---------- //
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest) {
 
@@ -51,7 +52,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(httpStatusCode);
         problemDetail.setType(URI.create("https://babystepsdev.com/erros/campos-invalidos"));
-        problemDetail.setTitle(this.getMessage("exception.resources.campos.invalidos"));
+        problemDetail.setTitle(this.getMessage("exception.request.attribute.invalid"));
 
         var fields = this.getFields(ex);
 
@@ -74,7 +75,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
     }
 
 
-    // ---------- TRATAMENTO DE EXCEÇÕES CUSTOM ---------- //
+    // ---------- TRATAMENTO DE EXCEÇÕES CUSTOMIZADAS ---------- //
     @ExceptionHandler(RequestWithDataInIncorrectFormatException.class)
     public ResponseEntity<ProblemDetail> handlePoorlyRequestFormulated(RequestWithDataInIncorrectFormatException ex,
                                                                        WebRequest webRequest) {
@@ -87,7 +88,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{valor},
             LocaleContextHolder.getLocale());
 
-        problemDetail.setTitle(String.format(mensagem, valor));
+        problemDetail.setTitle(mensagem);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
@@ -105,10 +106,10 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var valorAtributo = ex.getValorAtributo();
         var tamanhoMaximo = ex.getTamanhoMaximo();
 
-        var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{},
-                LocaleContextHolder.getLocale());
+        var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]
+                        {nomeAtributo, valorAtributo, tamanhoMaximo}, LocaleContextHolder.getLocale());
 
-        problemDetail.setTitle(String.format(mensagem, nomeAtributo, valorAtributo, tamanhoMaximo));
+        problemDetail.setTitle(mensagem);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
@@ -127,7 +128,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{id},
             LocaleContextHolder.getLocale());
 
-        problemDetail.setTitle(String.format(mensagem, id));
+        problemDetail.setTitle(mensagem);
 
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
