@@ -18,7 +18,6 @@ public class MapperInImpl implements MapperIn {
 
     @Override
     public Customer toCustomer(final CustomerCreateDtoRequest customerCreateDtoRequest) {
-
         return Optional.ofNullable(customerCreateDtoRequest)
             .map(this::customer)
             .orElseThrow();
@@ -37,14 +36,6 @@ public class MapperInImpl implements MapperIn {
         customer.setEnderecos(enderecos);
 
         return customer;
-//        return Customer.builder()
-//            .nomeCompleto(dto.nomeCompleto())
-//            .cpf(new CadastroPessoaFisica(dto.cpf()))
-//            .dataNascimento(new DataNascimento(dto.dataNascimento()))
-//            .email(new CorreioEletronico(dto.email()))
-//            .telefones(telefones)
-//            .enderecos(enderecos)
-//            .build();
     }
 
     private Set<Telefone> toTelefone(CustomerCreateDtoRequest dto) {
@@ -65,21 +56,13 @@ public class MapperInImpl implements MapperIn {
 
         return dto.enderecos()
             .stream()
-            .map(address -> Endereco.builder()
-                .cep(address.cep())
-                .estado(address.estado())
-                .cidade(address.cidade())
-                .bairro(address.bairro())
-                .logradouro(address.logradouro())
-                .numero(address.numero())
-                .complemento(address.complemento())
-                .build())
+            .map(address -> new Endereco(address.cep(), address.estado(), address.cidade(), address.bairro(),
+                address.logradouro(), address.numero(), address.complemento()))
             .collect(Collectors.toSet());
     }
 
     @Override
     public CustomerCreateDtoResponse toCustomerCreateDtoResponse(final Customer customer) {
-
         return Optional.ofNullable(customer)
             .map(this::customerCreateDtoResponse)
             .orElseThrow();

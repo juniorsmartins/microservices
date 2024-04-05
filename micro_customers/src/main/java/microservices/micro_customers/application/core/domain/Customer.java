@@ -14,7 +14,6 @@ import java.util.Set;
 
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode(of = {"customerId"})
@@ -43,6 +42,24 @@ public final class Customer {
     private OffsetDateTime updatedAt;
 
     private String updatedBy;
+
+    public Customer(Long id, String nomeCompleto, CadastroPessoaFisica cpf, DataNascimento dataNascimento,
+                    StatusCadastroEnum statusCadastro, CorreioEletronico email, Set<Telefone> telefones,
+                    Set<Endereco> enderecos, OffsetDateTime createdAt, String createdBy, OffsetDateTime updatedAt,
+                    String updatedBy) {
+        this.setCustomerId(id);
+        this.setNomeCompleto(nomeCompleto);
+        this.setCpf(cpf);
+        this.setDataNascimento(dataNascimento);
+        this.setStatusCadastro(statusCadastro);
+        this.setEmail(email);
+        this.setTelefones(telefones);
+        this.setEnderecos(enderecos);
+        this.setCreatedAt(createdAt);
+        this.setCreatedBy(createdBy);
+        this.setUpdatedAt(updatedAt);
+        this.setUpdatedBy(updatedBy);
+    }
 
     public void setCustomerId(Long id) {
         this.customerId = id;

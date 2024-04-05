@@ -1,6 +1,7 @@
 package microservices.micro_customers.application.core.domain.tipos;
 
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
+import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 import microservices.micro_customers.config.exception.http_400.TelefoneInvalidException;
 import microservices.micro_customers.config.exception.http_400.TelefoneWithoutTypeException;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
@@ -33,9 +34,17 @@ class TelefoneUnitTest extends AbstractTestcontainersTest {
             Assertions.assertThrows(TelefoneInvalidException.class, acao);
         }
 
+        @ParameterizedTest
+        @ValueSource(strings = {"", "   "})
+        @DisplayName("vazio ou em branco")
+        void dadoTelefoneComNumeroVazioOuEmBranco_quandoInstanciar_entaoLancarException(String numero) {
+            Executable acao = () -> new Telefone(numero, TipoTelefoneEnum.FIXO);
+            Assertions.assertThrows(ProhibitedEmptyOrBlankAttributeException.class, acao);
+        }
+
         @Test
         @DisplayName("tipo nulo")
-        void dadoTipoDeTelefoneNulo_quandoInstanciar_entaoLancarException() {
+        void dadoTelefoneComTipoNulo_quandoInstanciar_entaoLancarException() {
             Executable acao = () -> new Telefone("12345678901", null);
             Assertions.assertThrows(TelefoneWithoutTypeException.class, acao);
         }

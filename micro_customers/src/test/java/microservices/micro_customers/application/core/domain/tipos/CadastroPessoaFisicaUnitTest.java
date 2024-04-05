@@ -1,6 +1,9 @@
 package microservices.micro_customers.application.core.domain.tipos;
 
+import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 import microservices.micro_customers.config.exception.http_400.CpfInvalidException;
+import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
+import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.*;
@@ -38,6 +41,28 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         void dadoCpfInvalido_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
             Executable acao = () -> factory.gerarCadastroPessoaFisicaInvalidoBuilder().build();
             Assertions.assertThrows(CpfInvalidException.class, acao);
+        }
+
+        @Test
+        @DisplayName("nulo")
+        void dadoCpfNulo_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
+            Executable acao = () -> new CadastroPessoaFisica(null);
+            Assertions.assertThrows(NullAttributeNotAllowedException.class, acao);
+        }
+
+        @Test
+        @DisplayName("excedido tamanho máximo")
+        void dadoCpfTamanhoMaximoExcedido_quandoInstanciarCadastroPessoaFisica_entaoLancarException() {
+            Executable acao = () -> new CadastroPessoaFisica("123456789012345");
+            Assertions.assertThrows(AttributeWithInvalidMaximumSizeException.class, acao);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", "   "})
+        @DisplayName("vazio ou em branco")
+        void dadoCpfVazioOuEmBranco_quandoInstanciarCadastroPessoaFisica_entaoLancarException(String valor) {
+            Executable acao = () -> CadastroPessoaFisica.builder().cpf(valor).build();
+            Assertions.assertThrows(ProhibitedEmptyOrBlankAttributeException.class, acao);
         }
 
         @ParameterizedTest
