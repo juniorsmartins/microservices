@@ -52,7 +52,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(httpStatusCode);
         problemDetail.setType(URI.create("https://babystepsdev.com/erros/campos-invalidos"));
-        problemDetail.setTitle(this.getMessage("exception.resources.campos.invalidos"));
+        problemDetail.setTitle(this.getMessage("exception.request.attribute.invalid"));
 
         var fields = this.getFields(ex);
 
@@ -88,7 +88,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{valor},
             LocaleContextHolder.getLocale());
 
-        problemDetail.setTitle(MessageFormat.format(mensagem, valor));
+        problemDetail.setTitle(mensagem);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
@@ -109,7 +109,6 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]
                         {nomeAtributo, valorAtributo, tamanhoMaximo}, LocaleContextHolder.getLocale());
 
-//        problemDetail.setTitle(String.format(mensagem, nomeAtributo, valorAtributo, tamanhoMaximo));
         problemDetail.setTitle(mensagem);
 
         return ResponseEntity
@@ -129,7 +128,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{id},
             LocaleContextHolder.getLocale());
 
-        problemDetail.setTitle(String.format(mensagem, id));
+        problemDetail.setTitle(mensagem);
 
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
