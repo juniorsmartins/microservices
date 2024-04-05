@@ -253,3 +253,9 @@ smicro_customers/src/main/java/microservices/micro_customers/config/exception/ht
 wmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/TelefoneWithoutTypeException.java,8/b/8b0af32e51cbae12b5661cf1bc229c88cce0ace0
 ¤
 tmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/value_objects/EnderecoVoUnitTest.java,e/4/e4002b851c871bc4aeae0e5184d646f5944c7592
+¡
+qmicro_customers/src/main/java/microservices/micro_customers/application/port/output/CustomerSearchOutputPort.java,1/0/10f0ccae7dd13d7dcdf34db79323c8d69efc43ab
+ 
+pmicro_customers/src/main/java/microservices/micro_customers/adapter/out/repository/specs/CustomerEntitySpec.java,1/2/12ecf724c531a42c2fdd804c27c587d98d8eb762
+’
+bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/CustomerSearchAdapter.java,2/7/2744d5d7a523899b3ff5e2e1ff851995e81eb66f
