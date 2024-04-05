@@ -17,11 +17,11 @@ import java.io.Serializable;
 @Setter
 @ToString
 @Embeddable
-@EqualsAndHashCode(of = {"telefone"})
+@EqualsAndHashCode(of = {"numero"})
 public final class TelefoneVo implements Serializable {
 
-    @Column(name = "telefone", length = Constants.MAX_CARACTERES_CUSTOMER_TELEFONE_NUMERO)
-    private String telefone;
+    @Column(name = "numero", length = Constants.MAX_CARACTERES_CUSTOMER_TELEFONE_NUMERO)
+    private String numero;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", length = Constants.MAX_CARACTERES_CUSTOMER_TELEFONE_TIPO)

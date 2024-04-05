@@ -53,13 +53,13 @@ public final class FactoryObjectMother {
 
     public TelefoneVo.TelefoneVoBuilder gerarTelefoneVoFixoBuilder() {
         return TelefoneVo.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.FIXO);
     }
 
     public TelefoneVo.TelefoneVoBuilder gerarTelefoneVoCelularBuilder() {
         return TelefoneVo.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.CELULAR);
     }
 
