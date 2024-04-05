@@ -109,7 +109,8 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
         var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]
                         {nomeAtributo, valorAtributo, tamanhoMaximo}, LocaleContextHolder.getLocale());
 
-        problemDetail.setTitle(String.format(mensagem, nomeAtributo, valorAtributo, tamanhoMaximo));
+//        problemDetail.setTitle(String.format(mensagem, nomeAtributo, valorAtributo, tamanhoMaximo));
+        problemDetail.setTitle(mensagem);
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)

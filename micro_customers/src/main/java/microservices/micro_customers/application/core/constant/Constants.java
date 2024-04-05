@@ -8,8 +8,6 @@ public final class Constants {
 
     public static final int MAX_CARACTERES_CUSTOMER_NOMECOMPLETO = 100;
 
-    public static final String CPF = "CPF";
-
     public static final int MAX_CARACTERES_CUSTOMER_CPF = 14;
 
     public static final String EMAIL = "Email";
