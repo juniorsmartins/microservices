@@ -58,9 +58,13 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         }
 
         @Test
-        @DisplayName("telefones nulo")
-        void dadoCustomerCreateDtoRequestValidoComTelefonesNulo_quandoToCustomer_entaoConverterNormal() {
-            var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder().telefones(null).build();
+        @DisplayName("telefones e endereços nulos")
+        void dadoCustomerCreateDtoRequestValidoComTelefonesNuloAndEndereçosNulo_quandoToCustomer_entaoConverterNormal() {
+            var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder()
+                .telefones(null)
+                .enderecos(null)
+                .build();
+
             var customer = mapperIn.toCustomer(dtoRequest);
             customer.setCustomerId(1L);
             customer.setStatusCadastro(StatusCadastroEnum.INICIADO);
@@ -76,7 +80,8 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertTrue(customer.getTelefones().isEmpty());
             Assertions.assertNull(dtoRequest.telefones());
 
-            Assertions.assertEquals(dtoRequest.enderecos().size(), customer.getEnderecos().size());
+            Assertions.assertTrue(customer.getEnderecos().isEmpty());
+            Assertions.assertNull(dtoRequest.enderecos());
         }
     }
 
@@ -110,9 +115,13 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         }
 
         @Test
-        @DisplayName("telefones nulo")
-        void dadoCustomerValidoComTelefonesNulo_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
-            var customer = factory.gerarCustomerBuilder().telefones(null).build();
+        @DisplayName("telefones e endereços nulos")
+        void dadoCustomerValidoComTelefonesNuloAndEndereçosNulo_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
+            var customer = factory.gerarCustomerBuilder()
+                .telefones(null)
+                .enderecos(null)
+                .build();
+
             var dtoResponse = mapperIn.toCustomerCreateDtoResponse(customer);
             Assertions.assertInstanceOf(CustomerCreateDtoResponse.class, dtoResponse);
 
@@ -126,7 +135,8 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertNull(customer.getTelefones());
             Assertions.assertTrue(dtoResponse.telefones().isEmpty());
 
-            Assertions.assertEquals(dtoResponse.enderecos().size(), customer.getEnderecos().size());
+            Assertions.assertNull(customer.getEnderecos());
+            Assertions.assertTrue(dtoResponse.enderecos().isEmpty());
         }
     }
 
