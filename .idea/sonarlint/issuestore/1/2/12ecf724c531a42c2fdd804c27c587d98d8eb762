@@ -1,3 +1,5 @@
 
 ‚
-java:S1118":Add a private constructor to hide the implicit public one.(Ü¥™ûÿÿÿÿ8×˜€ë1J$83c2b0fb-7fef-4f3a-962c-4fe86521d3a6
+java:S1118":Add a private constructor to hide the implicit public one.(Ü¥™ûÿÿÿÿ8×˜€ë1J$10e33ed3-303b-49b7-b642-1a86635c894e
+o
+java:S6204("RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8Á×ø€ë1

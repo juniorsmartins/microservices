@@ -37,7 +37,7 @@ public class CustomerEntitySpec {
                     .stream()
                         .map(nome -> criteriaBuilder.like(criteriaBuilder
                             .lower(root.get("nomeCompleto")), "%" + nome.toLowerCase() + "%"))
-                        .collect(Collectors.toSet());
+                        .collect(Collectors.toList());
 
                 predicados.add(criteriaBuilder.or(predicadoNomes.toArray(new Predicate[0])));
             }

@@ -142,13 +142,13 @@ public final class FactoryObjectMother {
 
     public TelefoneDto.TelefoneDtoBuilder gerarTelefoneDtoFixoBuilder() {
         return TelefoneDto.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.FIXO);
     }
 
     public TelefoneDto.TelefoneDtoBuilder gerarTelefoneDtoCelularBuilder() {
         return TelefoneDto.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.CELULAR);
     }
 
