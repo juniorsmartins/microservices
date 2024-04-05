@@ -16,7 +16,7 @@ public final class Constants {
 
     public static final int MAX_CARACTERES_CUSTOMER_EMAIL = 150;
 
-    public static final String TELEFONE_NUMERO = "Número";
+    public static final String TELEFONE_NUMERO = "Número do Telefone";
 
     public static final int MAX_CARACTERES_CUSTOMER_TELEFONE_NUMERO = 11;
 

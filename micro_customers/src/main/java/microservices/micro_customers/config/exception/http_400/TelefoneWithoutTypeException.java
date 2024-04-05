@@ -7,8 +7,8 @@ public final class TelefoneWithoutTypeException extends RequestWithDataInIncorre
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public TelefoneWithoutTypeException() {
-        super("exception.request.format.invalid.telefone.tipo", null);
+    public TelefoneWithoutTypeException(String numeroTelefone) {
+        super("exception.request.format.invalid.telefone.tipo", numeroTelefone);
     }
 
 }
