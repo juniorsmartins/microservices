@@ -251,3 +251,5 @@ pmicro_customers/src/main/java/microservices/micro_customers/config/exception/ht
 smicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/TelefoneInvalidException.java,1/9/191aa6e49dad5e51bd864553e3e4acdfbc048241
 §
 wmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/TelefoneWithoutTypeException.java,8/b/8b0af32e51cbae12b5661cf1bc229c88cce0ace0
+¤
+tmicro_customers/src/test/java/microservices/micro_customers/adapter/out/entity/value_objects/EnderecoVoUnitTest.java,e/4/e4002b851c871bc4aeae0e5184d646f5944c7592

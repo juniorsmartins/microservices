@@ -79,11 +79,11 @@ public final class FactoryObjectMother {
         return EnderecoVo.builder()
             .cep(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
             .estado(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
-            .cidade(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
-            .bairro(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
-            .logradouro(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
-            .numero(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
-            .complemento(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
+            .cidade(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
+            .bairro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
+            .logradouro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
+            .numero(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
+            .complemento(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
     }
 
     public Customer.CustomerBuilder gerarCustomerBuilder() {

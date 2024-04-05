@@ -57,9 +57,13 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
         }
 
         @Test
-        @DisplayName("telefones nulo")
-        void dadoCustomerValidoComTelefonesNulo_quandoToCustomerEntity_entaoConverterNormal() {
-            var customer = factory.gerarCustomerBuilder().telefones(null).build();
+        @DisplayName("telefones e endereços nulos")
+        void dadoCustomerValidoComTelefonesNuloAndEnderecosNulo_quandoToCustomerEntity_entaoConverterNormal() {
+            var customer = factory.gerarCustomerBuilder()
+                .telefones(null)
+                .enderecos(null)
+                .build();
+
             var entity = mapperOut.toCustomerEntity(customer);
             Assertions.assertInstanceOf(CustomerEntity.class, entity);
 
@@ -73,7 +77,8 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertTrue(entity.getTelefones().isEmpty());
             Assertions.assertNull(customer.getTelefones());
 
-            Assertions.assertEquals(customer.getEnderecos().size(), entity.getEnderecos().size());
+            Assertions.assertTrue(entity.getEnderecos().isEmpty());
+            Assertions.assertNull(customer.getEnderecos());
         }
     }
 
@@ -107,9 +112,13 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
         }
 
         @Test
-        @DisplayName("telefones nulo")
-        void dadoCustomerValidoComTelefonesNulo_quandoToCustomerEntity_entaoConverterNormal() {
-            var entity = factory.gerarCustomerEntityBuilder().telefones(null).build();
+        @DisplayName("telefones e endereços nulos")
+        void dadoCustomerValidoComTelefonesNuloAndEnderecosNulo_quandoToCustomerEntity_entaoConverterNormal() {
+            var entity = factory.gerarCustomerEntityBuilder()
+                .telefones(null)
+                .enderecos(null)
+                .build();
+
             var customer = mapperOut.toCustomer(entity);
             Assertions.assertInstanceOf(Customer.class, customer);
 
@@ -123,7 +132,8 @@ class MapperOutImplUnitTest extends AbstractTestcontainersTest {
             Assertions.assertNull(entity.getTelefones());
             Assertions.assertTrue(customer.getTelefones().isEmpty());
 
-            Assertions.assertEquals(customer.getEnderecos().size(), entity.getEnderecos().size());
+            Assertions.assertNull(entity.getEnderecos());
+            Assertions.assertTrue(customer.getEnderecos().isEmpty());
         }
     }
 

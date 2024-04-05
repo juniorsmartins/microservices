@@ -9,6 +9,7 @@ import microservices.micro_customers.application.core.domain.enums.TipoTelefoneE
 import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 import microservices.micro_customers.config.exception.http_400.TelefoneInvalidException;
 import microservices.micro_customers.config.exception.http_400.TelefoneWithoutTypeException;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -33,8 +34,8 @@ public final class Telefone {
                 if (!this.hasValidFormat(valor)) {
                     throw new TelefoneInvalidException(valor);
                 }
-                if (tipo == null) {
-                    throw new TelefoneWithoutTypeException();
+                if (ObjectUtils.isEmpty(tipo)) {
+                    throw new TelefoneWithoutTypeException(valor);
                 }
                 this.numero = valor;
                 this.tipo = tipo;
