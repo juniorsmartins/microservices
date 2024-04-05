@@ -3,10 +3,16 @@ package microservices.micro_customers.application.core.domain;
 import microservices.micro_customers.application.core.domain.tipos.CadastroPessoaFisica;
 import microservices.micro_customers.application.core.domain.tipos.CorreioEletronico;
 import microservices.micro_customers.application.core.domain.tipos.DataNascimento;
+import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
+import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
+import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -31,6 +37,32 @@ class CustomerUnitTest extends AbstractTestcontainersTest {
         customer2 = factory.gerarCustomerBuilder()
             .customerId(1L)
             .build();
+    }
+
+    @Nested
+    @DisplayName("inválido")
+    class CustomerInvalid {
+
+        @Test
+        @DisplayName("nome nulo")
+        void dadoCustomerComNomeCompletoNulo_quandoInstanciar_entaoLancarException() {
+            Executable acao = () -> factory.gerarCustomerBuilder().nomeCompleto(null).build();
+            Assertions.assertThrows(NullAttributeNotAllowedException.class, acao);
+        }
+
+        @Test
+        @DisplayName("nome com tamanho excedido")
+        void dadoCustomerComNomeCompletoComTamanhoExcedido_quandoInstanciar_entaoLancarException() {
+            Executable acao = () -> factory.gerarCustomerBuilder().nomeCompleto("qwerty123456789qwerty123456789qwerty123456789qwerty123456789qwerty123456789qwerty123456789qwerty123456789qwerty123456789qwerty123456789qwerty123456789qwerty123456789").build();
+            Assertions.assertThrows(AttributeWithInvalidMaximumSizeException.class, acao);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", "   "})
+        void dadoCustomerComNomeCompletoVazioOuEmBranco_quandoInstanciar_entaoLancarException(String valor) {
+            Executable acao = () -> factory.gerarCustomerBuilder().nomeCompleto(valor).build();
+            Assertions.assertThrows(ProhibitedEmptyOrBlankAttributeException.class, acao);
+        }
     }
 
     @Nested
