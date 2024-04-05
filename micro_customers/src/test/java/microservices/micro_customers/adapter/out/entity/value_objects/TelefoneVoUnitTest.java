@@ -38,7 +38,7 @@ class TelefoneVoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("iguais")
         void dadoTelefoneVoIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            telefoneVo2.setTelefone(telefoneVo1.getTelefone());
+            telefoneVo2.setNumero(telefoneVo1.getNumero());
             Assertions.assertEquals(telefoneVo1, telefoneVo2);
         }
     }
@@ -56,7 +56,7 @@ class TelefoneVoUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("dados iguais")
         void dadoTelefoneVoComDadosIguais_quandoCompararToString_entaoRetornarEqualsTrue() {
-            telefoneVo2.setTelefone(telefoneVo1.getTelefone());
+            telefoneVo2.setNumero(telefoneVo1.getNumero());
             telefoneVo2.setTipo(telefoneVo1.getTipo());
             Assertions.assertEquals(telefoneVo1.toString(), telefoneVo2.toString());
         }

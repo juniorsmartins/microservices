@@ -5,14 +5,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerSearchDtoResponse;
+import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.mapper.MapperIn;
 import microservices.micro_customers.application.port.input.CustomerCreateInputPort;
+import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Optional;
@@ -24,6 +28,8 @@ import java.util.Optional;
 public class CustomerController {
 
     private final CustomerCreateInputPort customerCreateInputPort;
+
+    private final CustomerSearchOutputPort customerSearchOutputPort;
 
     private final MapperIn mapperIn;
 
@@ -38,6 +44,19 @@ public class CustomerController {
 
         return ResponseEntity
             .created(URI.create("/api/v1/customers" + response.customerId()))
+            .body(response);
+    }
+
+    @GetMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
+        @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = 10) final Pageable paginacao) {
+
+        var response = Optional.ofNullable(customerFilter)
+            .map(filter -> this.customerSearchOutputPort.search(filter, paginacao))
+            .orElseThrow();
+
+        return ResponseEntity
+            .ok()
             .body(response);
     }
 
