@@ -104,13 +104,13 @@ public final class FactoryObjectMother {
 
     public Telefone.TelefoneBuilder gerarTelefoneFixoBuilder() {
         return Telefone.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.FIXO);
     }
 
     public Telefone.TelefoneBuilder gerarTelefoneCelularBuilder() {
         return Telefone.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.CELULAR);
     }
 

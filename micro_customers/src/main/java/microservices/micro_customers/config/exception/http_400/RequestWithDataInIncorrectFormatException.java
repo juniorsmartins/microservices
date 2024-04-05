@@ -16,7 +16,7 @@ public abstract sealed class RequestWithDataInIncorrectFormatException extends R
 
   private final String messageKey;
 
-  protected RequestWithDataInIncorrectFormatException(String messageKey, final String valor) {
+  protected RequestWithDataInIncorrectFormatException(String messageKey, String valor) {
     super(messageKey);
     this.messageKey = messageKey;
     this.valor = valor;
