@@ -142,13 +142,13 @@ public final class FactoryObjectMother {
 
     public TelefoneDto.TelefoneDtoBuilder gerarTelefoneDtoFixoBuilder() {
         return TelefoneDto.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.FIXO);
     }
 
     public TelefoneDto.TelefoneDtoBuilder gerarTelefoneDtoCelularBuilder() {
         return TelefoneDto.builder()
-            .telefone(gerarNumerosAleatorios())
+            .numero(gerarNumerosAleatorios())
             .tipo(TipoTelefoneEnum.CELULAR);
     }
 
@@ -156,11 +156,11 @@ public final class FactoryObjectMother {
         return EnderecoDto.builder()
             .cep(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
             .estado(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
-            .cidade(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
-            .bairro(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
-            .logradouro(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
+            .cidade(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
+            .bairro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
+            .logradouro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
             .numero(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
-            .complemento(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
+            .complemento(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
     }
 
     public CadastroPessoaFisica.CadastroPessoaFisicaBuilder gerarCadastroPessoaFisicaValidoBuilder() {

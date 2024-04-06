@@ -45,7 +45,7 @@ public class MapperInImpl implements MapperIn {
 
         return dto.telefones()
             .stream()
-            .map(fone -> new Telefone(fone.telefone(), fone.tipo()))
+            .map(fone -> new Telefone(fone.numero(), fone.tipo()))
             .collect(Collectors.toSet());
     }
 

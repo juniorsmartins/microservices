@@ -19,22 +19,22 @@ import java.util.NoSuchElementException;
 
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Unit - CustomerSaveAdapter")
-class CustomerSaveAdapterUnitTest extends AbstractTestcontainersTest {
+@DisplayName("Unit - CustomerSearchAdapter")
+class CustomerSearchAdapterUnitTest extends AbstractTestcontainersTest {
 
     @Mock
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @Mock
-    MapperOut mapperOut;
+    private MapperOut mapperOut;
 
     @InjectMocks
-    CustomerSaveAdapter customerSaveAdapter;
+    private CustomerSearchAdapter customerSearchAdapter;
 
     @Test
     @DisplayName("nulo")
-    void dadoCustomerNulo_quandoSave_entaoLancarException() {
-        Executable acao = () -> this.customerSaveAdapter.save(null);
+    void dadoCustomerFilterNulo_quandoSearch_entaoLancarException() {
+        Executable acao = () -> this.customerSearchAdapter.search(null, null);
         Assertions.assertThrows(NoSuchElementException.class, acao);
         Mockito.verifyNoInteractions(this.customerRepository);
         Mockito.verifyNoInteractions(this.mapperOut);

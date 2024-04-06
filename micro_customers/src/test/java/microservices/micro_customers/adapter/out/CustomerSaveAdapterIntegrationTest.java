@@ -1,7 +1,9 @@
 package microservices.micro_customers.adapter.out;
 
+import microservices.micro_customers.adapter.out.repository.CustomerRepository;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,13 +15,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Unit - CustomerSaveAdapter")
+@DisplayName("Integration - CustomerSaveAdapter")
 class CustomerSaveAdapterIntegrationTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @Autowired
     CustomerSaveAdapter customerSaveAdapter;
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @AfterEach
+    void tearDown() {
+        this.customerRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("customer válido")

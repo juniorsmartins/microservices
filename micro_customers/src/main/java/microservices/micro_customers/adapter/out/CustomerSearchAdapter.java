@@ -7,7 +7,6 @@ import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.mapper.MapperOut;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
 import microservices.micro_customers.adapter.out.repository.specs.CustomerEntitySpec;
-import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

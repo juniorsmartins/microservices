@@ -47,7 +47,7 @@ public class CustomerController {
             .body(response);
     }
 
-    @GetMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
         @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = 10) final Pageable paginacao) {
 
