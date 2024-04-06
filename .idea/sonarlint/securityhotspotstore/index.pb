@@ -255,3 +255,5 @@ qmicro_customers/src/main/java/microservices/micro_customers/application/port/ou
 pmicro_customers/src/main/java/microservices/micro_customers/adapter/out/repository/specs/CustomerEntitySpec.java,1/2/12ecf724c531a42c2fdd804c27c587d98d8eb762
 ’
 bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/CustomerSearchAdapter.java,2/7/2744d5d7a523899b3ff5e2e1ff851995e81eb66f
+š
+jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterUnitTest.java,c/a/ca670a60c4a2359eb13707c8f149621e06d797c7

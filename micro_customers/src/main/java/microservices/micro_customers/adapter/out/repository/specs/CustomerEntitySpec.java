@@ -3,14 +3,16 @@ package microservices.micro_customers.adapter.out.repository.specs;
 import jakarta.persistence.criteria.Predicate;
 import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
-import org.springframework.data.jpa.domain.Specification;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class CustomerEntitySpec {
+
+    private CustomerEntitySpec() { }
 
     public static Specification<CustomerEntity> consultarDinamicamente(CustomerFilter filtro) {
 
@@ -35,9 +37,9 @@ public class CustomerEntitySpec {
 
                 var predicadoNomes = Arrays.asList(filtro.nomeCompleto().split(","))
                     .stream()
-                        .map(nome -> criteriaBuilder.like(criteriaBuilder
-                            .lower(root.get("nomeCompleto")), "%" + nome.toLowerCase() + "%"))
-                        .collect(Collectors.toList());
+                    .map(nome -> criteriaBuilder.like(criteriaBuilder
+                        .lower(root.get("nomeCompleto")), "%" + nome.toLowerCase() + "%"))
+                    .collect(Collectors.toSet());
 
                 predicados.add(criteriaBuilder.or(predicadoNomes.toArray(new Predicate[0])));
             }
