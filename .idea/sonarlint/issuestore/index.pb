@@ -257,3 +257,5 @@ pmicro_customers/src/main/java/microservices/micro_customers/adapter/out/reposit
 bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/CustomerSearchAdapter.java,2/7/2744d5d7a523899b3ff5e2e1ff851995e81eb66f
 š
 jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterUnitTest.java,c/a/ca670a60c4a2359eb13707c8f149621e06d797c7
+¡
+qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterIntegrationTest.java,c/a/ca431595369577165fc3cc23c43f8bf169ab687a

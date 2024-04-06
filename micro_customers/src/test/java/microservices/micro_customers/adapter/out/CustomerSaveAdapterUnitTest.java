@@ -23,13 +23,13 @@ import java.util.NoSuchElementException;
 class CustomerSaveAdapterUnitTest extends AbstractTestcontainersTest {
 
     @Mock
-    private CustomerRepository customerRepository;
+    CustomerRepository customerRepository;
 
     @Mock
-    private MapperOut mapperOut;
+    MapperOut mapperOut;
 
     @InjectMocks
-    private CustomerSaveAdapter customerSaveAdapter;
+    CustomerSaveAdapter customerSaveAdapter;
 
     @Test
     @DisplayName("nulo")

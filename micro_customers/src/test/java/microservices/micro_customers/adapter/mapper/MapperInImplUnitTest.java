@@ -61,7 +61,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("telefones e endereços nulos")
-        void dadoCustomerCreateDtoRequestValidoComTelefonesNuloAndEndereçosNulo_quandoToCustomer_entaoConverterNormal() {
+        void dadoCustomerCreateDtoRequestValidoComTelefonesNuloAndEnderecosNulo_quandoToCustomer_entaoConverterNormal() {
             var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder()
                     .telefones(null)
                     .enderecos(null)
@@ -138,7 +138,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("telefones e endereços nulos")
-        void dadoCustomerValidoComTelefonesNuloAndEndereçosNulo_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
+        void dadoCustomerValidoComTelefonesNuloAndEnderecosNulo_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
             var customer = factory.gerarCustomerBuilder()
                 .telefones(null)
                 .enderecos(null)
