@@ -1,8 +1,10 @@
 package microservices.micro_customers.adapter.mapper;
 
+import microservices.micro_customers.adapter.dto.TelefoneDto;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
+import microservices.micro_customers.application.core.domain.tipos.Telefone;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.Assertions;
@@ -59,11 +61,11 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("telefones e endereços nulos")
-        void dadoCustomerCreateDtoRequestValidoComTelefonesNuloAndEndereçosNulo_quandoToCustomer_entaoConverterNormal() {
+        void dadoCustomerCreateDtoRequestValidoComTelefonesNuloAndEnderecosNulo_quandoToCustomer_entaoConverterNormal() {
             var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder()
-                .telefones(null)
-                .enderecos(null)
-                .build();
+                    .telefones(null)
+                    .enderecos(null)
+                    .build();
 
             var customer = mapperIn.toCustomer(dtoRequest);
             customer.setCustomerId(1L);
@@ -82,6 +84,26 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
 
             Assertions.assertTrue(customer.getEnderecos().isEmpty());
             Assertions.assertNull(dtoRequest.enderecos());
+        }
+
+        @Test
+        @DisplayName("dados de telefone")
+        void dadoCustomerCreateDtoRequestValidoComDoisTelefones_quandoToCustomer_entaoRetornarDadosCorretosDeTelefones() {
+            var createDtoRequest = factory.gerarCustomerCreateDtoRequestBuilder().build();
+            var response = mapperIn.toCustomer(createDtoRequest);
+
+            Assertions.assertEquals(createDtoRequest.telefones().size(), response.getTelefones().size());
+
+            for (TelefoneDto dto : createDtoRequest.telefones()) {
+                Telefone fone = response.getTelefones()
+                    .stream()
+                    .filter(tel -> tel.getNumero().equals(dto.numero()) && tel.getTipo().equals(dto.tipo()))
+                    .findFirst()
+                    .orElse(null);
+
+                Assertions.assertEquals(dto.numero(), fone.getNumero());
+                Assertions.assertEquals(dto.tipo(), fone.getTipo());
+            }
         }
     }
 
@@ -116,7 +138,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("telefones e endereços nulos")
-        void dadoCustomerValidoComTelefonesNuloAndEndereçosNulo_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
+        void dadoCustomerValidoComTelefonesNuloAndEnderecosNulo_quandoToCustomerCreateDtoResponse_entaoConverterNormal() {
             var customer = factory.gerarCustomerBuilder()
                 .telefones(null)
                 .enderecos(null)
@@ -137,6 +159,26 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
 
             Assertions.assertNull(customer.getEnderecos());
             Assertions.assertTrue(dtoResponse.enderecos().isEmpty());
+        }
+
+        @Test
+        @DisplayName("dados de telefone")
+        void dadoCustomerValidoComDoisTelefones_quandoToCustomerCreateDtoResponse_entaoRetornarDadosCorretosDeTelefones() {
+            var customer = factory.gerarCustomerBuilder().build();
+            var response = mapperIn.toCustomerCreateDtoResponse(customer);
+
+            Assertions.assertEquals(customer.getTelefones().size(), response.telefones().size());
+
+            for (Telefone fone : customer.getTelefones()) {
+                TelefoneDto dto = response.telefones()
+                    .stream()
+                    .filter(telDto -> telDto.numero().equals(fone.getNumero()) && telDto.tipo().equals(fone.getTipo()))
+                    .findFirst()
+                    .orElse(null);
+
+                Assertions.assertEquals(dto.numero(), fone.getNumero());
+                Assertions.assertEquals(dto.tipo(), fone.getTipo());
+            }
         }
     }
 

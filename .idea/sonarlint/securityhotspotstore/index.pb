@@ -219,12 +219,8 @@ Xmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/Enderec
 Xmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/TelefoneDto.java,9/5/95ea677880dbb549486c8149a11043348c0ba093
 ¥
 umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerCreateDtoRequestUnitTest.java,e/c/ecf9a3ea4c68214534374a29a67ca72ca85476b9
- 
-pmicro_customers/src/main/java/microservices/micro_customers/application/port/input/CustomerSearchOutputPort.java,7/f/7f526999ae3a735f73a11f17b3f44d4346fe90bb
 Ÿ
 omicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/CustomerSearchDtoResponse.java,a/a/aaed5b0c14323c6a5a3dd7214c22ad7348caafb1
-Ÿ
-omicro_customers/src/main/java/microservices/micro_customers/application/core/usecase/CustomerSearchAdapter.java,7/d/7d600f26776c20ea67fcb3ebef8b95a46243b69f
 ’
 bmicro_customers/src/main/java/microservices/micro_customers/adapter/in/filters/CustomerFilter.java,1/8/1830d3e53aa7bd969fbe7834067780448939b37c
 ”
@@ -259,3 +255,7 @@ qmicro_customers/src/main/java/microservices/micro_customers/application/port/ou
 pmicro_customers/src/main/java/microservices/micro_customers/adapter/out/repository/specs/CustomerEntitySpec.java,1/2/12ecf724c531a42c2fdd804c27c587d98d8eb762
 ’
 bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/CustomerSearchAdapter.java,2/7/2744d5d7a523899b3ff5e2e1ff851995e81eb66f
+š
+jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterUnitTest.java,c/a/ca670a60c4a2359eb13707c8f149621e06d797c7
+¡
+qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterIntegrationTest.java,c/a/ca431595369577165fc3cc23c43f8bf169ab687a

@@ -6,7 +6,7 @@ import microservices.micro_customers.application.core.domain.enums.TipoTelefoneE
 @Builder
 public record TelefoneDto(
 
-    String telefone,
+    String numero,
 
     TipoTelefoneEnum tipo
 
