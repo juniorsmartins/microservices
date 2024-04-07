@@ -9,6 +9,7 @@ import microservices.micro_customers.util.FactoryObjectMother;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.BeanUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -23,18 +24,18 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
-    private CustomerEntity customer1;
+    private CustomerEntity entity1;
 
-    private CustomerEntity customer2;
+    private CustomerEntity entity2;
 
     @BeforeEach
     void setUp() {
-        customer1 = factory.gerarCustomerEntityBuilder()
+        entity1 = factory.gerarCustomerEntityBuilder()
             .customerId(1L)
             .statusCadastro(StatusCadastroEnum.INICIADO)
             .build();
 
-        customer2 = factory.gerarCustomerEntityBuilder()
+        entity2 = factory.gerarCustomerEntityBuilder()
             .customerId(1L)
             .statusCadastro(StatusCadastroEnum.INICIADO)
             .build();
@@ -47,16 +48,35 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("ids iguais")
         void dadoCustomerEntityComIdsIguais_quandoCompararComEquals_entaoRetornarEqualsTrue() {
-            Assertions.assertEquals(customer1, customer2);
+            Assertions.assertEquals(entity1, entity2);
         }
 
         @Test
         @DisplayName("ids diferentes")
         void dadoCustomerEntityComIdsDiferentes_quandoCompararComEquals_entaoRetornarNotEqualsTrue() {
-            customer2.setCustomerId(2L);
-            Assertions.assertNotEquals(customer1, customer2);
+            entity2.setCustomerId(2L);
+            Assertions.assertNotEquals(entity1, entity2);
         }
 
+    }
+
+    @Nested
+    @DisplayName("Hash")
+    class HashTest {
+
+        @Test
+        @DisplayName("diferentes")
+        void dadoCustomerEntityDiferentes_quandoCompararComHash_entaoRetornarNotEqualsTrue() {
+            entity2.setCustomerId(2L);
+            Assertions.assertNotEquals(entity1.hashCode(), entity2.hashCode());
+        }
+
+        @Test
+        @DisplayName("iguais")
+        void dadoCustomerEntityIguais_quandoCompararComHash_entaoRetornarEqualsTrue() {
+            BeanUtils.copyProperties(entity1, entity2);
+            Assertions.assertEquals(entity1.hashCode(), entity2.hashCode());
+        }
     }
 
     @Nested
@@ -66,7 +86,7 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("dados diferentes")
         void dadoCustomerComDadosDiferentes_quandoCompararToStrings_entaoRetornarNotEqualsTrue() {
-            Assertions.assertNotEquals(customer1.toString(), customer2.toString());
+            Assertions.assertNotEquals(entity1.toString(), entity2.toString());
         }
 
         @Test

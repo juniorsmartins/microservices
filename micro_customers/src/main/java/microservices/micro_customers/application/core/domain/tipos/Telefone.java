@@ -7,6 +7,7 @@ import lombok.ToString;
 import microservices.micro_customers.application.core.constant.Constants;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
+import microservices.micro_customers.config.exception.http_400.RequestWithTypeAndWithoutNumberException;
 import microservices.micro_customers.config.exception.http_400.TelefoneInvalidException;
 import microservices.micro_customers.config.exception.http_400.TelefoneWithoutTypeException;
 import org.springframework.util.ObjectUtils;
@@ -29,7 +30,7 @@ public final class Telefone {
 
     public Telefone(String numeroTelefone, TipoTelefoneEnum tipo) {
         Optional.ofNullable(numeroTelefone)
-            .ifPresent(valor -> {
+            .ifPresentOrElse(valor -> {
                 this.attributeValidator(Constants.TELEFONE_NUMERO, valor);
                 if (!this.hasValidFormat(valor)) {
                     throw new TelefoneInvalidException(valor);
@@ -39,6 +40,11 @@ public final class Telefone {
                 }
                 this.numero = valor;
                 this.tipo = tipo;
+            },
+            () -> {
+                if (ObjectUtils.isEmpty(numeroTelefone) && !ObjectUtils.isEmpty(tipo)) {
+                    throw new RequestWithTypeAndWithoutNumberException(tipo.getValue());
+                }
             }
         );
     }
