@@ -44,6 +44,24 @@ class TelefoneVoUnitTest extends AbstractTestcontainersTest {
     }
 
     @Nested
+    @DisplayName("Hash")
+    class HashTest {
+
+        @Test
+        @DisplayName("diferentes")
+        void dadoTelefoneVoDiferentes_quandoCompararComHash_entaoRetornarNotEqualsTrue() {
+            Assertions.assertNotEquals(telefoneVo1.hashCode(), telefoneVo2.hashCode());
+        }
+
+        @Test
+        @DisplayName("iguais")
+        void dadoTelefoneVoIguais_quandoCompararComHash_entaoRetornarEqualsTrue() {
+            telefoneVo2.setNumero(telefoneVo1.getNumero());
+            Assertions.assertEquals(telefoneVo1.hashCode(), telefoneVo2.hashCode());
+        }
+    }
+
+    @Nested
     @DisplayName("ToString")
     class ToStringTest {
 

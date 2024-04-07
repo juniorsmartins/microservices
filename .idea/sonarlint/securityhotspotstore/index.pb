@@ -217,8 +217,6 @@ omicro_customers/src/main/java/microservices/micro_customers/adapter/dto/respons
 Xmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/EnderecoDto.java,d/1/d18d8d12f7535a36d963e91a0f4b3410d785dc3f
 ˆ
 Xmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/TelefoneDto.java,9/5/95ea677880dbb549486c8149a11043348c0ba093
-¥
-umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerCreateDtoRequestUnitTest.java,e/c/ecf9a3ea4c68214534374a29a67ca72ca85476b9
 Ÿ
 omicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/CustomerSearchDtoResponse.java,a/a/aaed5b0c14323c6a5a3dd7214c22ad7348caafb1
 ’
@@ -259,3 +257,7 @@ bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/Custome
 jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterUnitTest.java,c/a/ca670a60c4a2359eb13707c8f149621e06d797c7
 ¡
 qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterIntegrationTest.java,c/a/ca431595369577165fc3cc23c43f8bf169ab687a
+¬
+|micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/WithTypeAndWithOutNumberException.java,c/e/cefd8041730694beebecde7448e97d00363560a5
+´
+ƒmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/RequestWithTypeAndWithoutNumberException.java,3/9/390b62748855d3b9090252358057c04cad54e5f1
