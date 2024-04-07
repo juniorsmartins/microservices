@@ -7,7 +7,7 @@ import java.io.Serial;
 @Getter
 public abstract sealed class RequestWithDataInIncorrectFormatException extends RuntimeException permits CpfInvalidException,
       EmailInvalidException, DataNascimentoInvalidException, TelefoneInvalidException, TelefoneWithoutTypeException,
-      ProhibitedEmptyOrBlankAttributeException, NullAttributeNotAllowedException {
+      ProhibitedEmptyOrBlankAttributeException, NullAttributeNotAllowedException, RequestWithTypeAndWithoutNumberException {
 
   @Serial
   private static final long serialVersionUID = 1L;
