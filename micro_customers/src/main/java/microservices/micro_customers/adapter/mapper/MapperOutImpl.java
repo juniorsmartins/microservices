@@ -9,6 +9,7 @@ import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.tipos.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -43,7 +44,7 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<TelefoneVo> toTelefoneVo(Customer customer) {
-        if (customer.getTelefones() == null || customer.getTelefones().isEmpty()) {
+        if (ObjectUtils.isEmpty(customer.getTelefones())) {
             return Collections.emptySet();
         }
 
@@ -54,7 +55,7 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<EnderecoVo> toEnderecoVo(Customer customer) {
-        if (customer.getEnderecos() == null || customer.getEnderecos().isEmpty()) {
+        if (ObjectUtils.isEmpty(customer.getEnderecos())) {
             return Collections.emptySet();
         }
 
@@ -100,7 +101,7 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<Telefone> toTelefone(CustomerEntity entity) {
-        if (entity.getTelefones() == null || entity.getTelefones().isEmpty()) {
+        if (ObjectUtils.isEmpty(entity.getTelefones())) {
             return Collections.emptySet();
         }
 
@@ -111,7 +112,7 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<Endereco> toEndereco(CustomerEntity entity) {
-        if (entity.getEnderecos() == null || entity.getEnderecos().isEmpty()) {
+        if (ObjectUtils.isEmpty(entity.getEnderecos())) {
             return Collections.emptySet();
         }
 
@@ -157,7 +158,7 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<TelefoneDto> toTelefoneDto(CustomerEntity entity) {
-        if (entity.getTelefones() == null || entity.getTelefones().isEmpty()) {
+        if (ObjectUtils.isEmpty(entity.getTelefones())) {
             return Collections.emptySet();
         }
 
@@ -168,7 +169,7 @@ public class MapperOutImpl implements MapperOut {
     }
 
     private Set<EnderecoDto> toEnderecoDto(CustomerEntity entity) {
-        if (entity.getEnderecos() == null || entity.getEnderecos().isEmpty()) {
+        if (ObjectUtils.isEmpty(entity.getEnderecos())) {
             return Collections.emptySet();
         }
 

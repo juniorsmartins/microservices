@@ -7,6 +7,7 @@ import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoRespo
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.tipos.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class MapperInImpl implements MapperIn {
     }
 
     private Set<Telefone> toTelefone(CustomerCreateDtoRequest dto) {
-        if (dto.telefones() == null || dto.telefones().isEmpty()) {
+        if (ObjectUtils.isEmpty(dto.telefones())) {
             return Collections.emptySet();
         }
 
@@ -50,7 +51,7 @@ public class MapperInImpl implements MapperIn {
     }
 
     private Set<Endereco> toEndereco(CustomerCreateDtoRequest dto) {
-        if (dto.enderecos() == null || dto.enderecos().isEmpty()) {
+        if (ObjectUtils.isEmpty(dto.enderecos())) {
             return Collections.emptySet();
         }
 
@@ -89,7 +90,7 @@ public class MapperInImpl implements MapperIn {
     }
 
     private Set<TelefoneDto> toTelefoneDto(Customer customer) {
-        if (customer.getTelefones() == null || customer.getTelefones().isEmpty()) {
+        if (ObjectUtils.isEmpty(customer.getTelefones())) {
             return Collections.emptySet();
         }
 
@@ -100,7 +101,7 @@ public class MapperInImpl implements MapperIn {
     }
 
     private Set<EnderecoDto> toEnderecoDto(Customer customer) {
-        if (customer.getEnderecos() == null || customer.getEnderecos().isEmpty()) {
+        if (ObjectUtils.isEmpty(customer.getEnderecos())) {
             return Collections.emptySet();
         }
 
