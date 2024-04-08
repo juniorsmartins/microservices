@@ -257,7 +257,5 @@ bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/Custome
 jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterUnitTest.java,c/a/ca670a60c4a2359eb13707c8f149621e06d797c7
 ¡
 qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerSearchAdapterIntegrationTest.java,c/a/ca431595369577165fc3cc23c43f8bf169ab687a
-¬
-|micro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/WithTypeAndWithOutNumberException.java,c/e/cefd8041730694beebecde7448e97d00363560a5
 ´
 ƒmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/RequestWithTypeAndWithoutNumberException.java,3/9/390b62748855d3b9090252358057c04cad54e5f1
