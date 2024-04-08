@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.io.Serial;
 
 @Getter
-public abstract class ResourceNotFoundException extends RuntimeException {
+public abstract sealed class ResourceNotFoundException extends RuntimeException permits CustomerNotFoundException {
 
   @Serial
   private static final long serialVersionUID = 1L;
@@ -14,7 +14,7 @@ public abstract class ResourceNotFoundException extends RuntimeException {
 
   private final String messageKey;
 
-  protected ResourceNotFoundException(String messageKey, final Long id) {
+  protected ResourceNotFoundException(final String messageKey, final Long id) {
     super(messageKey);
     this.messageKey = messageKey;
     this.id = id;

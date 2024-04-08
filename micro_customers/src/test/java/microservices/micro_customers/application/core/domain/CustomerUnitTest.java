@@ -1,5 +1,6 @@
 package microservices.micro_customers.application.core.domain;
 
+import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.tipos.CadastroPessoaFisica;
 import microservices.micro_customers.application.core.domain.tipos.CorreioEletronico;
 import microservices.micro_customers.application.core.domain.tipos.DataNascimento;
@@ -109,6 +110,27 @@ class CustomerUnitTest extends AbstractTestcontainersTest {
             customer2.setEnderecos(customer1.getEnderecos());
 
             Assertions.assertEquals(customer1.toString(), customer2.toString());
+        }
+    }
+
+    @Nested
+    @DisplayName("statusCadastro")
+    class StatusCadastroTest {
+
+        @Test
+        @DisplayName("iniciado")
+        void dadoCustomerValido_quandoAddStatusCadastroIniciado_entaoAtribuirStatusIniciado() {
+            var customer = factory.gerarCustomerBuilder().build();
+            customer.addStatusCadastroIniciado();
+            Assertions.assertEquals(StatusCadastroEnum.INICIADO, customer.getStatusCadastro());
+        }
+
+        @Test
+        @DisplayName("concluído")
+        void dadoCustomerValido_quandoAddStatusCadastroConcluido_entaoAtribuirStatusConcluido() {
+            var customer = factory.gerarCustomerBuilder().build();
+            customer.addStatusCadastroConcluido();
+            Assertions.assertEquals(StatusCadastroEnum.CONCLUIDO, customer.getStatusCadastro());
         }
     }
 
