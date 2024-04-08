@@ -221,8 +221,6 @@ Xmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/Telefon
 omicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/CustomerSearchDtoResponse.java,a/a/aaed5b0c14323c6a5a3dd7214c22ad7348caafb1
 ’
 bmicro_customers/src/main/java/microservices/micro_customers/adapter/in/filters/CustomerFilter.java,1/8/1830d3e53aa7bd969fbe7834067780448939b37c
-”
-dmicro_customers/src/main/java/microservices/micro_customers/application/core/constant/Constants.java,9/b/9b5fb34769289261f04705fce3b412a71657c8af
 ´
 ƒmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/ProhibitedEmptyOrBlankAttributeException.java,d/a/da35f415b71d4d0aef39e882c10d3e62937d33c8
 ´
@@ -279,3 +277,5 @@ jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/Custome
 qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerDeleteAdapterIntegrationTest.java,1/e/1ec5f30275e5d1f43cfdcf3ddb45afa7201f89d3
 §
 wmicro_customers/src/test/java/microservices/micro_customers/application/core/usecase/CustomerDeleteUseCaseUnitTest.java,5/9/59f62df52e213833c6d2617ae48d9704ad445f7d
+¡
+qmicro_customers/src/test/java/microservices/micro_customers/adapter/in/controller/CustomerControllerUnitTest.java,3/1/315e3bd3a19252e138d68727cb4f6e19169ab5f1

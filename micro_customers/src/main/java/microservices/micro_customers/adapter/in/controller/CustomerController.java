@@ -65,7 +65,7 @@ public class CustomerController {
             .body(response);
     }
 
-    @DeleteMapping(path = {"/id"})
+    @DeleteMapping(path = {"/{id}"})
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final Long customerId) {
 
         Optional.ofNullable(customerId)

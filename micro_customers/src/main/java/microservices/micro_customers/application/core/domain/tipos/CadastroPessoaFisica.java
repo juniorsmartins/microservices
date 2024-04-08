@@ -25,7 +25,7 @@ public class CadastroPessoaFisica implements Serializable {
 
         Optional.ofNullable(cadastroPessoaFisica)
             .ifPresentOrElse(cadastroPF -> {
-                    this.attributeValidator(Constantes.CPF, cadastroPF, Constantes.MAX_CARACTERES_CUSTOMER_CPF);
+                    this.attributeValidator(cadastroPF);
                     if (!this.hasValidFormat(cadastroPF)) {
                         throw new CpfInvalidException(cadastroPF);
                     }
@@ -35,12 +35,12 @@ public class CadastroPessoaFisica implements Serializable {
             );
     }
 
-    private void attributeValidator(String nomeAtributo, String valorAtributo, int tamanhoMaximo) {
+    private void attributeValidator(String valorAtributo) {
         if (valorAtributo.isBlank()) {
-            throw new ProhibitedEmptyOrBlankAttributeException(nomeAtributo);
+            throw new ProhibitedEmptyOrBlankAttributeException(Constantes.CPF);
         }
-        if (valorAtributo.length() > tamanhoMaximo) {
-            throw new AttributeWithInvalidMaximumSizeException(nomeAtributo, valorAtributo, tamanhoMaximo);
+        if (valorAtributo.length() > Constantes.MAX_CARACTERES_CUSTOMER_CPF) {
+            throw new AttributeWithInvalidMaximumSizeException(Constantes.CPF, valorAtributo, Constantes.MAX_CARACTERES_CUSTOMER_CPF);
         }
     }
 

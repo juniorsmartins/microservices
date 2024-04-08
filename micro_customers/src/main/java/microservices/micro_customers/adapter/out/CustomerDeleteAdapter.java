@@ -21,11 +21,11 @@ public class CustomerDeleteAdapter implements CustomerDeleteOutputPort {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     @Modifying
     @Override
-    public void delete(final Long customerId) {
+    public void delete(final Long id) {
 
-        this.customerRepository.findById(customerId)
+        this.customerRepository.findById(id)
             .ifPresentOrElse(this.customerRepository::delete,
-                () -> {throw new CustomerNotFoundException(customerId);}
+                () -> {throw new CustomerNotFoundException(id);}
             );
     }
 
