@@ -8,6 +8,7 @@ import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoRespo
 import microservices.micro_customers.adapter.dto.response.CustomerSearchDtoResponse;
 import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.mapper.MapperIn;
+import microservices.micro_customers.application.core.constant.Constants;
 import microservices.micro_customers.application.port.input.CustomerCreateInputPort;
 import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
 import org.springframework.data.domain.Page;
@@ -49,7 +50,7 @@ public class CustomerController {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
-        @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = 10) final Pageable paginacao) {
+        @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = Constants.PAGE_SIZE) final Pageable paginacao) {
 
         var response = Optional.ofNullable(customerFilter)
             .map(filter -> this.customerSearchOutputPort.search(filter, paginacao))

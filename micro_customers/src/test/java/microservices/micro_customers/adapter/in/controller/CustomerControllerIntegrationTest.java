@@ -12,6 +12,7 @@ import io.restassured.specification.RequestSpecification;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
+import microservices.micro_customers.application.core.constant.Constants;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
@@ -139,7 +140,10 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
                 .then()
                     .log().all()
                     .statusCode(200)
-                    .body("totalElements", Matchers.equalTo(3));
+                    .body("totalElements", Matchers.equalTo(3))
+                    .body("totalPages", Matchers.equalTo(1))
+                    .body("size", Matchers.equalTo(Constants.PAGE_SIZE))
+                    .body("number", Matchers.equalTo(0));
         }
 
         @Test

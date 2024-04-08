@@ -50,5 +50,6 @@ public final class Constants {
 
     public static final int MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO = 250;
 
+    public static final int PAGE_SIZE = 12;
 }
 
