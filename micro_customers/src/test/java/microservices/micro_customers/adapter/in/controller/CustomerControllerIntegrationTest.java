@@ -10,10 +10,13 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
+import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
 import microservices.micro_customers.util.TestConfig;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -27,7 +30,7 @@ import java.time.format.DateTimeFormatter;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Integration -CustomerController")
+@DisplayName("Integration - CustomerController")
 class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
     private static final String BASE_PATH = "/api/v1/customers";
@@ -44,6 +47,10 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
     @Autowired
     CustomerRepository customerRepository;
 
+    CustomerEntity entity1;
+
+    CustomerEntity entity2;
+
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper(); // Precisei mudar o import do ObjectMapper
@@ -58,6 +65,14 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
             .build();
+
+        entity1 = factory.gerarCustomerEntityBuilder().build();
+        entity2 = factory.gerarCustomerEntityBuilder().statusCadastro(StatusCadastroEnum.CONCLUIDO).build();
+        var entity3 = factory.gerarCustomerEntityBuilder().build();
+
+        this.customerRepository.save(entity1);
+        this.customerRepository.save(entity2);
+        this.customerRepository.save(entity3);
     }
 
     @AfterEach
@@ -66,7 +81,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
     }
 
     @Nested
-    @DisplayName("Post")
+    @DisplayName("PostCreate")
     class PostCreate {
 
         @Test
@@ -105,6 +120,104 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
             Assertions.assertNotNull(dtoOut.createdAt());
             Assertions.assertNotNull(dtoOut.createdBy());
+        }
+    }
+
+    @Nested
+    @DisplayName("GetSearch")
+    class GetSearch {
+
+        @Test
+        @DisplayName("filtro vazio")
+        void dadoCustomerFiltroVazio_quandoSearch_entaoRetornarHttp200ComTresCustomerSearchDtoResponse() {
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                .when()
+                    .get()
+                .then()
+                    .log().all()
+                    .statusCode(200)
+                    .body("totalElements", Matchers.equalTo(3));
+        }
+
+        @Test
+        @DisplayName("dois customerIds")
+        void dadoCustomerFiltroComDoisCustomerIds_quandoSearch_entaoRetornarDoisCustomerSearchDtoResponse() {
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .queryParam("customerId", entity1.getCustomerId() + "," + entity2.getCustomerId())
+                .when()
+                    .get()
+                .then()
+                    .body("totalElements", Matchers.equalTo(2));
+
+        }
+
+        @Test
+        @DisplayName("dois nomeCompleto")
+        void dadoCustomerFiltroComDoisNomeCompleto_quandoSearch_entaoRetornarDoisCustomerSearchDtoResponse() {
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .queryParam("nomeCompleto", entity1.getNomeCompleto() + "," + entity2.getNomeCompleto())
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                    .body("totalElements", Matchers.equalTo(2));
+        }
+
+        @Test
+        @DisplayName("dois cpfs")
+        void dadoCustomerFiltroComDoisCpfs_quandoSearch_entaoRetornarDoisCustomerSearchDtoResponse() {
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .queryParam("cpf", entity1.getCpf() + "," + entity2.getCpf())
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                    .body("totalElements", Matchers.equalTo(2));
+        }
+
+        @Test
+        @DisplayName("statusCadastro")
+        void dadoCustomerFiltroComUmStatusCadastro_quandoSearch_entaoRetornarUmCustomerSearchDtoResponse() {
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .queryParam("statusCadastro", entity2.getStatusCadastro())
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                    .body("totalElements", Matchers.equalTo(1));
+        }
+
+        @Test
+        @DisplayName("dois emails")
+        void dadoCustomerFiltroComDoisEmails_quandoSearch_entaoRetornarDoisCustomerSearchDtoResponse() {
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .queryParam("email", entity1.getEmail() + "," + entity2.getEmail())
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                    .body("totalElements", Matchers.equalTo(2))
+                    .extract()
+                    .body()
+                    .asString();
         }
     }
 
