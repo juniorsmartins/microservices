@@ -1,8 +1,8 @@
 package microservices.micro_customers.application.core.constant;
 
-public final class Constants {
+public final class Constantes {
 
-    private Constants() { }
+    private Constantes() { }
 
     public static final String NOME_COMPLETO = "NomeCompleto";
 
@@ -50,5 +50,6 @@ public final class Constants {
 
     public static final int MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO = 250;
 
+    public static final int PAGE_SIZE = 12;
 }
 

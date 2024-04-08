@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 import microservices.micro_customers.config.exception.http_400.CpfInvalidException;
 import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
@@ -25,22 +25,22 @@ public class CadastroPessoaFisica implements Serializable {
 
         Optional.ofNullable(cadastroPessoaFisica)
             .ifPresentOrElse(cadastroPF -> {
-                    this.attributeValidator(Constants.CPF, cadastroPF, Constants.MAX_CARACTERES_CUSTOMER_CPF);
+                    this.attributeValidator(cadastroPF);
                     if (!this.hasValidFormat(cadastroPF)) {
                         throw new CpfInvalidException(cadastroPF);
                     }
                     this.cpf = cadastroPF;
                 },
-                () -> {throw new NullAttributeNotAllowedException(Constants.CPF);}
+                () -> {throw new NullAttributeNotAllowedException(Constantes.CPF);}
             );
     }
 
-    private void attributeValidator(String nomeAtributo, String valorAtributo, int tamanhoMaximo) {
+    private void attributeValidator(String valorAtributo) {
         if (valorAtributo.isBlank()) {
-            throw new ProhibitedEmptyOrBlankAttributeException(nomeAtributo);
+            throw new ProhibitedEmptyOrBlankAttributeException(Constantes.CPF);
         }
-        if (valorAtributo.length() > tamanhoMaximo) {
-            throw new AttributeWithInvalidMaximumSizeException(nomeAtributo, valorAtributo, tamanhoMaximo);
+        if (valorAtributo.length() > Constantes.MAX_CARACTERES_CUSTOMER_CPF) {
+            throw new AttributeWithInvalidMaximumSizeException(Constantes.CPF, valorAtributo, Constantes.MAX_CARACTERES_CUSTOMER_CPF);
         }
     }
 

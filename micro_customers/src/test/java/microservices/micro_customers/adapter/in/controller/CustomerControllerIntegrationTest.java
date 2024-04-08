@@ -12,6 +12,7 @@ import io.restassured.specification.RequestSpecification;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
@@ -70,8 +71,8 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
         entity2 = factory.gerarCustomerEntityBuilder().statusCadastro(StatusCadastroEnum.CONCLUIDO).build();
         var entity3 = factory.gerarCustomerEntityBuilder().build();
 
-        this.customerRepository.save(entity1);
-        this.customerRepository.save(entity2);
+        entity1 = this.customerRepository.save(entity1);
+        entity2 = this.customerRepository.save(entity2);
         this.customerRepository.save(entity3);
     }
 
@@ -139,7 +140,10 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
                 .then()
                     .log().all()
                     .statusCode(200)
-                    .body("totalElements", Matchers.equalTo(3));
+                    .body("totalElements", Matchers.equalTo(3))
+                    .body("totalPages", Matchers.equalTo(1))
+                    .body("size", Matchers.equalTo(Constantes.PAGE_SIZE))
+                    .body("number", Matchers.equalTo(0));
         }
 
         @Test
@@ -218,6 +222,31 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
                     .extract()
                     .body()
                     .asString();
+        }
+    }
+
+    @Nested
+    @DisplayName("Delete")
+    class DeleteTest {
+
+        @Test
+        @DisplayName("customerId válido")
+        void dadoCustomerIdValido_quandoDeleteById_entaoRetornarHttp204AndApagarUmCustomer() {
+
+            var entitiesAntes = customerRepository.findAll();
+            Assertions.assertEquals(3, entitiesAntes.size());
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                .when()
+                    .delete("/" + entity1.getCustomerId())
+                .then()
+                    .log().all()
+                    .statusCode(204);
+
+            var entitiesDepois = customerRepository.findAll();
+            Assertions.assertEquals(2, entitiesDepois.size());
         }
     }
 

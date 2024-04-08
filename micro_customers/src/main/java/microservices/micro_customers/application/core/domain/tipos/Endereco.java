@@ -1,7 +1,7 @@
 package microservices.micro_customers.application.core.domain.tipos;
 
 import lombok.*;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 
 import java.util.Optional;
@@ -41,7 +41,7 @@ public final class Endereco {
     public void setCep(String cep) {
         Optional.ofNullable(cep)
             .ifPresent(postal -> {
-                this.attributeValidator(Constants.CEP, postal, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP);
+                this.attributeValidator(Constantes.CEP, postal, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP);
                 this.cep = postal;
             });
     }
@@ -49,7 +49,7 @@ public final class Endereco {
     public void setEstado(String estado) {
         Optional.ofNullable(estado)
             .ifPresent(uf -> {
-                this.attributeValidator(Constants.ESTADO, uf, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO);
+                this.attributeValidator(Constantes.ESTADO, uf, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO);
                 this.estado = uf;
             });
     }
@@ -57,7 +57,7 @@ public final class Endereco {
     public void setCidade(String cidade) {
         Optional.ofNullable(cidade)
             .ifPresent(city -> {
-                this.attributeValidator(Constants.CIDADE, city, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE);
+                this.attributeValidator(Constantes.CIDADE, city, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE);
                 this.cidade = city;
             });
     }
@@ -65,7 +65,7 @@ public final class Endereco {
     public void setBairro(String bairro) {
         Optional.ofNullable(bairro)
             .ifPresent(area -> {
-                this.attributeValidator(Constants.BAIRRO, area, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO);
+                this.attributeValidator(Constantes.BAIRRO, area, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO);
                 this.bairro = area;
             });
     }
@@ -73,7 +73,7 @@ public final class Endereco {
     public void setLogradouro(String logradouro) {
         Optional.ofNullable(logradouro)
             .ifPresent(street -> {
-                this.attributeValidator(Constants.LOGRADOURO, street, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO);
+                this.attributeValidator(Constantes.LOGRADOURO, street, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO);
                 this.logradouro = street;
             });
     }
@@ -81,7 +81,7 @@ public final class Endereco {
     public void setNumero(String numero) {
         Optional.ofNullable(numero)
             .ifPresent(location -> {
-                this.attributeValidator(Constants.NUMERO, location, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO);
+                this.attributeValidator(Constantes.NUMERO, location, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO);
                 this.numero = location;
             });
     }
@@ -89,7 +89,7 @@ public final class Endereco {
     public void setComplemento(String complemento) {
         Optional.ofNullable(complemento)
             .ifPresent(complement -> {
-                this.attributeValidator(Constants.COMPLEMENTO, complement, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO);
+                this.attributeValidator(Constantes.COMPLEMENTO, complement, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO);
                 this.complemento = complement;
             });
     }

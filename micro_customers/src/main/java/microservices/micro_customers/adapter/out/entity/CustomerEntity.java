@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 
 import java.io.Serial;
@@ -41,10 +41,10 @@ public final class CustomerEntity implements Serializable {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @Column(name = "nome_completo", nullable = false, length = Constants.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO)
+    @Column(name = "nome_completo", nullable = false, length = Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO)
     private String nomeCompleto;
 
-    @Column(name = "cpf", unique = true, nullable = false, updatable = false, length = Constants.MAX_CARACTERES_CUSTOMER_CPF)
+    @Column(name = "cpf", unique = true, nullable = false, updatable = false, length = Constantes.MAX_CARACTERES_CUSTOMER_CPF)
     private String cpf;
 
     @Column(name = "data_nascimento")
@@ -54,7 +54,7 @@ public final class CustomerEntity implements Serializable {
     @Column(name = "status_cadastro", nullable = false)
     private StatusCadastroEnum statusCadastro;
 
-    @Column(name = "email", nullable = false, length = Constants.MAX_CARACTERES_CUSTOMER_EMAIL)
+    @Column(name = "email", nullable = false, length = Constantes.MAX_CARACTERES_CUSTOMER_EMAIL)
     private String email;
 
 

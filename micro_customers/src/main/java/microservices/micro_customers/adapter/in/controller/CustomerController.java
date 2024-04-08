@@ -8,7 +8,9 @@ import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoRespo
 import microservices.micro_customers.adapter.dto.response.CustomerSearchDtoResponse;
 import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.mapper.MapperIn;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.port.input.CustomerCreateInputPort;
+import microservices.micro_customers.application.port.input.CustomerDeleteInputPort;
 import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +33,8 @@ public class CustomerController {
     private final CustomerCreateInputPort customerCreateInputPort;
 
     private final CustomerSearchOutputPort customerSearchOutputPort;
+
+    private final CustomerDeleteInputPort customerDeleteInputPort;
 
     private final MapperIn mapperIn;
 
@@ -49,7 +54,7 @@ public class CustomerController {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
-        @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = 10) final Pageable paginacao) {
+        @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = Constantes.PAGE_SIZE) final Pageable paginacao) {
 
         var response = Optional.ofNullable(customerFilter)
             .map(filter -> this.customerSearchOutputPort.search(filter, paginacao))
@@ -58,6 +63,19 @@ public class CustomerController {
         return ResponseEntity
             .ok()
             .body(response);
+    }
+
+    @DeleteMapping(path = {"/{id}"})
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final Long customerId) {
+
+        Optional.ofNullable(customerId)
+            .ifPresentOrElse(this.customerDeleteInputPort::delete,
+                () -> {throw new NoSuchElementException();}
+            );
+
+        return ResponseEntity
+            .noContent()
+            .build();
     }
 
 }

@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 import microservices.micro_customers.config.exception.http_400.EmailInvalidException;
 import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
@@ -27,13 +27,13 @@ public final class CorreioEletronico {
     public CorreioEletronico(String correioEletronico) {
         Optional.ofNullable(correioEletronico)
             .ifPresentOrElse(email -> {
-                    this.attributeValidator(Constants.EMAIL, email, Constants.MAX_CARACTERES_CUSTOMER_EMAIL);
+                    this.attributeValidator(Constantes.EMAIL, email, Constantes.MAX_CARACTERES_CUSTOMER_EMAIL);
                     if (!this.hasValidFormat(email)) {
                         throw new EmailInvalidException(email);
                     }
                     this.email = email;
                 },
-                () -> {throw new NullAttributeNotAllowedException(Constants.EMAIL);}
+                () -> {throw new NullAttributeNotAllowedException(Constantes.EMAIL);}
             );
     }
 

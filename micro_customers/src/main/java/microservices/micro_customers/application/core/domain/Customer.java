@@ -1,7 +1,7 @@
 package microservices.micro_customers.application.core.domain;
 
 import lombok.*;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.tipos.*;
 import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
@@ -68,10 +68,10 @@ public final class Customer {
     public void setNomeCompleto(String nomeCompleto) {
         Optional.ofNullable(nomeCompleto)
             .ifPresentOrElse(nome -> {
-                this.attributeValidator(Constants.NOME_COMPLETO, nome, Constants.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO);
+                this.attributeValidator(Constantes.NOME_COMPLETO, nome, Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO);
                 this.nomeCompleto = nome;
             },
-            () -> {throw new NullAttributeNotAllowedException(Constants.NOME_COMPLETO);}
+            () -> {throw new NullAttributeNotAllowedException(Constantes.NOME_COMPLETO);}
         );
     }
 

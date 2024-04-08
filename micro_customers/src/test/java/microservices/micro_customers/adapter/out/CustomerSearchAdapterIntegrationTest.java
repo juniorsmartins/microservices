@@ -51,7 +51,7 @@ class CustomerSearchAdapterIntegrationTest extends AbstractTestcontainersTest {
     }
 
     @Nested
-    @DisplayName("")
+    @DisplayName("CustomerFilter")
     class CustomerFilterTest {
 
         @Test
