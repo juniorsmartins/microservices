@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 import microservices.micro_customers.config.exception.http_400.RequestWithTypeAndWithoutNumberException;
@@ -31,7 +31,7 @@ public final class Telefone {
     public Telefone(String numeroTelefone, TipoTelefoneEnum tipo) {
         Optional.ofNullable(numeroTelefone)
             .ifPresentOrElse(valor -> {
-                this.attributeValidator(Constants.TELEFONE_NUMERO, valor);
+                this.attributeValidator(Constantes.TELEFONE_NUMERO, valor);
                 if (!this.hasValidFormat(valor)) {
                     throw new TelefoneInvalidException(valor);
                 }

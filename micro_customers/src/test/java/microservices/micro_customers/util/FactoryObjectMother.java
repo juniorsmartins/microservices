@@ -6,7 +6,7 @@ import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoReques
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
@@ -42,7 +42,7 @@ public final class FactoryObjectMother {
         var enderecoVo2 = gerarEnderecoVoBuilder().build();
 
         return CustomerEntity.builder()
-            .nomeCompleto(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO))
+            .nomeCompleto(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO))
             .cpf(faker.cpf().valid())
             .dataNascimento(LocalDate.of(2000, 10, 27))
             .statusCadastro(StatusCadastroEnum.INICIADO)
@@ -67,7 +67,7 @@ public final class FactoryObjectMother {
         Random random = new Random();
 
         StringBuilder onzeDigitos = new StringBuilder();
-        for (int i = 1; i <= Constants.MAX_CARACTERES_CUSTOMER_TELEFONE_NUMERO; i++) {
+        for (int i = 1; i <= Constantes.MAX_CARACTERES_CUSTOMER_TELEFONE_NUMERO; i++) {
             int digito = random.nextInt(9) + 1; // Gera um dígito aleatório de 0 a 9
             onzeDigitos.append(digito);
         }
@@ -77,13 +77,13 @@ public final class FactoryObjectMother {
 
     public EnderecoVo.EnderecoVoBuilder gerarEnderecoVoBuilder() {
         return EnderecoVo.builder()
-            .cep(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
-            .estado(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
-            .cidade(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
-            .bairro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
-            .logradouro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
-            .numero(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
-            .complemento(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
+            .cep(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
+            .estado(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
+            .cidade(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
+            .bairro(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
+            .logradouro(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
+            .numero(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
+            .complemento(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
     }
 
     public Customer.CustomerBuilder gerarCustomerBuilder() {
@@ -93,7 +93,7 @@ public final class FactoryObjectMother {
         var endereco2 = gerarEnderecoBuilder().build();
 
         return Customer.builder()
-            .nomeCompleto(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO))
+            .nomeCompleto(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO))
             .cpf(new CadastroPessoaFisica(faker.cpf().valid()))
             .dataNascimento(new DataNascimento(LocalDate.of(2000, 10, 27)))
             .statusCadastro(StatusCadastroEnum.INICIADO)
@@ -116,13 +116,13 @@ public final class FactoryObjectMother {
 
     public Endereco.EnderecoBuilder gerarEnderecoBuilder() {
         return Endereco.builder()
-            .cep(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
-            .estado(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
-            .cidade(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
-            .bairro(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
-            .logradouro(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
-            .numero(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
-            .complemento(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
+            .cep(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
+            .estado(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
+            .cidade(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
+            .bairro(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
+            .logradouro(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
+            .numero(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
+            .complemento(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
     }
 
     public CustomerCreateDtoRequest.CustomerCreateDtoRequestBuilder gerarCustomerCreateDtoRequestBuilder() {
@@ -132,7 +132,7 @@ public final class FactoryObjectMother {
         var endereco2 = gerarEnderecoDtoBuilder().build();
 
         return CustomerCreateDtoRequest.builder()
-            .nomeCompleto(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO))
+            .nomeCompleto(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO))
             .cpf(faker.cpf().valid())
             .dataNascimento("27/10/2000")
             .email(faker.internet().emailAddress())
@@ -154,13 +154,13 @@ public final class FactoryObjectMother {
 
     public EnderecoDto.EnderecoDtoBuilder gerarEnderecoDtoBuilder() {
         return EnderecoDto.builder()
-            .cep(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
-            .estado(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
-            .cidade(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
-            .bairro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
-            .logradouro(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
-            .numero(faker.lorem().characters(Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
-            .complemento(faker.lorem().characters(1, Constants.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
+            .cep(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CEP))
+            .estado(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO))
+            .cidade(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_CIDADE))
+            .bairro(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_BAIRRO))
+            .logradouro(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_LOGRADOURO))
+            .numero(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_NUMERO))
+            .complemento(faker.lorem().characters(1, Constantes.MAX_CARACTERES_CUSTOMER_ENDERECO_COMPLEMENTO));
     }
 
     public CadastroPessoaFisica.CadastroPessoaFisicaBuilder gerarCadastroPessoaFisicaValidoBuilder() {

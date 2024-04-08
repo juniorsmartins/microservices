@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import microservices.micro_customers.application.core.constant.Constants;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.config.exception.http_400.AttributeWithInvalidMaximumSizeException;
 import microservices.micro_customers.config.exception.http_400.CpfInvalidException;
 import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
@@ -25,13 +25,13 @@ public class CadastroPessoaFisica implements Serializable {
 
         Optional.ofNullable(cadastroPessoaFisica)
             .ifPresentOrElse(cadastroPF -> {
-                    this.attributeValidator(Constants.CPF, cadastroPF, Constants.MAX_CARACTERES_CUSTOMER_CPF);
+                    this.attributeValidator(Constantes.CPF, cadastroPF, Constantes.MAX_CARACTERES_CUSTOMER_CPF);
                     if (!this.hasValidFormat(cadastroPF)) {
                         throw new CpfInvalidException(cadastroPF);
                     }
                     this.cpf = cadastroPF;
                 },
-                () -> {throw new NullAttributeNotAllowedException(Constants.CPF);}
+                () -> {throw new NullAttributeNotAllowedException(Constantes.CPF);}
             );
     }
 
