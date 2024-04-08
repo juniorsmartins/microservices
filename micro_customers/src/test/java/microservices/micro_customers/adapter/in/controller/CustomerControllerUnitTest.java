@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -48,6 +49,10 @@ class CustomerControllerUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerIdNulo_quandoDeleteByID_entaoLancarException() {
             Executable acao = () -> customerController.deleteById(null);
             Assertions.assertThrows(NoSuchElementException.class, acao);
+            Mockito.verifyNoInteractions(customerCreateUseCase);
+            Mockito.verifyNoInteractions(customerSearchAdapter);
+            Mockito.verifyNoInteractions(customerDeleteUseCase);
+            Mockito.verifyNoInteractions(mapperIn);
         }
     }
 
