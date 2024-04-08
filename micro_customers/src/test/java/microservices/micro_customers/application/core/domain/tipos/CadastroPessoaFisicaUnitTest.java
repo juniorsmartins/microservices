@@ -66,8 +66,8 @@ class CadastroPessoaFisicaUnitTest extends AbstractTestcontainersTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"1234567890", "71970296011", "11111111111"})
-        @DisplayName("dez dígitos, primeiro dígito inválido e dígitos iguais")
+        @ValueSource(strings = {"1234567890", "54682866098", "54682866029", "11111111111"})
+        @DisplayName("dez dígitos, primeiro e segundo dígitos inválidos e dígitos iguais")
         void dadoCpfComTresErrosDistintos_quandoInstanciarCadastroPessoaFisica_entaoLancarException(String valor) {
             Executable acao = () -> CadastroPessoaFisica.builder().cpf(valor).build();
             Assertions.assertThrows(CpfInvalidException.class, acao);
