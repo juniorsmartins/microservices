@@ -9,6 +9,8 @@ import microservices.micro_customers.application.port.output.CustomerFindByCpfOu
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -20,11 +22,10 @@ public class CustomerFindByCpfAdapter implements CustomerFindByCpfOutputPort {
 
     @Transactional(readOnly = true)
     @Override
-    public Customer findByCpf(final String cpf) {
+    public Optional<Customer> findByCpf(final String cpf) {
 
         return this.customerRepository.findByCpf(cpf)
-            .map(this.mapperOut::toCustomer)
-            .orElseThrow();
+            .map(this.mapperOut::toCustomer);
     }
 
 }

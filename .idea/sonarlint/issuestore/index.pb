@@ -303,3 +303,11 @@ lmicro_customers/src/test/java/microservices/micro_customers/adapter/out/Custome
 smicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerFindByIdAdapterIntegrationTest.java,2/6/26f300979a9ba01f3cd95f8a899b1209f369fa76
 ¤
 tmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerFindByCpfAdapterIntegrationTest.java,d/1/d1338b3bf497ca61f474913987bc7207547ab15f
+©
+ymicro_customers/src/main/java/microservices/micro_customers/config/exception/http_409/BusinessRuleViolationException.java,0/3/039df290aa6ddb75cde67f45cce9dc91eb9e9e20
+ 
+pmicro_customers/src/main/java/microservices/micro_customers/config/exception/http_409/CpfDuplicityException.java,d/1/d18fdae39597ff989fa145a9ad778a36357ef6bf
+©
+ymicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/DataNascimentoInvalidException.java,5/7/575681b8b533fe5aff26e14f320c445a639b33a5
+®
+~micro_customers/src/test/java/microservices/micro_customers/application/core/usecase/CustomerCreateUseCaseIntegrationTest.java,7/4/74f3fc62310e1d2098332e7c621fb9c92fbf154d
