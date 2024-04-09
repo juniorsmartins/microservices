@@ -1,5 +1,7 @@
 package microservices.micro_customers.adapter.dto.request;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -19,17 +21,22 @@ public record CustomerCreateDtoRequest(
     String nomeCompleto,
 
     @NotBlank
-    @Size(max = Constantes.MAX_CARACTERES_CUSTOMER_CPF)
     @CPF
+    @Size(max = Constantes.MAX_CARACTERES_CUSTOMER_CPF)
     String cpf,
 
     @Pattern(regexp = "\\d{2}/\\d{2}/\\d{4}")
     String dataNascimento,
 
+    @NotBlank
+    @Email
+    @Size(max = Constantes.MAX_CARACTERES_CUSTOMER_EMAIL)
     String email,
 
+    @Valid
     Set<TelefoneDto> telefones,
 
+    @Valid
     Set<EnderecoDto> enderecos
 
 ) { }

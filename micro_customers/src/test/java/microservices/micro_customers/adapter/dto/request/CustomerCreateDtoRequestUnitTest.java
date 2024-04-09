@@ -130,5 +130,39 @@ class CustomerCreateDtoRequestUnitTest extends AbstractTestcontainersTest {
         }
     }
 
+    @Nested
+    @DisplayName("Email")
+    class EmailTest {
+
+        @Test
+        @DisplayName("nulo")
+        void dadoCustomerCreateDtoRequestComEmailNulo_quandoInstanciar_entaoLancarException() {
+            var dtoRequest = new CustomerCreateDtoRequest(nomeCompletoValido, cpfValido, dataNascimentoValida,
+                null, telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", "   "})
+        @DisplayName("vazio ou em branco")
+        void dadoCustomerCreateDtoRequestComEmailVazioOuEmBranco_quandoInstanciar_entaoLancarException(String valor) {
+            var dtoRequest = new CustomerCreateDtoRequest(nomeCompletoValido, cpfValido, dataNascimentoValida,
+                valor, telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+
+        @Test
+        @DisplayName("máximo caracteres excedido")
+        void dadoCustomerCreateDtoRequestComEmailComMaximoCaracteresExcedido_quandoInstanciar_entaoLancarException() {
+            var dtoRequest = new CustomerCreateDtoRequest(nomeCompletoValido, cpfValido, dataNascimentoValida,
+                FactoryObjectMother.faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_EMAIL + 1),
+                telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+    }
+
 }
 
