@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import microservices.micro_customers.adapter.dto.EnderecoDto;
 import microservices.micro_customers.adapter.dto.TelefoneDto;
+import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.enums.TipoTelefoneEnum;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import microservices.micro_customers.util.FactoryObjectMother;
@@ -26,6 +27,8 @@ class CustomerCreateDtoRequestUnitTest extends AbstractTestcontainersTest {
     @Autowired
     private Validator validator;
 
+    String nomeCompletoValido;
+
     String cpfValido;
 
     String dataNascimentoValida;
@@ -38,6 +41,7 @@ class CustomerCreateDtoRequestUnitTest extends AbstractTestcontainersTest {
 
     @BeforeEach
     void setUp() {
+        nomeCompletoValido = FactoryObjectMother.faker.artist().name();
         cpfValido = FactoryObjectMother.faker.cpf().valid();
         dataNascimentoValida = "10/02/1977";
         emailValido = FactoryObjectMother.faker.internet().emailAddress();
@@ -64,6 +68,63 @@ class CustomerCreateDtoRequestUnitTest extends AbstractTestcontainersTest {
         void dadoCustomerCreateDtoRequestComNomeVazioOuEmBranco_quandoInstanciar_entaoLancarException(String valor) {
             var dtoRequest = new CustomerCreateDtoRequest(valor, cpfValido, dataNascimentoValida,
                 emailValido, telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+
+        @Test
+        @DisplayName("máximo caracteres excedido")
+        void dadoCustomerCreateDtoRequestComNomeComMaximoCaracteresExcedido_quandoInstanciar_entaoLancarException() {
+            var dtoRequest = new CustomerCreateDtoRequest(FactoryObjectMother.faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO + 1), cpfValido,
+                dataNascimentoValida, emailValido, telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("CPF")
+    class CpfTest {
+
+        @Test
+        @DisplayName("nulo")
+        void dadoCustomerCreateDtoRequestComCpfNulo_quandoInstanciar_entaoLancarException() {
+            var dtoRequest = new CustomerCreateDtoRequest(nomeCompletoValido, null, dataNascimentoValida,
+                emailValido, telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", "   "})
+        @DisplayName("vazio ou em branco")
+        void dadoCustomerCreateDtoRequestComCpfVazioOuEmBranco_quandoInstanciar_entaoLancarException(String valor) {
+            var dtoRequest = new CustomerCreateDtoRequest(nomeCompletoValido, valor, dataNascimentoValida,
+                emailValido, telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+
+        @Test
+        @DisplayName("máximo caracteres excedido")
+        void dadoCustomerCreateDtoRequestComCpfComMaximoCaracteresExcedido_quandoInstanciar_entaoLancarException() {
+            var dtoRequest = new CustomerCreateDtoRequest(nomeCompletoValido, "123456789012345",
+                dataNascimentoValida, emailValido, telefonesValido, enderecosValido);
+            Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
+            Assertions.assertFalse(violations.isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("DataNascimento")
+    class DataNascimentoTest {
+
+        @ParameterizedTest
+        @ValueSource(strings = {"20-20-2020", "2020/10/10", "05/125/1990"})
+        @DisplayName("formatos inválidos")
+        void dadoCustomerCreateDtoRequestComDataNascimentoEmFormatoInvalido_quandoInstanciar_entaoLancarException(String valor) {
+            var dtoRequest = new CustomerCreateDtoRequest(nomeCompletoValido, cpfValido, valor, emailValido,
+                telefonesValido, enderecosValido);
             Set<ConstraintViolation<CustomerCreateDtoRequest>> violations = validator.validate(dtoRequest);
             Assertions.assertFalse(violations.isEmpty());
         }
