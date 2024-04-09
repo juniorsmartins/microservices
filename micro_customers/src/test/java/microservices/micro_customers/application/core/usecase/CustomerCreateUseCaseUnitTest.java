@@ -1,5 +1,6 @@
 package microservices.micro_customers.application.core.usecase;
 
+import microservices.micro_customers.adapter.out.CustomerFindByCpfAdapter;
 import microservices.micro_customers.adapter.out.CustomerSaveAdapter;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import org.junit.jupiter.api.Assertions;
@@ -22,10 +23,13 @@ import java.util.NoSuchElementException;
 class CustomerCreateUseCaseUnitTest extends AbstractTestcontainersTest {
 
     @Mock
-    private CustomerSaveAdapter customerSaveAdapter;
+    CustomerSaveAdapter customerSaveAdapter;
+
+    @Mock
+    CustomerFindByCpfAdapter customerFindByCpfAdapter;
 
     @InjectMocks
-    private CustomerCreateUseCase customerCreateUseCase;
+    CustomerCreateUseCase customerCreateUseCase;
 
     @Test
     @DisplayName("customer nulo")
@@ -33,6 +37,7 @@ class CustomerCreateUseCaseUnitTest extends AbstractTestcontainersTest {
         Executable acao = () -> this.customerCreateUseCase.create(null);
         Assertions.assertThrows(NoSuchElementException.class, acao);
         Mockito.verifyNoInteractions(this.customerSaveAdapter);
+        Mockito.verifyNoInteractions(this.customerFindByCpfAdapter);
     }
 
 }
