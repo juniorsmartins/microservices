@@ -303,3 +303,7 @@ ymicro_customers/src/main/java/microservices/micro_customers/config/exception/ht
 ~micro_customers/src/test/java/microservices/micro_customers/application/core/usecase/CustomerCreateUseCaseIntegrationTest.java,7/4/74f3fc62310e1d2098332e7c621fb9c92fbf154d
 •
 umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerCreateDtoRequestUnitTest.java,e/c/ecf9a3ea4c68214534374a29a67ca72ca85476b9
+ê
+`micro_customers/src/test/java/microservices/micro_customers/adapter/dto/TelefoneDtoUnitTest.java,3/3/3336c1c0aae965ac7cab9e05abf49d118ec91176
+ê
+`micro_customers/src/test/java/microservices/micro_customers/adapter/dto/EnderecoDtoUnitTest.java,3/5/359f6e0f934a90d0f8db3f2127faa459ff05767c
