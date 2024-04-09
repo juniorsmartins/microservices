@@ -20,15 +20,21 @@ public final class Constantes {
 
     public static final int MAX_CARACTERES_CUSTOMER_TELEFONE_NUMERO = 11;
 
+    public static final int MIN_CARACTERES_CUSTOMER_TELEFONE_NUMERO = 10;
+
     public static final int MAX_CARACTERES_CUSTOMER_TELEFONE_TIPO = 10;
 
     public static final String CEP = "Cep";
 
-    public static final int MAX_CARACTERES_CUSTOMER_ENDERECO_CEP = 14;
+    public static final int MAX_CARACTERES_CUSTOMER_ENDERECO_CEP = 10;
+
+    public static final int MIN_CARACTERES_CUSTOMER_ENDERECO_CEP = 8;
 
     public static final String ESTADO = "Estado";
 
     public static final int MAX_CARACTERES_CUSTOMER_ENDERECO_ESTADO = 2;
+
+    public static final int MIN_CARACTERES_CUSTOMER_ENDERECO_ESTADO = 2;
 
     public static final String CIDADE = "Cidade";
 
