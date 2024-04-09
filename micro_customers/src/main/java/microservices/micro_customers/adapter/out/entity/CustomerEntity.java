@@ -6,6 +6,8 @@ import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
 import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
+import org.hibernate.annotations.SoftDelete;
+import org.hibernate.annotations.SoftDeleteType;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,6 +30,7 @@ import java.util.Set;
 @Setter
 @ToString
 @EqualsAndHashCode(of = {"customerId"})
+@SoftDelete(strategy = SoftDeleteType.DELETED)
 public final class CustomerEntity implements Serializable {
 
     @Serial
@@ -44,7 +47,7 @@ public final class CustomerEntity implements Serializable {
     @Column(name = "nome_completo", nullable = false, length = Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO)
     private String nomeCompleto;
 
-    @Column(name = "cpf", unique = true, nullable = false, updatable = false, length = Constantes.MAX_CARACTERES_CUSTOMER_CPF)
+    @Column(name = "cpf", nullable = false, updatable = false, length = Constantes.MAX_CARACTERES_CUSTOMER_CPF)
     private String cpf;
 
     @Column(name = "data_nascimento")
