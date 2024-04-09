@@ -307,3 +307,5 @@ umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request
 `micro_customers/src/test/java/microservices/micro_customers/adapter/dto/TelefoneDtoUnitTest.java,3/3/3336c1c0aae965ac7cab9e05abf49d118ec91176
 ê
 `micro_customers/src/test/java/microservices/micro_customers/adapter/dto/EnderecoDtoUnitTest.java,3/5/359f6e0f934a90d0f8db3f2127faa459ff05767c
+á
+Wmicro_customers/src/main/java/microservices/micro_customers/config/beans/WebConfig.java,3/5/35af1c7c3493914fe70e5a8efa244f0a82aac217
