@@ -22,7 +22,7 @@ public final class FactoryObjectMother {
 
     private static FactoryObjectMother singletonFactory;
 
-    private final Faker faker = new Faker();
+    public static final Faker faker = new Faker();
 
     private FactoryObjectMother() { }
 

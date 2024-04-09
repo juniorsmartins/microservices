@@ -301,3 +301,5 @@ pmicro_customers/src/main/java/microservices/micro_customers/config/exception/ht
 ymicro_customers/src/main/java/microservices/micro_customers/config/exception/http_400/DataNascimentoInvalidException.java,5/7/575681b8b533fe5aff26e14f320c445a639b33a5
 ®
 ~micro_customers/src/test/java/microservices/micro_customers/application/core/usecase/CustomerCreateUseCaseIntegrationTest.java,7/4/74f3fc62310e1d2098332e7c621fb9c92fbf154d
+¥
+umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerCreateDtoRequestUnitTest.java,e/c/ecf9a3ea4c68214534374a29a67ca72ca85476b9

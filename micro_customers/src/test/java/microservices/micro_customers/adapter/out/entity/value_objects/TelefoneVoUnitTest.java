@@ -13,11 +13,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DisplayName("Unit - TelefoneVo")
 class TelefoneVoUnitTest extends AbstractTestcontainersTest {
 
-    private final FactoryObjectMother factory = FactoryObjectMother.singleton();
+    final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
-    private TelefoneVo telefoneVo1;
+    TelefoneVo telefoneVo1;
 
-    private TelefoneVo telefoneVo2;
+    TelefoneVo telefoneVo2;
 
     @BeforeEach
     void setUp() {
