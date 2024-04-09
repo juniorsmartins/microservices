@@ -28,6 +28,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
     private final MessageSource messageSource;
 
     // ---------- PARA CAPTURAR TODAS AS EXCEÇÕES SEM TRATAMENTO ESPECÍFICO ---------- //
+    // ---------- 500 Internal Server Erros ---------- //
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest) {
 
@@ -75,6 +76,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
 
 
     // ---------- TRATAMENTO DE EXCEÇÕES CUSTOMIZADAS ---------- //
+    // ---------- 400 Bad Request ---------- //
     @ExceptionHandler(RequestWithDataInIncorrectFormatException.class)
     public ResponseEntity<ProblemDetail> handlePoorlyRequestFormulated(RequestWithDataInIncorrectFormatException ex,
                                                                        WebRequest webRequest) {
@@ -94,6 +96,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
             .body(problemDetail);
     }
 
+    // ---------- 400 Bad Request ---------- //
     @ExceptionHandler(RequestWithDataOutsideTheRulesException.class)
     public ResponseEntity<ProblemDetail> handleRequestWithDataOutsideTheRules(RequestWithDataOutsideTheRulesException ex,
                                                                        WebRequest webRequest) {
@@ -115,6 +118,7 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
             .body(problemDetail);
     }
 
+    // ---------- 404 Not Found ---------- //
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceNotFoundException ex, WebRequest webRequest) {
 
@@ -134,13 +138,23 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
             .body(problemDetail);
     }
 
+    // ---------- 409 Conflict ---------- //
     @ExceptionHandler(BusinessRuleViolationException.class)
     public ResponseEntity<ProblemDetail> handleBusinessRuleViolation(BusinessRuleViolationException ex,
                                                                      WebRequest webRequest) {
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
         problemDetail.setType(URI.create("https://babystepsdev.com/erros/regras-de-negocio-violadas"));
-        problemDetail.setTitle(this.getMessage(ex.getMessageKey()));
+
+        var valor = ex.getValor();
+
+        if (valor != null) {
+            var mensagem = this.messageSource.getMessage(ex.getMessageKey(), new Object[]{valor},
+                LocaleContextHolder.getLocale());
+            problemDetail.setTitle(mensagem);
+        } else {
+            problemDetail.setTitle(this.getMessage(ex.getMessageKey()));
+        }
 
         return ResponseEntity
             .status(HttpStatus.CONFLICT)
