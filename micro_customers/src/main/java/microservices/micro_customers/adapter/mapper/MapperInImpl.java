@@ -3,7 +3,9 @@ package microservices.micro_customers.adapter.mapper;
 import microservices.micro_customers.adapter.dto.EnderecoDto;
 import microservices.micro_customers.adapter.dto.TelefoneDto;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
+import microservices.micro_customers.adapter.dto.request.CustomerUpdateDtoRequest;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerUpdateDtoResponse;
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.core.domain.tipos.*;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 public class MapperInImpl implements MapperIn {
 
     @Override
-    public Customer toCustomer(final CustomerCreateDtoRequest customerCreateDtoRequest) {
+    public Customer toCustomerCreate(final CustomerCreateDtoRequest customerCreateDtoRequest) {
         return Optional.ofNullable(customerCreateDtoRequest)
             .map(this::customer)
             .orElseThrow();
@@ -117,6 +119,79 @@ public class MapperInImpl implements MapperIn {
                 .complemento(address.getComplemento())
                 .build())
             .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Customer toCustomerUpdate(CustomerUpdateDtoRequest customerUpdateDtoRequest) {
+        return Optional.ofNullable(customerUpdateDtoRequest)
+            .map(this::customer)
+            .orElseThrow();
+    }
+
+    private Customer customer(CustomerUpdateDtoRequest dto) {
+        var enderecos = this.toEndereco(dto);
+        var telefones = this.toTelefone(dto);
+
+        var customer = new Customer();
+        customer.setCustomerId(dto.customerId());
+        customer.setNomeCompleto(dto.nomeCompleto());
+        customer.setCpf(new CadastroPessoaFisica(dto.cpf()));
+        customer.setDataNascimento(new DataNascimento(dto.dataNascimento()));
+        customer.setEmail(new CorreioEletronico(dto.email()));
+        customer.setTelefones(telefones);
+        customer.setEnderecos(enderecos);
+
+        return customer;
+    }
+
+    private Set<Telefone> toTelefone(CustomerUpdateDtoRequest dto) {
+        if (ObjectUtils.isEmpty(dto.telefones())) {
+            return Collections.emptySet();
+        }
+
+        return dto.telefones()
+            .stream()
+            .map(fone -> new Telefone(fone.numero(), fone.tipo()))
+            .collect(Collectors.toSet());
+    }
+
+    private Set<Endereco> toEndereco(CustomerUpdateDtoRequest dto) {
+        if (ObjectUtils.isEmpty(dto.enderecos())) {
+            return Collections.emptySet();
+        }
+
+        return dto.enderecos()
+            .stream()
+            .map(address -> new Endereco(address.cep(), address.estado(), address.cidade(), address.bairro(),
+                address.logradouro(), address.numero(), address.complemento()))
+            .collect(Collectors.toSet());
+    }
+
+    @Override
+    public CustomerUpdateDtoResponse toCustomerUpdateDtoResponse(Customer customer) {
+        return Optional.ofNullable(customer)
+            .map(this::customerUpdateDtoResponse)
+            .orElseThrow();
+    }
+
+    private CustomerUpdateDtoResponse customerUpdateDtoResponse(Customer customer) {
+        var telefonesDto = this.toTelefoneDto(customer);
+        var enderecosDto = this.toEnderecoDto(customer);
+
+        return CustomerUpdateDtoResponse.builder()
+            .customerId(customer.getCustomerId())
+            .nomeCompleto(customer.getNomeCompleto())
+            .cpf(customer.getCpf().getCpf())
+            .dataNascimento(customer.getDataNascimento().getDataNascimentoString())
+            .statusCadastro(customer.getStatusCadastro())
+            .email(customer.getEmail().getEmail())
+            .telefones(telefonesDto)
+            .enderecos(enderecosDto)
+            .createdAt(customer.getCreatedAt())
+            .createdBy(customer.getCreatedBy())
+            .updatedAt(customer.getUpdatedAt())
+            .updatedBy(customer.getUpdatedBy())
+            .build();
     }
 
 }

@@ -4,13 +4,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
+import microservices.micro_customers.adapter.dto.request.CustomerUpdateDtoRequest;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.adapter.dto.response.CustomerSearchDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerUpdateDtoResponse;
 import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.mapper.MapperIn;
 import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.port.input.CustomerCreateInputPort;
 import microservices.micro_customers.application.port.input.CustomerDeleteInputPort;
+import microservices.micro_customers.application.port.input.CustomerUpdateInputPort;
 import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +39,8 @@ public class CustomerController {
 
     private final CustomerDeleteInputPort customerDeleteInputPort;
 
+    private final CustomerUpdateInputPort customerUpdateInputPort;
+
     private final MapperIn mapperIn;
 
     @PostMapping(
@@ -44,7 +49,7 @@ public class CustomerController {
     public ResponseEntity<CustomerCreateDtoResponse> create(@RequestBody @Valid CustomerCreateDtoRequest customerCreateDtoRequest) {
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
-            .map(this.mapperIn::toCustomer)
+            .map(this.mapperIn::toCustomerCreate)
             .map(this.customerCreateInputPort::create)
             .map(this.mapperIn::toCustomerCreateDtoResponse)
             .orElseThrow();
@@ -78,6 +83,22 @@ public class CustomerController {
         return ResponseEntity
             .noContent()
             .build();
+    }
+
+    @PutMapping(
+        consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<CustomerUpdateDtoResponse> update(@RequestBody @Valid CustomerUpdateDtoRequest customerUpdateDtoRequest) {
+
+        var response = Optional.ofNullable(customerUpdateDtoRequest)
+            .map(this.mapperIn::toCustomerUpdate)
+            .map(this.customerUpdateInputPort::update)
+            .map(this.mapperIn::toCustomerUpdateDtoResponse)
+            .orElseThrow();
+
+        return ResponseEntity
+            .ok()
+            .body(response);
     }
 
 }

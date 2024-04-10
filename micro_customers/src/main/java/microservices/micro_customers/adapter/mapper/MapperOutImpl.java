@@ -32,6 +32,7 @@ public class MapperOutImpl implements MapperOut {
         var enderecosVo = this.toEnderecoVo(customer);
 
         return CustomerEntity.builder()
+            .version(customer.getVersion())
             .customerId(customer.getCustomerId())
             .nomeCompleto(customer.getNomeCompleto())
             .cpf(customer.getCpf().getCpf())
@@ -85,6 +86,7 @@ public class MapperOutImpl implements MapperOut {
         var enderecos = this.toEndereco(entity);
 
         return Customer.builder()
+            .version(entity.getVersion())
             .customerId(entity.getCustomerId())
             .nomeCompleto(entity.getNomeCompleto())
             .cpf(new CadastroPessoaFisica(entity.getCpf()))

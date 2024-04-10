@@ -19,6 +19,8 @@ import java.util.Set;
 @EqualsAndHashCode(of = {"customerId"})
 public final class Customer {
 
+    private Long version;
+
     private Long customerId;
 
     private String nomeCompleto;
@@ -43,7 +45,7 @@ public final class Customer {
 
     private String updatedBy;
 
-    public Customer(Long id, String nomeCompleto, CadastroPessoaFisica cpf, DataNascimento dataNascimento,
+    public Customer(Long version, Long id, String nomeCompleto, CadastroPessoaFisica cpf, DataNascimento dataNascimento,
                     StatusCadastroEnum statusCadastro, CorreioEletronico email, Set<Telefone> telefones,
                     Set<Endereco> enderecos, OffsetDateTime createdAt, String createdBy, OffsetDateTime updatedAt,
                     String updatedBy) {
@@ -59,6 +61,10 @@ public final class Customer {
         this.setCreatedBy(createdBy);
         this.setUpdatedAt(updatedAt);
         this.setUpdatedBy(updatedBy);
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public void setCustomerId(Long id) {

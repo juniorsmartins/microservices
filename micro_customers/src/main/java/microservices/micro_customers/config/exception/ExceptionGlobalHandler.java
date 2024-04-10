@@ -29,18 +29,18 @@ public final class ExceptionGlobalHandler extends ResponseEntityExceptionHandler
 
     // ---------- PARA CAPTURAR TODAS AS EXCEÇÕES SEM TRATAMENTO ESPECÍFICO ---------- //
     // ---------- 500 Internal Server Erros ---------- //
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest) {
-
-        // ProblemDetail RFC 7807
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        problemDetail.setType(URI.create("https://babystepsdev.com/erros/erro-interno-servidor"));
-        problemDetail.setTitle(this.getMessage("exception.internal.server.error"));
-
-        return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(problemDetail);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest) {
+//
+//        // ProblemDetail RFC 7807
+//        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+//        problemDetail.setType(URI.create("https://babystepsdev.com/erros/erro-interno-servidor"));
+//        problemDetail.setTitle(this.getMessage("exception.internal.server.error"));
+//
+//        return ResponseEntity
+//            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//            .body(problemDetail);
+//    }
 
     // ---------- TRATAMENTO DE EXCEÇÕES DEFAULT ---------- //
     // ---------- Sobreescrever método de ResponseEntityExceptionHandler para customizar ---------- //

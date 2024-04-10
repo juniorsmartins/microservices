@@ -309,5 +309,11 @@ umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request
 `micro_customers/src/test/java/microservices/micro_customers/adapter/dto/EnderecoDtoUnitTest.java,3/5/359f6e0f934a90d0f8db3f2127faa459ff05767c
 á
 Wmicro_customers/src/main/java/microservices/micro_customers/config/beans/WebConfig.java,3/5/35af1c7c3493914fe70e5a8efa244f0a82aac217
-î
-dmicro_customers/src/main/java/microservices/micro_customers/config/beans/ContentNegotiationYaml.java,e/c/ec10e4fbf4f7cb8d732d08f29e2ade09cd3e5cfd
+ü
+omicro_customers/src/main/java/microservices/micro_customers/application/port/input/CustomerUpdateInputPort.java,7/4/742e2bd1a058bdb87675c068db8eb1a800e7a115
+ù
+mmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/request/CustomerUpdateDtoRequest.java,6/3/63979cffb3ddade2bf916c8947f12d293a138385
+ü
+omicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/CustomerUpdateDtoResponse.java,1/8/1870584b1ac269c248064b9fc7213af28bb0b812
+ü
+omicro_customers/src/main/java/microservices/micro_customers/application/core/usecase/CustomerUpdateUseCase.java,9/d/9dfe7da67a099513c7ba00787ba4fa738db9e9da
