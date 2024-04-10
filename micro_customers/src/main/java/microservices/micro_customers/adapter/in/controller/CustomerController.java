@@ -56,7 +56,7 @@ public class CustomerController {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
-        @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = Constantes.PAGE_SIZE) final Pageable paginacao) {
+        @PageableDefault(sort = "customerId", direction = Sort.Direction.DESC, page = 0, size = Constantes.PAGE_SIZE) final Pageable paginacao) {
 
         var response = Optional.ofNullable(customerFilter)
             .map(filter -> this.customerSearchOutputPort.search(filter, paginacao))

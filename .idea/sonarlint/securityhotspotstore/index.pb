@@ -309,3 +309,5 @@ umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request
 `micro_customers/src/test/java/microservices/micro_customers/adapter/dto/EnderecoDtoUnitTest.java,3/5/359f6e0f934a90d0f8db3f2127faa459ff05767c
 ‡
 Wmicro_customers/src/main/java/microservices/micro_customers/config/beans/WebConfig.java,3/5/35af1c7c3493914fe70e5a8efa244f0a82aac217
+”
+dmicro_customers/src/main/java/microservices/micro_customers/config/beans/ContentNegotiationYaml.java,e/c/ec10e4fbf4f7cb8d732d08f29e2ade09cd3e5cfd

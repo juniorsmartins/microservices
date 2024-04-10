@@ -14,10 +14,11 @@ public class WebConfig implements WebMvcConfigurer {
 
         configurer.favorParameter(false)
             .ignoreAcceptHeader(false)
-            .useRegisteredExtensionsOnly(false)
+            .useRegisteredExtensionsOnly(false) // substituiu useJaf - deprecado
             .defaultContentType(MediaType.APPLICATION_JSON)
             .mediaType("json", MediaType.APPLICATION_JSON)
             .mediaType("xml", MediaType.APPLICATION_XML);
     }
+
 }
 

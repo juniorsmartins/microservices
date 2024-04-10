@@ -29,7 +29,7 @@ public class InternacionalizacaoConfig implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-        localeResolver.setDefaultLocale(new Locale("pt", "BR"));
+        localeResolver.setDefaultLocale(new Locale.Builder().setLanguage("pt").setRegion("BR").build());
         return localeResolver;
     }
 
@@ -44,5 +44,6 @@ public class InternacionalizacaoConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
+
 }
 
