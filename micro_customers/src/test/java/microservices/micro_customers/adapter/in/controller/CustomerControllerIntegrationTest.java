@@ -89,12 +89,12 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
         @DisplayName("dados válidos")
         void dadoCustomerCreateDtoRequestCompletoAndValido_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
 
-            var dtoIn = factory.gerarCustomerCreateDtoRequestBuilder().build();
+            var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder().build();
 
             var response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
-                    .body(dtoIn)
+                    .body(dtoRequest)
                 .when()
                     .post()
                 .then()
@@ -127,6 +127,23 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
     @Nested
     @DisplayName("GetSearch")
     class GetSearch {
+
+        @Test
+        @DisplayName("XML")
+        void dadoContentTypeComXML_quandoSearch_entaoRetornarHttp200ComTresCustomerSearchDtoResponseEmXML() {
+
+            RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_XML)
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                    .body("totalElements", Matchers.equalTo(3))
+                    .body("totalPages", Matchers.equalTo(1))
+                    .body("size", Matchers.equalTo(Constantes.PAGE_SIZE))
+                    .body("number", Matchers.equalTo(0));
+        }
 
         @Test
         @DisplayName("filtro vazio")

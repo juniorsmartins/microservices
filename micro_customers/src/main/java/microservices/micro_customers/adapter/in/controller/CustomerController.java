@@ -38,7 +38,9 @@ public class CustomerController {
 
     private final MapperIn mapperIn;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(
+        consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<CustomerCreateDtoResponse> create(@RequestBody @Valid CustomerCreateDtoRequest customerCreateDtoRequest) {
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
@@ -52,9 +54,9 @@ public class CustomerController {
             .body(response);
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
-        @PageableDefault(sort = "customerId", direction = Sort.Direction.ASC, page = 0, size = Constantes.PAGE_SIZE) final Pageable paginacao) {
+        @PageableDefault(sort = "customerId", direction = Sort.Direction.DESC, page = 0, size = Constantes.PAGE_SIZE) final Pageable paginacao) {
 
         var response = Optional.ofNullable(customerFilter)
             .map(filter -> this.customerSearchOutputPort.search(filter, paginacao))

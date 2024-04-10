@@ -4,6 +4,8 @@ public final class Constantes {
 
     private Constantes() { }
 
+    public static final String APPLICATION_YAML_VALUE = "application/x-yaml";
+
     public static final String NOME_COMPLETO = "NomeCompleto";
 
     public static final int MAX_CARACTERES_CUSTOMER_NOMECOMPLETO = 100;
