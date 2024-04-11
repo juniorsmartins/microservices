@@ -319,3 +319,7 @@ omicro_customers/src/main/java/microservices/micro_customers/adapter/dto/respons
 omicro_customers/src/main/java/microservices/micro_customers/application/core/usecase/CustomerUpdateUseCase.java,9/d/9dfe7da67a099513c7ba00787ba4fa738db9e9da
 §
 wmicro_customers/src/test/java/microservices/micro_customers/application/core/usecase/CustomerUpdateUseCaseUnitTest.java,a/6/a60a80618e0f789c9e21e91622c57d2493e9a36d
+’
+bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/CustomerUpdateAdapter.java,f/2/f244b9092a7a08021a9a9c52f9519befad5c1d19
+¡
+qmicro_customers/src/main/java/microservices/micro_customers/application/port/output/CustomerUpdateOutputPort.java,e/b/eba96b80f7a525c09f5958165ea00c251da3cd91

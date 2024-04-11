@@ -26,7 +26,7 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
         return Optional.ofNullable(customer)
             .map(this::checkCpfDuplicity)
             .map(Customer::addStatusCadastroIniciado)
-            .map(this.customerSaveOutputPort::save)
+            .map(this.customerSaveOutputPort::update)
             .orElseThrow();
     }
 

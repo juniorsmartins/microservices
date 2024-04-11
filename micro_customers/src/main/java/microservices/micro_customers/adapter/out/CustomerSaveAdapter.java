@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.mapper.MapperOut;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
 import microservices.micro_customers.application.core.domain.Customer;
-import microservices.micro_customers.application.port.output.CustomerSaveOutputPort;
+import microservices.micro_customers.application.port.output.CustomerUpdateOutputPort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class CustomerSaveAdapter implements CustomerSaveOutputPort {
+public class CustomerSaveAdapter implements CustomerUpdateOutputPort {
 
     private final CustomerRepository customerRepository;
 
