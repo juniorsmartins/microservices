@@ -10,6 +10,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerUpdateDtoResponse;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
 import microservices.micro_customers.application.core.constant.Constantes;
@@ -264,6 +265,56 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
             var entitiesDepois = customerRepository.findAll();
             Assertions.assertEquals(2, entitiesDepois.size());
+        }
+    }
+
+    @Nested
+    @DisplayName("PutUpdate")
+    class PutUpdate {
+
+        @Test
+        @DisplayName("dados válidos")
+        void dadoCustomerUpdateDtoRequestValido_quandoUpdate_entaoRetornarDadosPersistidos() throws IOException {
+
+            var dtoRequest = factory.gerarCustomerUpdateDtoRequestBuilder()
+                .customerId(entity1.getCustomerId())
+                .build();
+
+            var response = RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .body(dtoRequest)
+                .when()
+                    .put()
+                .then()
+                    .log().all()
+                    .statusCode(200)
+                    .extract()
+                    .body()
+                    .asString();
+
+            var dtoOut = objectMapper.readValue(response, CustomerUpdateDtoResponse.class);
+            var persistido = customerRepository.findById(dtoOut.customerId()).orElseThrow();
+
+            DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            Assertions.assertEquals(dtoOut.customerId(), persistido.getCustomerId());
+            Assertions.assertEquals(dtoOut.nomeCompleto(), persistido.getNomeCompleto());
+
+            Assertions.assertNotEquals(dtoRequest.cpf(), persistido.getCpf());
+            Assertions.assertEquals(dtoOut.cpf(), persistido.getCpf());
+
+            Assertions.assertEquals(dtoOut.dataNascimento(), persistido.getDataNascimento().format(FORMATO_DATA));
+            Assertions.assertEquals(dtoOut.statusCadastro(), persistido.getStatusCadastro());
+            Assertions.assertEquals(dtoOut.email(), persistido.getEmail());
+
+            Assertions.assertEquals(dtoOut.telefones().size(), persistido.getTelefones().size());
+            Assertions.assertEquals(dtoOut.enderecos().size(), persistido.getEnderecos().size());
+
+            Assertions.assertNotNull(dtoOut.createdAt());
+            Assertions.assertNotNull(dtoOut.createdBy());
+            Assertions.assertNotNull(dtoOut.updatedAt());
+            Assertions.assertNotNull(dtoOut.updatedBy());
         }
     }
 

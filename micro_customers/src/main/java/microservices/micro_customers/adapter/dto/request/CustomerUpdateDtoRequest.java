@@ -4,6 +4,7 @@ import lombok.Builder;
 import microservices.micro_customers.adapter.dto.EnderecoDto;
 import microservices.micro_customers.adapter.dto.TelefoneDto;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Builder

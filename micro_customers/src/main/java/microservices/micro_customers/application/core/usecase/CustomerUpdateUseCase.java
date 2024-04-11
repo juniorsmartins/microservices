@@ -31,7 +31,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
 
     private Customer replaceInformation(Customer customer) {
         var customerDatabase = this.customerFindByIdOutputPort.findById(customer.getCustomerId());
-        BeanUtils.copyProperties(customer, customerDatabase, "version", "cpf", "createdAt", "createdBy", "updatedAt", "updatedBy");
+        BeanUtils.copyProperties(customer, customerDatabase, "version", "cpf", "statusCadastro", "createdAt", "createdBy", "updatedAt", "updatedBy");
         return customerDatabase;
     }
 

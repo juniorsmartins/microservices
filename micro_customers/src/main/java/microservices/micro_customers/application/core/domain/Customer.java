@@ -49,6 +49,7 @@ public final class Customer {
                     StatusCadastroEnum statusCadastro, CorreioEletronico email, Set<Telefone> telefones,
                     Set<Endereco> enderecos, OffsetDateTime createdAt, String createdBy, OffsetDateTime updatedAt,
                     String updatedBy) {
+        this.setVersion(version);
         this.setCustomerId(id);
         this.setNomeCompleto(nomeCompleto);
         this.setCpf(cpf);
