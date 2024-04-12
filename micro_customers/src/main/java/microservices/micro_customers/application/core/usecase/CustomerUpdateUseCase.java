@@ -1,5 +1,6 @@
 package microservices.micro_customers.application.core.usecase;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.application.core.domain.Customer;
@@ -18,7 +19,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     private final CustomerUpdateOutputPort customerUpdateOutputPort;
 
     @Override
-    public Customer update(Customer customer) {
+    public Customer update(@NonNull Customer customer) {
 
         return Optional.ofNullable(customer)
                 .map(x -> {

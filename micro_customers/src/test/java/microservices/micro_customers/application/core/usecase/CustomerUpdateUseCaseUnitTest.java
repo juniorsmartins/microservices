@@ -35,7 +35,7 @@ class CustomerUpdateUseCaseUnitTest extends AbstractTestcontainersTest {
     @DisplayName("nulo")
     void dadoCustomerNulo_quandoUpdate_entaoLancarException() {
         Executable acao = () -> this.customerUpdateUseCase.update(null);
-        Assertions.assertThrows(NoSuchElementException.class, acao);
+        Assertions.assertThrows(NullPointerException.class, acao);
         Mockito.verifyNoInteractions(this.customerFindByIdAdapter);
         Mockito.verifyNoInteractions(this.customerSaveAdapter);
     }

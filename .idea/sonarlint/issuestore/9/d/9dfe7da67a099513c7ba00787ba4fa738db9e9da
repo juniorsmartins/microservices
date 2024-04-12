@@ -1,3 +1,5 @@
 
-r	java:S106"+Replace this use of System.out by a logger.(Ñ×”œúÿÿÿÿ8ÒØ·ùì1J$379ade3f-d2cb-464f-a53c-ba2c82d0c59f
-r	java:S106"+Replace this use of System.out by a logger.(Ê‘øıÿÿÿÿ8Œƒ¸ùì1J$f2a4edb8-87dc-4cf7-a160-70bfb0850000
+r	java:S106"+Replace this use of System.out by a logger.(Ñ×”œúÿÿÿÿ8ÒØ·ùì1J$b96f62f8-1e07-4aa4-aee5-7ef5e7090a65
+r	java:S106"+Replace this use of System.out by a logger.(Ê‘øıÿÿÿÿ8Œƒ¸ùì1J$beba9287-0adf-47ef-a3ce-b7cdbb6b3bee
+±
+java:S1128"iRemove this unused import 'microservices.micro_customers.application.port.output.CustomerSaveOutputPort'.(ìªêÿÿÿÿÿ8§ãæí1J$7d18134a-cea9-4f79-83dc-f312fb1ac43c

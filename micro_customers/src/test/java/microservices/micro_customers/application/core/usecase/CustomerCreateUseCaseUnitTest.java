@@ -35,7 +35,7 @@ class CustomerCreateUseCaseUnitTest extends AbstractTestcontainersTest {
     @DisplayName("customer nulo")
     void dadoCustomerNulo_quandoCreate_entaoLancarException() {
         Executable acao = () -> this.customerCreateUseCase.create(null);
-        Assertions.assertThrows(NoSuchElementException.class, acao);
+        Assertions.assertThrows(NullPointerException.class, acao);
         Mockito.verifyNoInteractions(this.customerSaveAdapter);
         Mockito.verifyNoInteractions(this.customerFindByCpfAdapter);
     }
