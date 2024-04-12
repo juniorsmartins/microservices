@@ -24,10 +24,10 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
     @Override
     public Customer create(@NonNull Customer customer) {
 
-        return Optional.ofNullable(customer)
+        return Optional.of(customer)
             .map(this::checkCpfDuplicity)
             .map(Customer::addStatusCadastroIniciado)
-            .map(this.customerSaveOutputPort::update)
+            .map(this.customerSaveOutputPort::save)
             .orElseThrow();
     }
 

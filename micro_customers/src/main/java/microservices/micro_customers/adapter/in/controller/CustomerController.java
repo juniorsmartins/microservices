@@ -91,25 +91,9 @@ public class CustomerController {
     public ResponseEntity<CustomerUpdateDtoResponse> update(@RequestBody @Valid CustomerUpdateDtoRequest customerUpdateDtoRequest) {
 
         var response = Optional.ofNullable(customerUpdateDtoRequest)
-                .map(x -> {
-                    System.out.println("\n\n\n---------- 1 ---------- " + x + "\n\n\n");
-                    return x;
-                })
             .map(this.mapperIn::toCustomerUpdate)
-                .map(x -> {
-                    System.out.println("\n\n\n---------- 2 ---------- " + x + "\n\n\n");
-                    return x;
-                })
             .map(this.customerUpdateInputPort::update)
-                .map(x -> {
-                    System.out.println("\n\n\n---------- 9 ---------- " + x + "\n\n\n");
-                    return x;
-                })
             .map(this.mapperIn::toCustomerUpdateDtoResponse)
-                .map(x -> {
-                    System.out.println("\n\n\n---------- 10 ---------- " + x + "\n\n\n");
-                    return x;
-                })
             .orElseThrow();
 
         return ResponseEntity

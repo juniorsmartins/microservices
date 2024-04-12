@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.application.core.domain.Customer;
 import microservices.micro_customers.application.port.input.CustomerUpdateInputPort;
-import microservices.micro_customers.application.port.output.CustomerSaveOutputPort;
 import microservices.micro_customers.application.port.output.CustomerUpdateOutputPort;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +21,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     public Customer update(@NonNull Customer customer) {
 
         return Optional.ofNullable(customer)
-                .map(x -> {
-                    System.out.println("\n\n\n---------- 3 ---------- " + x + "\n\n\n");
-                    return x;
-                })
-            .map(this.customerUpdateOutputPort::save)
-                .map(x -> {
-                    System.out.println("\n\n\n---------- 8 ---------- " + x + "\n\n\n");
-                    return x;
-                })
+            .map(this.customerUpdateOutputPort::update)
             .orElseThrow();
     }
 

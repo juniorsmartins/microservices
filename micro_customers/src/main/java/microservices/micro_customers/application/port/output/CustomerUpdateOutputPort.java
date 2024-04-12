@@ -4,7 +4,7 @@ import microservices.micro_customers.application.core.domain.Customer;
 
 public interface CustomerUpdateOutputPort {
 
-    Customer save(Customer customer);
+    Customer update(Customer customer);
 
 }
 
