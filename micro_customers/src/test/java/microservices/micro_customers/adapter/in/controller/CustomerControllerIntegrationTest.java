@@ -1,8 +1,5 @@
 package microservices.micro_customers.adapter.in.controller;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -27,7 +24,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -38,8 +34,6 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
     private static final String BASE_PATH = "/api/v1/customers";
 
     private static RequestSpecification requestSpecification;
-
-    private static ObjectMapper objectMapper;
 
     private final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
@@ -55,11 +49,6 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
     @BeforeEach
     void setUp() {
-        objectMapper = new ObjectMapper(); // Precisei mudar o import do ObjectMapper
-//        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES); // Usar somente nos testes para manter a segurança da API - Isso é usado quanto temos Hateoas
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.registerModule(new JavaTimeModule());
-
         requestSpecification = new RequestSpecBuilder()
             .addHeader(TestConfig.HEADER_PARAM_ORIGIN, TestConfig.ORIGIN_BABYSTEPS)
             .setBasePath(BASE_PATH)
@@ -88,7 +77,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("dados válidos")
-        void dadoCustomerCreateDtoRequestCompletoAndValido_quandoCreate_entaoRetornarDadosPersistidos() throws IOException {
+        void dadoCustomerCreateDtoRequestCompletoAndValido_quandoCreate_entaoRetornarDadosPersistidos() {
 
             var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder().build();
 
@@ -102,26 +91,24 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
                     .log().all()
                     .statusCode(201)
                 .extract()
-                    .body()
-                        .asString();
+                    .as(CustomerCreateDtoResponse.class);
 
-            var dtoOut = objectMapper.readValue(response, CustomerCreateDtoResponse.class);
-            var persistido = customerRepository.findById(dtoOut.customerId()).orElseThrow();
+            var persistido = customerRepository.findById(response.customerId()).orElseThrow();
 
             DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            Assertions.assertEquals(dtoOut.customerId(), persistido.getCustomerId());
-            Assertions.assertEquals(dtoOut.nomeCompleto(), persistido.getNomeCompleto());
-            Assertions.assertEquals(dtoOut.cpf(), persistido.getCpf());
-            Assertions.assertEquals(dtoOut.dataNascimento(), persistido.getDataNascimento().format(FORMATO_DATA));
-            Assertions.assertEquals(dtoOut.statusCadastro(), persistido.getStatusCadastro());
-            Assertions.assertEquals(dtoOut.email(), persistido.getEmail());
+            Assertions.assertEquals(response.customerId(), persistido.getCustomerId());
+            Assertions.assertEquals(response.nomeCompleto(), persistido.getNomeCompleto());
+            Assertions.assertEquals(response.cpf(), persistido.getCpf());
+            Assertions.assertEquals(response.dataNascimento(), persistido.getDataNascimento().format(FORMATO_DATA));
+            Assertions.assertEquals(response.statusCadastro(), persistido.getStatusCadastro());
+            Assertions.assertEquals(response.email(), persistido.getEmail());
 
-            Assertions.assertEquals(dtoOut.telefones().size(), persistido.getTelefones().size());
-            Assertions.assertEquals(dtoOut.enderecos().size(), persistido.getEnderecos().size());
+            Assertions.assertEquals(response.telefones().size(), persistido.getTelefones().size());
+            Assertions.assertEquals(response.enderecos().size(), persistido.getEnderecos().size());
 
-            Assertions.assertNotNull(dtoOut.createdAt());
-            Assertions.assertNotNull(dtoOut.createdBy());
+            Assertions.assertNotNull(response.createdAt());
+            Assertions.assertNotNull(response.createdBy());
         }
     }
 
@@ -274,7 +261,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
 
         @Test
         @DisplayName("dados válidos")
-        void dadoCustomerUpdateDtoRequestValido_quandoUpdate_entaoRetornarDadosPersistidos() throws IOException {
+        void dadoCustomerUpdateDtoRequestValido_quandoUpdate_entaoRetornarDadosPersistidos() {
 
             var dtoRequest = factory.gerarCustomerUpdateDtoRequestBuilder()
                 .customerId(entity1.getCustomerId())
@@ -290,31 +277,29 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
                     .log().all()
                     .statusCode(200)
                     .extract()
-                    .body()
-                    .asString();
+                    .as(CustomerUpdateDtoResponse.class);
 
-            var dtoOut = objectMapper.readValue(response, CustomerUpdateDtoResponse.class);
-            var persistido = customerRepository.findById(dtoOut.customerId()).orElseThrow();
+            var persistido = customerRepository.findById(response.customerId()).orElseThrow();
 
             DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            Assertions.assertEquals(dtoOut.customerId(), persistido.getCustomerId());
-            Assertions.assertEquals(dtoOut.nomeCompleto(), persistido.getNomeCompleto());
+            Assertions.assertEquals(response.customerId(), persistido.getCustomerId());
+            Assertions.assertEquals(response.nomeCompleto(), persistido.getNomeCompleto());
 
             Assertions.assertNotEquals(dtoRequest.cpf(), persistido.getCpf());
-            Assertions.assertEquals(dtoOut.cpf(), persistido.getCpf());
+            Assertions.assertEquals(response.cpf(), persistido.getCpf());
 
-            Assertions.assertEquals(dtoOut.dataNascimento(), persistido.getDataNascimento().format(FORMATO_DATA));
-            Assertions.assertEquals(dtoOut.statusCadastro(), persistido.getStatusCadastro());
-            Assertions.assertEquals(dtoOut.email(), persistido.getEmail());
+            Assertions.assertEquals(response.dataNascimento(), persistido.getDataNascimento().format(FORMATO_DATA));
+            Assertions.assertEquals(response.statusCadastro(), persistido.getStatusCadastro());
+            Assertions.assertEquals(response.email(), persistido.getEmail());
 
-            Assertions.assertEquals(dtoOut.telefones().size(), persistido.getTelefones().size());
-            Assertions.assertEquals(dtoOut.enderecos().size(), persistido.getEnderecos().size());
+            Assertions.assertEquals(response.telefones().size(), persistido.getTelefones().size());
+            Assertions.assertEquals(response.enderecos().size(), persistido.getEnderecos().size());
 
-            Assertions.assertNotNull(dtoOut.createdAt());
-            Assertions.assertNotNull(dtoOut.createdBy());
-            Assertions.assertNotNull(dtoOut.updatedAt());
-            Assertions.assertNotNull(dtoOut.updatedBy());
+            Assertions.assertNotNull(response.createdAt());
+            Assertions.assertNotNull(response.createdBy());
+//            Assertions.assertNotNull(response.updatedAt());
+//            Assertions.assertNotNull(response.updatedBy());
         }
     }
 

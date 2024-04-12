@@ -20,7 +20,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     @Override
     public Customer update(@NonNull Customer customer) {
 
-        return Optional.ofNullable(customer)
+        return Optional.of(customer)
             .map(this.customerUpdateOutputPort::update)
             .orElseThrow();
     }
