@@ -327,3 +327,5 @@ qmicro_customers/src/main/java/microservices/micro_customers/application/port/ou
 jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerUpdateAdapterUnitTest.java,e/5/e5c32d04585549ffc99028d6611acd55cd2d99ed
 ¡
 qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerUpdateAdapterIntegrationTest.java,8/5/85eff6e50e4f07cbebf125ae35177fe4b5db70c3
+¥
+umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerUpdateDtoRequestUnitTest.java,6/7/6767aca2602ca56887c631284b5627330893cda7
