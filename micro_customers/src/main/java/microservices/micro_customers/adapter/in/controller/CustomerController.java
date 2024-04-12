@@ -1,6 +1,7 @@
 package microservices.micro_customers.adapter.in.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
@@ -73,7 +74,7 @@ public class CustomerController {
     }
 
     @DeleteMapping(path = {"/{id}"})
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final Long customerId) {
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") @Positive final Long customerId) {
 
         Optional.ofNullable(customerId)
             .ifPresentOrElse(this.customerDeleteInputPort::delete,
