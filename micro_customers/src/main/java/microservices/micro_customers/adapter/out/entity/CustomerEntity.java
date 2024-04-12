@@ -84,10 +84,10 @@ public final class CustomerEntity implements Serializable {
     @Column(name = "created_by", nullable = false, insertable = true, updatable = false, table = "customer_metadados")
     private String createdBy;
 
-    @Column(name = "updated_at", nullable = true, insertable = false, updatable = true, table = "customer_metadados")
+    @Column(name = "updated_at", nullable = true, insertable = true, updatable = true, table = "customer_metadados")
     private OffsetDateTime updatedAt;
 
-    @Column(name = "updated_by", nullable = true, insertable = false, updatable = true, table = "customer_metadados")
+    @Column(name = "updated_by", nullable = true, insertable = true, updatable = true, table = "customer_metadados")
     private String updatedBy;
 
     @PrePersist

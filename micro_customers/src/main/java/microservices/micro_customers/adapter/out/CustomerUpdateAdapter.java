@@ -6,19 +6,19 @@ import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.mapper.MapperOut;
 import microservices.micro_customers.adapter.out.repository.CustomerRepository;
 import microservices.micro_customers.application.core.domain.Customer;
-import microservices.micro_customers.application.port.output.CustomerSaveOutputPort;
+import microservices.micro_customers.application.port.output.CustomerUpdateOutputPort;
+import microservices.micro_customers.config.exception.http_404.CustomerNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class CustomerSaveAdapter implements CustomerSaveOutputPort {
+public class CustomerUpdateAdapter implements CustomerUpdateOutputPort {
 
     private final CustomerRepository customerRepository;
 
@@ -27,13 +27,18 @@ public class CustomerSaveAdapter implements CustomerSaveOutputPort {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     @Modifying
     @Override
-    public Customer save(@NonNull Customer customer) {
+    public Customer update(@NonNull Customer customer) {
+        var id = customer.getCustomerId();
 
-        return Optional.of(customer)
-            .map(this.mapperOut::toCustomerEntity)
-            .map(this.customerRepository::save)
+        return this.customerRepository.findById(id)
+            .map(entityDatabase -> {
+                var entityUpdate = this.mapperOut.toCustomerEntity(customer);
+                BeanUtils.copyProperties(entityUpdate, entityDatabase, "version", "customerId", "cpf", "statusCadastro",
+                    "createdAt", "createdBy", "updatedAt", "updatedBy");
+                return entityDatabase;
+            })
             .map(this.mapperOut::toCustomer)
-            .orElseThrow();
+            .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
 }

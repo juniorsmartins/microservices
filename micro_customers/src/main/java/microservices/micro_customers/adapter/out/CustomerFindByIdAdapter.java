@@ -21,7 +21,6 @@ public class CustomerFindByIdAdapter implements CustomerFindByIdOutputPort {
     @Transactional(readOnly = true)
     @Override
     public Customer findById(final Long customerId) {
-
         return this.customerRepository.findById(customerId)
             .map(this.mapperOut::toCustomer)
             .orElseThrow();

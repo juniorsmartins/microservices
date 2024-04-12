@@ -3,6 +3,7 @@ package microservices.micro_customers.util;
 import microservices.micro_customers.adapter.dto.EnderecoDto;
 import microservices.micro_customers.adapter.dto.TelefoneDto;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
+import microservices.micro_customers.adapter.dto.request.CustomerUpdateDtoRequest;
 import microservices.micro_customers.adapter.out.entity.CustomerEntity;
 import microservices.micro_customers.adapter.out.entity.value_objects.EnderecoVo;
 import microservices.micro_customers.adapter.out.entity.value_objects.TelefoneVo;
@@ -182,6 +183,20 @@ public final class FactoryObjectMother {
         return CorreioEletronico.builder()
             .email(faker.lorem().characters(15, 30));
     }
+
+    public CustomerUpdateDtoRequest.CustomerUpdateDtoRequestBuilder gerarCustomerUpdateDtoRequestBuilder() {
+        var telefone1 = gerarTelefoneDtoFixoBuilder().build();
+        var endereco1 = gerarEnderecoDtoBuilder().build();
+
+        return CustomerUpdateDtoRequest.builder()
+            .nomeCompleto(faker.lorem().characters(Constantes.MAX_CARACTERES_CUSTOMER_NOMECOMPLETO))
+            .cpf(faker.cpf().valid())
+            .dataNascimento("15/02/2000")
+            .email(faker.internet().emailAddress())
+            .telefones(Set.of(telefone1))
+            .enderecos(Set.of(endereco1));
+    }
+
 
 }
 
