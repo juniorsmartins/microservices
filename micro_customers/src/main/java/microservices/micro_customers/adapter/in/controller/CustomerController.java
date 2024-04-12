@@ -46,7 +46,7 @@ public class CustomerController {
     @PostMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<CustomerCreateDtoResponse> create(@RequestBody @Valid CustomerCreateDtoRequest customerCreateDtoRequest) {
+    public ResponseEntity<CustomerCreateDtoResponse> create(@Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
             .map(this.mapperIn::toCustomerCreate)
@@ -88,7 +88,7 @@ public class CustomerController {
     @PutMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<CustomerUpdateDtoResponse> update(@RequestBody @Valid CustomerUpdateDtoRequest customerUpdateDtoRequest) {
+    public ResponseEntity<CustomerUpdateDtoResponse> update(@Valid @RequestBody CustomerUpdateDtoRequest customerUpdateDtoRequest) {
 
         var response = Optional.ofNullable(customerUpdateDtoRequest)
             .map(this.mapperIn::toCustomerUpdate)
