@@ -323,3 +323,7 @@ wmicro_customers/src/test/java/microservices/micro_customers/application/core/us
 bmicro_customers/src/main/java/microservices/micro_customers/adapter/out/CustomerUpdateAdapter.java,f/2/f244b9092a7a08021a9a9c52f9519befad5c1d19
 ¡
 qmicro_customers/src/main/java/microservices/micro_customers/application/port/output/CustomerUpdateOutputPort.java,e/b/eba96b80f7a525c09f5958165ea00c251da3cd91
+š
+jmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerUpdateAdapterUnitTest.java,e/5/e5c32d04585549ffc99028d6611acd55cd2d99ed
+¡
+qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/CustomerUpdateAdapterIntegrationTest.java,8/5/85eff6e50e4f07cbebf125ae35177fe4b5db70c3
