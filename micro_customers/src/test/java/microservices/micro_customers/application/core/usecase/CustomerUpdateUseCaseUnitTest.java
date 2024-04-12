@@ -1,6 +1,6 @@
 package microservices.micro_customers.application.core.usecase;
 
-import microservices.micro_customers.adapter.out.CustomerFindByCpfAdapter;
+import microservices.micro_customers.adapter.out.CustomerFindByIdAdapter;
 import microservices.micro_customers.adapter.out.CustomerSaveAdapter;
 import microservices.micro_customers.util.AbstractTestcontainersTest;
 import org.junit.jupiter.api.Assertions;
@@ -19,25 +19,25 @@ import java.util.NoSuchElementException;
 
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@DisplayName("Unit - CustomerCreateUseCase")
-class CustomerCreateUseCaseUnitTest extends AbstractTestcontainersTest {
+@DisplayName("Unit - CustomerUpdateUseCase")
+class CustomerUpdateUseCaseUnitTest extends AbstractTestcontainersTest {
 
     @Mock
     CustomerSaveAdapter customerSaveAdapter;
 
     @Mock
-    CustomerFindByCpfAdapter customerFindByCpfAdapter;
+    CustomerFindByIdAdapter customerFindByIdAdapter;
 
     @InjectMocks
-    CustomerCreateUseCase customerCreateUseCase;
+    CustomerUpdateUseCase customerUpdateUseCase;
 
     @Test
-    @DisplayName("customer nulo")
-    void dadoCustomerNulo_quandoCreate_entaoLancarException() {
-        Executable acao = () -> this.customerCreateUseCase.create(null);
+    @DisplayName("nulo")
+    void dadoCustomerNulo_quandoUpdate_entaoLancarException() {
+        Executable acao = () -> this.customerUpdateUseCase.update(null);
         Assertions.assertThrows(NullPointerException.class, acao);
+        Mockito.verifyNoInteractions(this.customerFindByIdAdapter);
         Mockito.verifyNoInteractions(this.customerSaveAdapter);
-        Mockito.verifyNoInteractions(this.customerFindByCpfAdapter);
     }
 
 }

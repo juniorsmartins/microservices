@@ -1,5 +1,6 @@
 package microservices.micro_customers.application.core.usecase;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.application.core.domain.Customer;
@@ -21,9 +22,9 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
     private final CustomerFindByCpfOutputPort customerFindByCpfOutputPort;
 
     @Override
-    public Customer create(Customer customer) {
+    public Customer create(@NonNull Customer customer) {
 
-        return Optional.ofNullable(customer)
+        return Optional.of(customer)
             .map(this::checkCpfDuplicity)
             .map(Customer::addStatusCadastroIniciado)
             .map(this.customerSaveOutputPort::save)

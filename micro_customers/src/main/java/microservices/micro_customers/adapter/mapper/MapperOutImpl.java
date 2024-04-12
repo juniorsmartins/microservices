@@ -23,16 +23,15 @@ public class MapperOutImpl implements MapperOut {
     @Override
     public CustomerEntity toCustomerEntity(Customer customer) {
         return Optional.ofNullable(customer)
-            .map(this::entity)
+            .map(this::entityCreate)
             .orElseThrow();
     }
 
-    private CustomerEntity entity(Customer customer) {
+    private CustomerEntity entityCreate(Customer customer) {
         var telefonesVo = this.toTelefoneVo(customer);
         var enderecosVo = this.toEnderecoVo(customer);
 
         return CustomerEntity.builder()
-            .customerId(customer.getCustomerId())
             .nomeCompleto(customer.getNomeCompleto())
             .cpf(customer.getCpf().getCpf())
             .dataNascimento(customer.getDataNascimento().getDataNascimentoLocalDate())
@@ -73,6 +72,7 @@ public class MapperOutImpl implements MapperOut {
             .collect(Collectors.toSet());
     }
 
+
     @Override
     public Customer toCustomer(CustomerEntity entity) {
         return Optional.ofNullable(entity)
@@ -85,6 +85,7 @@ public class MapperOutImpl implements MapperOut {
         var enderecos = this.toEndereco(entity);
 
         return Customer.builder()
+            .version(entity.getVersion())
             .customerId(entity.getCustomerId())
             .nomeCompleto(entity.getNomeCompleto())
             .cpf(new CadastroPessoaFisica(entity.getCpf()))

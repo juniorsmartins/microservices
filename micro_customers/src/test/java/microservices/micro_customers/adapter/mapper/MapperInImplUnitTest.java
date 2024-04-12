@@ -37,7 +37,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("customerCreateDtoRequest nulo")
         void dadoCustomerCreateDtoRequestNulo_quandoToCustomer_entaoLancarException() {
-            Executable acao = () -> mapperIn.toCustomer(null);
+            Executable acao = () -> mapperIn.toCustomerCreate(null);
             Assertions.assertThrows(NoSuchElementException.class, acao);
         }
 
@@ -45,7 +45,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         @DisplayName("customerCreateDtoRequest válido")
         void dadoCustomerCreateDtoRequestValido_quandoToCustomer_entaoConverterNormal() {
             var dtoRequest = factory.gerarCustomerCreateDtoRequestBuilder().build();
-            var customer = mapperIn.toCustomer(dtoRequest);
+            var customer = mapperIn.toCustomerCreate(dtoRequest);
             Assertions.assertInstanceOf(Customer.class, customer);
 
             Assertions.assertNull(customer.getCustomerId());
@@ -67,7 +67,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
                     .enderecos(null)
                     .build();
 
-            var customer = mapperIn.toCustomer(dtoRequest);
+            var customer = mapperIn.toCustomerCreate(dtoRequest);
             customer.setCustomerId(1L);
             customer.setStatusCadastro(StatusCadastroEnum.INICIADO);
             Assertions.assertInstanceOf(Customer.class, customer);
@@ -90,7 +90,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         @DisplayName("dados de telefone")
         void dadoCustomerCreateDtoRequestValidoComDoisTelefones_quandoToCustomer_entaoRetornarDadosCorretosDeTelefones() {
             var createDtoRequest = factory.gerarCustomerCreateDtoRequestBuilder().build();
-            var response = mapperIn.toCustomer(createDtoRequest);
+            var response = mapperIn.toCustomerCreate(createDtoRequest);
 
             Assertions.assertEquals(createDtoRequest.telefones().size(), response.getTelefones().size());
 
@@ -114,7 +114,7 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("customer nulo")
         void dadoCustomerNulo_quandoToCustomerCreateDtoResponse_entaoLancarException() {
-            Executable acao = () -> mapperIn.toCustomer(null);
+            Executable acao = () -> mapperIn.toCustomerCreate(null);
             Assertions.assertThrows(NoSuchElementException.class, acao);
         }
 

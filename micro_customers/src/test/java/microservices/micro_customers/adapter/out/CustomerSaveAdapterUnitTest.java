@@ -15,8 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.NoSuchElementException;
-
 @SpringBootTest
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @DisplayName("Unit - CustomerSaveAdapter")
@@ -35,7 +33,7 @@ class CustomerSaveAdapterUnitTest extends AbstractTestcontainersTest {
     @DisplayName("nulo")
     void dadoCustomerNulo_quandoSave_entaoLancarException() {
         Executable acao = () -> this.customerSaveAdapter.save(null);
-        Assertions.assertThrows(NoSuchElementException.class, acao);
+        Assertions.assertThrows(NullPointerException.class, acao);
         Mockito.verifyNoInteractions(this.customerRepository);
         Mockito.verifyNoInteractions(this.mapperOut);
     }
