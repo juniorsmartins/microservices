@@ -8,7 +8,7 @@ import microservices.micro_customers.config.exception.http_400.AttributeWithInva
 import microservices.micro_customers.config.exception.http_400.NullAttributeNotAllowedException;
 import microservices.micro_customers.config.exception.http_400.ProhibitedEmptyOrBlankAttributeException;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,17 +37,17 @@ public final class Customer {
 
     private Set<Endereco> enderecos;
 
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
 
     private String createdBy;
 
-    private OffsetDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     private String updatedBy;
 
     public Customer(Long version, Long id, String nomeCompleto, CadastroPessoaFisica cpf, DataNascimento dataNascimento,
                     StatusCadastroEnum statusCadastro, CorreioEletronico email, Set<Telefone> telefones,
-                    Set<Endereco> enderecos, OffsetDateTime createdAt, String createdBy, OffsetDateTime updatedAt,
+                    Set<Endereco> enderecos, LocalDateTime createdAt, String createdBy, LocalDateTime updatedAt,
                     String updatedBy) {
         this.setVersion(version);
         this.setCustomerId(id);
@@ -106,7 +106,7 @@ public final class Customer {
         this.enderecos = enderecos;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -114,7 +114,7 @@ public final class Customer {
         this.createdBy = createdBy;
     }
 
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
