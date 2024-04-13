@@ -1,5 +1,6 @@
 package microservices.micro_customers.adapter.in.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,9 @@ import java.net.URI;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Tag(
+    name = "CRUD da API Rest Customer.",
+    description = "Customer disponibiliza os recursos: Create, Search, Update e Delete.")
 @Slf4j
 @RestController
 @RequestMapping(path = "/api/v1/customers")
