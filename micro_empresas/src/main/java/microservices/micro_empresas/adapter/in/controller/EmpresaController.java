@@ -33,7 +33,9 @@ public class EmpresaController {
 
     private final MapperIn mapperIn;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<EmpresaCreateDtoResponse> create(@RequestBody @Valid EmpresaCreateDtoRequest empresaCreateDtoIn) {
 
         var response = Optional.ofNullable(empresaCreateDtoIn)
@@ -47,10 +49,10 @@ public class EmpresaController {
             .body(response);
     }
 
-    @DeleteMapping(path = {"/{empresaId}"})
-    public ResponseEntity<Void> delete(@PathVariable(name = "empresaId") final Long id) {
+    @DeleteMapping(path = {"/{id}"})
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") final Long empresaId) {
 
-        Optional.ofNullable(id)
+        Optional.ofNullable(empresaId)
             .ifPresentOrElse(this.empresaDeleteInputPort::delete,
                 () -> {throw new NoSuchElementException();}
             );
