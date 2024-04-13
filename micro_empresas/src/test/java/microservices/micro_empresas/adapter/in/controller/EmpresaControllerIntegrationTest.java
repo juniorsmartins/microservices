@@ -10,6 +10,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import microservices.micro_empresas.adapter.in.controller.dto.response.EmpresaCreateDtoResponse;
+import microservices.micro_empresas.adapter.out.entity.EmpresaEntity;
 import microservices.micro_empresas.adapter.out.repository.EmpresaRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
@@ -30,19 +31,21 @@ import java.io.IOException;
 @DisplayName("Integration - EmpresaController")
 class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
 
-    private static final String BASE_PATH = "/api/v1/empresas";
+    static final String BASE_PATH = "/api/v1/empresas";
 
-    private static RequestSpecification requestSpecification;
+    static RequestSpecification requestSpecification;
 
-    private static ObjectMapper objectMapper;
+    static ObjectMapper objectMapper;
 
-    private final FactoryObjectMother factory = FactoryObjectMother.singleton();
+    final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @LocalServerPort // Esta anotação injeta a porta selecionada pelo Spring Boot
-    private int port;
+    int port;
 
     @Autowired
-    private EmpresaRepository empresaRepository;
+    EmpresaRepository empresaRepository;
+
+    EmpresaEntity entity1;
 
     @BeforeEach
     void setUp() {
@@ -58,6 +61,9 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
             .build();
+
+        entity1 = factory.gerarEmpresaEntityBuilder().build();
+        this.empresaRepository.save(entity1);
     }
 
     @AfterEach
@@ -104,19 +110,16 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
         @DisplayName("id válido")
         void dadoIdValido_quandoDelete_entaoRetornarHttp204NoContent() {
 
-            var empresaEntidade = factory.gerarEmpresaEntityBuilder().build();
-            var empresaSalva = empresaRepository.save(empresaEntidade);
-
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
                 .when()
-                    .delete("/" + empresaSalva.getEmpresaId())
+                    .delete("/" + entity1.getEmpresaId())
                 .then()
                     .log().all()
                     .statusCode(204);
 
-            var persistido = empresaRepository.findById(empresaSalva.getEmpresaId());
+            var persistido = empresaRepository.findById(entity1.getEmpresaId());
 
             Assertions.assertTrue(persistido.isEmpty());
         }
@@ -130,10 +133,7 @@ class EmpresaControllerIntegrationTest extends AbstractTestcontainersTest {
         @DisplayName("all")
         void dadoRequisicaoValida_quandoList_entaoRetornarListaComDoisItens() {
 
-            var empresaEntidade1 = factory.gerarEmpresaEntityBuilder().build();
             var empresaEntidade2 = factory.gerarEmpresaEntityBuilder().build();
-
-            empresaRepository.save(empresaEntidade1);
             empresaRepository.save(empresaEntidade2);
 
             RestAssured

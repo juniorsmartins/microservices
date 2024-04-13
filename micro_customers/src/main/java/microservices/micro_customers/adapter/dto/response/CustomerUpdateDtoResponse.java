@@ -6,7 +6,7 @@ import microservices.micro_customers.adapter.dto.EnderecoDto;
 import microservices.micro_customers.adapter.dto.TelefoneDto;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Builder
@@ -29,11 +29,11 @@ public record CustomerUpdateDtoResponse(
 
         Set<EnderecoDto> enderecos,
 
-        OffsetDateTime createdAt,
+        LocalDateTime createdAt,
 
         String createdBy,
 
-        OffsetDateTime updatedAt,
+        LocalDateTime updatedAt,
 
         String updatedBy
 

@@ -8,13 +8,19 @@ import microservices.micro_customers.application.core.constant.Constantes;
 import microservices.micro_customers.application.core.domain.enums.StatusCadastroEnum;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.SoftDeleteType;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "customers", indexes = {
     @Index(name = "idx_customers_nome_completo", columnList = "nome_completo"),
@@ -78,29 +84,21 @@ public final class CustomerEntity implements Serializable {
 
 
     // ----- Secondary Table de Metadados para Auditoria ----- //
+    @CreatedDate
     @Column(name = "created_at", nullable = false, insertable = true, updatable = false, table = "customer_metadados")
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
 
+    @CreatedBy
     @Column(name = "created_by", nullable = false, insertable = true, updatable = false, table = "customer_metadados")
     private String createdBy;
 
-    @Column(name = "updated_at", nullable = true, insertable = true, updatable = true, table = "customer_metadados")
-    private OffsetDateTime updatedAt;
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = true, insertable = false, updatable = true, table = "customer_metadados")
+    private LocalDateTime updatedAt;
 
-    @Column(name = "updated_by", nullable = true, insertable = true, updatable = true, table = "customer_metadados")
+    @LastModifiedBy
+    @Column(name = "updated_by", nullable = true, insertable = false, updatable = true, table = "customer_metadados")
     private String updatedBy;
-
-    @PrePersist
-    private void prePersist() {
-        this.setCreatedAt(OffsetDateTime.now());
-        this.setCreatedBy("anônimo");
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        this.setUpdatedAt(OffsetDateTime.now());
-        this.setUpdatedBy("anônimo");
-    }
 
 }
 

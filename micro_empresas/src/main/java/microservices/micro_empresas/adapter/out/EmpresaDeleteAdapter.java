@@ -19,7 +19,7 @@ public class EmpresaDeleteAdapter implements EmpresaDeleteOutputPort {
 
     private final EmpresaRepository empresaRepository;
 
-    @Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.SERIALIZABLE)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     @Modifying
     @Override
     public void delete(final Long id) {
