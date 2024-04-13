@@ -1,5 +1,10 @@
 package microservices.micro_customers.adapter.in.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -22,6 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +37,7 @@ import java.util.Optional;
 
 @Tag(
     name = "CRUD da API Rest Customer.",
-    description = "Customer disponibiliza os recursos: Create, Search, Update e Delete.")
+    description = "São disponibilizados os recursos: Create (criar), Search (pesquisar), Update (atualizar) e Delete (apagar).")
 @Slf4j
 @RestController
 @RequestMapping(path = "/api/v1/customers")
@@ -51,6 +57,26 @@ public class CustomerController {
     @PostMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Create", description = "Recurso para criar (Create) novo Customer.",
+        responses = {
+            @ApiResponse(responseCode = "201", description = "Created - recurso cadastrado com sucesso.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomerCreateDtoResponse.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = CustomerCreateDtoResponse.class)),}
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "409", description = "Conflict - violação de regras de negócio.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            )
+        }
+    )
     public ResponseEntity<CustomerCreateDtoResponse> create(@Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
@@ -65,6 +91,22 @@ public class CustomerController {
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Search", description = "Recurso para pesquisar (Search) Customer por customerId, nomeCompleto, cpf, statusCadastro e email.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
+                content = {@Content(mediaType = "application/json", array = @ArraySchema(minItems = 0, schema = @Schema(implementation = CustomerSearchDtoResponse.class))),
+                    @Content(mediaType = "application/xml", array = @ArraySchema(minItems = 0, schema = @Schema(implementation = CustomerSearchDtoResponse.class))),}
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            )
+        }
+    )
     public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
         @PageableDefault(sort = "customerId", direction = Sort.Direction.DESC, size = Constantes.PAGE_SIZE) final Pageable paginacao) {
 
@@ -78,6 +120,29 @@ public class CustomerController {
     }
 
     @DeleteMapping(path = {"/{id}"})
+    @Operation(summary = "Delete", description = "Recurso para apagar (Delete) Customer.",
+        responses = {
+            @ApiResponse(responseCode = "204", description = "No Content - requisição bem sucedida e sem retorno.",
+                content = {@Content(mediaType = "application/json"), @Content(mediaType = "application/xml"),}
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "409", description = "Conflict - violação de regras de negócio.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            )
+        }
+    )
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") @Positive final Long customerId) {
 
         Optional.ofNullable(customerId)
@@ -93,6 +158,30 @@ public class CustomerController {
     @PutMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Update", description = "Recurso para atualizar (Update) Customer.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomerUpdateDtoResponse.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = CustomerUpdateDtoResponse.class)),}
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "409", description = "Conflict - violação de regras de negócio.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)),
+                    @Content(mediaType = "application/xml", schema = @Schema(implementation = ProblemDetail.class))}
+            )
+        }
+    )
     public ResponseEntity<CustomerUpdateDtoResponse> update(@Valid @RequestBody CustomerUpdateDtoRequest customerUpdateDtoRequest) {
 
         var response = Optional.ofNullable(customerUpdateDtoRequest)
