@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DisplayName("Integration - CustomerSaveAdapter")
 class CustomerSaveAdapterIntegrationTest extends AbstractTestcontainersTest {
 
-    private final FactoryObjectMother factory = FactoryObjectMother.singleton();
+    final FactoryObjectMother factory = FactoryObjectMother.singleton();
 
     @Autowired
     CustomerSaveAdapter customerSaveAdapter;

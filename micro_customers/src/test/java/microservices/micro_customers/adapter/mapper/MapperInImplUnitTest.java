@@ -31,8 +31,8 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
     MapperIn mapperIn;
 
     @Nested
-    @DisplayName("ToCustomer")
-    class TestToCustomer {
+    @DisplayName("ToCustomerCreate")
+    class TestToCustomerCreate {
 
         @Test
         @DisplayName("customerCreateDtoRequest nulo")
@@ -173,6 +173,83 @@ class MapperInImplUnitTest extends AbstractTestcontainersTest {
                 TelefoneDto dto = response.telefones()
                     .stream()
                     .filter(telDto -> telDto.numero().equals(fone.getNumero()) && telDto.tipo().equals(fone.getTipo()))
+                    .findFirst()
+                    .orElse(null);
+
+                Assertions.assertEquals(dto.numero(), fone.getNumero());
+                Assertions.assertEquals(dto.tipo(), fone.getTipo());
+            }
+        }
+    }
+
+    @Nested
+    @DisplayName("ToCustomerUpdate")
+    class TestToCustomerUpdate {
+
+        @Test
+        @DisplayName("customerUpdateDtoRequest nulo")
+        void dadoCustomerUpdateDtoRequestNulo_quandoToCustomerUpdate_entaoLancarException() {
+            Executable acao = () -> mapperIn.toCustomerUpdate(null);
+            Assertions.assertThrows(NoSuchElementException.class, acao);
+        }
+
+        @Test
+        @DisplayName("customerUpdateDtoRequest válido")
+        void dadoCustomerUpdateDtoRequestValido_quandoToCustomerUpdate_entaoConverterNormal() {
+            var dtoRequest = factory.gerarCustomerUpdateDtoRequestBuilder().build();
+            var customer = mapperIn.toCustomerUpdate(dtoRequest);
+            Assertions.assertInstanceOf(Customer.class, customer);
+
+            Assertions.assertNull(customer.getCustomerId());
+            Assertions.assertEquals(dtoRequest.nomeCompleto(), customer.getNomeCompleto());
+            Assertions.assertEquals(dtoRequest.cpf(), customer.getCpf().getCpf());
+            Assertions.assertEquals(dtoRequest.dataNascimento(), customer.getDataNascimento().getDataNascimentoString());
+            Assertions.assertNull(customer.getStatusCadastro());
+            Assertions.assertEquals(dtoRequest.email(), customer.getEmail().getEmail());
+
+            Assertions.assertEquals(dtoRequest.telefones().size(), customer.getTelefones().size());
+            Assertions.assertEquals(dtoRequest.enderecos().size(), customer.getEnderecos().size());
+        }
+
+        @Test
+        @DisplayName("telefones e endereços nulos")
+        void dadoCustomerUpdateDtoRequestValidoComTelefonesNuloAndEnderecosNulo_quandoToCustomerUpdate_entaoConverterNormal() {
+            var dtoRequest = factory.gerarCustomerUpdateDtoRequestBuilder()
+                .customerId(1L)
+                .telefones(null)
+                .enderecos(null)
+                .build();
+
+            var customer = mapperIn.toCustomerUpdate(dtoRequest);
+            customer.setStatusCadastro(StatusCadastroEnum.INICIADO);
+            Assertions.assertInstanceOf(Customer.class, customer);
+
+            Assertions.assertTrue(customer.getCustomerId() > 0);
+            Assertions.assertEquals(dtoRequest.nomeCompleto(), customer.getNomeCompleto());
+            Assertions.assertEquals(dtoRequest.cpf(), customer.getCpf().getCpf());
+            Assertions.assertEquals(dtoRequest.dataNascimento(), customer.getDataNascimento().getDataNascimentoString());
+            Assertions.assertEquals(StatusCadastroEnum.INICIADO, customer.getStatusCadastro());
+            Assertions.assertEquals(dtoRequest.email(), customer.getEmail().getEmail());
+
+            Assertions.assertTrue(customer.getTelefones().isEmpty());
+            Assertions.assertNull(dtoRequest.telefones());
+
+            Assertions.assertTrue(customer.getEnderecos().isEmpty());
+            Assertions.assertNull(dtoRequest.enderecos());
+        }
+
+        @Test
+        @DisplayName("dados de telefone")
+        void dadoCustomerUpdateDtoRequestValidoComDoisTelefones_quandoToCustomerUpdate_entaoRetornarDadosCorretosDeTelefones() {
+            var createDtoRequest = factory.gerarCustomerUpdateDtoRequestBuilder().build();
+            var response = mapperIn.toCustomerUpdate(createDtoRequest);
+
+            Assertions.assertEquals(createDtoRequest.telefones().size(), response.getTelefones().size());
+
+            for (TelefoneDto dto : createDtoRequest.telefones()) {
+                Telefone fone = response.getTelefones()
+                    .stream()
+                    .filter(tel -> tel.getNumero().equals(dto.numero()) && tel.getTipo().equals(dto.tipo()))
                     .findFirst()
                     .orElse(null);
 

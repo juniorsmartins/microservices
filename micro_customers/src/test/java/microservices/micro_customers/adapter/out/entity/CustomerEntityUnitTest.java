@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @SpringBootTest
@@ -117,7 +117,7 @@ class CustomerEntityUnitTest extends AbstractTestcontainersTest {
                 .complemento(complemento)
                 .build());
 
-            var createdAt = OffsetDateTime.now();
+            var createdAt = LocalDateTime.now();
             var createdBy = "anônimo";
 
             var customer1 = factory.gerarCustomerEntityBuilder()

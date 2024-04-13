@@ -1,6 +1,7 @@
 package microservices.micro_customers.adapter.in.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
@@ -46,7 +47,7 @@ public class CustomerController {
     @PostMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<CustomerCreateDtoResponse> create(@RequestBody @Valid CustomerCreateDtoRequest customerCreateDtoRequest) {
+    public ResponseEntity<CustomerCreateDtoResponse> create(@Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
             .map(this.mapperIn::toCustomerCreate)
@@ -73,7 +74,7 @@ public class CustomerController {
     }
 
     @DeleteMapping(path = {"/{id}"})
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final Long customerId) {
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") @Positive final Long customerId) {
 
         Optional.ofNullable(customerId)
             .ifPresentOrElse(this.customerDeleteInputPort::delete,
@@ -88,7 +89,7 @@ public class CustomerController {
     @PutMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<CustomerUpdateDtoResponse> update(@RequestBody @Valid CustomerUpdateDtoRequest customerUpdateDtoRequest) {
+    public ResponseEntity<CustomerUpdateDtoResponse> update(@Valid @RequestBody CustomerUpdateDtoRequest customerUpdateDtoRequest) {
 
         var response = Optional.ofNullable(customerUpdateDtoRequest)
             .map(this.mapperIn::toCustomerUpdate)
