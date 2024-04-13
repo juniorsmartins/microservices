@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
 @Component("auditAwareImpl")
 public class AuditAwareImpl implements AuditorAware<String> {
 
