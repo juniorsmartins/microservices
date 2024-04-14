@@ -331,3 +331,5 @@ qmicro_customers/src/test/java/microservices/micro_customers/adapter/out/Custome
 umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request/CustomerUpdateDtoRequestUnitTest.java,6/7/6767aca2602ca56887c631284b5627330893cda7
 Œ
 \micro_customers/src/main/java/microservices/micro_customers/config/audit/AuditAwareImpl.java,5/d/5dff7622c73fc1518ed5e759b9b32f534d9a4877
+Š
+Zmicro_customers/src/main/java/microservices/micro_customers/MicroCustomersApplication.java,c/8/c833b4bd3a85c5be2d23048437d76a664b8b2d81
