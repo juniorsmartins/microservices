@@ -1,6 +1,7 @@
 package microservices.micro_customers.adapter.in.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -77,7 +78,9 @@ public class CustomerController {
             )
         }
     )
-    public ResponseEntity<CustomerCreateDtoResponse> create(@Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
+    public ResponseEntity<CustomerCreateDtoResponse> create(
+        @Parameter(name = "customerCreateDtoRequest", description = "Dados para cadastrar novo Customer.", required = true)
+        @Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
             .map(this.mapperIn::toCustomerCreate)
@@ -107,8 +110,11 @@ public class CustomerController {
             )
         }
     )
-    public ResponseEntity<Page<CustomerSearchDtoResponse>> search(final CustomerFilter customerFilter,
-        @PageableDefault(sort = "customerId", direction = Sort.Direction.DESC, size = Constantes.PAGE_SIZE) final Pageable paginacao) {
+    public ResponseEntity<Page<CustomerSearchDtoResponse>> search(
+        @Parameter(name = "customerFilter", description = "Parâmetros para pesquisar no banco de dados.", required = false)
+        final CustomerFilter customerFilter,
+        @PageableDefault(sort = "customerId", direction = Sort.Direction.DESC, size = Constantes.PAGE_SIZE)
+        final Pageable paginacao) {
 
         var response = Optional.ofNullable(customerFilter)
             .map(filter -> this.customerSearchOutputPort.search(filter, paginacao))
@@ -143,7 +149,9 @@ public class CustomerController {
             )
         }
     )
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") @Positive final Long customerId) {
+    public ResponseEntity<Void> deleteById(
+        @Parameter(name = "customerId", description = "Identificador do Customer no banco de dados.", example = "22", required = true)
+        @PathVariable(name = "id") @Positive final Long customerId) {
 
         Optional.ofNullable(customerId)
             .ifPresentOrElse(this.customerDeleteInputPort::delete,
@@ -182,7 +190,9 @@ public class CustomerController {
             )
         }
     )
-    public ResponseEntity<CustomerUpdateDtoResponse> update(@Valid @RequestBody CustomerUpdateDtoRequest customerUpdateDtoRequest) {
+    public ResponseEntity<CustomerUpdateDtoResponse> update(
+        @Parameter(name = "customerUpdateDtoRequest", description = "Dados para atualizar Customer.", required = true)
+        @Valid @RequestBody CustomerUpdateDtoRequest customerUpdateDtoRequest) {
 
         var response = Optional.ofNullable(customerUpdateDtoRequest)
             .map(this.mapperIn::toCustomerUpdate)
