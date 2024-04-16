@@ -1,6 +1,10 @@
 # Estágio de construção - 1
-FROM gradle:jdk21-alpine AS builder
+FROM gradle:8.7.0-jdk21-alpine AS builder
 
+#Responsável pela manutenção
+MAINTAINER juniormartins
+
+# Autoria
 LABEL authors="juniormartins"
 
 WORKDIR /compile
@@ -20,4 +24,6 @@ VOLUME /tmp
 
 COPY --from=builder /compile/build/libs/micro_customers-0.0.1-SNAPSHOT.jar api.jar
 
+#Execute a aplicação
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/api.jar"]
+
