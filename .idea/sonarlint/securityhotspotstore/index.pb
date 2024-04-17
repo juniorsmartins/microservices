@@ -333,3 +333,7 @@ umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request
 \micro_customers/src/main/java/microservices/micro_customers/config/audit/AuditAwareImpl.java,5/d/5dff7622c73fc1518ed5e759b9b32f534d9a4877
 Š
 Zmicro_customers/src/main/java/microservices/micro_customers/MicroCustomersApplication.java,c/8/c833b4bd3a85c5be2d23048437d76a664b8b2d81
+P
+ micro_customers/env/postgres.env,5/f/5f720a611cca88c6274b232fbe61c624b2a6a4ae
+K
+micro_customers/env/app.env,6/b/6bc4201a692578ef19eb8018a49fb6a82d444776
