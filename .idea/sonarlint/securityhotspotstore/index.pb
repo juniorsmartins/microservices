@@ -127,8 +127,6 @@ b
 2micro_customers/src/main/resources/application.yml,a/1/a109dd7cb2c2dd0ca6fa42ac7ed6db546a65b580
 L
 micro_customers/build.gradle,d/d/ddbb00b6e13e8e807c2826697922dd8d9a6ef38f
-D
-micro_customers/.env,d/b/db4d2cbf0ed3869528de70313b8a7f0e6c3126c9
 J
 micro_customers/Dockerfile,e/2/e2484c2da7c79458cb7b1fbea274476ef40d7773
 ê

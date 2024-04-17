@@ -293,7 +293,7 @@ volumes:
 
 networks:
   mercado_financeiro_net:
-    name: mercado_financeiro_net
+    name: mercado_financeiro_netd
     driver: bridge
 
 
