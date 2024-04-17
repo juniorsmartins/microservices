@@ -337,3 +337,5 @@ P
  micro_customers/env/postgres.env,5/f/5f720a611cca88c6274b232fbe61c624b2a6a4ae
 K
 micro_customers/env/app.env,6/b/6bc4201a692578ef19eb8018a49fb6a82d444776
+J
+micro_customers/.gitignore,9/d/9d38d93bd3fffcca6d543482ba812c22b2e1ca5a
