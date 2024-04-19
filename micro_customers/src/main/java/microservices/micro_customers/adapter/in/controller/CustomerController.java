@@ -23,7 +23,9 @@ import microservices.micro_customers.application.port.input.CustomerCreateInputP
 import microservices.micro_customers.application.port.input.CustomerDeleteInputPort;
 import microservices.micro_customers.application.port.input.CustomerUpdateInputPort;
 import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -59,6 +61,9 @@ public class CustomerController {
     @Value("${build.version}")
     private String buildVersion;
 
+    @Autowired
+    private Environment environment;
+
     @GetMapping(path = "/build-info")
     @Operation(summary = "Get Build Information", description = "Buscar informações sobre deploy do Micro_Customers.",
         responses = {
@@ -70,6 +75,19 @@ public class CustomerController {
         return ResponseEntity
             .ok()
             .body(buildVersion);
+    }
+
+    @GetMapping(path = "/java-version")
+    @Operation(summary = "Get Java Version", description = "Buscar informações sobre a versão do Java usada no Micro_Customers.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno."),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.")
+        }
+    )
+    public ResponseEntity<String> getJavaVersion() {
+        return ResponseEntity
+            .ok()
+            .body(environment.getProperty("java.version"));
     }
 
     @PostMapping(
