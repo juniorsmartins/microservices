@@ -16,6 +16,7 @@ import microservices.micro_customers.adapter.dto.request.CustomerUpdateDtoReques
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.adapter.dto.response.CustomerSearchDtoResponse;
 import microservices.micro_customers.adapter.dto.response.CustomerUpdateDtoResponse;
+import microservices.micro_customers.adapter.dto.response.VersoesDtoResponse;
 import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.mapper.MapperIn;
 import microservices.micro_customers.application.core.constant.Constantes;
@@ -77,17 +78,23 @@ public class CustomerController {
             .body(buildVersion);
     }
 
-    @GetMapping(path = "/java-version")
-    @Operation(summary = "Get Java Version", description = "Buscar informações sobre a versão do Java usada no Micro_Customers.",
+    @GetMapping(path = "/versions")
+    @Operation(summary = "Get Versions", description = "Buscar informações sobre versões no Micro_Customers.",
         responses = {
             @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno."),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.")
         }
     )
-    public ResponseEntity<String> getJavaVersion() {
+    public ResponseEntity<VersoesDtoResponse> getVersions() {
+
+        var javaDistribution = environment.getProperty("JAVA_HOME");
+        var javaVersion = environment.getProperty("java.version");
+
+        var response = new VersoesDtoResponse(javaDistribution, javaVersion);
+
         return ResponseEntity
             .ok()
-            .body(environment.getProperty("java.version"));
+            .body(response);
     }
 
     @PostMapping(
