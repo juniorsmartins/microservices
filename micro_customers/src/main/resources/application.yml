@@ -42,3 +42,6 @@ spring:
     generate-ddl: true
     show-sql: true
 
+build:
+  version: "1.0"
+

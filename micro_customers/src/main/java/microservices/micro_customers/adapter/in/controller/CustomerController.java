@@ -23,6 +23,7 @@ import microservices.micro_customers.application.port.input.CustomerCreateInputP
 import microservices.micro_customers.application.port.input.CustomerDeleteInputPort;
 import microservices.micro_customers.application.port.input.CustomerUpdateInputPort;
 import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -54,6 +55,22 @@ public class CustomerController {
     private final CustomerUpdateInputPort customerUpdateInputPort;
 
     private final MapperIn mapperIn;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @GetMapping(path = "/build-info")
+    @Operation(summary = "Get Build Information", description = "Buscar informações sobre deploy do Micro_Customers.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno."),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.")
+        }
+    )
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity
+            .ok()
+            .body(buildVersion);
+    }
 
     @PostMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
