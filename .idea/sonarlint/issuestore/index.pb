@@ -127,8 +127,6 @@ b
 2micro_customers/src/main/resources/application.yml,a/1/a109dd7cb2c2dd0ca6fa42ac7ed6db546a65b580
 L
 micro_customers/build.gradle,d/d/ddbb00b6e13e8e807c2826697922dd8d9a6ef38f
-D
-micro_customers/.env,d/b/db4d2cbf0ed3869528de70313b8a7f0e6c3126c9
 J
 micro_customers/Dockerfile,e/2/e2484c2da7c79458cb7b1fbea274476ef40d7773
 ê
@@ -333,3 +331,13 @@ umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request
 \micro_customers/src/main/java/microservices/micro_customers/config/audit/AuditAwareImpl.java,5/d/5dff7622c73fc1518ed5e759b9b32f534d9a4877
 ä
 Zmicro_customers/src/main/java/microservices/micro_customers/MicroCustomersApplication.java,c/8/c833b4bd3a85c5be2d23048437d76a664b8b2d81
+P
+ micro_customers/env/postgres.env,5/f/5f720a611cca88c6274b232fbe61c624b2a6a4ae
+K
+micro_customers/env/app.env,6/b/6bc4201a692578ef19eb8018a49fb6a82d444776
+J
+micro_customers/.gitignore,9/d/9d38d93bd3fffcca6d543482ba812c22b2e1ca5a
+ç
+]micro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/Versoes.java,a/6/a65152775c283c2ff99661746ecd565c7b21d608
+ò
+hmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/VersoesDtoResponse.java,3/b/3b752bb968b4467632d64fe1da0d7d1e1f6334c4

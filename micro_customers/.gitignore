@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### Informações Sensíveis - Senhas e variáveis de ambiente ###
+env
+
