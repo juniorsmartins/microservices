@@ -45,3 +45,12 @@ spring:
 build:
   version: "1.0"
 
+customers:
+  message: "Bem-vindo! Somos a API Rest, Micro_Customers."
+  contactDetails:
+    name: "Junior Martins - Developer"
+    email: "teste@teste.com"
+  onCallSupport:
+    - (11) 9999-2222
+    - (21) 3333-5555
+
