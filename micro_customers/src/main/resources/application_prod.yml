@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+customers:
+  message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Produção."
+  contactDetails:
+    name: "Martin Fowler - Product Owner"
+    email: "fowler@teste.com"
+  onCallSupport:
+    - (11) 9999-2222
+    - (21) 3333-5555
+

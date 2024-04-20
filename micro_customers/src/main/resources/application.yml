@@ -1,10 +1,18 @@
 server:
-  port: ${SERVER_PORT:18093}
+  port: ${SERVER_PORT:8093}
 
 spring:
 
   application:
     name: micro_customers
+
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active:
+      - "qa"
 
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -43,10 +51,10 @@ spring:
     show-sql: true
 
 build:
-  version: "1.0"
+  version: "3.0"
 
 customers:
-  message: "Bem-vindo! Somos a API Rest, Micro_Customers."
+  message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Desenvolvimento."
   contactDetails:
     name: "Junior Martins - Developer"
     email: "teste@teste.com"

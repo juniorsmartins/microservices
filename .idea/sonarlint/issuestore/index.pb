@@ -337,8 +337,6 @@ K
 micro_customers/env/app.env,6/b/6bc4201a692578ef19eb8018a49fb6a82d444776
 J
 micro_customers/.gitignore,9/d/9d38d93bd3fffcca6d543482ba812c22b2e1ca5a
-ç
-]micro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/Versoes.java,a/6/a65152775c283c2ff99661746ecd565c7b21d608
 ò
 hmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/VersoesDtoResponse.java,3/b/3b752bb968b4467632d64fe1da0d7d1e1f6334c4
 ú
