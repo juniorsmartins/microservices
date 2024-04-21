@@ -6,14 +6,11 @@ spring:
   application:
     name: micro_customers
 
-  config:
-    import:
-      - "application_dev.yml"
-      - "application_qa.yml"
-      - "application_prod.yml"
   profiles:
     active:
-      - "dev"
+      - "prod"
+  config:
+    import: "optional:micro_configserver:http://localhost:8071/"
 
   datasource:
     driver-class-name: org.postgresql.Driver
