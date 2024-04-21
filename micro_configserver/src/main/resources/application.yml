@@ -6,3 +6,11 @@ spring:
   application:
     name: micro_configserver
 
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: "classpath:/config"
+
