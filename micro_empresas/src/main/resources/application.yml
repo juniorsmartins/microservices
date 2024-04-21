@@ -1,10 +1,19 @@
 server:
-  port: ${SERVER_PORT:18091}
+  port: ${SERVER_PORT:8091}
 
 spring:
 
   application:
     name: micro_empresas
+
+  config:
+    import:
+      - "application_dev.yml"
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active:
+      - "dev"
 
   datasource:
     driver-class-name: org.postgresql.Driver

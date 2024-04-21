@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import microservices.micro_customers.adapter.dto.response.ContactInfoDtoResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
 @OpenAPIDefinition(
@@ -29,6 +31,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		url = "https://www.teste.com/docs"
 	)
 )
+@EnableConfigurationProperties(value = ContactInfoDtoResponse.class)
 public class MicroCustomersApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MicroCustomersApplication.class, args);
