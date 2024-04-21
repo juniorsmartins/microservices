@@ -4,7 +4,7 @@ spring:
       on-profile: "prod"
 
 build:
-  version: "1.0"
+  version: "3.0.0"
 
 customers:
   message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Produção."
@@ -12,6 +12,6 @@ customers:
     name: "Martin Fowler - Product Owner"
     email: "fowler@teste.com"
   onCallSupport:
-    - (11) 9999-2222
-    - (21) 3333-5555
+    - (11) 9999-0000
+    - (21) 3333-8888
 

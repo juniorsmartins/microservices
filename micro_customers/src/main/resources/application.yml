@@ -8,11 +8,12 @@ spring:
 
   config:
     import:
+      - "application_dev.yml"
       - "application_qa.yml"
       - "application_prod.yml"
   profiles:
     active:
-      - "qa"
+      - "dev"
 
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -49,16 +50,4 @@ spring:
     open-in-view: false
     generate-ddl: true
     show-sql: true
-
-build:
-  version: "3.0"
-
-customers:
-  message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Desenvolvimento."
-  contactDetails:
-    name: "Junior Martins - Developer"
-    email: "teste@teste.com"
-  onCallSupport:
-    - (11) 9999-2222
-    - (21) 3333-5555
 
