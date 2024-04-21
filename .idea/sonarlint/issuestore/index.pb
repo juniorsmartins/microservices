@@ -341,3 +341,5 @@ J
 hmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/VersoesDtoResponse.java,3/b/3b752bb968b4467632d64fe1da0d7d1e1f6334c4
 œ
 lmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/ContactInfoDtoResponse.java,f/9/f92d8ae796f175d16393ee0b2a50d89efccab875
+¨
+xmicro_empresas/src/main/java/microservices/micro_empresas/adapter/in/controller/dto/response/ContactInfoDtoResponse.java,2/7/2728486547db2df1e46df4fd039f06e6ee497381
