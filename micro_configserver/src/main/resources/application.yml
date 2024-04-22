@@ -4,7 +4,7 @@ server:
 spring:
 
   application:
-    name: configserver
+    name: micro_configserver
 
   profiles:
     active: native
