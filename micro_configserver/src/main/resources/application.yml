@@ -7,11 +7,18 @@ spring:
     name: micro_configserver
 
   profiles:
-    active: native
+#    active: native
+    active: git
   cloud:
     config:
       server:
-        native:
+#        native:
 #          search-locations: "classpath:/config"
-          search-locations: "file:///home//juniormartins//Workspace//SharedFiles"
+#          search-locations: "file:///home//juniormartins//Workspace//SharedFiles"
+        git:
+          uri: "https://github.com/juniorsmartins/configserver.git"
+          default-label: master
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
 
