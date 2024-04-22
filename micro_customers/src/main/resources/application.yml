@@ -10,7 +10,7 @@ spring:
     active:
       - "prod"
   config:
-    import: "optional:micro_configserver:http://localhost:8071/"
+    import: "optional:configserver:http://localhost:8071/"
 
   datasource:
     driver-class-name: org.postgresql.Driver

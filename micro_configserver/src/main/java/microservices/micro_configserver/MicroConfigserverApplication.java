@@ -11,5 +11,5 @@ public class MicroConfigserverApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MicroConfigserverApplication.class, args);
 	}
-
 }
+
