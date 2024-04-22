@@ -343,3 +343,9 @@ hmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/respons
 lmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/ContactInfoDtoResponse.java,f/9/f92d8ae796f175d16393ee0b2a50d89efccab875
 ¨
 xmicro_empresas/src/main/java/microservices/micro_empresas/adapter/in/controller/dto/response/ContactInfoDtoResponse.java,2/7/2728486547db2df1e46df4fd039f06e6ee497381
+O
+micro_configserver/build.gradle,5/6/56a3532f4c49133886399f6dc2d99b6dfa866934
+e
+5micro_configserver/src/main/resources/application.yml,6/d/6dce80135d6020c64c604e486f1ecd90a65b20c0
+“
+cmicro_configserver/src/main/java/microservices/micro_configserver/MicroConfigserverApplication.java,0/6/06b1f7671649f0bbc2ed53cc4a2761ff79fd9abc

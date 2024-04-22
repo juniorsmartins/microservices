@@ -13,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
 import microservices.micro_customers.adapter.dto.request.CustomerUpdateDtoRequest;
-import microservices.micro_customers.adapter.dto.response.*;
+import microservices.micro_customers.adapter.dto.response.ContactInfoDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerSearchDtoResponse;
+import microservices.micro_customers.adapter.dto.response.CustomerUpdateDtoResponse;
 import microservices.micro_customers.adapter.in.filters.CustomerFilter;
 import microservices.micro_customers.adapter.mapper.MapperIn;
 import microservices.micro_customers.application.core.constant.Constantes;
@@ -21,8 +24,6 @@ import microservices.micro_customers.application.port.input.CustomerCreateInputP
 import microservices.micro_customers.application.port.input.CustomerDeleteInputPort;
 import microservices.micro_customers.application.port.input.CustomerUpdateInputPort;
 import microservices.micro_customers.application.port.output.CustomerSearchOutputPort;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -55,44 +56,7 @@ public class CustomerController {
 
     private final MapperIn mapperIn;
 
-    private final Environment environment;
-
     private final ContactInfoDtoResponse contactInfoDtoResponse;
-
-    @Value("${build.version}")
-    private String buildVersion;
-
-    @GetMapping(path = "/build-info")
-    @Operation(summary = "Get Build Information", description = "Buscar informações sobre deploy do Micro_Customers.",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno."),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.")
-        }
-    )
-    public ResponseEntity<String> getBuildInfo() {
-        return ResponseEntity
-            .ok()
-            .body(buildVersion);
-    }
-
-    @GetMapping(path = "/versions")
-    @Operation(summary = "Get Versions", description = "Buscar informações sobre versões no Micro_Customers.",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno."),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.")
-        }
-    )
-    public ResponseEntity<VersoesDtoResponse> getVersions() {
-
-        var javaDistribution = environment.getProperty("JAVA_HOME");
-        var javaVersion = environment.getProperty("java.version");
-
-        var response = new VersoesDtoResponse(javaDistribution, javaVersion);
-
-        return ResponseEntity
-            .ok()
-            .body(response);
-    }
 
     @GetMapping(path = "/contact-info")
     @Operation(summary = "Get Contact Information", description = "Buscar informações de contato do Micro_Customers.",

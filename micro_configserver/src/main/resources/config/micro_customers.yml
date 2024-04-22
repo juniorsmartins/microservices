@@ -1,11 +1,3 @@
-spring:
-  config:
-    activate:
-      on-profile: "dev"
-
-build:
-  version: "1.0.0"
-
 customers:
   message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Desenvolvimento."
   contactDetails:
