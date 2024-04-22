@@ -1,10 +1,16 @@
 server:
-  port: ${SERVER_PORT:18093}
+  port: ${SERVER_PORT:8093}
 
 spring:
 
   application:
     name: micro_customers
+
+  profiles:
+    active:
+      - "prod"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
 
   datasource:
     driver-class-name: org.postgresql.Driver

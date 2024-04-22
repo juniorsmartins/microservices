@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_customers.adapter.dto.request.CustomerCreateDtoRequest;
 import microservices.micro_customers.adapter.dto.request.CustomerUpdateDtoRequest;
+import microservices.micro_customers.adapter.dto.response.ContactInfoDtoResponse;
 import microservices.micro_customers.adapter.dto.response.CustomerCreateDtoResponse;
 import microservices.micro_customers.adapter.dto.response.CustomerSearchDtoResponse;
 import microservices.micro_customers.adapter.dto.response.CustomerUpdateDtoResponse;
@@ -54,6 +55,21 @@ public class CustomerController {
     private final CustomerUpdateInputPort customerUpdateInputPort;
 
     private final MapperIn mapperIn;
+
+    private final ContactInfoDtoResponse contactInfoDtoResponse;
+
+    @GetMapping(path = "/contact-info")
+    @Operation(summary = "Get Contact Information", description = "Buscar informações de contato do Micro_Customers.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno."),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.")
+        }
+    )
+    public ResponseEntity<ContactInfoDtoResponse> getContactInfo() {
+        return ResponseEntity
+            .ok()
+            .body(contactInfoDtoResponse);
+    }
 
     @PostMapping(
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},

@@ -8,12 +8,15 @@ services:
     restart: always
     networks:
       - mercado_financeiro_net
-    environment:
-      - POSTGRES_DB=micro_customers
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./micro_customers/env/postgres.env
     ports:
       - "5434:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     volumes:
       - micro_customers-postgresql-data:/var/lib/postgresql/data
 
@@ -33,7 +36,7 @@ services:
     networks:
       - mercado_financeiro_net
     env_file:
-      - ./micro_customers/.env
+      - ./micro_customers/env/app.env
     depends_on:
       - micro_customers_postgres16
 
@@ -49,6 +52,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5433:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     volumes:
       - micro-empresas-postgresql-data:/var/lib/postgresql/data
 
@@ -285,7 +293,7 @@ volumes:
 
 networks:
   mercado_financeiro_net:
-    name: mercado_financeiro_net
+    name: mercado_financeiro_netd
     driver: bridge
 
 
