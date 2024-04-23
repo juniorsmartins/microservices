@@ -22,7 +22,11 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
-	implementation 'org.springframework.cloud:spring-cloud-bus'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp:4.1.1'
+//	implementation 'org.springframework.cloud:spring-cloud-bus'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-bus:3.1.2'
+//	implementation 'org.springframework.cloud:spring-cloud-bus-rabbit:3.1.2'
+
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

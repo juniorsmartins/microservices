@@ -12,6 +12,12 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8071/"
 
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:micro_empresas}?serverTimezone=UTC
@@ -54,8 +60,9 @@ management:
   endpoints:
     web:
       exposure:
-#        include: "refresh"
         include: "*"
+#        include: "refresh" // caminho para atualização de configurações de application.properties ou yml
+#        include: "busrefresh" // caminho para atualizar configurações de application em massa
 #        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
     metrics:
       enabled: true
