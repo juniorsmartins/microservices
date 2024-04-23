@@ -1,8 +1,8 @@
 customers:
-  message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Desenvolvimento."
+  message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Desenvolvimento - Classpath."
   contactDetails:
     name: "Junior Martins - Developer"
-    email: "{cipher}48bd94974644a2dd2fdb10a5c1cfa4220c779f419f4f1b7446b2199e472a33e4"
+    email: "teste@teste.com"
   onCallSupport:
     - (11) 9999-2222
     - (21) 3333-5555

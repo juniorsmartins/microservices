@@ -1,8 +1,8 @@
 customers:
-  message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Produção."
+  message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Produção - Classpath."
   contactDetails:
     name: "Martin Fowler - Product Owner"
-    email: "{cipher}8f81bbbda6bafee9c0eb3549233171c9af04fb9b863d684058bfc3b1c0083168f262783a832a5b04e48dfdd45a7941e9"
+    email: "fowler@teste.com"
   onCallSupport:
     - (11) 9999-0000
     - (21) 3333-8888
