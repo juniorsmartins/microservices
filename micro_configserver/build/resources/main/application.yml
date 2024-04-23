@@ -1,0 +1,33 @@
+server:
+  port: ${SERVER_PORT:8071}
+
+spring:
+
+  application:
+    name: micro_configserver
+
+  profiles:
+#    active: native
+    active: git
+  cloud:
+    config:
+      server:
+#        native:
+#          search-locations: "classpath:/config"
+#          search-locations: "file:///home//juniormartins//Workspace//SharedFiles"
+        git:
+          uri: "https://github.com/juniorsmartins/configserver.git"
+          default-label: master
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+encrypt:
+  key: "6z$63r@=;(}.f^]u|j/*@l}.0`|8y!fwm%j~0,q#+e[og{hk3s8w~.?[:i}e$pw"
+
