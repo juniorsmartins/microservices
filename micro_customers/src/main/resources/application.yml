@@ -52,5 +52,6 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+#        include: "*"
+        include: "refresh"
 

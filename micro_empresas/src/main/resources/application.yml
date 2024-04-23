@@ -54,8 +54,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: "refresh"
-#        include: "*"
+#        include: "refresh"
+        include: "*"
 #        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
     metrics:
       enabled: true
