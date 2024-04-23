@@ -6,6 +6,7 @@ em construção.....
 
 1. Tecnologias;
 2. Diagramas;
+3. [Repositório de configurações](https://github.com/juniorsmartins/configserver);
 
 ### TECNOLOGIAS
 
