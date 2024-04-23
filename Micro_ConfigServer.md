@@ -13,10 +13,10 @@ em construção.....
 1. __Java (versão 21 LTS)__;
 
 
-2. __Spring Boot__;
+2. __Spring Boot__: é um framework Java de código aberto que visa simplificar e agilizar o desenvolvimento de aplicações Spring. Ele fornece diversas funcionalidades e recursos que eliminam a necessidade de configuração manual complexa, permitindo que você se concentre em escrever o código da sua aplicação e não em configurar o ambiente.
 
 
-3. __Spring Cloud Config Server (versão 2023.0.1)__;
+3. __Spring Cloud Config Server (versão 2023.0.1)__: é um componente central do Spring Cloud que fornece um repositório centralizado para armazenar e gerenciar as configurações de seus microsserviços. Ele permite que você defina configurações em diferentes formatos (como YAML, JSON ou arquivos properties) e as aplique aos seus microsserviços de forma dinâmica e segura.
 
 
 4. __Spring Actuator__: é uma biblioteca do Spring Boot que fornece endpoints HTTP expondo informações detalhadas sobre o estado interno da sua aplicação Spring. Isso permite que você monitore e gerencie sua aplicação de forma mais eficaz, facilitando a depuração, solução de problemas e otimização.
