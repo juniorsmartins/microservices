@@ -10,10 +10,12 @@ em construção.....
 
 ### TECNOLOGIAS
 
-1. Java (versão 21 LTS);
-2. Spring Boot;
-3. Spring Cloud Config Server (versão 2023.0.1);
-4. Spring Actuator;
+1. __Java (versão 21 LTS)__;
+2. __Spring Boot__;
+3. __Spring Cloud Config Server (versão 2023.0.1)__;
+4. __Spring Actuator__;
+   O Spring Actuator é uma biblioteca do Spring Boot que fornece endpoints HTTP expondo informações detalhadas sobre o estado interno da sua aplicação Spring. Isso permite que você monitore e gerencie sua aplicação de forma mais eficaz, facilitando a depuração, solução de problemas e otimização.
+6. __Spring Cloud Bus__;
 
 ### DIAGRAMAS
 
