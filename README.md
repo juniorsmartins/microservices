@@ -7,5 +7,9 @@ em construção.....
 1. [Micro_ConfigServer](https://github.com/juniorsmartins/microservices_mercado_financeiro/blob/master/Micro_ConfigServer.md)
 2. [Micro_Customers](https://github.com/juniorsmartins/microservices_mercado_financeiro/blob/master/Micro_Customers.md);
 3. Micro_Empresas;
-4. Micro_Emails.
+4. Micro_Emails;
+5. Intruções de como testar.
+
+### INSTRUÇÕES DE COMO TESTAR
+
 
