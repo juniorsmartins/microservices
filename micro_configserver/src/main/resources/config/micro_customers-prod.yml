@@ -2,7 +2,7 @@ customers:
   message: "Bem-vindo! Somos a API Rest, Micro_Customers no ambiente de Produção."
   contactDetails:
     name: "Martin Fowler - Product Owner"
-    email: "fowler@teste.com"
+    email: "{cipher}8f81bbbda6bafee9c0eb3549233171c9af04fb9b863d684058bfc3b1c0083168f262783a832a5b04e48dfdd45a7941e9"
   onCallSupport:
     - (11) 9999-0000
     - (21) 3333-8888
