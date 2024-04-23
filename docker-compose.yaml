@@ -2,6 +2,44 @@ version: "3.9"
 
 services:
 
+  micro_customers_postgres16:
+    container_name: micro_customers_postgres16
+    image: postgres:16.0
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    env_file:
+      - ./micro_customers/env/postgres.env
+    ports:
+      - "5434:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    volumes:
+      - micro_customers-postgresql-data:/var/lib/postgresql/data
+
+  micro_customers:
+    container_name: micro_customers
+    build:
+      context: ./
+      dockerfile: ./micro_customers/Dockerfile
+    ports:
+      - "8093:8093"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    env_file:
+      - ./micro_customers/env/app.env
+    depends_on:
+      - micro_customers_postgres16
+
   micro_empresas_postgres16:
     container_name: micro_empresas_postgres16
     image: postgres:16.0
@@ -14,6 +52,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5433:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     volumes:
       - micro-empresas-postgresql-data:/var/lib/postgresql/data
 
@@ -177,6 +220,7 @@ services:
       - mercado_financeiro_net
     depends_on:
       - sonarqube
+      - artifactory
 
 
 
@@ -212,6 +256,9 @@ services:
 
 
 volumes:
+  micro_customers-postgresql-data:
+    name: micro_customers-postgresql-data
+
   micro-empresas-postgresql-data:
     name: micro-empresas-postgresql-data
 
@@ -246,13 +293,17 @@ volumes:
 
 networks:
   mercado_financeiro_net:
-    name: mercado_financeiro_net
+    name: mercado_financeiro_netd
     driver: bridge
 
 
 # PORTAS
+# Micro_customers-postgresql16 - 5434
+# Micro_customers - 8093
 # Micro_emails - 8092
+# Micro_customers-postgresql16 - 5433
 # Micro_empresas - 8091
+# Micro_customers -
 # Actuator micro_emails - 9092
 # Actuator micro_empresas - 9091
 # Prometheus - 9090

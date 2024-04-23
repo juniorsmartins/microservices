@@ -1,7 +1,7 @@
 package util;
 
 import microservices.micro_empresas.adapter.in.controller.dto.request.EmpresaCreateDtoRequest;
-import microservices.micro_empresas.adapter.out.repository.entity.EmpresaEntity;
+import microservices.micro_empresas.adapter.out.entity.EmpresaEntity;
 import microservices.micro_empresas.application.core.domain.Empresa;
 import net.datafaker.Faker;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;

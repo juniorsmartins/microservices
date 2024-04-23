@@ -1,15 +1,19 @@
 package microservices.micro_empresas.adapter.in.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservices.micro_empresas.adapter.in.controller.dto.request.EmpresaCreateDtoRequest;
+import microservices.micro_empresas.adapter.in.controller.dto.response.ContactInfoDtoResponse;
 import microservices.micro_empresas.adapter.in.controller.dto.response.EmpresaCreateDtoResponse;
 import microservices.micro_empresas.adapter.in.controller.dto.response.EmpresaListDtoResponse;
 import microservices.micro_empresas.adapter.mapper.MapperIn;
 import microservices.micro_empresas.application.port.input.EmpresaCreateInputPort;
 import microservices.micro_empresas.application.port.input.EmpresaDeleteInputPort;
 import microservices.micro_empresas.application.port.input.EmpresaListInputPort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +36,24 @@ public class EmpresaController {
 
     private final MapperIn mapperIn;
 
-    @PostMapping
+    private final ContactInfoDtoResponse contactInfoDtoResponse;
+
+    @GetMapping(path = "/contact-info")
+    @Operation(summary = "Get Contact Information", description = "Buscar informações de contato do Micro_Empresas.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno."),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.")
+        }
+    )
+    public ResponseEntity<ContactInfoDtoResponse> getContactInfo() {
+        return ResponseEntity
+            .ok()
+            .body(contactInfoDtoResponse);
+    }
+
+    @PostMapping(
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<EmpresaCreateDtoResponse> create(@RequestBody @Valid EmpresaCreateDtoRequest empresaCreateDtoIn) {
 
         var response = Optional.ofNullable(empresaCreateDtoIn)
@@ -42,14 +63,14 @@ public class EmpresaController {
             .orElseThrow();
 
         return ResponseEntity
-            .created(URI.create("/api/v1/empresas" + response.getId()))
+            .created(URI.create("/api/v1/empresas" + response.getEmpresaId()))
             .body(response);
     }
 
-    @DeleteMapping(path = {"/{empresaId}"})
-    public ResponseEntity<Void> delete(@PathVariable(name = "empresaId") final Long id) {
+    @DeleteMapping(path = {"/{id}"})
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") final Long empresaId) {
 
-        Optional.ofNullable(id)
+        Optional.ofNullable(empresaId)
             .ifPresentOrElse(this.empresaDeleteInputPort::delete,
                 () -> {throw new NoSuchElementException();}
             );
@@ -59,7 +80,7 @@ public class EmpresaController {
             .build();
     }
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<EmpresaListDtoResponse>> list() {
 
         var response = this.empresaListInputPort.list()

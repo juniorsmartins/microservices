@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
+<<<<<<< HEAD
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="1744a5d8-b60c-4dfc-aae8-73a019ab6c9a" />
+=======
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$/../../micro_customers/build/generated/sources/annotationProcessor/java/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../micro_customers/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
+    </content>
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="45920a69-a8fe-4c70-b8fc-107fa959419c" />
+>>>>>>> fceb32c803948dc6774533d6f8fb48527112652f
   </component>
 </module>

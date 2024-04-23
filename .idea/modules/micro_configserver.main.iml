@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
   <component name="SonarLintModuleSettings">
+<<<<<<< HEAD
     <option name="uniqueId" value="e749b6b9-26a7-445d-be5c-aae2f5fab2f0" />
+=======
+    <option name="uniqueId" value="d6222116-8d17-4273-9c15-fea9db04168f" />
+>>>>>>> fceb32c803948dc6774533d6f8fb48527112652f
   </component>
 </module>
