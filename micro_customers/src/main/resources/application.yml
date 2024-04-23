@@ -12,6 +12,12 @@ spring:
   config:
     import: "configserver:http://localhost:8071/"
 
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:micro_customers}?serverTimezone=UTC
@@ -47,4 +53,12 @@ spring:
     open-in-view: false
     generate-ddl: true
     show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#        include: "refresh"
+#        include: "busrefresh"
 
