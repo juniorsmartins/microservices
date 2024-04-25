@@ -17,8 +17,6 @@ services:
     restart: always
     networks:
       - mercado_financeiro_net
-    env_file:
-      - ./micro_configserver/env/app.env
 
   micro_customers_postgres16:
     container_name: micro_customers_postgres16
@@ -53,8 +51,17 @@ services:
     restart: always
     networks:
       - mercado_financeiro_net
-    env_file:
-      - ./micro_customers/env/app.env
+    environment:
+      DB_HOST: micro_customers_postgres16
+      DB_PORT: 5432
+      DB_NAME: micro_customers
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SPRING_APPLICATION_NAME: "micro_customers"
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
+#    env_file:
+#      - ./micro_customers/env/app.env
     depends_on:
       - micro_customers_postgres16
 
@@ -93,8 +100,17 @@ services:
     restart: always
     networks:
       - mercado_financeiro_net
-    env_file:
-      - ./micro_empresas/.env
+#    env_file:
+#      - ./micro_empresas/.env
+    environment:
+      DB_HOST: micro_empresas_postgres16
+      DB_PORT: 5432
+      DB_NAME: micro_empresas
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SPRING_APPLICATION_NAME: "micro_empresas"
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
     depends_on:
       - micro_empresas_postgres16
 

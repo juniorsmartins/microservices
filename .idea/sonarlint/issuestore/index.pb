@@ -353,3 +353,7 @@ E
 docker-compose-qa.yml,0/f/0fb66bef4bdfee93a0ad7c33f372fb3d3dcb1a3e
 M
 micro_configserver/Dockerfile,4/7/472516d50b327e3cdf0f939d74e3f66d3c05e4be
+N
+micro_configserver/env/app.env,8/d/8df2e9731d71630c0d762faa31dec5353e7ab512
+B
+docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a

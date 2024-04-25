@@ -34,6 +34,16 @@ management:
       exposure:
         include: "*"
 
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
 encrypt:
   key: "6z$63r@=;(}.f^]u|j/*@l}.0`|8y!fwm%j~0,q#+e[og{hk3s8w~.?[:i}e$pw"
 
