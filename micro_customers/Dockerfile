@@ -1,9 +1,6 @@
 # Estágio de construção - 1
 FROM gradle:8.7.0-jdk21-alpine AS builder
 
-#Responsável pela manutenção
-MAINTAINER juniormartins
-
 # Autoria
 LABEL authors="juniormartins"
 
@@ -17,7 +14,7 @@ RUN ./gradlew clean build -x test --no-daemon
 
 
 # Estágio de execução - 2
-FROM amazoncorretto:21.0.1-al2023-headful
+FROM amazoncorretto:21.0.3-al2023-headless
 
 WORKDIR /app
 VOLUME /tmp
