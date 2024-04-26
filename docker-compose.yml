@@ -2,22 +2,6 @@ version: "3.9"
 
 services:
 
-  micro_configserver:
-    container_name: micro_configserver
-    build:
-      context: ./
-      dockerfile: ./micro_configserver/Dockerfile
-    ports:
-      - "8071:8071"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
-    restart: always
-    networks:
-      - mercado_financeiro_net
-
   micro_customers_postgres16:
     container_name: micro_customers_postgres16
     image: postgres:16.0
@@ -35,6 +19,67 @@ services:
           memory: 512M
     volumes:
       - micro_customers-postgresql-data:/var/lib/postgresql/data
+
+  micro_empresas_postgres16:
+    container_name: micro_empresas_postgres16
+    image: postgres:16.0
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - POSTGRES_DB=micro_empresas
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    volumes:
+      - micro-empresas-postgresql-data:/var/lib/postgresql/data
+
+
+  rabbit:
+    image: rabbitmq:3.12-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - mercado_financeiro_net
+
+  micro_configserver:
+    container_name: micro_configserver
+    build:
+      context: ./
+      dockerfile: ./micro_configserver/Dockerfile
+    ports:
+      - "8071:8071"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    restart: always
+    networks:
+      - mercado_financeiro_net
 
   micro_customers:
     container_name: micro_customers
@@ -63,28 +108,10 @@ services:
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
-      - micro_customers_postgres16
-      - micro_configserver
-
-  micro_empresas_postgres16:
-    container_name: micro_empresas_postgres16
-    image: postgres:16.0
-    restart: always
-    networks:
-      - mercado_financeiro_net
-    environment:
-      - POSTGRES_DB=micro_empresas
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - "5433:5432"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
-    volumes:
-      - micro-empresas-postgresql-data:/var/lib/postgresql/data
+      micro_configserver:
+        condition: service_healthy
+      micro_customers_postgres16:
+        condition: service_started
 
   micro_empresas:
     container_name: micro_empresas
@@ -113,8 +140,11 @@ services:
       SPRING_CONFIG_IMPORT: "configserver:http://micro_configserver:8071/"
       SPRING_PROFILES_ACTIVE: default
     depends_on:
-      - micro_empresas_postgres16
-      - micro_configserver
+      micro_configserver:
+        condition: service_healthy
+      micro_empresas_postgres16:
+        condition: service_started
+
 
   micro_emails:
     container_name: micro_emails
