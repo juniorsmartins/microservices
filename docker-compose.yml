@@ -56,8 +56,8 @@ services:
     networks:
       - mercado_financeiro_net
 
-  micro_configserver:
-    container_name: micro_configserver
+  configserver:
+    container_name: configserver
     build:
       context: ./
       dockerfile: ./micro_configserver/Dockerfile
@@ -78,6 +78,8 @@ services:
           cpus: '0.3'
           memory: 512M
     restart: always
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
     networks:
       - mercado_financeiro_net
 
@@ -102,13 +104,14 @@ services:
       DB_NAME: micro_customers
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: "micro_customers"
-      SPRING_CONFIG_IMPORT: "configserver:http://micro_configserver:8071/"
+      SPRING_APPLICATION_NAME: micro_customers
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       SPRING_PROFILES_ACTIVE: default
+      SPRING_RABBITMQ_HOST: "rabbit"
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
-      micro_configserver:
+      configserver:
         condition: service_healthy
       micro_customers_postgres16:
         condition: service_started
@@ -136,11 +139,12 @@ services:
       DB_NAME: micro_empresas
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: "micro_empresas"
-      SPRING_CONFIG_IMPORT: "configserver:http://micro_configserver:8071/"
+      SPRING_APPLICATION_NAME: micro_empresas
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       SPRING_PROFILES_ACTIVE: default
+      SPRING_RABBITMQ_HOST: "rabbit"
     depends_on:
-      micro_configserver:
+      configserver:
         condition: service_healthy
       micro_empresas_postgres16:
         condition: service_started
