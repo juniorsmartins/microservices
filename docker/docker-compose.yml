@@ -8,8 +8,10 @@ services:
     restart: always
     networks:
       - mercado_financeiro_net
-    env_file:
-      - ./micro_customers/env/postgres.env
+    environment:
+      - POSTGRES_DB=micro_customers
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
       - "5434:5432"
     deploy:
@@ -58,9 +60,10 @@ services:
 
   configserver:
     container_name: configserver
-    build:
-      context: ./
-      dockerfile: ./micro_configserver/Dockerfile
+    image: juniorsmartins/configserver:latest
+#    build:
+#      context: ..
+#      dockerfile: ../micro_configserver/Dockerfile
     ports:
       - "8071:8071"
     depends_on:
@@ -85,9 +88,10 @@ services:
 
   micro_customers:
     container_name: micro_customers
-    build:
-      context: ./
-      dockerfile: ./micro_customers/Dockerfile
+    image: juniorsmartins/micro_customers:latest
+#    build:
+#      context: ..
+#      dockerfile: ../micro_customers/Dockerfile
     ports:
       - "8093:8093"
     deploy:
@@ -118,9 +122,10 @@ services:
 
   micro_empresas:
     container_name: micro_empresas
-    build:
-      context: ./
-      dockerfile: ./micro_empresas/Dockerfile
+    image: juniorsmartins/micro_empresas:latest
+#    build:
+#      context: ..
+#      dockerfile: ../micro_empresas/Dockerfile
     ports:
       - "8091:8091"
     deploy:
@@ -152,9 +157,7 @@ services:
 
   micro_emails:
     container_name: micro_emails
-    build:
-      context: ./
-      dockerfile: ./micro_emails/Dockerfile
+    image:
     ports:
       - "8092:8092"
     deploy:
@@ -166,7 +169,7 @@ services:
     networks:
       - mercado_financeiro_net
     env_file:
-      - ./micro_emails/.env
+      - ../micro_emails/.env
 
 
 

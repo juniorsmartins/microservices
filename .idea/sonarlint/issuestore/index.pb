@@ -353,3 +353,5 @@ M
 micro_configserver/Dockerfile,4/7/472516d50b327e3cdf0f939d74e3f66d3c05e4be
 B
 docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a
+I
+docker/docker-compose.yml,3/f/3fe733692645251b38d6ef0a55b2d48c3a1cf387

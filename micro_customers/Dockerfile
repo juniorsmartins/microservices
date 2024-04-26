@@ -7,7 +7,8 @@ LABEL authors="juniormartins"
 WORKDIR /compile
 
 # Copia os arquivos Gradle e o código-fonte
-COPY ./micro_customers/. /compile
+#COPY ./micro_customers/. /compile
+COPY . /compile
 
 # Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
