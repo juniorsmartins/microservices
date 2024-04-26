@@ -58,12 +58,13 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: "micro_customers"
-      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_CONFIG_IMPORT: "configserver:http://micro_configserver:8071/"
       SPRING_PROFILES_ACTIVE: default
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
       - micro_customers_postgres16
+      - micro_configserver
 
   micro_empresas_postgres16:
     container_name: micro_empresas_postgres16
@@ -109,10 +110,11 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: "micro_empresas"
-      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_CONFIG_IMPORT: "configserver:http://micro_configserver:8071/"
       SPRING_PROFILES_ACTIVE: default
     depends_on:
       - micro_empresas_postgres16
+      - micro_configserver
 
   micro_emails:
     container_name: micro_emails
