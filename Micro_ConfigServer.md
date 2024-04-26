@@ -10,7 +10,7 @@ em construção.....
 
 ### TECNOLOGIAS
 
-1. __Java (versão 21 LTS)__;
+1. __Java (versão 21 LTS)__:
 
 
 2. __Spring Boot__: é um framework Java de código aberto que visa simplificar e agilizar o desenvolvimento de aplicações Spring. Ele fornece diversas funcionalidades e recursos que eliminam a necessidade de configuração manual complexa, permitindo que você se concentre em escrever o código da sua aplicação e não em configurar o ambiente.
