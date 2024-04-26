@@ -14,7 +14,7 @@ RUN ./gradlew clean build -x test --no-daemon
 
 
 # Estágio de execução - 2
-FROM amazoncorretto:21.0.3-al2023-headless
+FROM gradle:jdk21-alpine
 
 WORKDIR /app
 VOLUME /tmp
