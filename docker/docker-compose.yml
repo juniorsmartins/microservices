@@ -157,7 +157,7 @@ services:
 
   micro_emails:
     container_name: micro_emails
-    image:
+    image: juniorsmartins/micro_emails:latest
     ports:
       - "8092:8092"
     deploy:
