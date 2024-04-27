@@ -7,8 +7,7 @@ LABEL authors="juniormartins"
 WORKDIR /compile
 
 # Copia os arquivos Gradle e o código-fonte
-#COPY ./micro_configserver/. /compile
-COPY . /compile
+COPY . .
 
 # Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
@@ -18,7 +17,7 @@ RUN ./gradlew clean build -x test --no-daemon
 FROM amazoncorretto:21.0.3-al2023-headless
 
 WORKDIR /app
-VOLUME /tmp
+#VOLUME /tmp
 
 COPY --from=builder /compile/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar api.jar
 
