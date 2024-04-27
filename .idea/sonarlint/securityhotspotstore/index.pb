@@ -83,8 +83,6 @@ tmicro_empresas/src/test/java/microservices/micro_empresas/application/core/usec
 vmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/repository/EmpresaRepositoryIntegrationTest.java,4/f/4f6e65c18a68161cae30cc6f6ca659623a0e2fd1
 j
 :micro_empresas/src/test/java/util/FactoryObjectMother.java,b/8/b852cfbb73bd944ec702b63217d908f2e607a358
-4
-.env,3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
 ;
 system.yaml,e/2/e276ae1374cc9775d58ee11917673cda3dae499c
 ¥
@@ -345,13 +343,11 @@ e
 5micro_configserver/src/main/resources/application.yml,6/d/6dce80135d6020c64c604e486f1ecd90a65b20c0
 “
 cmicro_configserver/src/main/java/microservices/micro_configserver/MicroConfigserverApplication.java,0/6/06b1f7671649f0bbc2ed53cc4a2761ff79fd9abc
-G
-docker-compose-prod.yml,2/4/2476ad3ad41441b5f97e5c08b0e980731761bbff
-E
-docker-compose-qa.yml,0/f/0fb66bef4bdfee93a0ad7c33f372fb3d3dcb1a3e
 M
 micro_configserver/Dockerfile,4/7/472516d50b327e3cdf0f939d74e3f66d3c05e4be
-B
-docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a
 I
 docker/docker-compose.yml,3/f/3fe733692645251b38d6ef0a55b2d48c3a1cf387
+Q
+!docker/default/docker-compose.yml,9/b/9b71dfa5cdf2a028394961d8d0b283b04f823b07
+;
+docker/.env,1/d/1d24bb718a81e826684363b3a04a856b29508ed4
