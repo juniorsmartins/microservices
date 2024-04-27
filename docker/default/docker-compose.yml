@@ -55,15 +55,13 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
-    networks:
-      - mercado_financeiro_net
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
 
   configserver:
     container_name: configserver
     image: juniorsmartins/configserver:latest
-#    build:
-#      context: ..
-#      dockerfile: ../micro_configserver/Dockerfile
     ports:
       - "8071:8071"
     depends_on:
@@ -75,16 +73,10 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
     restart: always
-    environment:
-      SPRING_RABBITMQ_HOST: "rabbit"
-    networks:
-      - mercado_financeiro_net
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
 
   micro_customers:
     container_name: micro_customers
@@ -94,14 +86,14 @@ services:
 #      dockerfile: ../micro_customers/Dockerfile
     ports:
       - "8093:8093"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.3'
+#          memory: 512M
     restart: always
-    networks:
-      - mercado_financeiro_net
+#    networks:
+#      - mercado_financeiro_net
     environment:
       DB_HOST: micro_customers_postgres16
       DB_PORT: 5432
@@ -109,35 +101,26 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: micro_customers
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      SPRING_PROFILES_ACTIVE: default
-      SPRING_RABBITMQ_HOST: "rabbit"
+#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+#      SPRING_PROFILES_ACTIVE: default
+#      SPRING_RABBITMQ_HOST: "rabbit"
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
-      configserver:
-        condition: service_healthy
+#      configserver:
+#        condition: service_healthy
       micro_customers_postgres16:
         condition: service_started
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
 
   micro_empresas:
     container_name: micro_empresas
     image: juniorsmartins/micro_empresas:latest
-#    build:
-#      context: ..
-#      dockerfile: ../micro_empresas/Dockerfile
     ports:
       - "8091:8091"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
     restart: always
-    networks:
-      - mercado_financeiro_net
-#    env_file:
-#      - ./micro_empresas/.env
     environment:
       DB_HOST: micro_empresas_postgres16
       DB_PORT: 5432
@@ -145,15 +128,12 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: micro_empresas
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      SPRING_PROFILES_ACTIVE: default
-      SPRING_RABBITMQ_HOST: "rabbit"
     depends_on:
-      configserver:
-        condition: service_healthy
       micro_empresas_postgres16:
         condition: service_started
-
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
 
   micro_emails:
     container_name: micro_emails
