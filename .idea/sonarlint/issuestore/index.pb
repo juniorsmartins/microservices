@@ -349,3 +349,11 @@ Q
 !docker/default/docker-compose.yml,9/b/9b71dfa5cdf2a028394961d8d0b283b04f823b07
 P
  docker/default/common-config.yml,b/5/b5a9750c24d92a9e0311a7820e3fe6ecb63ef9dd
+M
+docker/prod/common-config.yml,d/5/d5c30103a64cb88723c45b1a464e7c91754a62ea
+K
+docker/qa/common-config.yml,6/7/67c941f5927c77daa6bf16f3483dab8b05cfc5d6
+N
+docker/prod/docker-compose.yml,c/4/c4385ea8b1d6080927b30692238612447135f324
+L
+docker/qa/docker-compose.yml,f/d/fdd839a89c55516a7d5fe104b0efad7bb79880ae
