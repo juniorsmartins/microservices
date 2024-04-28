@@ -357,3 +357,7 @@ N
 docker/prod/docker-compose.yml,c/4/c4385ea8b1d6080927b30692238612447135f324
 L
 docker/qa/docker-compose.yml,f/d/fdd839a89c55516a7d5fe104b0efad7bb79880ae
+H
+readme/Micro_Empresas.md,0/f/0fb9b338c052ce69af047f4a635bfb27bd96fd35
+F
+readme/Micro_emails.md,c/7/c7637ccd6ccf475840d28d29249fb36f7d77e13f
