@@ -361,3 +361,7 @@ H
 readme/Micro_Empresas.md,0/f/0fb9b338c052ce69af047f4a635bfb27bd96fd35
 F
 readme/Micro_emails.md,c/7/c7637ccd6ccf475840d28d29249fb36f7d77e13f
+I
+readme/Micro_Customers.md,3/d/3d2c77cd50284391f0779a1f0202cfe30a5aa0dd
+F
+readme/Micro_Emails.md,3/3/33578ea062a267b5c0f6cb0436454555ddc49994
