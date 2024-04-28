@@ -6,14 +6,15 @@ LABEL authors="juniormartins"
 WORKDIR /compile
 
 # Copia os arquivos Gradle e o código-fonte
-COPY ./micro_emails/. /compile
+#COPY ./micro_emails/. /compile
+COPY . /compile
 
 # Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
 
 
 # Estágio de execução - 2
-FROM amazoncorretto:21.0.1-al2023-headful
+FROM gradle:jdk21-alpine
 
 WORKDIR /app
 VOLUME /tmp

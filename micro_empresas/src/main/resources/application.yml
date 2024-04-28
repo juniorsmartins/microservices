@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8091}
+  port: ${SERVER_PORT:9102}
 
 spring:
 
@@ -10,7 +10,8 @@ spring:
     active:
       - "prod"
   config:
-    import: "optional:configserver:http://localhost:8071/"
+    import: "optional:configserver:http://localhost:9201/"
+#    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:9201}/"
 
   rabbitmq:
     host: "localhost"
