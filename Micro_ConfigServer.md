@@ -10,7 +10,7 @@ em construção.....
 
 ### TECNOLOGIAS
 
-1. __Java (versão 21 LTS)__;
+1. __Java (versão 21 LTS)__:
 
 
 2. __Spring Boot__: é um framework Java de código aberto que visa simplificar e agilizar o desenvolvimento de aplicações Spring. Ele fornece diversas funcionalidades e recursos que eliminam a necessidade de configuração manual complexa, permitindo que você se concentre em escrever o código da sua aplicação e não em configurar o ambiente.
@@ -25,7 +25,12 @@ em construção.....
 6. __Spring Cloud Bus__: é um framework para comunicação e coordenação de microsserviços distribuídos. Ele fornece um canal de eventos centralizado para que os microsserviços se comuniquem entre si, permitindo que você implemente eventos, notificações e atualizações de estado em tempo real.
 
 
-7. __TESTE__
+7. __Spring Cloud Config Monitor__: é componente crucial na arquitetura de microsserviços, desempenhando um papel vital na gestão dinâmica das configurações para seus microsserviços distribuídos. O monitor detecta e notifica sobre qualquer mudança nas configurações armazenadas no Spring Cloud Config Server.
+
+8. 
+9. 
+10. 
+11. 
 
 ### DIAGRAMAS
 
