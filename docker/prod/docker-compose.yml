@@ -1,0 +1,380 @@
+version: "3.9"
+
+services:
+
+  micro_customers_postgres16:
+    container_name: micro_customers_postgres16
+    image: postgres:16.0
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - POSTGRES_DB=micro_customers
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5001:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    volumes:
+      - micro_customers-postgresql-data:/var/lib/postgresql/data
+
+  micro_empresas_postgres16:
+    container_name: micro_empresas_postgres16
+    image: postgres:16.0
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - POSTGRES_DB=micro_empresas
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5002:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    volumes:
+      - micro-empresas-postgresql-data:/var/lib/postgresql/data
+
+
+
+  rabbit:
+    image: rabbitmq:3.12-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  configserver:
+    container_name: configserver
+    image: juniorsmartins/configserver:latest
+    ports:
+      - "9201:9201"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9201/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: always
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  micro_customers:
+    container_name: micro_customers
+    image: juniorsmartins/micro_customers:latest
+#    build:
+#      context: .
+#      dockerfile: ../../micro_customers/Dockerfile
+    ports:
+      - "9101:9101"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.3'
+#          memory: 512M
+    restart: always
+#    networks:
+#      - mercado_financeiro_net
+    environment:
+      DB_HOST: micro_customers_postgres16
+      DB_PORT: 5432
+      DB_NAME: micro_customers
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SPRING_APPLICATION_NAME: micro_customers
+#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+#      SPRING_PROFILES_ACTIVE: default
+#      SPRING_RABBITMQ_HOST: "rabbit"
+#    env_file:
+#      - ./micro_customers/env/app.env
+    depends_on:
+      configserver:
+        condition: service_healthy
+      micro_customers_postgres16:
+        condition: service_started
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  micro_empresas:
+    container_name: micro_empresas
+    image: juniorsmartins/micro_empresas:latest
+    ports:
+      - "9102:9102"
+    restart: always
+    environment:
+      DB_HOST: micro_empresas_postgres16
+      DB_PORT: 5432
+      DB_NAME: micro_empresas
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SPRING_APPLICATION_NAME: micro_empresas
+    depends_on:
+      configserver:
+        condition: service_healthy
+      micro_empresas_postgres16:
+        condition: service_started
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  micro_emails:
+    container_name: micro_emails
+    image: juniorsmartins/micro_emails:latest
+    ports:
+      - "9103:9103"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    restart: always
+    networks:
+      - mercado_financeiro_net
+
+
+
+#  sonarqube_postgres16:
+#    container_name: sonarqube_postgres16
+#    image: postgres:16.0
+#    networks:
+#      - mercado_financeiro_net
+#    environment:
+#      - POSTGRES_DB=sonarqube
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#    volumes:
+#      - sonarqube-postgresql:/var/lib/postgresql
+#      - sonarqube-postgresql-data:/var/lib/postgresql/data
+#
+#  sonarqube:
+#    container_name: sonarqube
+#    image: sonarqube:9.9.4-community
+#    ports:
+#      - "9000:9000"
+#    networks:
+#      - mercado_financeiro_net
+#    environment:
+#      - sonar.jdbc.url=jdbc:postgresql://sonarqube_postgres16:5432/sonarqube
+#    volumes:
+#      - sonarqube_conf:/opt/sonarqube/conf
+#      - sonarqube_data:/opt/sonarqube/data
+#      - sonarqube_extensions:/opt/sonarqube/extensions
+#      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+#    depends_on:
+#      - sonarqube_postgres16
+
+
+#  artifactory_postgres16:
+#    container_name: artifactory_postgres16
+#    image: postgres:16.0
+#    environment:
+#      - POSTGRES_DB=artifactory
+#      - POSTGRES_USER=artifactory
+#      - POSTGRES_PASSWORD=artifactory
+#    ports:
+#      - "5532:5432"
+#    restart: always
+#    networks:
+#      - mercado_financeiro_net
+#    volumes:
+#      - artifactory-postgresql-data:/var/lib/postgresql/data
+#      - /etc/localtime:/etc/localtime:ro
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: "1.0"
+#          memory: 500m
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: "50m"
+#        max-file: "10"
+#    ulimits:
+#      nproc: 65535
+#      nofile:
+#        soft: 32000
+#        hard: 40000
+#
+#  artifactory:
+#    container_name: artifactory
+#    image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.8
+#    environment:
+#      - ENABLE_MIGRATION=y
+#      - JF_SHARED_DATABASE_TYPE=postgresql
+#      - JF_SHARED_DATABASE_USERNAME=artifactory
+#      - JF_SHARED_DATABASE_PASSWORD=artifactory
+#      - JF_SHARED_DATABASE_URL=jdbc:postgresql://artifactory_postgres16:5432/artifactory
+#      - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
+#      - JF_SHARED_NODE_IP=${JF_SHARED_NODE_IP}
+#      - JF_SHARED_NODE_ID=${JF_SHARED_NODE_ID}
+#      - JF_SHARED_NODE_NAME=${JF_SHARED_NODE_NAME}
+#      - JF_ROUTER_ENTRYPOINTS_EXTERNALPORT=${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
+#    ports:
+#      - ${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}:${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
+#      - "8081:8081"
+#    volumes:
+#      - artifactory-storage:/var/opt/jfrog/artifactory
+#      - /etc/localtime:/etc/localtime:ro
+#    restart: always
+#    networks:
+#      - mercado_financeiro_net
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: "2.0"
+#          memory: 4G
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: "50m"
+#        max-file: "10"
+#    ulimits:
+#      nproc: 65535
+#      nofile:
+#        soft: 32000
+#        hard: 40000
+#    depends_on:
+#      - artifactory_postgres16
+
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:2.440.2-lts-jdk21
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    networks:
+      - mercado_financeiro_net
+#    depends_on:
+#      - sonarqube
+#      - artifactory
+
+
+
+#  prometheus:
+#    container_name: prometheus
+#    image: prom/prometheus:v2.51.0
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+#      - prometheus-storage:/prometheus
+#    command:
+#      - "--config.file=/etc/prometheus/prometheus.yaml"
+#    restart: always
+#    networks:
+#      - mercado_financeiro_net
+#
+#  grafana:
+#    container_name: grafana
+#    image: grafana/grafana:10.3.5-ubuntu
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - grafana-storage:/var/lib/grafana
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=admin
+#      - GF_SECURITY_ADMIN_PASSWORD=admin
+#    networks:
+#      - mercado_financeiro_net
+#    depends_on:
+#      - prometheus
+
+
+
+volumes:
+  micro_customers-postgresql-data:
+    name: micro_customers-postgresql-data
+
+  micro-empresas-postgresql-data:
+    name: micro-empresas-postgresql-data
+
+#  sonarqube-postgresql:
+#    name: sonarqube-postgresql
+#  sonarqube-postgresql-data:
+#    name: sonarqube-postgresql-data
+
+#  sonarqube_conf:
+#    name: sonarqube_conf
+#  sonarqube_data:
+#    name: sonarqube_data
+#  sonarqube_extensions:
+#    name: sonarqube_extensions
+#  sonarqube_bundled-plugins:
+#    name: sonarqube_bundled-plugins
+
+#  artifactory-postgresql-data:
+#    name: artifactory-postgresql-data
+#  artifactory-storage:
+#    name: artifactory-storage
+
+  jenkins-docker-certs:
+    name: jenkins-docker-certs
+  jenkins-home:
+    name: jenkins-home
+
+#  prometheus-storage:
+#    name: prometheus-storage
+#  grafana-storage:
+#    name: grafana-storage
+
+networks:
+  mercado_financeiro_net:
+    name: mercado_financeiro_net
+    driver: bridge
+
+
+# PORTAS
+# Configserver - 9201
+
+# Micro_customers - 9101
+# Micro_empresas - 9102
+# Micro_emails - 9103
+
+# Micro_customers-postgres16 - 9001
+# Micro_empresas-postgres16 - 9002
+
+# Jenkins - 8080
+
+
+
+# Actuator micro_emails - 9092
+# Actuator micro_empresas - 9091
+
+# Prometheus - 9090
+# Grafana - 3000
+# Sonarqube - 9000
+
+# Artifactory - 8082
+# Artifactory - 8081
+
+
+
+

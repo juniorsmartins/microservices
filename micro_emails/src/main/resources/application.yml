@@ -1,18 +1,17 @@
 server:
-  port: 8092
+  port: ${SERVER_PORT:9103}
 
 spring:
 
   application:
     name: micro_emails
 
-
-
 management:
   endpoints:
     web:
       exposure:
-        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
+        include: "*"
+#        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
     metrics:
       enabled: true
       tags:

@@ -3,8 +3,6 @@
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 K
 micro_empresas/build.gradle,2/d/2d44a5e6494441b43523dcf2810c283e23e1b37f
-C
-docker-compose.yaml,e/f/ef8def03dc8f162799089e9b5f4321201c8810d5
 I
 micro_empresas/Dockerfile,d/3/d3769fc96d422785b61f7dd53cb77b53ef677914
 C
@@ -85,8 +83,6 @@ tmicro_empresas/src/test/java/microservices/micro_empresas/application/core/usec
 vmicro_empresas/src/test/java/microservices/micro_empresas/adapter/out/repository/EmpresaRepositoryIntegrationTest.java,4/f/4f6e65c18a68161cae30cc6f6ca659623a0e2fd1
 j
 :micro_empresas/src/test/java/util/FactoryObjectMother.java,b/8/b852cfbb73bd944ec702b63217d908f2e607a358
-4
-.env,3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
 ;
 system.yaml,e/2/e276ae1374cc9775d58ee11917673cda3dae499c
 ¥
@@ -337,8 +333,6 @@ K
 micro_customers/env/app.env,6/b/6bc4201a692578ef19eb8018a49fb6a82d444776
 J
 micro_customers/.gitignore,9/d/9d38d93bd3fffcca6d543482ba812c22b2e1ca5a
-˜
-hmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/VersoesDtoResponse.java,3/b/3b752bb968b4467632d64fe1da0d7d1e1f6334c4
 œ
 lmicro_customers/src/main/java/microservices/micro_customers/adapter/dto/response/ContactInfoDtoResponse.java,f/9/f92d8ae796f175d16393ee0b2a50d89efccab875
 ¨
@@ -349,3 +343,17 @@ e
 5micro_configserver/src/main/resources/application.yml,6/d/6dce80135d6020c64c604e486f1ecd90a65b20c0
 “
 cmicro_configserver/src/main/java/microservices/micro_configserver/MicroConfigserverApplication.java,0/6/06b1f7671649f0bbc2ed53cc4a2761ff79fd9abc
+M
+micro_configserver/Dockerfile,4/7/472516d50b327e3cdf0f939d74e3f66d3c05e4be
+Q
+!docker/default/docker-compose.yml,9/b/9b71dfa5cdf2a028394961d8d0b283b04f823b07
+P
+ docker/default/common-config.yml,b/5/b5a9750c24d92a9e0311a7820e3fe6ecb63ef9dd
+M
+docker/prod/common-config.yml,d/5/d5c30103a64cb88723c45b1a464e7c91754a62ea
+K
+docker/qa/common-config.yml,6/7/67c941f5927c77daa6bf16f3483dab8b05cfc5d6
+N
+docker/prod/docker-compose.yml,c/4/c4385ea8b1d6080927b30692238612447135f324
+L
+docker/qa/docker-compose.yml,f/d/fdd839a89c55516a7d5fe104b0efad7bb79880ae
