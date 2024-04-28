@@ -143,15 +143,15 @@ services:
     image: juniorsmartins/micro_emails:latest
     ports:
       - "9103:9103"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
     restart: always
-    networks:
-      - mercado_financeiro_net
-
+    environment:
+      SPRING_APPLICATION_NAME: micro_emails
+    depends_on:
+      configserver:
+        condition: service_healthy
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
 
 
 #  sonarqube_postgres16:

@@ -365,3 +365,9 @@ I
 readme/Micro_Customers.md,3/d/3d2c77cd50284391f0779a1f0202cfe30a5aa0dd
 F
 readme/Micro_Emails.md,3/3/33578ea062a267b5c0f6cb0436454555ddc49994
+–
+fmicro_emails/src/main/java/microservices/micro_emails/adapter/dto/response/ContactInfoDtoResponse.java,1/5/15fa4a5ec3a06ad6388034c11ca83c83851c4cec
+“
+cmicro_emails/src/main/java/microservices/micro_emails/adapter/in/controller/CustomerController.java,e/a/ead9f4542f0af341da24214d53472675f532634c
+‘
+amicro_emails/src/main/java/microservices/micro_emails/adapter/in/controller/EmailsController.java,0/d/0d406e034ffff1753c5210d7afac327b51c24460
