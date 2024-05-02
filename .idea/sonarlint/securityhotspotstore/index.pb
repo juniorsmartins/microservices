@@ -5,8 +5,6 @@ K
 micro_empresas/build.gradle,2/d/2d44a5e6494441b43523dcf2810c283e23e1b37f
 I
 micro_empresas/Dockerfile,d/3/d3769fc96d422785b61f7dd53cb77b53ef677914
-C
-micro_empresas/.env,b/9/b9a22a7ec3b0ce1bfa6ab407009e447d955d6275
 N
 micro_empresas/settings.gradle,d/9/d9d697d56c55473793fae8ce3d5af2e80633844b
 J
@@ -49,8 +47,6 @@ lmicro_empresas/src/main/java/microservices/micro_empresas/application/core/usec
 nmicro_empresas/src/main/java/microservices/micro_empresas/application/port/output/EmpresaDeleteOutputPort.java,9/8/9827ea0a5f55852a1de31147071b0d0351366dc8
 è
 _micro_empresas/src/main/java/microservices/micro_empresas/adapter/out/EmpresaDeleteAdapter.java,5/1/51e9589931ab22c7f064992bfb65b046c6719856
-A
-micro_emails/.env,4/c/4c56ef0703d1efbf40c8026880702f83150ba9b8
 G
 micro_emails/Dockerfile,9/9/99b71f6228810774cdeefaa517c8435cac092029
 I
@@ -327,10 +323,6 @@ umicro_customers/src/test/java/microservices/micro_customers/adapter/dto/request
 \micro_customers/src/main/java/microservices/micro_customers/config/audit/AuditAwareImpl.java,5/d/5dff7622c73fc1518ed5e759b9b32f534d9a4877
 ä
 Zmicro_customers/src/main/java/microservices/micro_customers/MicroCustomersApplication.java,c/8/c833b4bd3a85c5be2d23048437d76a664b8b2d81
-P
- micro_customers/env/postgres.env,5/f/5f720a611cca88c6274b232fbe61c624b2a6a4ae
-K
-micro_customers/env/app.env,6/b/6bc4201a692578ef19eb8018a49fb6a82d444776
 J
 micro_customers/.gitignore,9/d/9d38d93bd3fffcca6d543482ba812c22b2e1ca5a
 ú
@@ -359,15 +351,11 @@ L
 docker/qa/docker-compose.yml,f/d/fdd839a89c55516a7d5fe104b0efad7bb79880ae
 H
 readme/Micro_Empresas.md,0/f/0fb9b338c052ce69af047f4a635bfb27bd96fd35
-F
-readme/Micro_emails.md,c/7/c7637ccd6ccf475840d28d29249fb36f7d77e13f
 I
 readme/Micro_Customers.md,3/d/3d2c77cd50284391f0779a1f0202cfe30a5aa0dd
 F
 readme/Micro_Emails.md,3/3/33578ea062a267b5c0f6cb0436454555ddc49994
 ñ
 fmicro_emails/src/main/java/microservices/micro_emails/adapter/dto/response/ContactInfoDtoResponse.java,1/5/15fa4a5ec3a06ad6388034c11ca83c83851c4cec
-ì
-cmicro_emails/src/main/java/microservices/micro_emails/adapter/in/controller/CustomerController.java,e/a/ead9f4542f0af341da24214d53472675f532634c
 ë
 amicro_emails/src/main/java/microservices/micro_emails/adapter/in/controller/EmailsController.java,0/d/0d406e034ffff1753c5210d7afac327b51c24460

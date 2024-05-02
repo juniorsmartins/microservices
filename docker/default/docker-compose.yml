@@ -40,8 +40,26 @@ services:
           cpus: '0.3'
           memory: 512M
     volumes:
-      - micro-empresas-postgresql-data:/var/lib/postgresql/data
+      - micro_empresas-postgresql-data:/var/lib/postgresql/data
 
+  micro_emails_mysql8:
+    container_name: micro_emails_mysql8
+    image: mysql:8.0.17
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - MYSQL_DATABASE=micro_emails
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "5003:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    volumes:
+      - micro_emails-mysql-data:/var/lib/mysql
 
 
   rabbit:
@@ -313,9 +331,11 @@ volumes:
   micro_customers-postgresql-data:
     name: micro_customers-postgresql-data
 
-  micro-empresas-postgresql-data:
-    name: micro-empresas-postgresql-data
+  micro_empresas-postgresql-data:
+    name: micro_empresas-postgresql-data
 
+  micro_emails-mysql-data:
+    name: micro_emails-mysql-data
 #  sonarqube-postgresql:
 #    name: sonarqube-postgresql
 #  sonarqube-postgresql-data:
@@ -358,8 +378,9 @@ networks:
 # Micro_empresas - 9102
 # Micro_emails - 9103
 
-# Micro_customers-postgres16 - 9001
-# Micro_empresas-postgres16 - 9002
+# Micro_customers-postgres16 - 5001
+# Micro_empresas-postgres16 - 5001
+# Micro_emails_mysql8 - 5003
 
 # Jenkins - 8080
 
