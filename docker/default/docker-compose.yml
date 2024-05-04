@@ -6,8 +6,6 @@ services:
     container_name: micro_customers_postgres16
     image: postgres:16.0
     restart: always
-    networks:
-      - mercado_financeiro_net
     environment:
       - POSTGRES_DB=micro_customers
       - POSTGRES_USER=postgres
@@ -20,11 +18,9 @@ services:
       retries: 10 # Quantidade de tentativas
       interval: 10s # Intervalo entre tentativas
       start_period: 10s # Tempo de delay antes de começar a checagem
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
     volumes:
       - micro_customers-postgresql-data:/var/lib/postgresql/data
 
@@ -32,8 +28,6 @@ services:
     container_name: micro_empresas_postgres16
     image: postgres:16.0
     restart: always
-    networks:
-      - mercado_financeiro_net
     environment:
       - POSTGRES_DB=micro_empresas
       - POSTGRES_USER=postgres
@@ -46,11 +40,9 @@ services:
       retries: 10 # Quantidade de tentativas
       interval: 10s # Intervalo entre tentativas
       start_period: 10s # Tempo de delay antes de começar a checagem
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
     volumes:
       - micro_empresas-postgresql-data:/var/lib/postgresql/data
 
@@ -69,14 +61,9 @@ services:
       retries: 10 # Quantidade de tentativas
       interval: 10s # Intervalo entre tentativas
       start_period: 10s # Tempo de delay antes de começar a checagem
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
     extends:
       file: common-config.yml
-      service: network-deploy-service
+      service: microservice-db-config
     volumes:
       - micro_emails-mysql-data:/var/lib/mysql
 

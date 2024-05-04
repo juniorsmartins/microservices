@@ -4,7 +4,7 @@ services:
     networks:
       - mercado_financeiro_net
 
-  microservice-base-config:
+  microservice-db-config:
     extends:
       service: network-deploy-service
     deploy:
@@ -12,6 +12,10 @@ services:
         limits:
           cpus: '0.3'
           memory: 512M
+
+  microservice-base-config:
+    extends:
+      service: microservice-db-config
     environment:
       SPRING_RABBITMQ_HOST: "rabbit"
 
