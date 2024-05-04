@@ -163,10 +163,17 @@ services:
       - "9103:9103"
     restart: always
     environment:
+      DB_HOST: micro_emails_mysql8
+      DB_PORT: 3306
+      DB_NAME: micro_emails
+      DB_USERNAME: root
+      DB_PASSWORD: root
       SPRING_APPLICATION_NAME: micro_emails
     depends_on:
       configserver:
         condition: service_healthy
+      micro_emails_mysql8:
+        condition: service_started
     extends:
       file: common-config.yml
       service: microservice-configserver-config
