@@ -19,6 +19,45 @@ spring:
     username: "guest"
     password: "guest"
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:micro_emails_mysql8}:${DB_PORT:3306}/${DB_NAME:micro_emails}?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    sql-script-encoding: UTF-8
+    characterEncoding: UTF-8
+    hikari:
+      pool-name: poll_micro_emails
+      maxLifetime: 1800000
+      connection-timeout: 40000
+      idle-timeout: 300000
+      maximum-pool-size: 2
+
+  jpa:
+    database: MYSQL # Especifica o banco para o Spring acionar configuração automática para a maioria dos aspectos
+    hibernate: # Define configurações específicas do Hibernate
+      ddl-auto: update
+      naming: # Controla como o Hibernate nomeia tabelas e colunas
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estratégia padrão, snake_case para nomes
+    properties: # Define propriedades específicas do Hibernate
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect # Garante compatibilidade com tipo de dados e geração de SQL
+        format_sql: true # Habilita a formatação das instruções SQL para melhor legibilidade
+        use_sql_comments: true # Diz ao Hibernate para adicionar comentários ao SQL gerado para ajudar na compreensão
+        type: # Define mapeamento de tipo personalizado
+          enumType:
+            type: pgsql_enum
+        jdbc:
+          log: # Controla o registro de logs do JDBC
+            non_contextual_creation: true
+#    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false # Desativa a manutenção de objetos de sessão do Hibernate na camada de visualização, o que é recomendado para desempenho e gerenciamento de recursos.
+    generate-ddl: true # Gerará o schema quando o aplicativo for iniciado. Coligado com ddl-auto update.
+    show-sql: true # Habilita o registro das instruções SQL geradas durante a execução do aplicativo, o que pode ser útil para depuração e compreensão das interações com o banco de dados.
+    sql: # Define scripts SQL a serem executados durante a inicialização do aplicativo. Ou seja, schema.sql disponível em resources
+      init: # Configura o comportamento de inicialização.
+        mode: always # Instrui o Spring a sempre executar o script de inicialização, mesmo que o schema do banco de dados já exista. No entanto, seja cauteloso com essa configuração, especialmente em ambientes de produção, pois pode sobrescrever dados existentes se o script fizer modificações. É recomendável usar uma abordagem mais seletiva como on_creation ou never, dependendo do seu caso de uso.
+
 management:
   endpoints:
     web:
