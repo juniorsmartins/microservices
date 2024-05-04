@@ -6,19 +6,21 @@ services:
     container_name: micro_customers_postgres16
     image: postgres:16.0
     restart: always
-    networks:
-      - mercado_financeiro_net
     environment:
       - POSTGRES_DB=micro_customers
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5001:5432"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      timeout: 10s # Tempo limite de espera antes de assumir como falha
+      retries: 10 # Quantidade de tentativas
+      interval: 10s # Intervalo entre tentativas
+      start_period: 10s # Tempo de delay antes de começar a checagem
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
     volumes:
       - micro_customers-postgresql-data:/var/lib/postgresql/data
 
@@ -26,21 +28,44 @@ services:
     container_name: micro_empresas_postgres16
     image: postgres:16.0
     restart: always
-    networks:
-      - mercado_financeiro_net
     environment:
       - POSTGRES_DB=micro_empresas
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5002:5432"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      timeout: 10s # Tempo limite de espera antes de assumir como falha
+      retries: 10 # Quantidade de tentativas
+      interval: 10s # Intervalo entre tentativas
+      start_period: 10s # Tempo de delay antes de começar a checagem
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
     volumes:
-      - micro-empresas-postgresql-data:/var/lib/postgresql/data
+      - micro_empresas-postgresql-data:/var/lib/postgresql/data
+
+  micro_emails_mysql8:
+    container_name: micro_emails_mysql8
+    image: mysql:8.0.17
+    restart: always
+    environment:
+      - MYSQL_DATABASE=micro_emails
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "5003:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s # Tempo limite de espera antes de assumir como falha
+      retries: 10 # Quantidade de tentativas
+      interval: 10s # Intervalo entre tentativas
+      start_period: 10s # Tempo de delay antes de começar a checagem
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+    volumes:
+      - micro_emails-mysql-data:/var/lib/mysql
 
 
 
@@ -111,7 +136,7 @@ services:
       configserver:
         condition: service_healthy
       micro_customers_postgres16:
-        condition: service_started
+        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-configserver-config
@@ -133,7 +158,7 @@ services:
       configserver:
         condition: service_healthy
       micro_empresas_postgres16:
-        condition: service_started
+        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-configserver-config
@@ -143,14 +168,22 @@ services:
     image: juniorsmartins/micro_emails:latest
     ports:
       - "9103:9103"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 512M
     restart: always
-    networks:
-      - mercado_financeiro_net
+    environment:
+      DB_HOST: micro_emails_mysql8
+      DB_PORT: 3306
+      DB_NAME: micro_emails
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      SPRING_APPLICATION_NAME: micro_emails
+    depends_on:
+      configserver:
+        condition: service_healthy
+      micro_emails_mysql8:
+        condition: service_healthy
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
 
 
 
