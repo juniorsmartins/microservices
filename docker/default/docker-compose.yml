@@ -4,66 +4,49 @@ services:
 
   micro_customers_postgres16:
     container_name: micro_customers_postgres16
-    image: postgres:16.0
+#    image: postgres:16.0
     restart: always
     environment:
       - POSTGRES_DB=micro_customers
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
     ports:
       - "5001:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
-      timeout: 10s # Tempo limite de espera antes de assumir como falha
-      retries: 10 # Quantidade de tentativas
-      interval: 10s # Intervalo entre tentativas
-      start_period: 10s # Tempo de delay antes de começar a checagem
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+#      timeout: 10s # Tempo limite de espera antes de assumir como falha
+#      retries: 10 # Quantidade de tentativas
+#      interval: 10s # Intervalo entre tentativas
+#      start_period: 10s # Tempo de delay antes de começar a checagem
     extends:
       file: common-config.yml
-      service: microservice-db-config
+      service: microservice-postgres16-config
     volumes:
       - micro_customers-postgresql-data:/var/lib/postgresql/data
 
   micro_empresas_postgres16:
     container_name: micro_empresas_postgres16
-    image: postgres:16.0
     restart: always
     environment:
       - POSTGRES_DB=micro_empresas
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
     ports:
       - "5002:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
-      timeout: 10s # Tempo limite de espera antes de assumir como falha
-      retries: 10 # Quantidade de tentativas
-      interval: 10s # Intervalo entre tentativas
-      start_period: 10s # Tempo de delay antes de começar a checagem
     extends:
       file: common-config.yml
-      service: microservice-db-config
+      service: microservice-postgres16-config
     volumes:
       - micro_empresas-postgresql-data:/var/lib/postgresql/data
 
   micro_emails_mysql8:
     container_name: micro_emails_mysql8
-    image: mysql:8.0.17
     restart: always
     environment:
       - MYSQL_DATABASE=micro_emails
-      - MYSQL_ROOT_PASSWORD=root
     ports:
       - "5003:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 10s # Tempo limite de espera antes de assumir como falha
-      retries: 10 # Quantidade de tentativas
-      interval: 10s # Intervalo entre tentativas
-      start_period: 10s # Tempo de delay antes de começar a checagem
     extends:
       file: common-config.yml
-      service: microservice-db-config
+      service: microservice-mysql8-config
     volumes:
       - micro_emails-mysql-data:/var/lib/mysql
 
