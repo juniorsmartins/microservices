@@ -359,5 +359,5 @@ F
 fmicro_emails/src/main/java/microservices/micro_emails/adapter/dto/response/ContactInfoDtoResponse.java,1/5/15fa4a5ec3a06ad6388034c11ca83c83851c4cec
 ‘
 amicro_emails/src/main/java/microservices/micro_emails/adapter/in/controller/EmailsController.java,0/d/0d406e034ffff1753c5210d7afac327b51c24460
-I
-readme/Micro_EurekaServer,f/2/f24ed0bc969a88dcbd6f563da867964cd64f0fba
+“
+cmicro_eurekaserver/src/main/java/microservices/micro_eurekaserver/MicroEurekaserverApplication.java,a/6/a61112fca38cb8c0df3568974ba99e0c29f770e8
