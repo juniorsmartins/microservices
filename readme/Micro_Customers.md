@@ -15,7 +15,7 @@ em construção.....
 
 3. __Spring Cloud Config Client (versão 2023.0.1)__: atua como um cliente que se conecta ao Spring Cloud Config Server centralizado para obter as configurações necessárias para a sua operação. No momento da inicialização, o Spring Cloud Config Client busca as configurações do Spring Cloud Config Server.
 
-4. __Spring Actuator__: é uma biblioteca do Spring Boot que fornece endpoints HTTP expondo informações detalhadas sobre o estado interno da sua aplicação Spring. Isso permite que você monitore e gerencie sua aplicação de forma mais eficaz, facilitando a depuração, solução de problemas e otimização.
+4. __Spring Boot Actuator__: é uma biblioteca do Spring Boot que fornece endpoints HTTP expondo informações detalhadas sobre o estado interno da sua aplicação Spring. Isso permite que você monitore e gerencie sua aplicação de forma mais eficaz, facilitando a depuração, solução de problemas e otimização.
 
 5. __Spring Cloud Bus__: é um framework para comunicação e coordenação de microsserviços distribuídos. Ele fornece um canal de eventos centralizado para que os microsserviços se comuniquem entre si, permitindo que você implemente eventos, notificações e atualizações de estado em tempo real.
 
