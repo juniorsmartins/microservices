@@ -1,0 +1,31 @@
+spring:
+
+  application:
+    name: eurekaserver
+
+  config:
+    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:9201}/"
+
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+

@@ -4,7 +4,7 @@ services:
     networks:
       - mercado_financeiro_net
 
-  microservice-base-config:
+  microservice-resources-config:
     extends:
       service: network-deploy-service
     deploy:
@@ -12,6 +12,37 @@ services:
         limits:
           cpus: '0.3'
           memory: 512M
+
+  microservice-postgres16-config:
+    extends:
+      service: microservice-resources-config
+    image: postgres:16.0
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      timeout: 10s # Tempo limite de espera antes de assumir como falha
+      retries: 10 # Quantidade de tentativas
+      interval: 10s # Intervalo entre tentativas
+      start_period: 10s # Tempo de delay antes de começar a checagem
+
+  microservice-mysql8-config:
+    extends:
+      service: microservice-resources-config
+    image: mysql:8.0.17
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s # Tempo limite de espera antes de assumir como falha
+      retries: 10 # Quantidade de tentativas
+      interval: 10s # Intervalo entre tentativas
+      start_period: 10s # Tempo de delay antes de começar a checagem
+
+  microservice-base-config:
+    extends:
+      service: microservice-resources-config
     environment:
       SPRING_RABBITMQ_HOST: "rabbit"
 
