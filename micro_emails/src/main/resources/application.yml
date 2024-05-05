@@ -59,22 +59,39 @@ spring:
     init: # Configura o comportamento de inicialização.
       mode: always # Instrui o Spring a sempre executar o script de inicialização, mesmo que o schema do banco de dados já exista. No entanto, seja cauteloso com essa configuração, especialmente em ambientes de produção, pois pode sobrescrever dados existentes se o script fizer modificações. É recomendável usar uma abordagem mais seletiva como on_creation ou never, dependendo do seu caso de uso.
 
-management:
+
+management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.
   endpoints:
     web:
       exposure:
         include: "*"
-#        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
-    metrics:
-      enabled: true
-      tags:
-        application: ${spring.application.name}
-    prometheus:
-      enabled: true
+  #        include: "refresh"
+  #        include: "busrefresh"
+  #        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
+  endpoint:
+    shutdown:
+      enabled: true # Habilita o endpoint de desligamento, que permite encerrar a execução da aplicação através da interface web.
+  info:
+    env:
+      enabled: true # Habilita a exibição de informações de ambiente na página de informações do Management.
 
-info:
-  app: Microsserviços com Java e Spring Boot.
-  website: https://babystepsdev.com
-  github: https://github.com/juniorsmartins/microservices_mercado_financeiro
+endpoints: # Este bloco define configurações adicionais para endpoints da aplicação.
+  shutdown: # Este sub-bloco define as configurações do endpoint de desligamento, que permite encerrar a execução da aplicação. A configuração enabled: true indica que o endpoint de desligamento está habilitado.
+    enabled: true
+
+eureka:
+  instance:
+    preferIpAddress: true # Define a preferência do cliente Eureka por utilizar o endereço IP ao invés do nome de host ao se registrar no Eureka Server.
+  client:
+    fetchRegistry: true # Habilita a busca por outros servidores Eureka pelo cliente. Isso permite que o cliente se sincronize com o registro de serviços mais recente, mesmo que o Eureka Server principal esteja indisponível.
+    registerWithEureka: true # Instrui o cliente Eureka para se registrar no Eureka Server, anunciando sua presença e disponibilidade para outros serviços.
+    serviceUrl:
+      defaultZone: http://localhost:9202/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
+
+info: # Este bloco define informações sobre a sua aplicação que serão exibidas em diferentes contextos, como a página de informações do Management e logs.
+  app:
+    name: "micro_emails"
+    description: "Microsserviços Micro_Emails"
+    version: "1.0.0.0"
 
 

@@ -55,6 +55,11 @@ spring:
     generate-ddl: true
     show-sql: true
 
+  sql: # Define scripts SQL a serem executados durante a inicialização do aplicativo. Ou seja, schema.sql disponível em resources
+    init: # Configura o comportamento de inicialização.
+      mode: always # Instrui o Spring a sempre executar o script de inicialização, mesmo que o schema do banco de dados já exista. No entanto, seja cauteloso com essa configuração, especialmente em ambientes de produção, pois pode sobrescrever dados existentes se o script fizer modificações. É recomendável usar uma abordagem mais seletiva como on_creation ou never, dependendo do seu caso de uso.
+
+
 management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.
   endpoints:
     web:
@@ -62,6 +67,7 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
         include: "*"
 #        include: "refresh"
 #        include: "busrefresh"
+#        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
   endpoint:
     shutdown:
       enabled: true # Habilita o endpoint de desligamento, que permite encerrar a execução da aplicação através da interface web.
