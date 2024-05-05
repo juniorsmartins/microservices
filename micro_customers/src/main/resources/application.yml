@@ -55,11 +55,37 @@ spring:
     generate-ddl: true
     show-sql: true
 
-management:
+management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.
   endpoints:
     web:
       exposure:
         include: "*"
 #        include: "refresh"
 #        include: "busrefresh"
+  endpoint:
+    shutdown:
+      enabled: true # Habilita o endpoint de desligamento, que permite encerrar a execução da aplicação através da interface web.
+  info:
+    env:
+      enabled: true # Habilita a exibição de informações de ambiente na página de informações do Management.
+
+endpoints: # Este bloco define configurações adicionais para endpoints da aplicação.
+  shutdown: # Este sub-bloco define as configurações do endpoint de desligamento, que permite encerrar a execução da aplicação. A configuração enabled: true indica que o endpoint de desligamento está habilitado.
+    enabled: true
+
+eureka:
+  instance:
+    preferIpAddress: true # Define a preferência do cliente Eureka por utilizar o endereço IP ao invés do nome de host ao se registrar no Eureka Server.
+  client:
+    fetchRegistry: true # Habilita a busca por outros servidores Eureka pelo cliente. Isso permite que o cliente se sincronize com o registro de serviços mais recente, mesmo que o Eureka Server principal esteja indisponível.
+    registerWithEureka: true # Instrui o cliente Eureka para se registrar no Eureka Server, anunciando sua presença e disponibilidade para outros serviços.
+    serviceUrl:
+      defaultZone: http://localhost:9202/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
+
+info: # Este bloco define informações sobre a sua aplicação que serão exibidas em diferentes contextos, como a página de informações do Management e logs.
+  app:
+    name: "micro_customers"
+    description: "Microsserviços Micro_Customers"
+    version: "1.0.0.0"
+
 
