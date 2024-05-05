@@ -19,7 +19,7 @@ em construção.....
 3. __Spring Cloud Config Server (versão 2023.0.1)__: é um componente central do Spring Cloud que fornece um repositório centralizado para armazenar e gerenciar as configurações de seus microsserviços. Ele permite que você defina configurações em diferentes formatos (como YAML, JSON ou arquivos properties) e as aplique aos seus microsserviços de forma dinâmica e segura.
 
 
-4. __Spring Actuator__: é uma biblioteca do Spring Boot que fornece endpoints HTTP expondo informações detalhadas sobre o estado interno da sua aplicação Spring. Isso permite que você monitore e gerencie sua aplicação de forma mais eficaz, facilitando a depuração, solução de problemas e otimização.
+4. __Spring Boot Actuator__: é uma biblioteca do Spring Boot que fornece endpoints HTTP expondo informações detalhadas sobre o estado interno da sua aplicação Spring. Isso permite que você monitore e gerencie sua aplicação de forma mais eficaz, facilitando a depuração, solução de problemas e otimização.
 
 
 6. __Spring Cloud Bus__: é um framework para comunicação e coordenação de microsserviços distribuídos. Ele fornece um canal de eventos centralizado para que os microsserviços se comuniquem entre si, permitindo que você implemente eventos, notificações e atualizações de estado em tempo real.
