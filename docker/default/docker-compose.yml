@@ -392,7 +392,7 @@ networks:
 # Micro_emails - 9103
 
 # Micro_customers-postgres16 - 5001
-# Micro_empresas-postgres16 - 5001
+# Micro_empresas-postgres16 - 5002
 # Micro_emails_mysql8 - 5003
 
 # Jenkins - 8080
