@@ -369,6 +369,7 @@ networks:
 
 # PORTAS
 # Configserver - 9201
+# EurekaServer - 9202
 
 # Micro_customers - 9101
 # Micro_empresas - 9102
