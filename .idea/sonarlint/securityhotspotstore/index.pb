@@ -361,3 +361,5 @@ fmicro_emails/src/main/java/microservices/micro_emails/adapter/dto/response/Cont
 amicro_emails/src/main/java/microservices/micro_emails/adapter/in/controller/EmailsController.java,0/d/0d406e034ffff1753c5210d7afac327b51c24460
 “
 cmicro_eurekaserver/src/main/java/microservices/micro_eurekaserver/MicroEurekaserverApplication.java,a/6/a61112fca38cb8c0df3568974ba99e0c29f770e8
+O
+micro_eurekaserver/build.gradle,c/e/ce9ad704d1bd95ffad9991409c3fbb303c162144
