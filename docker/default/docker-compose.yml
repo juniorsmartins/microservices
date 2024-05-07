@@ -92,8 +92,6 @@ services:
     ports:
       - "8070:8070"
     depends_on:
-      rabbit:
-        condition: service_healthy
       configserver:
         condition: service_healthy
     healthcheck:
@@ -138,8 +136,6 @@ services:
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
-      configserver:
-        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_customers_postgres16:
@@ -162,8 +158,6 @@ services:
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: micro_empresas
     depends_on:
-      configserver:
-        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_empresas_postgres16:
@@ -186,8 +180,6 @@ services:
       DB_PASSWORD: root
       SPRING_APPLICATION_NAME: micro_emails
     depends_on:
-      configserver:
-        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_emails_mysql8:
