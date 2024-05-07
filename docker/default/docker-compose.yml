@@ -90,19 +90,19 @@ services:
     container_name: eurekaserver
     image: juniorsmartins/eurekaserver:latest
     ports:
-      - "9202:9202"
+      - "8070:8070"
     depends_on:
-      rabbit:
-        condition: service_healthy
       configserver:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail --silent localhost:9202/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 10s
     restart: always
+    environment:
+      SPRING_APPLICATION_NAME: eurekaserver
     extends:
       file: common-config.yml
       service: microservice-base-config
@@ -396,7 +396,9 @@ networks:
 
 # PORTAS
 # Configserver - 9201
-# EurekaServer - 9202
+
+# EurekaServer - 8070
+# Jenkins - 8080
 
 # Micro_customers - 9101
 # Micro_empresas - 9102
@@ -405,8 +407,6 @@ networks:
 # Micro_customers-postgres16 - 5001
 # Micro_empresas-postgres16 - 5002
 # Micro_emails_mysql8 - 5003
-
-# Jenkins - 8080
 
 
 

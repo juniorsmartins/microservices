@@ -86,7 +86,7 @@ eureka:
     fetchRegistry: true # Habilita a busca por outros servidores Eureka pelo cliente. Isso permite que o cliente se sincronize com o registro de serviços mais recente, mesmo que o Eureka Server principal esteja indisponível.
     registerWithEureka: true # Instrui o cliente Eureka para se registrar no Eureka Server, anunciando sua presença e disponibilidade para outros serviços.
     serviceUrl:
-      defaultZone: http://localhost:9202/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
+      defaultZone: http://localhost:8070/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
 
 info: # Este bloco define informações sobre a sua aplicação que serão exibidas em diferentes contextos, como a página de informações do Management e logs.
   app:
