@@ -102,7 +102,7 @@ services:
       start_period: 10s
     restart: always
     environment:
-      SPRING_APPLICATION_NAME: eurekaserver
+      SPRING_APPLICATION_NAME: "eurekaserver"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
