@@ -92,6 +92,8 @@ services:
     ports:
       - "8070:8070"
     depends_on:
+      rabbit:
+        condition: service_healthy
       configserver:
         condition: service_healthy
     healthcheck:
