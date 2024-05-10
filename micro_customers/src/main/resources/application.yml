@@ -9,9 +9,10 @@ spring:
   profiles:
     active:
       - "prod"
+
   config:
-    import: "optional:configserver:http://localhost:9201/"
-#    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:9201}/"
+    import: "optional:configserver:http://localhost:8071/"
+#    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:8071}/"
 
   rabbitmq:
     host: "localhost"
@@ -86,12 +87,12 @@ eureka:
     fetchRegistry: true # Habilita a busca por outros servidores Eureka pelo cliente. Isso permite que o cliente se sincronize com o registro de serviços mais recente, mesmo que o Eureka Server principal esteja indisponível.
     registerWithEureka: true # Instrui o cliente Eureka para se registrar no Eureka Server, anunciando sua presença e disponibilidade para outros serviços.
     serviceUrl:
-      defaultZone: http://localhost:9202/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
+      defaultZone: http://localhost:8070/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
 
 info: # Este bloco define informações sobre a sua aplicação que serão exibidas em diferentes contextos, como a página de informações do Management e logs.
   app:
-    name: "micro_customers"
-    description: "Microsserviços Micro_Customers"
+    name: "Micro_Customers"
+    description: "Microsserviços para gerenciar clientes (Pessoa física - PF)."
     version: "1.0.0.0"
 
 

@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:9201}
+  port: ${SERVER_PORT:8071}
 
 spring:
 
@@ -33,7 +33,6 @@ management:
     web:
       exposure:
         include: "*"
-
   health:
     readiness-state:
       enabled: true
