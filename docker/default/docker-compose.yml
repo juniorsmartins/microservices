@@ -92,8 +92,6 @@ services:
     ports:
       - "8070:8070"
     depends_on:
-      rabbit:
-        condition: service_healthy
       configserver:
         condition: service_healthy
     healthcheck:
@@ -104,10 +102,10 @@ services:
       start_period: 10s
     restart: always
     environment:
-      SPRING_APPLICATION_NAME: "eurekaserver"
+      SPRING_APPLICATION_NAME: eurekaserver
     extends:
       file: common-config.yml
-      service: microservice-eureka-config
+      service: microservice-configserver-config
 
   micro_customers:
     container_name: micro_customers
@@ -144,7 +142,7 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   micro_empresas:
     container_name: micro_empresas
@@ -166,7 +164,7 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   micro_emails:
     container_name: micro_emails
@@ -188,7 +186,7 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
 
 #  sonarqube_postgres16:
@@ -355,6 +353,7 @@ volumes:
 
   micro_emails-mysql-data:
     name: micro_emails-mysql-data
+
 #  sonarqube-postgresql:
 #    name: sonarqube-postgresql
 #  sonarqube-postgresql-data:
