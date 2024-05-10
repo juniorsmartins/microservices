@@ -9,6 +9,7 @@ spring:
   profiles:
     active:
       - "prod"
+
   config:
     import: "optional:configserver:http://localhost:8071/"
 #    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:8071}/"
@@ -90,8 +91,8 @@ eureka:
 
 info: # Este bloco define informações sobre a sua aplicação que serão exibidas em diferentes contextos, como a página de informações do Management e logs.
   app:
-    name: "micro_empresas"
-    description: "Microsserviços Micro_Empresas"
+    name: "Micro_Empresas"
+    description: "Microsserviços para gerenciar Empresas (Pessoa Jurídica - PJ)."
     version: "1.0.0.0"
 
 
