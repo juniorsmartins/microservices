@@ -1,12 +1,6 @@
 services:
 
-  network-deploy-service:
-    networks:
-      - mercado_financeiro_net
-
   microservice-resources-config:
-    extends:
-      service: network-deploy-service
     deploy:
       resources:
         limits:
@@ -58,3 +52,5 @@ services:
       service: microservice-configserver-config
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+
+

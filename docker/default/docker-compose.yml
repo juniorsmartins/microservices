@@ -5,13 +5,15 @@ services:
   micro_customers_postgres16:
     container_name: micro_customers_postgres16
 #    image: postgres:16.0
+    ports:
+      - "5001:5432"
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       - POSTGRES_DB=micro_customers
 #      - POSTGRES_USER=postgres
 #      - POSTGRES_PASSWORD=postgres
-    ports:
-      - "5001:5432"
 #    healthcheck:
 #      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
 #      timeout: 10s # Tempo limite de espera antes de assumir como falha
@@ -26,11 +28,13 @@ services:
 
   micro_empresas_postgres16:
     container_name: micro_empresas_postgres16
-    restart: always
-    environment:
-      - POSTGRES_DB=micro_empresas
     ports:
       - "5002:5432"
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - POSTGRES_DB=micro_empresas
     extends:
       file: common-config.yml
       service: microservice-postgres16-config
@@ -39,11 +43,13 @@ services:
 
   micro_emails_mysql8:
     container_name: micro_emails_mysql8
-    restart: always
-    environment:
-      - MYSQL_DATABASE=micro_emails
     ports:
       - "5003:3306"
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      - MYSQL_DATABASE=micro_emails
     extends:
       file: common-config.yml
       service: microservice-mysql8-config
@@ -63,9 +69,9 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
-    extends:
-      file: common-config.yml
-      service: network-deploy-service
+    restart: always
+    networks:
+      - mercado_financeiro_net
 
   configserver:
     container_name: configserver
@@ -82,6 +88,10 @@ services:
       retries: 10
       start_period: 10s
     restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      SPRING_APPLICATION_NAME: configserver
     extends:
       file: common-config.yml
       service: microservice-base-config
@@ -101,6 +111,8 @@ services:
       retries: 10
       start_period: 10s
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       SPRING_APPLICATION_NAME: eurekaserver
     extends:
@@ -121,8 +133,8 @@ services:
 #          cpus: '0.3'
 #          memory: 512M
     restart: always
-#    networks:
-#      - mercado_financeiro_net
+    networks:
+      - mercado_financeiro_net
     environment:
       DB_HOST: micro_customers_postgres16
       DB_PORT: 5432
@@ -136,6 +148,8 @@ services:
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_customers_postgres16:
@@ -150,6 +164,8 @@ services:
     ports:
       - "9102:9102"
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       DB_HOST: micro_empresas_postgres16
       DB_PORT: 5432
@@ -158,6 +174,8 @@ services:
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: micro_empresas
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_empresas_postgres16:
@@ -172,6 +190,8 @@ services:
     ports:
       - "9103:9103"
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       DB_HOST: micro_emails_mysql8
       DB_PORT: 3306
@@ -180,6 +200,8 @@ services:
       DB_PASSWORD: root
       SPRING_APPLICATION_NAME: micro_emails
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_emails_mysql8:
@@ -292,21 +314,21 @@ services:
 #    depends_on:
 #      - artifactory_postgres16
 
-  jenkins:
-    container_name: jenkins
-    image: jenkins/jenkins:2.440.2-lts-jdk21
-    privileged: true
-    user: root
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins-docker-certs:/certs/client
-      - jenkins-home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: always
-    networks:
-      - mercado_financeiro_net
+#  jenkins:
+#    container_name: jenkins
+#    image: jenkins/jenkins:2.440.2-lts-jdk21
+#    privileged: true
+#    user: root
+#    ports:
+#      - "8080:8080"
+#      - "50000:50000"
+#    volumes:
+#      - jenkins-docker-certs:/certs/client
+#      - jenkins-home:/var/jenkins_home
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    restart: always
+#    networks:
+#      - mercado_financeiro_net
 #    depends_on:
 #      - sonarqube
 #      - artifactory
@@ -373,10 +395,10 @@ volumes:
 #  artifactory-storage:
 #    name: artifactory-storage
 
-  jenkins-docker-certs:
-    name: jenkins-docker-certs
-  jenkins-home:
-    name: jenkins-home
+#  jenkins-docker-certs:
+#    name: jenkins-docker-certs
+#  jenkins-home:
+#    name: jenkins-home
 
 #  prometheus-storage:
 #    name: prometheus-storage
