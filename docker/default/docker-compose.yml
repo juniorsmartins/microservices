@@ -71,12 +71,12 @@ services:
     container_name: configserver
     image: juniorsmartins/configserver:latest
     ports:
-      - "9201:9201"
+      - "8071:8071"
     depends_on:
       rabbit:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail --silent localhost:9201/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
@@ -85,6 +85,29 @@ services:
     extends:
       file: common-config.yml
       service: microservice-base-config
+
+  eurekaserver:
+    container_name: eurekaserver
+    image: juniorsmartins/eurekaserver:latest
+    ports:
+      - "8070:8070"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: always
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
 
   micro_customers:
     container_name: micro_customers
@@ -115,7 +138,7 @@ services:
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
-      configserver:
+      eurekaserver:
         condition: service_healthy
       micro_customers_postgres16:
         condition: service_healthy
@@ -137,7 +160,7 @@ services:
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: micro_empresas
     depends_on:
-      configserver:
+      eurekaserver:
         condition: service_healthy
       micro_empresas_postgres16:
         condition: service_healthy
@@ -159,7 +182,7 @@ services:
       DB_PASSWORD: root
       SPRING_APPLICATION_NAME: micro_emails
     depends_on:
-      configserver:
+      eurekaserver:
         condition: service_healthy
       micro_emails_mysql8:
         condition: service_healthy
@@ -368,8 +391,9 @@ networks:
 
 
 # PORTAS
-# Configserver - 9201
-# EurekaServer - 9202
+# EurekaServer - 8070
+# Configserver - 8071
+# Jenkins - 8080
 
 # Micro_customers - 9101
 # Micro_empresas - 9102
@@ -378,8 +402,6 @@ networks:
 # Micro_customers-postgres16 - 5001
 # Micro_empresas-postgres16 - 5002
 # Micro_emails_mysql8 - 5003
-
-# Jenkins - 8080
 
 
 
