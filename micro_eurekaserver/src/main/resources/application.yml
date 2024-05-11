@@ -5,6 +5,12 @@ spring:
 
   config:
     import: "configserver:http://localhost:8071/"
+  cloud:
+    config:
+      refresh:
+        enabled: true # Permite buscar automaticamente as configurações atualizadas do servidor de configuração quando houver uma alteração, sem precisar reiniciar o aplicativo.
+      fail-fast: true
+
 
   rabbitmq:
     host: "localhost"
