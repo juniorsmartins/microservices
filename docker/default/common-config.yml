@@ -34,22 +34,16 @@ services:
       interval: 10s # Intervalo entre tentativas
       start_period: 10s # Tempo de delay antes de começar a checagem
 
-  microservice-base-config:
+  microservice-eureka-config:
     extends:
       service: microservice-resources-config
-    environment:
-      SPRING_RABBITMQ_HOST: "rabbit"
-
-  microservice-configserver-config:
-    extends:
-      service: microservice-base-config
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
 
-  microservice-eureka-config:
+  microservice-config:
     extends:
-      service: microservice-configserver-config
+      service: microservice-eureka-config
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 

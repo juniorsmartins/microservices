@@ -65,9 +65,9 @@ spring:
     generate-ddl: true # Gerará o schema quando o aplicativo for iniciado. Coligado com ddl-auto update.
     show-sql: true # Habilita o registro das instruções SQL geradas durante a execução do aplicativo, o que pode ser útil para depuração e compreensão das interações com o banco de dados.
 
-  sql: # Define scripts SQL a serem executados durante a inicialização do aplicativo. Ou seja, schema.sql disponível em resources
-    init: # Configura o comportamento de inicialização.
-      mode: always # Instrui o Spring a sempre executar o script de inicialização, mesmo que o schema do banco de dados já exista. No entanto, seja cauteloso com essa configuração, especialmente em ambientes de produção, pois pode sobrescrever dados existentes se o script fizer modificações. É recomendável usar uma abordagem mais seletiva como on_creation ou never, dependendo do seu caso de uso.
+#  sql: # Define scripts SQL a serem executados durante a inicialização do aplicativo. Ou seja, schema.sql disponível em resources
+#    init: # Configura o comportamento de inicialização.
+#      mode: always # Instrui o Spring a sempre executar o script de inicialização, mesmo que o schema do banco de dados já exista. No entanto, seja cauteloso com essa configuração, especialmente em ambientes de produção, pois pode sobrescrever dados existentes se o script fizer modificações. É recomendável usar uma abordagem mais seletiva como on_creation ou never, dependendo do seu caso de uso.
 
 
 management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.

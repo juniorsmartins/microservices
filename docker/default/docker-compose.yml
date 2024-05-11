@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
   micro_customers_postgres16:
@@ -92,9 +90,10 @@ services:
       - mercado_financeiro_net
     environment:
       SPRING_APPLICATION_NAME: configserver
+      SPRING_RABBITMQ_HOST: "rabbit"
     extends:
       file: common-config.yml
-      service: microservice-base-config
+      service: microservice-resources-config
 
   eurekaserver:
     container_name: eurekaserver
@@ -115,9 +114,10 @@ services:
       - mercado_financeiro_net
     environment:
       SPRING_APPLICATION_NAME: eurekaserver
+      SPRING_RABBITMQ_HOST: "rabbit"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   micro_customers:
     container_name: micro_customers
@@ -142,6 +142,7 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: micro_customers
+      SPRING_RABBITMQ_HOST: "rabbit"
 #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
 #      SPRING_PROFILES_ACTIVE: default
 #      SPRING_RABBITMQ_HOST: "rabbit"
@@ -156,7 +157,7 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-eureka-config
+      service: microservice-config
 
   micro_empresas:
     container_name: micro_empresas
@@ -173,6 +174,7 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: micro_empresas
+      SPRING_RABBITMQ_HOST: "rabbit"
     depends_on:
       configserver:
         condition: service_healthy
@@ -182,7 +184,7 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-eureka-config
+      service: microservice-config
 
   micro_emails:
     container_name: micro_emails
@@ -199,6 +201,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: root
       SPRING_APPLICATION_NAME: micro_emails
+      SPRING_RABBITMQ_HOST: "rabbit"
     depends_on:
       configserver:
         condition: service_healthy
@@ -208,7 +211,7 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-eureka-config
+      service: microservice-config
 
 
 #  sonarqube_postgres16:
