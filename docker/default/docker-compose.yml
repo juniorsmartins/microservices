@@ -89,7 +89,7 @@ services:
     networks:
       - mercado_financeiro_net
     environment:
-      SPRING_APPLICATION_NAME: configserver
+      SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
     extends:
       file: common-config.yml
@@ -113,7 +113,7 @@ services:
     networks:
       - mercado_financeiro_net
     environment:
-      SPRING_APPLICATION_NAME: eurekaserver
+      SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
     extends:
       file: common-config.yml
@@ -141,7 +141,7 @@ services:
       DB_NAME: micro_customers
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: micro_customers
+      SPRING_APPLICATION_NAME: "micro_customers"
       SPRING_RABBITMQ_HOST: "rabbit"
 #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
 #      SPRING_PROFILES_ACTIVE: default
@@ -173,7 +173,7 @@ services:
       DB_NAME: micro_empresas
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: micro_empresas
+      SPRING_APPLICATION_NAME: "micro_empresas"
       SPRING_RABBITMQ_HOST: "rabbit"
     depends_on:
       configserver:
@@ -200,7 +200,7 @@ services:
       DB_NAME: micro_emails
       DB_USERNAME: root
       DB_PASSWORD: root
-      SPRING_APPLICATION_NAME: micro_emails
+      SPRING_APPLICATION_NAME: "micro_emails"
       SPRING_RABBITMQ_HOST: "rabbit"
     depends_on:
       configserver:
