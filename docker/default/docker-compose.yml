@@ -76,6 +76,11 @@ services:
     image: juniorsmartins/configserver:latest
     ports:
       - "8071:8071"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     depends_on:
       rabbit:
         condition: service_healthy
@@ -91,15 +96,20 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-    extends:
-      file: common-config.yml
-      service: microservice-resources-config
+#    extends:
+#      file: common-config.yml
+#      service: microservice-resources-config
 
   eurekaserver:
     container_name: eurekaserver
     image: juniorsmartins/eurekaserver:latest
     ports:
       - "8070:8070"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     depends_on:
       configserver:
         condition: service_healthy
@@ -115,9 +125,11 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-    extends:
-      file: common-config.yml
-      service: microservice-eureka-config
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+#    extends:
+#      file: common-config.yml
+#      service: microservice-eureka-config
 
   micro_customers:
     container_name: micro_customers
@@ -127,11 +139,11 @@ services:
 #      dockerfile: ../../micro_customers/Dockerfile
     ports:
       - "9101:9101"
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.3'
-#          memory: 512M
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     restart: always
     networks:
       - mercado_financeiro_net
@@ -143,9 +155,9 @@ services:
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: "micro_customers"
       SPRING_RABBITMQ_HOST: "rabbit"
-#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-#      SPRING_PROFILES_ACTIVE: default
-#      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
@@ -155,15 +167,20 @@ services:
         condition: service_healthy
       micro_customers_postgres16:
         condition: service_healthy
-    extends:
-      file: common-config.yml
-      service: microservice-config
+#    extends:
+#      file: common-config.yml
+#      service: microservice-config
 
   micro_empresas:
     container_name: micro_empresas
     image: juniorsmartins/micro_empresas:latest
     ports:
       - "9102:9102"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     restart: always
     networks:
       - mercado_financeiro_net
@@ -175,6 +192,9 @@ services:
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: "micro_empresas"
       SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
     depends_on:
       configserver:
         condition: service_healthy
@@ -182,15 +202,20 @@ services:
         condition: service_healthy
       micro_empresas_postgres16:
         condition: service_healthy
-    extends:
-      file: common-config.yml
-      service: microservice-config
+#    extends:
+#      file: common-config.yml
+#      service: microservice-config
 
   micro_emails:
     container_name: micro_emails
     image: juniorsmartins/micro_emails:latest
     ports:
       - "9103:9103"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     restart: always
     networks:
       - mercado_financeiro_net
@@ -202,6 +227,9 @@ services:
       DB_PASSWORD: root
       SPRING_APPLICATION_NAME: "micro_emails"
       SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
     depends_on:
       configserver:
         condition: service_healthy
@@ -209,9 +237,9 @@ services:
         condition: service_healthy
       micro_emails_mysql8:
         condition: service_healthy
-    extends:
-      file: common-config.yml
-      service: microservice-config
+#    extends:
+#      file: common-config.yml
+#      service: microservice-config
 
 
 #  sonarqube_postgres16:

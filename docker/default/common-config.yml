@@ -10,15 +10,15 @@ services:
   microservice-eureka-config:
     extends:
       service: microservice-resources-config
-    environment:
-      SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+#    environment:
+#      SPRING_PROFILES_ACTIVE: default
+#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
 
   microservice-config:
     extends:
       service: microservice-eureka-config
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 
   microservice-postgres16-config:
     extends:

@@ -8,7 +8,8 @@ eureka:
     fetchRegistry: false
     registerWithEureka: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://localhost:8070/eureka/
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 spring:
 
