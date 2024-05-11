@@ -74,7 +74,7 @@ services:
       - mercado_financeiro_net
 
   configserver:
-    container_name: micro_configserver
+    container_name: configserver
     image: juniorsmartins/configserver:latest
     ports:
       - "8071:8071"
@@ -97,7 +97,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    container_name: micro_eurekaserver
+    container_name: eurekaserver
     image: juniorsmartins/eurekaserver:latest
     ports:
       - "8070:8070"
