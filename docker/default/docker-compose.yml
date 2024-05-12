@@ -4,7 +4,7 @@ services:
     container_name: micro_customers_postgres16
 #    image: postgres:16.0
     ports:
-      - "5001:5432"
+      - "5401:5432"
     restart: always
     networks:
       - mercado_financeiro_net
@@ -27,7 +27,7 @@ services:
   micro_empresas_postgres16:
     container_name: micro_empresas_postgres16
     ports:
-      - "5002:5432"
+      - "5402:5432"
     restart: always
     networks:
       - mercado_financeiro_net
@@ -42,7 +42,7 @@ services:
   micro_emails_mysql8:
     container_name: micro_emails_mysql8
     ports:
-      - "5003:3306"
+      - "5403:3306"
     restart: always
     networks:
       - mercado_financeiro_net
@@ -451,9 +451,9 @@ networks:
 # Micro_empresas - 9102
 # Micro_emails - 9103
 
-# Micro_customers-postgres16 - 5001
-# Micro_empresas-postgres16 - 5002
-# Micro_emails_mysql8 - 5003
+# Micro_customers-postgres16 - 5401
+# Micro_empresas-postgres16 - 5402
+# Micro_emails_mysql8 - 5403
 
 
 
