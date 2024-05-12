@@ -1,17 +1,17 @@
-version: "3.9"
-
 services:
 
   micro_customers_postgres16:
     container_name: micro_customers_postgres16
 #    image: postgres:16.0
+    ports:
+      - "5401:5432"
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       - POSTGRES_DB=micro_customers
 #      - POSTGRES_USER=postgres
 #      - POSTGRES_PASSWORD=postgres
-    ports:
-      - "5001:5432"
 #    healthcheck:
 #      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
 #      timeout: 10s # Tempo limite de espera antes de assumir como falha
@@ -26,11 +26,13 @@ services:
 
   micro_empresas_postgres16:
     container_name: micro_empresas_postgres16
+    ports:
+      - "5402:5432"
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       - POSTGRES_DB=micro_empresas
-    ports:
-      - "5002:5432"
     extends:
       file: common-config.yml
       service: microservice-postgres16-config
@@ -39,11 +41,13 @@ services:
 
   micro_emails_mysql8:
     container_name: micro_emails_mysql8
+    ports:
+      - "5403:3306"
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       - MYSQL_DATABASE=micro_emails
-    ports:
-      - "5003:3306"
     extends:
       file: common-config.yml
       service: microservice-mysql8-config
@@ -63,15 +67,20 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
-    extends:
-      file: common-config.yml
-      service: network-deploy-service
+    restart: always
+    networks:
+      - mercado_financeiro_net
 
   configserver:
     container_name: configserver
     image: juniorsmartins/configserver:latest
     ports:
       - "8071:8071"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     depends_on:
       rabbit:
         condition: service_healthy
@@ -82,15 +91,25 @@ services:
       retries: 10
       start_period: 10s
     restart: always
-    extends:
-      file: common-config.yml
-      service: microservice-base-config
+    networks:
+      - mercado_financeiro_net
+    environment:
+      SPRING_APPLICATION_NAME: "configserver"
+      SPRING_RABBITMQ_HOST: "rabbit"
+#    extends:
+#      file: common-config.yml
+#      service: microservice-resources-config
 
   eurekaserver:
     container_name: eurekaserver
     image: juniorsmartins/eurekaserver:latest
     ports:
       - "8070:8070"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     depends_on:
       configserver:
         condition: service_healthy
@@ -101,11 +120,16 @@ services:
       retries: 10
       start_period: 10s
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
-      SPRING_APPLICATION_NAME: eurekaserver
-    extends:
-      file: common-config.yml
-      service: microservice-configserver-config
+      SPRING_APPLICATION_NAME: "eurekaserver"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+#    extends:
+#      file: common-config.yml
+#      service: microservice-eureka-config
 
   micro_customers:
     container_name: micro_customers
@@ -115,78 +139,107 @@ services:
 #      dockerfile: ../../micro_customers/Dockerfile
     ports:
       - "9101:9101"
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.3'
-#          memory: 512M
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     restart: always
-#    networks:
-#      - mercado_financeiro_net
+    networks:
+      - mercado_financeiro_net
     environment:
       DB_HOST: micro_customers_postgres16
       DB_PORT: 5432
       DB_NAME: micro_customers
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: micro_customers
-#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-#      SPRING_PROFILES_ACTIVE: default
-#      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_APPLICATION_NAME: "micro_customers"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_customers_postgres16:
         condition: service_healthy
-    extends:
-      file: common-config.yml
-      service: microservice-eureka-config
+#    extends:
+#      file: common-config.yml
+#      service: microservice-config
 
   micro_empresas:
     container_name: micro_empresas
     image: juniorsmartins/micro_empresas:latest
     ports:
       - "9102:9102"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       DB_HOST: micro_empresas_postgres16
       DB_PORT: 5432
       DB_NAME: micro_empresas
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: micro_empresas
+      SPRING_APPLICATION_NAME: "micro_empresas"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_empresas_postgres16:
         condition: service_healthy
-    extends:
-      file: common-config.yml
-      service: microservice-eureka-config
+#    extends:
+#      file: common-config.yml
+#      service: microservice-config
 
   micro_emails:
     container_name: micro_emails
     image: juniorsmartins/micro_emails:latest
     ports:
       - "9103:9103"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     restart: always
+    networks:
+      - mercado_financeiro_net
     environment:
       DB_HOST: micro_emails_mysql8
       DB_PORT: 3306
       DB_NAME: micro_emails
       DB_USERNAME: root
       DB_PASSWORD: root
-      SPRING_APPLICATION_NAME: micro_emails
+      SPRING_APPLICATION_NAME: "micro_emails"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       micro_emails_mysql8:
         condition: service_healthy
-    extends:
-      file: common-config.yml
-      service: microservice-eureka-config
+#    extends:
+#      file: common-config.yml
+#      service: microservice-config
 
 
 #  sonarqube_postgres16:
@@ -292,21 +345,21 @@ services:
 #    depends_on:
 #      - artifactory_postgres16
 
-  jenkins:
-    container_name: jenkins
-    image: jenkins/jenkins:2.440.2-lts-jdk21
-    privileged: true
-    user: root
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins-docker-certs:/certs/client
-      - jenkins-home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: always
-    networks:
-      - mercado_financeiro_net
+#  jenkins:
+#    container_name: jenkins
+#    image: jenkins/jenkins:2.440.2-lts-jdk21
+#    privileged: true
+#    user: root
+#    ports:
+#      - "8080:8080"
+#      - "50000:50000"
+#    volumes:
+#      - jenkins-docker-certs:/certs/client
+#      - jenkins-home:/var/jenkins_home
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    restart: always
+#    networks:
+#      - mercado_financeiro_net
 #    depends_on:
 #      - sonarqube
 #      - artifactory
@@ -373,10 +426,10 @@ volumes:
 #  artifactory-storage:
 #    name: artifactory-storage
 
-  jenkins-docker-certs:
-    name: jenkins-docker-certs
-  jenkins-home:
-    name: jenkins-home
+#  jenkins-docker-certs:
+#    name: jenkins-docker-certs
+#  jenkins-home:
+#    name: jenkins-home
 
 #  prometheus-storage:
 #    name: prometheus-storage
@@ -398,9 +451,9 @@ networks:
 # Micro_empresas - 9102
 # Micro_emails - 9103
 
-# Micro_customers-postgres16 - 5001
-# Micro_empresas-postgres16 - 5002
-# Micro_emails_mysql8 - 5003
+# Micro_customers-postgres16 - 5401
+# Micro_empresas-postgres16 - 5402
+# Micro_emails_mysql8 - 5403
 
 
 
