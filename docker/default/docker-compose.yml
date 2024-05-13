@@ -126,7 +126,7 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
 #    extends:
 #      file: common-config.yml
 #      service: microservice-eureka-config
