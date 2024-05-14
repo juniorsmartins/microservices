@@ -13,6 +13,7 @@ spring:
       discovery: # Essa seção define como a API Gateway descobre os microsserviços que ela deve rotear o tráfego.
         locator: # Essa seção define o mecanismo de descoberta de serviço que a API Gateway utilizará.
           enabled: true # Essa configuração indica que a descoberta de serviço está ativada. Isso significa que a API Gateway buscará ativamente seus microsserviços em um repositório de descoberta.
+          lowerCaseServiceId: true
 
   rabbitmq:
     host: "localhost"
