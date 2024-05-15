@@ -367,3 +367,5 @@ M
 micro_eurekaserver/Dockerfile,5/7/57dde1ffcc41cb1acfd933415c2cd606da9183f5
 P
  micro_gatewayserver/build.gradle,5/6/562d2ad1496b57e415186668173e22d19fa0d787
+—
+gmicro_gatewayserver/src/main/java/microsservices/micro_gatewayserver/MicroGatewayserverApplication.java,b/0/b015123902bf0a49c5c3b09bd29be651d3c056c5
