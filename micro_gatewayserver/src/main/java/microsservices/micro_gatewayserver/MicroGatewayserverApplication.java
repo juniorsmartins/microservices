@@ -25,8 +25,8 @@ public class MicroGatewayserverApplication {
 				.uri("lb://MICRO_EMPRESAS")
 			)
 			.route(rota -> rota.path("/microservices/micro_emails/**")
-					.filters(filtro -> filtro.rewritePath("/microservices/micro_emails/(?<segment>.*)", "/${segment}"))
-					.uri("lb://MICRO_EMAILS")
+				.filters(filtro -> filtro.rewritePath("/microservices/micro_emails/(?<segment>.*)", "/${segment}"))
+				.uri("lb://MICRO_EMAILS")
 			).build();
 	}
 }
