@@ -6,6 +6,8 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
+
 @SpringBootApplication
 public class MicroGatewayserverApplication {
 
@@ -17,15 +19,18 @@ public class MicroGatewayserverApplication {
 	public RouteLocator microservicesRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
 		return routeLocatorBuilder.routes()
 			.route(rota -> rota.path("/microservices/micro_customers/**")
-				.filters(filtro -> filtro.rewritePath("/microservices/micro_customers/(?<segment>.*)","/${segment}"))
+				.filters(filtro -> filtro.rewritePath("/microservices/micro_customers/(?<segment>.*)","/${segment}")
+					.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 				.uri("lb://MICRO_CUSTOMERS")
 			)
 			.route(rota -> rota.path("/microservices/micro_empresas/**")
-				.filters(filtro -> filtro.rewritePath("/microservices/micro_empresas/(?<segment>.*)", "/${segment}"))
+				.filters(filtro -> filtro.rewritePath("/microservices/micro_empresas/(?<segment>.*)", "/${segment}")
+					.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 				.uri("lb://MICRO_EMPRESAS")
 			)
 			.route(rota -> rota.path("/microservices/micro_emails/**")
-				.filters(filtro -> filtro.rewritePath("/microservices/micro_emails/(?<segment>.*)", "/${segment}"))
+				.filters(filtro -> filtro.rewritePath("/microservices/micro_emails/(?<segment>.*)", "/${segment}")
+					.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 				.uri("lb://MICRO_EMAILS")
 			).build();
 	}
