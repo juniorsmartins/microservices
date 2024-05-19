@@ -14,6 +14,25 @@ spring:
           enabled: true # Permite buscar automaticamente as configurações atualizadas do servidor de configuração quando houver uma alteração, sem precisar reiniciar o aplicativo.
         fail-fast: true
     gateway: # Essa seção define as configurações específicas da API Gateway, que atua como ponto de entrada único para seus microsserviços.
+#      routes:
+#        - id: micro_customers
+#          uri: lb://micro_customers
+#          predicates:
+#            - Path=/api/v1/customers/**
+#          filters:
+#            - StripPrefix=3
+#        - id: micro_empresas
+#          uri: lb://micro_empresas
+#          predicates:
+#            - Path=/api/v1/empresas/**
+#          filters:
+#            - StripPrefix=3
+#        - id: micro_emails
+#          uri: lb://micro_emails
+#          predicates:
+#            - Path=/api/v1/emails/**
+#          filters:
+#            - StripPrefix=3
       discovery: # Essa seção define como a API Gateway descobre os microsserviços que ela deve rotear o tráfego.
         locator: # Essa seção define o mecanismo de descoberta de serviço que a API Gateway utilizará.
           enabled: false # Essa configuração indica que a descoberta de serviço está ativada. Isso significa que a API Gateway buscará ativamente seus microsserviços em um repositório de descoberta.

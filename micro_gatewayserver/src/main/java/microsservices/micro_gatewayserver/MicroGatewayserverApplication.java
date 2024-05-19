@@ -18,20 +18,20 @@ public class MicroGatewayserverApplication {
 	@Bean
 	public RouteLocator microservicesRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
 		return routeLocatorBuilder.routes()
-			.route(rota -> rota.path("/microservices/micro_customers/**")
-				.filters(filtro -> filtro.rewritePath("/microservices/micro_customers/(?<segment>.*)","/${segment}")
+			.route(rota -> rota.path("/microservices/microcustomers/**")
+				.filters(filtro -> filtro.rewritePath("/microservices/microcustomers/(?<segment>.*)","/${segment}")
 					.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
-				.uri("lb://MICRO_CUSTOMERS")
+				.uri("lb://MICROCUSTOMERS")
 			)
-			.route(rota -> rota.path("/microservices/micro_empresas/**")
-				.filters(filtro -> filtro.rewritePath("/microservices/micro_empresas/(?<segment>.*)", "/${segment}")
+			.route(rota -> rota.path("/microservices/microempresas/**")
+				.filters(filtro -> filtro.rewritePath("/microservices/microempresas/(?<segment>.*)", "/${segment}")
 					.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
-				.uri("lb://MICRO_EMPRESAS")
+				.uri("lb://MICROEMPRESAS")
 			)
-			.route(rota -> rota.path("/microservices/micro_emails/**")
-				.filters(filtro -> filtro.rewritePath("/microservices/micro_emails/(?<segment>.*)", "/${segment}")
+			.route(rota -> rota.path("/microservices/microemails/**")
+				.filters(filtro -> filtro.rewritePath("/microservices/microemails/(?<segment>.*)", "/${segment}")
 					.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
-				.uri("lb://MICRO_EMAILS")
+				.uri("lb://MICROEMAILS")
 			).build();
 	}
 }

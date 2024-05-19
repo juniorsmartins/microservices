@@ -4,17 +4,18 @@ server:
 spring:
 
   application:
-    name: micro_empresas
+    name: microempresas
 
-  profiles:
-    active:
-      - "prod"
+#  profiles:
+#    active:
+#      - "prod"
 
   config:
     import: "optional:configserver:http://localhost:8071/"
 #    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:8071}/"
     cloud:
       config:
+        profile: prod
         refresh:
           enabled: true # Permite buscar automaticamente as configurações atualizadas do servidor de configuração quando houver uma alteração, sem precisar reiniciar o aplicativo.
         fail-fast: false
@@ -37,7 +38,7 @@ spring:
     sql-script-encoding: UTF-8
     characterEncoding: UTF-8
     hikari:
-      pool-name: poll_micro_empresas
+      pool-name: poll_microempresas
       maxLifetime: 1800000
       connection-timeout: 40000
       idle-timeout: 300000
@@ -100,7 +101,7 @@ eureka:
 
 info: # Este bloco define informações sobre a sua aplicação que serão exibidas em diferentes contextos, como a página de informações do Management e logs.
   app:
-    name: "Micro_Empresas"
+    name: "MicroEmpresas"
     description: "Microsserviços para gerenciar Empresas (Pessoa Jurídica - PJ)."
     version: "1.0.0.0"
 
