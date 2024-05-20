@@ -76,8 +76,7 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
     web:
       exposure:
         include: "*"
-  #        include: "refresh"
-  #        include: "busrefresh"
+  #        include: health,refresh,busrefresh,shutdown,info,prometheus
   #        include: prometheus,auditevents,beans,caches,conditions,configprops,env,flyway,health,httpexchanges,info,integrationgraph,loggers,metrics,mappings,quartz,scheduledtasks,sessions,shutdown,startup,threaddump
   endpoint:
     shutdown:

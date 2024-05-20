@@ -49,6 +49,7 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
     web:
       exposure:
         include: "*"
+#        include: "refresh"
   endpoint:
     gateway:
       enabled: true

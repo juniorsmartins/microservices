@@ -9,6 +9,7 @@ import microservices.micro_customers.adapter.dto.response.ContactInfoDtoResponse
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 @SpringBootApplication
 @OpenAPIDefinition(
@@ -31,6 +32,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 		url = "https://www.teste.com/docs"
 	)
 )
+@RefreshScope
 @EnableConfigurationProperties(value = ContactInfoDtoResponse.class)
 public class MicroCustomersApplication {
 	public static void main(String[] args) {
