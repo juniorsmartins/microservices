@@ -104,7 +104,7 @@ services:
     container_name: eurekaserver
     image: juniorsmartins/eurekaserver:latest
     ports:
-      - "8070:8070"
+      - "8671:8671"
     deploy:
       resources:
         limits:
@@ -114,7 +114,7 @@ services:
       configserver:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
