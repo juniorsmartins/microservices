@@ -54,4 +54,8 @@ info: # Este bloco define informações sobre a sua aplicação que serão exibi
     description: "Microsserviços de API Gateway ou Edge Server (Ponto único de entrada)."
     version: "1.0.0.0"
 
+logging:
+  level:
+    microsservices:
+      micro_gatewayserver: DEBUG
 
