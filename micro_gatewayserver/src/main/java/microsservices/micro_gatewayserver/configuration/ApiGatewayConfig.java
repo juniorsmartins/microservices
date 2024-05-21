@@ -14,25 +14,25 @@ import java.util.function.Function;
 @Configuration
 public class ApiGatewayConfig {
 
-//    @Bean
-//    public RouteLocator microservicesRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
-//        return routeLocatorBuilder.routes()
-//            .route(rota -> rota.path("/microservices/microcustomers/**")
-//                .filters(filtro -> filtro.rewritePath("/microservices/microcustomers/(?<segment>.*)","/${segment}")
-//                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
-//                .uri("lb://MICROCUSTOMERS")
-//            )
-//            .route(rota -> rota.path("/microservices/microempresas/**")
-//                .filters(filtro -> filtro.rewritePath("/microservices/microempresas/(?<segment>.*)", "/${segment}")
-//                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
-//                .uri("lb://MICROEMPRESAS")
-//            )
-//            .route(rota -> rota.path("/microservices/microemails/**")
-//                .filters(filtro -> filtro.rewritePath("/microservices/microemails/(?<segment>.*)", "/${segment}")
-//                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
-//                .uri("lb://MICROEMAILS")
-//            ).build();
-//    }
+    @Bean
+    public RouteLocator microservicesRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
+        return routeLocatorBuilder.routes()
+            .route(rota -> rota.path("/microcustomers/**")
+                .filters(filtro -> filtro.rewritePath("/microcustomers/(?<segment>.*)","/${segment}")
+                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+                .uri("lb://MICROCUSTOMERS")
+            )
+            .route(rota -> rota.path("/microempresas/**")
+                .filters(filtro -> filtro.rewritePath("/microempresas/(?<segment>.*)", "/${segment}")
+                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+                .uri("lb://MICROEMPRESAS")
+            )
+            .route(rota -> rota.path("/microemails/**")
+                .filters(filtro -> filtro.rewritePath("/microemails/(?<segment>.*)", "/${segment}")
+                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+                .uri("lb://MICROEMAILS")
+            ).build();
+    }
 
 //    @Bean
 //    public RouteLocator gatewayRouter(RouteLocatorBuilder routeLocatorBuilder) {
@@ -43,22 +43,22 @@ public class ApiGatewayConfig {
 //            .build();
 //    }
 
-    @Bean
-    public RouteLocator gatewayRouter2(RouteLocatorBuilder routeLocatorBuilder) {
-
-        return routeLocatorBuilder.routes()
-            .route(p -> p.path("/get")
-                .filters(f -> f
-                    .addRequestHeader("Chave Hello", "Valor World")
-                    .addRequestParameter("Chave Hello", "Valor World"))
-                .uri("http://httpbin.org:80"))
-            .route(p -> p.path("/microcustomers/**")
-                .uri("lb://microcustomers"))
-            .route(p -> p.path("/microempresas/**")
-                .uri("lb://microempresas"))
-            .route(p -> p.path("/microemails/**")
-                .uri("lb://microemails"))
-            .build();
-    }
+//    @Bean
+//    public RouteLocator gatewayRouter2(RouteLocatorBuilder routeLocatorBuilder) {
+//
+//        return routeLocatorBuilder.routes()
+//            .route(p -> p.path("/get")
+//                .filters(f -> f
+//                    .addRequestHeader("Chave Hello", "Valor World")
+//                    .addRequestParameter("Chave Hello", "Valor World"))
+//                .uri("http://httpbin.org:80"))
+//            .route(p -> p.path("/microcustomers/**")
+//                .uri("lb://microcustomers"))
+//            .route(p -> p.path("/microempresas/**")
+//                .uri("lb://microempresas"))
+//            .route(p -> p.path("/microemails/**")
+//                .uri("lb://microemails"))
+//            .build();
+//    }
 }
 
