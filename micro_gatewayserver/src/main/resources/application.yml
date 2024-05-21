@@ -1,5 +1,5 @@
 #server:
-#  port: ${SERVER_PORT:8072}
+#  port: ${SERVER_PORT:8125}
 
 spring:
 
@@ -14,28 +14,9 @@ spring:
           enabled: true # Permite buscar automaticamente as configurações atualizadas do servidor de configuração quando houver uma alteração, sem precisar reiniciar o aplicativo.
         fail-fast: true
     gateway: # Essa seção define as configurações específicas da API Gateway, que atua como ponto de entrada único para seus microsserviços.
-#      routes:
-#        - id: micro_customers
-#          uri: lb://micro_customers
-#          predicates:
-#            - Path=/api/v1/customers/**
-#          filters:
-#            - StripPrefix=3
-#        - id: micro_empresas
-#          uri: lb://micro_empresas
-#          predicates:
-#            - Path=/api/v1/empresas/**
-#          filters:
-#            - StripPrefix=3
-#        - id: micro_emails
-#          uri: lb://micro_emails
-#          predicates:
-#            - Path=/api/v1/emails/**
-#          filters:
-#            - StripPrefix=3
       discovery: # Essa seção define como a API Gateway descobre os microsserviços que ela deve rotear o tráfego.
         locator: # Essa seção define o mecanismo de descoberta de serviço que a API Gateway utilizará.
-          enabled: false # Essa configuração indica que a descoberta de serviço está ativada. Isso significa que a API Gateway buscará ativamente seus microsserviços em um repositório de descoberta.
+          enabled: true # Essa configuração indica que a descoberta de serviço está ativada. Isso significa que a API Gateway buscará ativamente seus microsserviços em um repositório de descoberta.
           lowerCaseServiceId: true
 
   rabbitmq:
@@ -65,7 +46,7 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
 #    fetchRegistry: true # Habilita a busca por outros servidores Eureka pelo cliente. Isso permite que o cliente se sincronize com o registro de serviços mais recente, mesmo que o Eureka Server principal esteja indisponível.
 #    registerWithEureka: true # Instrui o cliente Eureka para se registrar no Eureka Server, anunciando sua presença e disponibilidade para outros serviços.
 #    serviceUrl:
-#      defaultZone: http://localhost:8070/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
+#      defaultZone: http://localhost:8671/eureka/ # Define o URL base do Eureka Server para o qual o cliente se registrará e buscará informações de registro de serviços.
 
 info: # Este bloco define informações sobre a sua aplicação que serão exibidas em diferentes contextos, como a página de informações do Management e logs.
   app:
