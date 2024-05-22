@@ -39,6 +39,9 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
   endpoint:
     gateway:
       enabled: true
+    health:
+      probes:
+        enabled: true
   info:
     env:
       enabled: true # Habilita a exibição de informações de ambiente na página de informações do Management.

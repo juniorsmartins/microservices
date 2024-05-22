@@ -139,7 +139,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.4'
           memory: 512M
     depends_on:
       configserver:
