@@ -104,4 +104,8 @@ info: # Este bloco define informações sobre a sua aplicação que serão exibi
     description: "Microsserviços para gerenciar clientes (Pessoa física - PF)."
     version: "1.0.0.0"
 
+logging:
+  level:
+    microservices:
+      micro_customers: DEBUG
 

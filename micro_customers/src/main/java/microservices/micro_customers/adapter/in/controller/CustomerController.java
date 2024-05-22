@@ -95,8 +95,11 @@ public class CustomerController {
         }
     )
     public ResponseEntity<CustomerCreateDtoResponse> create(
+        @RequestHeader("rastreamento-id") String rastreamentoId,
         @Parameter(name = "customerCreateDtoRequest", description = "Dados para cadastrar novo Customer.", required = true)
         @Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
+
+        log.debug("rastreamento-id encontrado: {}", rastreamentoId);
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
             .map(this.mapperIn::toCustomerCreate)

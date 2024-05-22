@@ -25,19 +25,19 @@ public class RequestTraceFilter implements GlobalFilter { // A interface GlobalF
         HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
 
         if (isCorrelationIdPresent(requestHeaders)) {
-            logger.debug("microservices-correlation-id found in RequestTraceFilter : {}",
-                    filterUtility.getCorrelationId(requestHeaders));
+            logger.debug("rastreamento-id found in RequestTraceFilter : {}",
+                    filterUtility.getRastreamentoId(requestHeaders));
         } else {
             String correlationID = generateCorrelationId();
-            exchange = filterUtility.setCorrelationId(exchange, correlationID);
-            logger.debug("microservices-correlation-id generated in RequestTraceFilter : {}", correlationID);
+            exchange = filterUtility.setRastreamentoId(exchange, correlationID);
+            logger.debug("rastreamento-id generated in RequestTraceFilter : {}", correlationID);
         }
 
         return chain.filter(exchange);
     }
 
     private boolean isCorrelationIdPresent(HttpHeaders requestHeaders) {
-        if (filterUtility.getCorrelationId(requestHeaders) != null) {
+        if (filterUtility.getRastreamentoId(requestHeaders) != null) {
             return true;
         } else {
             return false;

@@ -8,11 +8,11 @@ import java.util.List;
 @Component
 public class FilterUtility {
 
-    public static final String CORRELATION_ID = "microservices-correlation-id";
+    public static final String RASTREAMENTO_ID = "rastreamento-id";
 
-    public String getCorrelationId(HttpHeaders requestHeaders) {
-        if (requestHeaders.get(CORRELATION_ID) != null) {
-            List<String> requestHeaderList = requestHeaders.get(CORRELATION_ID);
+    public String getRastreamentoId(HttpHeaders requestHeaders) {
+        if (requestHeaders.get(RASTREAMENTO_ID) != null) {
+            List<String> requestHeaderList = requestHeaders.get(RASTREAMENTO_ID);
             return requestHeaderList.stream().findFirst().get();
         } else {
             return null;
@@ -23,8 +23,8 @@ public class FilterUtility {
         return exchange.mutate().request(exchange.getRequest().mutate().header(name, value).build()).build();
     }
 
-    public ServerWebExchange setCorrelationId(ServerWebExchange exchange, String correlationId) {
-        return this.setRequestHeader(exchange, CORRELATION_ID, correlationId);
+    public ServerWebExchange setRastreamentoId(ServerWebExchange exchange, String rastreamentoId) {
+        return this.setRequestHeader(exchange, RASTREAMENTO_ID, rastreamentoId);
     }
 }
 
