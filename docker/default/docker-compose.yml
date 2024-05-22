@@ -152,12 +152,6 @@ services:
         condition: service_healthy
       microemails:
         condition: service_healthy
-    healthcheck:
-      test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
     restart: always
     networks:
       - mercado_financeiro_net
@@ -171,7 +165,7 @@ services:
 
   microcustomers:
     container_name: microcustomers
-    image: juniorsmartins/micro_customers:latest
+    image: juniorsmartins/microcustomers:latest
 #    build:
 #      context: .
 #      dockerfile: ../../micro_customers/Dockerfile
@@ -217,7 +211,7 @@ services:
 
   microempresas:
     container_name: microempresas
-    image: juniorsmartins/micro_empresas:latest
+    image: juniorsmartins/microempresas:latest
     ports:
       - "9102:9102"
     deploy:
@@ -258,7 +252,7 @@ services:
 
   microemails:
     container_name: microemails
-    image: juniorsmartins/micro_emails:latest
+    image: juniorsmartins/microemails:latest
     ports:
       - "9103:9103"
     deploy:
