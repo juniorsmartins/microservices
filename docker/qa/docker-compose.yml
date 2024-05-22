@@ -79,7 +79,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.4'
           memory: 512M
     depends_on:
       rabbit:
@@ -104,17 +104,17 @@ services:
     container_name: eurekaserver
     image: juniorsmartins/eurekaserver:latest
     ports:
-      - "8070:8070"
+      - "8671:8671"
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.4'
           memory: 512M
     depends_on:
       configserver:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
@@ -125,15 +125,47 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_PROFILES_ACTIVE: qa
+      SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
 #    extends:
 #      file: common-config.yml
 #      service: microservice-eureka-config
 
-  micro_customers:
-    container_name: micro_customers
-    image: juniorsmartins/micro_customers:latest
+  gatewayserver:
+    container_name: gatewayserver
+    image: juniorsmartins/gatewayserver:latest
+    ports:
+      - "8125:8125"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      microcustomers:
+        condition: service_healthy
+      microempresas:
+        condition: service_healthy
+      microemails:
+        condition: service_healthy
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+
+
+  microcustomers:
+    container_name: microcustomers
+    image: juniorsmartins/microcustomers:latest
 #    build:
 #      context: .
 #      dockerfile: ../../micro_customers/Dockerfile
@@ -153,11 +185,11 @@ services:
       DB_NAME: micro_customers
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: "micro_customers"
+      SPRING_APPLICATION_NAME: "microcustomers"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: qa
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
@@ -167,13 +199,19 @@ services:
         condition: service_healthy
       micro_customers_postgres16:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9101/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 #    extends:
 #      file: common-config.yml
 #      service: microservice-config
 
-  micro_empresas:
-    container_name: micro_empresas
-    image: juniorsmartins/micro_empresas:latest
+  microempresas:
+    container_name: microempresas
+    image: juniorsmartins/microempresas:latest
     ports:
       - "9102:9102"
     deploy:
@@ -190,11 +228,11 @@ services:
       DB_NAME: micro_empresas
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SPRING_APPLICATION_NAME: "micro_empresas"
+      SPRING_APPLICATION_NAME: "microempresas"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: qa
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
       configserver:
         condition: service_healthy
@@ -202,13 +240,19 @@ services:
         condition: service_healthy
       micro_empresas_postgres16:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9102/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 #    extends:
 #      file: common-config.yml
 #      service: microservice-config
 
-  micro_emails:
-    container_name: micro_emails
-    image: juniorsmartins/micro_emails:latest
+  microemails:
+    container_name: microemails
+    image: juniorsmartins/microemails:latest
     ports:
       - "9103:9103"
     deploy:
@@ -225,11 +269,11 @@ services:
       DB_NAME: micro_emails
       DB_USERNAME: root
       DB_PASSWORD: root
-      SPRING_APPLICATION_NAME: "micro_emails"
+      SPRING_APPLICATION_NAME: "microemails"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: qa
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
       configserver:
         condition: service_healthy
@@ -237,9 +281,12 @@ services:
         condition: service_healthy
       micro_emails_mysql8:
         condition: service_healthy
-#    extends:
-#      file: common-config.yml
-#      service: microservice-config
+    healthcheck:
+      test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
 
 #  sonarqube_postgres16:
@@ -443,8 +490,10 @@ networks:
 
 
 # PORTAS
-# EurekaServer - 8070
 # Configserver - 8071
+# EurekaServer - 8671
+# GatewayServer - 8125
+
 # Jenkins - 8080
 
 # Micro_customers - 9101
