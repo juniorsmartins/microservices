@@ -30,7 +30,7 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
     web:
       exposure:
         include: "*"
-#        include: "refresh"
+#        include: health,refresh,busrefresh,shutdown,info,prometheus
   health:
     readiness-state:
       enabled: true
