@@ -79,7 +79,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.4'
           memory: 512M
     depends_on:
       rabbit:
@@ -108,7 +108,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.4'
           memory: 512M
     depends_on:
       configserver:
@@ -139,19 +139,19 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.4'
+          cpus: '0.5'
           memory: 512M
     depends_on:
       configserver:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-    healthcheck:
-      test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+      microcustomers:
+        condition: service_healthy
+      microempresas:
+        condition: service_healthy
+      microemails:
+        condition: service_healthy
     restart: always
     networks:
       - mercado_financeiro_net
@@ -165,7 +165,7 @@ services:
 
   microcustomers:
     container_name: microcustomers
-    image: juniorsmartins/micro_customers:latest
+    image: juniorsmartins/microcustomers:latest
 #    build:
 #      context: .
 #      dockerfile: ../../micro_customers/Dockerfile
@@ -197,17 +197,21 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      gatewayserver:
-        condition: service_healthy
       micro_customers_postgres16:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9101/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 #    extends:
 #      file: common-config.yml
 #      service: microservice-config
 
   microempresas:
     container_name: microempresas
-    image: juniorsmartins/micro_empresas:latest
+    image: juniorsmartins/microempresas:latest
     ports:
       - "9102:9102"
     deploy:
@@ -234,17 +238,21 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      gatewayserver:
-        condition: service_healthy
       micro_empresas_postgres16:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9102/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 #    extends:
 #      file: common-config.yml
 #      service: microservice-config
 
   microemails:
     container_name: microemails
-    image: juniorsmartins/micro_emails:latest
+    image: juniorsmartins/microemails:latest
     ports:
       - "9103:9103"
     deploy:
@@ -271,10 +279,14 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      gatewayserver:
-        condition: service_healthy
       micro_emails_mysql8:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
 
 #  sonarqube_postgres16:
