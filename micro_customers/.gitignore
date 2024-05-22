@@ -40,3 +40,33 @@ out/
 ### Informações Sensíveis - Senhas e variáveis de ambiente ###
 env
 
+# Diretórios para ignorar
+build/
+target/
+.gradle/
+tmp/
+idea/
+.idea/
+.project
+.classpath
+
+# Arquivos para ignorar
+*.iml
+*.log
+*.properties
+*.sql
+*.bat
+*.sh
+*.DS_Store
+
+# Arquivos específicos do Gradle
+*.cache
+*.lock
+*.pid
+*.stale
+
+# Package files
+*.jar
+*.war
+*.ear
+

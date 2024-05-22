@@ -17,7 +17,15 @@ spring:
 #          search-locations: "file:///home//juniormartins//Workspace//SharedFiles"
         git:
           uri: "https://github.com/juniorsmartins/configserver.git"
+#          username: username-de-repositório-privado
+#          password: password-de-repositório-privado
           default-label: master
+          search-paths:
+            - 'eurekaserver*'
+            - 'gatewayserver*'
+            - 'microcustomers*'
+            - 'microempresas*'
+            - 'microemails*'
           timeout: 5
           clone-on-start: true
           force-pull: true

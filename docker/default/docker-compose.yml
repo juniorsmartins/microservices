@@ -104,7 +104,7 @@ services:
     container_name: eurekaserver
     image: juniorsmartins/eurekaserver:latest
     ports:
-      - "8070:8070"
+      - "8671:8671"
     deploy:
       resources:
         limits:
@@ -114,7 +114,7 @@ services:
       configserver:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 10
@@ -126,10 +126,42 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
 #    extends:
 #      file: common-config.yml
 #      service: microservice-eureka-config
+
+  gatewayserver:
+    container_name: gatewayserver
+    image: juniorsmartins/gatewayserver:latest
+    ports:
+      - "8125:8125"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.4'
+          memory: 512M
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: always
+    networks:
+      - mercado_financeiro_net
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+
 
   micro_customers:
     container_name: micro_customers
@@ -157,13 +189,15 @@ services:
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
       configserver:
         condition: service_healthy
       eurekaserver:
+        condition: service_healthy
+      gatewayserver:
         condition: service_healthy
       micro_customers_postgres16:
         condition: service_healthy
@@ -194,11 +228,13 @@ services:
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
       configserver:
         condition: service_healthy
       eurekaserver:
+        condition: service_healthy
+      gatewayserver:
         condition: service_healthy
       micro_empresas_postgres16:
         condition: service_healthy
@@ -229,17 +265,16 @@ services:
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
       configserver:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
+      gatewayserver:
+        condition: service_healthy
       micro_emails_mysql8:
         condition: service_healthy
-#    extends:
-#      file: common-config.yml
-#      service: microservice-config
 
 
 #  sonarqube_postgres16:
@@ -443,8 +478,10 @@ networks:
 
 
 # PORTAS
-# EurekaServer - 8070
 # Configserver - 8071
+# EurekaServer - 8671
+# GatewayServer - 8125
+
 # Jenkins - 8080
 
 # Micro_customers - 9101

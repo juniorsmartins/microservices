@@ -1,14 +1,14 @@
-server:
-  port: ${SERVER_PORT:8070}
+#server:
+#  port: ${SERVER_PORT:8671}
 
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    fetchRegistry: false
-    registerWithEureka: false
-    serviceUrl:
-      defaultZone: http://localhost:8070/eureka/
+#eureka:
+#  instance:
+#    hostname: localhost
+#  client:
+#    fetch-registry: false
+#    register-with-eureka: false
+#    serviceUrl:
+#      defaultZone: http://localhost:8671/eureka/
 #      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 spring:
