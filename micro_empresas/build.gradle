@@ -3,7 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.4'
 
-	id 'org.sonarqube' version '4.4.1.3373'
+//	id 'org.sonarqube' version '4.4.1.3373'
 }
 
 group = 'microservices'
@@ -45,9 +45,9 @@ dependencies {
 //	implementation "gradle.plugin.com.jfrog.artifactory:artifactory-gradle-plugin:5.1.14"
 //	implementation group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '5.2.0'
 
-	implementation('org.jfrog.buildinfo:build-info-extractor-gradle:5.2.0') {
-		exclude group: 'org.jfrog.buildinfo', module: 'build-info-extractor'
-	}
+//	implementation('org.jfrog.buildinfo:build-info-extractor-gradle:5.2.0') {
+//		exclude group: 'org.jfrog.buildinfo', module: 'build-info-extractor'
+//	}
 
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -125,11 +125,11 @@ apply plugin: "java"
 //	}
 //}
 
-sonar {
-	properties {
-		property "sonar.projectKey", "jenkins_mercado_financeiro"
-		property "sonar.login", "squ_35c655e2667a2228326356b315a3cfec80a8c92d"
-		property 'sonar.gradle.skipCompile', 'true'
-	}
-}
+//sonar {
+//	properties {
+//		property "sonar.projectKey", "jenkins_mercado_financeiro"
+//		property "sonar.login", "squ_35c655e2667a2228326356b315a3cfec80a8c92d"
+//		property 'sonar.gradle.skipCompile', 'true'
+//	}
+//}
 

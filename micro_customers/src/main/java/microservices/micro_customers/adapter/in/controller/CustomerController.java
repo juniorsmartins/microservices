@@ -95,8 +95,11 @@ public class CustomerController {
         }
     )
     public ResponseEntity<CustomerCreateDtoResponse> create(
+        @RequestHeader("rastreamento-id") String rastreamentoId,
         @Parameter(name = "customerCreateDtoRequest", description = "Dados para cadastrar novo Customer.", required = true)
         @Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
+
+        log.debug("rastreamento-id encontrado: {}", rastreamentoId);
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
             .map(this.mapperIn::toCustomerCreate)
@@ -127,6 +130,7 @@ public class CustomerController {
         }
     )
     public ResponseEntity<Page<CustomerSearchDtoResponse>> search(
+        @RequestHeader("rastreamento-id") String rastreamentoId,
         @Parameter(name = "customerFilter", description = "Parâmetros para pesquisar no banco de dados.", required = false)
         final CustomerFilter customerFilter,
         @PageableDefault(sort = "customerId", direction = Sort.Direction.DESC, size = Constantes.PAGE_SIZE)
@@ -166,6 +170,7 @@ public class CustomerController {
         }
     )
     public ResponseEntity<Void> deleteById(
+        @RequestHeader("rastreamento-id") String rastreamentoId,
         @Parameter(name = "customerId", description = "Identificador do Customer no banco de dados.", example = "22", required = true)
         @PathVariable(name = "id") @Positive final Long customerId) {
 
@@ -207,6 +212,7 @@ public class CustomerController {
         }
     )
     public ResponseEntity<CustomerUpdateDtoResponse> update(
+        @RequestHeader("rastreamento-id") String rastreamentoId,
         @Parameter(name = "customerUpdateDtoRequest", description = "Dados para atualizar Customer.", required = true)
         @Valid @RequestBody CustomerUpdateDtoRequest customerUpdateDtoRequest) {
 
