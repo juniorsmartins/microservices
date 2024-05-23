@@ -8,7 +8,6 @@ spring:
 
   profiles:
     active: git
-
   cloud:
     config:
       server:
