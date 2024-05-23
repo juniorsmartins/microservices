@@ -1,4 +1,4 @@
-# Estágio de construção - 1
+# 1 - Estágio de construção
 FROM gradle:8.7.0-jdk21-alpine AS builder
 
 # Autoria
@@ -13,15 +13,14 @@ COPY . /compile
 # Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
 
-
-# Estágio de execução - 2
+# 2 - Estágio de execução
 FROM amazoncorretto:21.0.3-al2023-headless
 
 WORKDIR /app
 #VOLUME /tmp
 
-COPY --from=builder /compile/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar api.jar
+COPY --from=builder /compile/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar app.jar
 
 #Execute a aplicação
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/api.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
 

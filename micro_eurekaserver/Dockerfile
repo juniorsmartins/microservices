@@ -20,8 +20,8 @@ FROM amazoncorretto:21.0.3-al2023-headless
 WORKDIR /app
 #VOLUME /tmp
 
-COPY --from=builder /compile/build/libs/micro_eurekaserver-0.0.1-SNAPSHOT.jar api.jar
+COPY --from=builder /compile/build/libs/micro_eurekaserver-0.0.1-SNAPSHOT.jar app.jar
 
 #Execute a aplicação
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/api.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
 
