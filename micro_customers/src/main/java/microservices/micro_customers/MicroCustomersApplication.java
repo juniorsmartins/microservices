@@ -35,6 +35,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @RefreshScope
 @EnableConfigurationProperties(value = ContactInfoDtoResponse.class)
 public class MicroCustomersApplication {
+
 	public static void main(String[] args) {
 		SpringApplication.run(MicroCustomersApplication.class, args);
 	}
