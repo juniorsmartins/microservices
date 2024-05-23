@@ -17,9 +17,11 @@ spring:
     name: "eurekaserver"
 
   config:
-    import: "optional:configserver:http://localhost:8071/"
+    import:
+    - optional:configserver:http://localhost:8071/
   cloud:
     config:
+      profile: default
       refresh:
         enabled: true # Permite buscar automaticamente as configurações atualizadas do servidor de configuração quando houver uma alteração, sem precisar reiniciar o aplicativo.
       fail-fast: true

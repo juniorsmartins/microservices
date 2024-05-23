@@ -7,14 +7,10 @@ spring:
     name: configserver
 
   profiles:
-#    active: native
     active: git
   cloud:
     config:
       server:
-#        native:
-#          search-locations: "classpath:/config"
-#          search-locations: "file:///home//juniormartins//Workspace//SharedFiles"
         git:
           uri: "https://github.com/juniorsmartins/configserver.git"
 #          username: username-de-repositório-privado
