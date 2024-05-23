@@ -4,7 +4,7 @@ services:
     container_name: microcustomers_postgres16
 #    image: postgres:16.0
     ports:
-      - "5401:5432"
+      - "5501:5432"
     restart: always
     networks:
       - mercado_financeiro_net
@@ -27,7 +27,7 @@ services:
   microempresas_postgres16:
     container_name: microempresas_postgres16
     ports:
-      - "5402:5432"
+      - "5502:5432"
     restart: always
     networks:
       - mercado_financeiro_net
@@ -42,7 +42,7 @@ services:
   microemails_mysql8:
     container_name: microemails_mysql8
     ports:
-      - "5403:3306"
+      - "5503:3306"
     restart: always
     networks:
       - mercado_financeiro_net
@@ -110,6 +110,9 @@ services:
         limits:
           cpus: '0.4'
           memory: 512M
+    depends_on:
+      configserver:
+        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
       interval: 10s

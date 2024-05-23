@@ -14,7 +14,7 @@ COPY . /compile
 RUN ./gradlew clean build -x test --no-daemon
 
 # 2 - Estágio de execução
-FROM openjdk:23-oraclelinux9
+FROM amazoncorretto:21.0.3-al2023-headless
 
 WORKDIR /app
 #VOLUME /tmp
