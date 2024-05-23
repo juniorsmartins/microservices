@@ -110,9 +110,6 @@ services:
         limits:
           cpus: '0.4'
           memory: 512M
-    depends_on:
-      configserver:
-        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -124,11 +121,6 @@ services:
       - mercado_financeiro_net
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
-      SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
-#    extends:
-#      file: common-config.yml
-#      service: microservice-eureka-config
 
 
   microcustomers:
@@ -281,7 +273,7 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
 
 #  sonarqube_postgres16:
