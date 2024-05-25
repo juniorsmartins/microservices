@@ -2,25 +2,31 @@
 FROM gradle:8.7.0-jdk21-alpine AS builder
 
 # Autoria
-LABEL authors="juniormartins"
+LABEL authors="juniorsmartins"
 
-WORKDIR /compile
+# Criar volume para armazenar dados
+VOLUME [ "/app" ]
 
-# Copia os arquivos Gradle e o código-fonte
-#COPY ./micro_configserver/. /compile
-COPY . /compile
+#RUN adduser -h /app \ -s /bin/bash \ -D app
+
+# Criar e entrar no diretório
+WORKDIR /app
+
+# Copiar todos os arquivos da raíz do projeto para o diretório app
+COPY . /app
 
 # Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
 
-# 2 - Estágio de execução
-FROM amazoncorretto:21.0.3-al2023-headless
+# 2 - Estágio de execução (Essa imagem foi a menor que achei com Java e com menos vulnerabilidades)
+FROM amazoncorretto:21-alpine3.16-jdk
 
 WORKDIR /app
-#VOLUME /tmp
 
-COPY --from=builder /compile/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar app.jar
 
-#Execute a aplicação
+EXPOSE 8888
+
+# Comandos que serão executados quando a imagem gerar container
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
 
