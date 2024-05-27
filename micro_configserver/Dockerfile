@@ -28,5 +28,5 @@ COPY --from=builder /app/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar app.ja
 EXPOSE 8888
 
 # Comandos que serão executados quando a imagem gerar container
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
 
