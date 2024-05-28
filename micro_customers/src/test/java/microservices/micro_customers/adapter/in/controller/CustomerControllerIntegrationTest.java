@@ -25,6 +25,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
@@ -84,6 +85,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             var response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                     .body(dtoRequest)
                 .when()
                     .post()
@@ -123,6 +125,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_XML)
+                    .header("rastreamento-id", UUID.randomUUID())
                 .when()
                     .get()
                 .then()
@@ -140,6 +143,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                 .when()
                     .get()
                 .then()
@@ -158,6 +162,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                     .queryParam("customerId", entity1.getCustomerId() + "," + entity2.getCustomerId())
                 .when()
                     .get()
@@ -173,6 +178,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                     .queryParam("nomeCompleto", entity1.getNomeCompleto() + "," + entity2.getNomeCompleto())
                 .when()
                     .get()
@@ -188,6 +194,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                     .queryParam("cpf", entity1.getCpf() + "," + entity2.getCpf())
                 .when()
                     .get()
@@ -203,6 +210,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                     .queryParam("statusCadastro", entity2.getStatusCadastro())
                 .when()
                     .get()
@@ -218,6 +226,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                     .queryParam("email", entity1.getEmail() + "," + entity2.getEmail())
                 .when()
                     .get()
@@ -244,6 +253,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                 .when()
                     .delete("/" + entity1.getCustomerId())
                 .then()
@@ -270,6 +280,7 @@ class CustomerControllerIntegrationTest extends AbstractTestcontainersTest {
             var response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .header("rastreamento-id", UUID.randomUUID())
                     .body(dtoRequest)
                 .when()
                     .put()

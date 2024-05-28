@@ -5,8 +5,8 @@
 *.iml
 *.iws
 
-target/
-gradle/
+#target/
+#gradle/
 
 .sonar/
 .sonarlint/
