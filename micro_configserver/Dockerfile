@@ -21,12 +21,12 @@ RUN ./gradlew clean build -x test --no-daemon
 # 2 - Estágio de execução (Essa imagem foi a menor que achei com Java e com menos vulnerabilidades)
 FROM amazoncorretto:21-alpine3.16-jdk
 
+EXPOSE 8888
+
 WORKDIR /executar
 
 COPY --from=builder /compilar/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar app.jar
 
-EXPOSE 8888
-
-# Comandos que serão executados quando a imagem gerar container
+# Comandos
 CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/executar/app.jar"]
 
