@@ -7,7 +7,7 @@ services:
       - "5501:5432"
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_db_customers
     environment:
       - POSTGRES_DB=microcustomers
 #      - POSTGRES_USER=postgres
@@ -30,7 +30,7 @@ services:
       - "5502:5432"
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_db_empresas
     environment:
       - POSTGRES_DB=microempresas
     extends:
@@ -45,7 +45,7 @@ services:
       - "5503:3306"
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_db_emails
     environment:
       - MYSQL_DATABASE=microemails
     extends:
@@ -69,11 +69,17 @@ services:
       start_period: 5s
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_geral
 
   configserver:
     container_name: configserver
-    image: juniorsmartins/configserver:latest
+#    image: juniorsmartins/configserver:latest
+    build:
+      context: ../../micro_configserver/
+      dockerfile: Dockerfile
+      args:
+        - VERSION=v1.1.0
+        - PORT=8888
     ports:
       - "8888:8888"
     deploy:
@@ -84,15 +90,16 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
-    healthcheck:
-      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost"]
+#      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
+#      interval: 1m10s
+#      timeout: 10s
+#      retries: 10
+#      start_period: 15s
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -122,7 +129,7 @@ services:
       start_period: 10s
 #    restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -145,7 +152,8 @@ services:
           memory: 512M
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_geral
+      - comunicacao_db_customers
     environment:
       DB_HOST: microcustomers_postgres16
       DB_PORT: 5432
@@ -186,7 +194,8 @@ services:
           memory: 512M
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_geral
+      - comunicacao_db_empresas
     environment:
       DB_HOST: microempresas_postgres16
       DB_PORT: 5432
@@ -222,7 +231,8 @@ services:
           memory: 512M
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_geral
+      - comunicacao_db_emails
     environment:
       DB_HOST: microemails_mysql8
       DB_PORT: 3306
@@ -268,7 +278,7 @@ services:
         condition: service_healthy
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -470,10 +480,18 @@ volumes:
 #    name: grafana-storage
 
 networks:
-  mercado_financeiro_net:
-    name: mercado_financeiro_net
+  comunicacao_geral:
+    name: comunicacao_geral
     driver: bridge
-
+  comunicacao_db_customers:
+    name: comunicacao_db_customers
+    driver: bridge
+  comunicacao_db_empresas:
+    name: comunicacao_db_empresas
+    driver: bridge
+  comunicacao_db_emails:
+    name: comunicacao_db_emails
+    driver: bridge
 
 # PORTAS
 # Configserver - 8071
