@@ -28,7 +28,11 @@ ENV PATH $JAVA_HOME/bin:$PATH
 WORKDIR /compilar
 
 # Copiar todos os arquivos da raíz do projeto para o workdir
-COPY . .
+COPY ./gradle ./gradle
+COPY ./build.gradle .
+COPY ./gradlew .
+COPY ./settings.gradle .
+COPY ./src ./src
 
 ## Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
