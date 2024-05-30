@@ -1,10 +1,32 @@
-# Variáveis de tempo de construção
-ARG IMAGEM_VERSION
+# Variáveis de tempo de construção (com valor default - opcional)
+ARG IMAGE_BUILD="gradle:8.7.0-jdk21-alpine"
+ARG IMAGE_RUN="amazoncorretto:21-alpine3.16-jdk"
+#ARG IMAGE_BUILD_VERSION="8.7.0-jdk21-alpine"
+#ARG IMAGE_RUN_VERSION="21-alpine3.16-jdk"
 
 # 1 - Estágio de construção/build
-FROM gradle:${IMAGEM_VERSION} AS builder
+FROM ${IMAGE_BUILD} AS builder
+#FROM gradle:${IMAGE_BUILD_VERSION} AS builder
 #FROM gradle:8.7.0-jdk21-alpine AS builder
 #FROM ubuntu:22.04 AS builder
+
+# Criar e entrar no diretório
+WORKDIR /compilar
+
+# Copiar todos os arquivos da raíz do projeto para o workdir
+COPY . .
+
+## Compila o projeto com o Gradle
+RUN ./gradlew clean build -x test --no-daemon
+
+
+# 2 - Estágio de execução
+FROM ${IMAGE_RUN} AS runner
+#FROM amazoncorretto:${IMAGE_RUN_VERSION} AS runner
+#FROM amazoncorretto:21-alpine3.16-jdk AS runner
+
+# Variáveis de tempo de construção (com valor default - opcional)
+ARG APP_VERSION="1.0.0"
 
 #Variáveis de ambiente
 ENV APPLICATION="ConfigServer" \
@@ -12,38 +34,19 @@ ENV APPLICATION="ConfigServer" \
     MAINTAINER="juniorsmartins" \
     CONTATO="dev.juniorsmartins@gmail.com"
 
-# Variáveis de tempo de construção
-ARG APP_VERSION
-
 # Metadados
 LABEL aplication=${APPLICATION} \
-    version=${CONFIGSERVER_VERSION}
+    version=${APP_VERSION} \
+    description="Centraliza e gerencia configurações de microsserviços." \
     authors=${DEVELOPER} \
     maintainer=${MAINTAINER} \
-    contato=${CONTATO} \
-    description="O ${APPICATION}-${APP_VERSION} centraliza e gerencia configurações de microsserviços."
-
-# Criar e entrar no diretório
-WORKDIR /compilar
-
-# Copiar todos os arquivos da raíz do projeto para o diretório app
-COPY . ./compilar
-
-## Compila o projeto com o Gradle
-RUN ./gradlew clean build -x test --no-daemon
-
-
-# 2 - Estágio de execução (Essa imagem foi a menor que achei com Java e com menos vulnerabilidades)
-FROM amazoncorretto:21-alpine3.16-jdk AS runner
+    contato=${CONTATO}
 
 #EXPOSE 8888
 
 #HEALTHCHECK CMD curl -sf http://localhost:8888/actuator/health/readiness | grep UP || exit 1
 
 WORKDIR /executar
-
-#ARG VERSION
-#ENV VERSION=${VERSION:-v1.0.0}
 
 COPY --from=builder /compilar/build/libs/micro_configserver-0.0.1-SNAPSHOT.jar app.jar
 
