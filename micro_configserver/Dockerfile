@@ -1,14 +1,15 @@
 # Variáveis de tempo de construção (com valor default - opcional)
 ARG IMAGE_BUILD="gradle:8.7.0-jdk21-alpine"
 ARG IMAGE_RUN="amazoncorretto:21-alpine3.16-jdk"
-#ARG IMAGE_BUILD_VERSION="8.7.0-jdk21-alpine"
-#ARG IMAGE_RUN_VERSION="21-alpine3.16-jdk"
 
 # 1 - Estágio de construção/build
 FROM ${IMAGE_BUILD} AS builder
-#FROM gradle:${IMAGE_BUILD_VERSION} AS builder
-#FROM gradle:8.7.0-jdk21-alpine AS builder
-#FROM ubuntu:22.04 AS builder
+
+# Adicionar usuário no Sistema Operacional (neste caso, Linux - O parâmetro -D define usuário sem senha)
+RUN adduser -D juniorsmartins
+
+# Definir usuário responsável pelos próximos RUNs (o inicial/anterior é feito pelo usuário Root)
+USER juniorsmartins
 
 # Criar e entrar no diretório
 WORKDIR /compilar
@@ -22,20 +23,18 @@ RUN ./gradlew clean build -x test --no-daemon
 
 # 2 - Estágio de execução
 FROM ${IMAGE_RUN} AS runner
-#FROM amazoncorretto:${IMAGE_RUN_VERSION} AS runner
-#FROM amazoncorretto:21-alpine3.16-jdk AS runner
 
 # Variáveis de tempo de construção (com valor default - opcional)
 ARG APP_VERSION="1.0.0"
 
 #Variáveis de ambiente
-ENV APPLICATION="ConfigServer" \
+ENV APP="ConfigServer" \
     DEVELOPER="juniorsmartins" \
     MAINTAINER="juniorsmartins" \
     CONTATO="dev.juniorsmartins@gmail.com"
 
 # Metadados
-LABEL aplication=${APPLICATION} \
+LABEL aplication=${APP} \
     version=${APP_VERSION} \
     description="Centraliza e gerencia configurações de microsserviços." \
     authors=${DEVELOPER} \
