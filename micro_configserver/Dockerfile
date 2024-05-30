@@ -1,15 +1,27 @@
+# Variáveis de tempo de construção
+ARG IMAGEM_VERSION
+
 # 1 - Estágio de construção/build
-FROM gradle:8.7.0-jdk21-alpine AS builder
+FROM gradle:${IMAGEM_VERSION} AS builder
+#FROM gradle:8.7.0-jdk21-alpine AS builder
 #FROM ubuntu:22.04 AS builder
 
-ENV DEVELOPER="juniorsmartins" \
+#Variáveis de ambiente
+ENV APPLICATION="ConfigServer" \
+    DEVELOPER="juniorsmartins" \
     MAINTAINER="juniorsmartins" \
-    APPLICATION="ConfigServer"
+    CONTATO="dev.juniorsmartins@gmail.com"
 
-# Autoria
-LABEL authors=${DEVELOPER} \
+# Variáveis de tempo de construção
+ARG APP_VERSION
+
+# Metadados
+LABEL aplication=${APPLICATION} \
+    version=${CONFIGSERVER_VERSION}
+    authors=${DEVELOPER} \
     maintainer=${MAINTAINER} \
-    description="O ${APPICATION} centraliza e gerencia configurações de microsserviços."
+    contato=${CONTATO} \
+    description="O ${APPICATION}-${APP_VERSION} centraliza e gerencia configurações de microsserviços."
 
 # Criar e entrar no diretório
 WORKDIR /compilar
