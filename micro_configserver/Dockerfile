@@ -2,10 +2,14 @@
 FROM gradle:8.7.0-jdk21-alpine AS builder
 #FROM ubuntu:22.04 AS builder
 
+ENV DEVELOPER="juniorsmartins" \
+    MAINTAINER="juniorsmartins" \
+    APPLICATION="ConfigServer"
+
 # Autoria
-LABEL developer="juniorsmartins" \
-    maintainer="juniorsmartins" \
-    description="O ConfigServer centraliza e gerencia configurações para microsserviços."
+LABEL authors=${DEVELOPER} \
+    maintainer=${MAINTAINER} \
+    description="O ${APPICATION} centraliza e gerencia configurações de microsserviços."
 
 # Atualizar os repositórios e instalar dependências básicas
 #RUN apt-get update && apt-get install -y \
@@ -56,16 +60,15 @@ LABEL developer="juniorsmartins" \
 WORKDIR /compilar
 
 # Copiar todos os arquivos da raíz do projeto para o diretório app
-#COPY . /compilar
-#COPY ./src ./compilar
 COPY . ./compilar
+#COPY ./src ./compilar
 #COPY ./build.gradle ./compilar
 #COPY ./build.gradle .
 
 ## Compila o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
-# Compilar a aplicação (assumindo que seu build.gradle está configurado corretamente)
 #RUN gradle build
+
 
 # 2 - Estágio de execução (Essa imagem foi a menor que achei com Java e com menos vulnerabilidades)
 FROM amazoncorretto:21-alpine3.16-jdk AS runner
