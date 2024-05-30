@@ -18,8 +18,10 @@ RUN apt-get update && \
 ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
 ENV PATH $JAVA_HOME/bin:$PATH
 
-# Adicionar usuário no Sistema Operacional (neste caso, Linux - O parâmetro -D define usuário sem senha)
-#RUN adduser -D juniorsmartins
+# Adicionar usuário no Sistema Operacional (neste caso, Linux - O parâmetro -D define usuário sem senha). Depois cria grupo e depois adiciona juniorsmartins no grupo.
+#RUN adduser -D juniorsmartins \
+#    && addgroup devs \
+#    && addgroup juniorsmartins devs
 
 # Definir usuário responsável pelos próximos RUNs (o inicial/anterior é feito pelo usuário Root)
 #USER juniorsmartins
