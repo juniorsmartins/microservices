@@ -1,5 +1,6 @@
 # Variáveis de tempo de construção (com valor default - opcional)
 #ARG IMAGE_BUILD="gradle:8.7.0-jdk21-alpine"
+ARG IMAGE_EMPTY="scratch"
 ARG IMAGE_BUILD="ubuntu:22.04"
 #ARG IMAGE_RUN="amazoncorretto:21-alpine3.16-jdk"
 ARG IMAGE_RUN="ubuntu:22.04"
@@ -8,11 +9,13 @@ ARG IMAGE_RUN="ubuntu:22.04"
 FROM ${IMAGE_BUILD} AS builder
 
 # Adicionar repositório para OpenJDK 21 e instalar
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:openjdk-r/ppa && \
-    apt-get update && \
-    apt-get install -y openjdk-21-jdk
+RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository ppa:openjdk-r/ppa \
+    && apt-get update \
+    && apt-get install -y openjdk-21-jdk \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* # Remove arquivos temporários
 
 # Configurar variáveis de ambiente para o Java
 ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
