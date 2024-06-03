@@ -26,7 +26,10 @@ services:
       service: microservice-resources-config
     image: mysql:8.0.17
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      TZ: UTC
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s # Tempo limite de espera antes de assumir como falha

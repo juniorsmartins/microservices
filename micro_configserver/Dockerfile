@@ -1,6 +1,4 @@
 # Variáveis de tempo de construção (com valor default - opcional)
-#ARG IMAGE_BUILD="gradle:8.7.0-jdk21-alpine"
-ARG IMAGE_EMPTY="scratch"
 ARG IMAGE_BUILD="ubuntu:22.04"
 #ARG IMAGE_RUN="amazoncorretto:21-alpine3.16-jdk"
 ARG IMAGE_RUN="ubuntu:22.04"
@@ -21,14 +19,6 @@ RUN apt-get update \
 ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
 ENV PATH $JAVA_HOME/bin:$PATH
 
-# Adicionar usuário no Sistema Operacional (neste caso, Linux - O parâmetro -D define usuário sem senha). Depois cria grupo e depois adiciona juniorsmartins no grupo.
-#RUN adduser -D juniorsmartins \
-#    && addgroup devs \
-#    && addgroup juniorsmartins devs
-
-# Definir usuário responsável pelos próximos RUNs (o inicial/anterior é feito pelo usuário Root)
-#USER juniorsmartins
-
 # Criar e entrar no diretório
 WORKDIR /compilar
 
@@ -47,13 +37,13 @@ RUN ./gradlew clean build -x test --no-daemon
 FROM ${IMAGE_BUILD} AS runner
 
 # Variáveis de tempo de construção (com valor default - opcional)
+ARG APP="configserver"
 ARG APP_VERSION="1.0.0"
 
 #Variáveis de ambiente
-ENV APP="ConfigServer" \
-    DEVELOPER="juniorsmartins" \
+ENV DEVELOPER="juniorsmartins" \
     MAINTAINER="juniorsmartins" \
-    CONTATO="dev.juniorsmartins@gmail.com"
+    CONTATO="juniorsoaresmartins@gmail.com"
 
 # Metadados
 LABEL aplication=${APP} \
@@ -63,9 +53,8 @@ LABEL aplication=${APP} \
     maintainer=${MAINTAINER} \
     contato=${CONTATO}
 
-#EXPOSE 8888
-
-#HEALTHCHECK CMD curl -sf http://localhost:8888/actuator/health/readiness | grep UP || exit 1
+RUN apt-get update \
+    && apt-get install -y openjdk-21-jdk
 
 WORKDIR /executar
 

@@ -234,11 +234,12 @@ services:
       - comunicacao_geral
       - comunicacao_db_emails
     environment:
+      TZ: UTC
       DB_HOST: microemails_mysql8
-      DB_PORT: 3306
       DB_NAME: microemails
       DB_USERNAME: root
       DB_PASSWORD: root
+      DB_PORT: 3306
       SPRING_APPLICATION_NAME: "microemails"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
