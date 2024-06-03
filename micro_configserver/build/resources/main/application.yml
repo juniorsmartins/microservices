@@ -1,5 +1,5 @@
 server:
-  port: 8071
+  port: 8888
 
 spring:
 
@@ -12,7 +12,7 @@ spring:
     config:
       server:
         git:
-          uri: "https://github.com/eazybytes/eazybytes-config.git"
+          uri: "https://github.com/juniorsmartins/configserver.git"
 #          username: username-de-repositório-privado
 #          password: password-de-repositório-privado
           default-label: master

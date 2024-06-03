@@ -62,10 +62,11 @@ services:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
+#      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 3
       start_period: 5s
     restart: always
     networks:
@@ -73,13 +74,12 @@ services:
 
   configserver:
     container_name: configserver
-#    image: juniorsmartins/configserver:latest
+    image: juniorsmartins/configserver:v1.0.1
     build:
       context: ../../micro_configserver/
       dockerfile: Dockerfile
       args:
-        - VERSION=v1.1.0
-        - PORT=8888
+        - APP_VERSION=v1.0.0
     ports:
       - "8888:8888"
     deploy:
@@ -90,20 +90,19 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost"]
-#      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
-#      interval: 1m10s
-#      timeout: 10s
-#      retries: 10
-#      start_period: 15s
+    healthcheck:
+      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
+      interval: 30s
+      timeout: 10s
+      retries: 2
+      start_period: 15s
     restart: always
     networks:
       - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_PROFILES_ACTIVE: default
+#      SPRING_PROFILES_ACTIVE: default
 #    extends:
 #      file: common-config.yml
 #      service: microservice-resources-config
@@ -123,11 +122,11 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
+      interval: 10s # intervalo de segundos após uma verificação anterior
       timeout: 5s
-      retries: 10
-      start_period: 10s
-#    restart: always
+      retries: 3
+      start_period: 10s # efectua esta verificação após segundos do período de arranque
+    restart: always
     networks:
       - comunicacao_geral
     environment:
