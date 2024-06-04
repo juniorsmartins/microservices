@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
 
   microcustomers_postgres16:
@@ -5,7 +7,6 @@ services:
 #    image: postgres:16.0
     ports:
       - "5501:5432"
-    restart: always
     networks:
       - comunicacao_db_customers
     environment:
@@ -23,12 +24,12 @@ services:
       service: microservice-postgres16-config
     volumes:
       - microcustomers-postgresql-data:/var/lib/postgresql/data
+    restart: always
 
   microempresas_postgres16:
     container_name: microempresas_postgres16
     ports:
       - "5502:5432"
-    restart: always
     networks:
       - comunicacao_db_empresas
     environment:
@@ -38,12 +39,12 @@ services:
       service: microservice-postgres16-config
     volumes:
       - microempresas-postgresql-data:/var/lib/postgresql/data
+    restart: always
 
   microemails_mysql8:
     container_name: microemails_mysql8
     ports:
       - "5503:3306"
-    restart: always
     networks:
       - comunicacao_db_emails
     environment:
@@ -53,6 +54,7 @@ services:
       service: microservice-mysql8-config
     volumes:
       - microemails-mysql-data:/var/lib/mysql
+    restart: always
 
 
   rabbit:
@@ -68,9 +70,9 @@ services:
       timeout: 5s
       retries: 3
       start_period: 5s
-    restart: always
     networks:
       - comunicacao_geral
+    restart: always
 
   configserver:
     container_name: configserver
@@ -79,7 +81,9 @@ services:
       context: ../../micro_configserver/
       dockerfile: Dockerfile
       args:
-        - APP_VERSION=v1.0.0
+        APP_NAME: "configserver"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações eficientemente."
     ports:
       - "8888:8888"
     deploy:
@@ -96,13 +100,12 @@ services:
       timeout: 10s
       retries: 2
       start_period: 15s
-    restart: always
     networks:
       - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-#      SPRING_PROFILES_ACTIVE: default
+    restart: always
 #    extends:
 #      file: common-config.yml
 #      service: microservice-resources-config
