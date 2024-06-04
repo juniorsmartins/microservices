@@ -24,7 +24,7 @@ services:
   microservice-mysql8-config:
     extends:
       service: microservice-resources-config
-    image: mysql:8.0.17
+    image: mysql:8.0.29
     environment:
       TZ: UTC
       MYSQL_ROOT_PASSWORD: root
