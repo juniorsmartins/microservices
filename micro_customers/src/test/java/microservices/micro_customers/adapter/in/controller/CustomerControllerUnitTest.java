@@ -47,7 +47,7 @@ class CustomerControllerUnitTest extends AbstractTestcontainersTest {
         @Test
         @DisplayName("customerId nulo")
         void dadoCustomerIdNulo_quandoDeleteByID_entaoLancarException() {
-            Executable acao = () -> customerController.deleteById(null);
+            Executable acao = () -> customerController.deleteById(null, null);
             Assertions.assertThrows(NoSuchElementException.class, acao);
             Mockito.verifyNoInteractions(customerCreateUseCase);
             Mockito.verifyNoInteractions(customerSearchAdapter);

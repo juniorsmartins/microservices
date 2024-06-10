@@ -1,25 +1,17 @@
 #server:
 #  port: ${SERVER_PORT:8671}
 
-#eureka:
-#  instance:
-#    hostname: localhost
-#  client:
-#    fetch-registry: false
-#    register-with-eureka: false
-#    serviceUrl:
-#      defaultZone: http://localhost:8671/eureka/
-#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-
 spring:
 
   application:
     name: "eurekaserver"
 
   config:
-    import: "optional:configserver:http://localhost:8071/"
+    import: "optional:configserver:http://localhost:8888/"
   cloud:
     config:
+      enabled: false
+      profile: default
       refresh:
         enabled: true # Permite buscar automaticamente as configurações atualizadas do servidor de configuração quando houver uma alteração, sem precisar reiniciar o aplicativo.
       fail-fast: false
@@ -33,6 +25,16 @@ spring:
     port: 5672
     username: "guest"
     password: "guest"
+
+#eureka:
+#  instance:
+#    hostname: localhost
+#  client:
+#    fetch-registry: false
+#    register-with-eureka: false
+#    serviceUrl:
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      defaultZone: http://localhost:8671/eureka/
 
 management:
   endpoints:

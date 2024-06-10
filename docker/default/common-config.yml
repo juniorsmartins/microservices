@@ -7,19 +7,6 @@ services:
           cpus: '0.3'
           memory: 512M
 
-  microservice-eureka-config:
-    extends:
-      service: microservice-resources-config
-#    environment:
-#      SPRING_PROFILES_ACTIVE: default
-#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-
-  microservice-config:
-    extends:
-      service: microservice-eureka-config
-#    environment:
-#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
-
   microservice-postgres16-config:
     extends:
       service: microservice-resources-config
@@ -37,9 +24,12 @@ services:
   microservice-mysql8-config:
     extends:
       service: microservice-resources-config
-    image: mysql:8.0.17
+    image: mysql:8.0.29
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      TZ: UTC
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s # Tempo limite de espera antes de assumir como falha

@@ -11,8 +11,8 @@ spring:
 #      - "prod"
 
   config:
-    import: "optional:configserver:http://localhost:8071/"
-#    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:8071}/"
+    import: "optional:configserver:http://localhost:8888/"
+#    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:8888}/"
   cloud:
     config:
       profile: prod
@@ -32,7 +32,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:micro_customers}?serverTimezone=UTC
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:microcustomers}?serverTimezone=UTC
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
     sql-script-encoding: UTF-8
@@ -41,7 +41,7 @@ spring:
       pool-name: poll_microcustomers
       maxLifetime: 1800000
       connection-timeout: 40000
-      idle-timeout: 300000
+#      idle-timeout: 300000 # Não possui efetividade quando usado com maximum-pool-size fixo.
       maximum-pool-size: 2
 
   jpa:
@@ -110,7 +110,7 @@ info: # Este bloco define informações sobre a sua aplicação que serão exibi
   app:
     name: "MicroCustomers"
     description: "Microsserviços para gerenciar clientes (Pessoa física - PF)."
-    version: "1.0.0.0"
+    version: "1.0.0"
 
 logging:
   level:
