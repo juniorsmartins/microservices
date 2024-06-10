@@ -11,8 +11,8 @@ spring:
 #      - "prod"
 
   config:
-    import: "optional:configserver:http://localhost:8071/"
-#    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:8071}/"
+    import: "optional:configserver:http://localhost:8888/"
+#    import: "optional:configserver:http://${CONFIG_SERVER:localhost}:${CONFIG_SERVER_PORT:8888}/"
   cloud:
     config:
       profile: prod
@@ -32,7 +32,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:microemails}?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3308}/${DB_NAME:microemails}?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:root}
     sql-script-encoding: UTF-8

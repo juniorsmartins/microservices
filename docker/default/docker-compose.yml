@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
 
   microcustomers_postgres16:
@@ -5,7 +7,6 @@ services:
 #    image: postgres:16.0
     ports:
       - "5501:5432"
-    restart: always
     networks:
       - comunicacao_db_customers
     environment:
@@ -23,12 +24,12 @@ services:
       service: microservice-postgres16-config
     volumes:
       - microcustomers-postgresql-data:/var/lib/postgresql/data
+    restart: always
 
   microempresas_postgres16:
     container_name: microempresas_postgres16
     ports:
       - "5502:5432"
-    restart: always
     networks:
       - comunicacao_db_empresas
     environment:
@@ -38,48 +39,57 @@ services:
       service: microservice-postgres16-config
     volumes:
       - microempresas-postgresql-data:/var/lib/postgresql/data
+    restart: always
 
   microemails_mysql8:
     container_name: microemails_mysql8
+#    command: mysqld --default_authentication_plugin=mysql_native_password
     ports:
-      - "5503:3306"
-    restart: always
+      - "3308:3308"
+    expose:
+      - 3308
     networks:
       - comunicacao_db_emails
     environment:
-      - MYSQL_DATABASE=microemails
+      MYSQL_DATABASE: microemails
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3308
     extends:
       file: common-config.yml
       service: microservice-mysql8-config
     volumes:
       - microemails-mysql-data:/var/lib/mysql
+    restart: always
 
 
   rabbit:
-    image: rabbitmq:3.12-management
+#    image: rabbitmq:3.12-management
+    image: rabbitmq:3.13.3-alpine
     hostname: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
+#      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 5s
-    restart: always
+      interval: 15s
+      timeout: 10s
+      retries: 2
+      start_period: 20s
     networks:
       - comunicacao_geral
+    restart: always
 
   configserver:
     container_name: configserver
-#    image: juniorsmartins/configserver:latest
+    image: juniorsmartins/configserver:v1.0.1
     build:
       context: ../../micro_configserver/
       dockerfile: Dockerfile
       args:
-        - VERSION=v1.1.0
-        - PORT=8888
+        APP_NAME: "configserver"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações eficientemente."
     ports:
       - "8888:8888"
     deploy:
@@ -90,20 +100,18 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost"]
-#      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
-#      interval: 1m10s
-#      timeout: 10s
-#      retries: 10
-#      start_period: 15s
-    restart: always
+    healthcheck:
+      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
+      interval: 30s
+      timeout: 10s
+      retries: 2
+      start_period: 1m5s
     networks:
       - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_PROFILES_ACTIVE: default
+    restart: always
 #    extends:
 #      file: common-config.yml
 #      service: microservice-resources-config
@@ -123,11 +131,11 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-#    restart: always
+      interval: 30s # intervalo de segundos após uma verificação anterior
+      timeout: 10s
+      retries: 2 # quantas tentativas deve fazer
+      start_period: 15s # efetua a verificação após segundos do período de arranque
+    restart: always
     networks:
       - comunicacao_geral
     environment:
@@ -174,10 +182,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9101/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+      interval: 30s # intervalo de segundos após uma verificação anterior
+      timeout: 10s
+      retries: 2 # quantas tentativas deve fazer
+      start_period: 15s # efetua a verificação após segundos do período de arranque
 #    extends:
 #      file: common-config.yml
 #      service: microservice-config
@@ -214,10 +222,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9102/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+      interval: 30s # intervalo de segundos após uma verificação anterior
+      timeout: 10s
+      retries: 2 # quantas tentativas deve fazer
+      start_period: 15s # efetua a verificação após segundos do período de arranque
 
   microemails:
     container_name: microemails
@@ -234,8 +242,9 @@ services:
       - comunicacao_geral
       - comunicacao_db_emails
     environment:
+      TZ: UTC
       DB_HOST: microemails_mysql8
-      DB_PORT: 3306
+      DB_PORT: 3308
       DB_NAME: microemails
       DB_USERNAME: root
       DB_PASSWORD: root
@@ -251,10 +260,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+      interval: 30s # intervalo de segundos após uma verificação anterior
+      timeout: 10s
+      retries: 2 # quantas tentativas deve fazer
+      start_period: 15s # efetua a verificação após segundos do período de arranque
 
 
   gatewayserver:
