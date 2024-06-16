@@ -4,7 +4,7 @@ server:
 spring:
 
   application:
-    name: "configserver"
+    name: configserver
 
   profiles:
     active: git
@@ -44,7 +44,7 @@ management:
       enabled: true # Habilita o estado de vivacidade (liveness state) para a verificação de saúde da aplicação. Indica se a aplicação está viva e funcionando corretamente.
   endpoint:
     health:
-      show-details: always # Configura o nível de detalhe das informações mostradas pelo endpoint de saúde (/actuator/health). O valor 'always' exibe todos os detalhes sobre o estado de saúde da aplicação, independentemente de quem está solicitando a informação (seja usuário autenticado ou não).
+#      show-details: always # Configura o nível de detalhe das informações mostradas pelo endpoint de saúde (/actuator/health). O valor 'always' exibe todos os detalhes sobre o estado de saúde da aplicação, independentemente de quem está solicitando a informação (seja usuário autenticado ou não).
       probes:
         enabled: true # Habilita a inclusão de probes (sondas) de readiness e liveness nas respostas do endpoint de saúde (/actuator/health). São verificações adicionais que indicam o estado de readiness e liveness diretamente no endpoint de saúde.
 

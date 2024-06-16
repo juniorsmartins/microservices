@@ -95,19 +95,24 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.4'
+          cpus: '0.5'
           memory: 512M
     depends_on:
       rabbit:
         condition: service_healthy
     healthcheck:
 #      test: ["CMD", "curl", "-f", "http://localhost:8888/ping"]
+#      test: "curl --silent --fail localhost:8888/actuator/health || exit 1"
+#      test: ["CMD", "curl", "--silent", "--fail", "localhost:8888/actuator/health/readiness"]
+#      test: [ "CMD-SHELL", "curl --fail http://localhost:8888/health/readiness || exit 1" ]
+#      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
+#      test: ["CMD", "curl", "-f", "http://configserver:8888/actuator/health/readiness"]
+#      test: ["CMD", "curl", "-f", "http://configserver:8888/actuator/health"]
       test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
-#      test: "curl --fail --silent localhost:8888/actuator/health | jq --exit-status -n 'inputs | if has(\"status\") then .status==\"UP\" else false end' > /dev/null || exit 1"
       interval: 30s
       timeout: 30s
       retries: 3
-      start_period: 5s
+      start_period: 50s
     networks:
       - comunicacao_geral
     environment:
@@ -134,9 +139,9 @@ services:
     healthcheck:
       test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
       interval: 30s # intervalo de segundos após uma verificação anterior
-      timeout: 10s
-      retries: 2 # quantas tentativas deve fazer
-      start_period: 15s # efetua a verificação após segundos do período de arranque
+      timeout: 30s
+      retries: 3 # quantas tentativas deve fazer
+      start_period: 60s # efetua a verificação após segundos do período de arranque
     restart: always
     networks:
       - comunicacao_geral
