@@ -33,36 +33,20 @@ spring:
     password: "guest"
 
 management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+  endpoints: # Essa seção define a configuração geral dos endpoints de gerenciamento.
+    web: # Configura o endpoint web de gerenciamento.
+      exposure: # Especifica quais endpoints serão expostos através do endpoint web.
+        include: "*" # Configura quais endpoints de gerenciamento da aplicação devem estar expostos. O asterisco "*" diz para expor todos.
   health:
     readiness-state:
-      enabled: true
+      enabled: true # Habilita o estado de prontidão (readiness state) para a verificação de saúde da aplicação. Indica se a aplicação está pronta para receber tráfego.
     liveness-state:
-      enabled: true
+      enabled: true # Habilita o estado de vivacidade (liveness state) para a verificação de saúde da aplicação. Indica se a aplicação está viva e funcionando corretamente.
   endpoint:
     health:
-      show-details: always
+      show-details: always # Configura o nível de detalhe das informações mostradas pelo endpoint de saúde (/actuator/health). O valor 'always' exibe todos os detalhes sobre o estado de saúde da aplicação, independentemente de quem está solicitando a informação (seja usuário autenticado ou não).
       probes:
-        enabled: true
-
-#management:
-#  endpoints: # Essa seção define a configuração geral dos endpoints de gerenciamento.
-#    web: # Configura o endpoint web de gerenciamento.
-#      exposure: # Especifica quais endpoints serão expostos através do endpoint web.
-#        include: "*" # Configura quais endpoints de gerenciamento da aplicação devem estar expostos. O asterisco "*" diz para expor todos.
-#  health:
-#    readiness-state:
-#      enabled: true # Habilita o estado de prontidão (readiness state) para a verificação de saúde da aplicação. Indica se a aplicação está pronta para receber tráfego.
-#    liveness-state:
-#      enabled: true # Habilita o estado de vivacidade (liveness state) para a verificação de saúde da aplicação. Indica se a aplicação está viva e funcionando corretamente.
-#  endpoint:
-#    health:
-#      show-details: always # Configura o nível de detalhe das informações mostradas pelo endpoint de saúde (/actuator/health). O valor 'always' exibe todos os detalhes sobre o estado de saúde da aplicação, independentemente de quem está solicitando a informação (seja usuário autenticado ou não).
-#      probes:
-#        enabled: true # Habilita a inclusão de probes (sondas) de readiness e liveness nas respostas do endpoint de saúde (/actuator/health). São verificações adicionais que indicam o estado de readiness e liveness diretamente no endpoint de saúde.
+        enabled: true # Habilita a inclusão de probes (sondas) de readiness e liveness nas respostas do endpoint de saúde (/actuator/health). São verificações adicionais que indicam o estado de readiness e liveness diretamente no endpoint de saúde.
 
 encrypt:
   key: "6z$63r@=;(}.f^]u|j/*@l}.0`|8y!fwm%j~0,q#+e[og{hk3s8w~.?[:i}e$pw"
