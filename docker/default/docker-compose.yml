@@ -52,7 +52,7 @@ services:
       - comunicacao_db_emails
     environment:
       MYSQL_DATABASE: microemails
-      MYSQL_ROOT_HOST: '%'
+#      MYSQL_ROOT_HOST: '%'
       MYSQL_TCP_PORT: 3308
     extends:
       file: common-config.yml
@@ -101,11 +101,13 @@ services:
       rabbit:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
+#      test: ["CMD", "curl", "-f", "http://localhost:8888/ping"]
+#      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8888/actuator/health | jq --exit-status -n 'inputs | if has(\"status\") then .status==\"UP\" else false end' > /dev/null || exit 1"
       interval: 30s
-      timeout: 10s
-      retries: 2
-      start_period: 1m5s
+      timeout: 30s
+      retries: 3
+      start_period: 5s
     networks:
       - comunicacao_geral
     environment:

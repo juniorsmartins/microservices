@@ -27,14 +27,14 @@ services:
     image: mysql:8.0.29
     environment:
       TZ: UTC
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+#      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 10s # Tempo limite de espera antes de assumir como falha
-      retries: 10 # Quantidade de tentativas
-      interval: 10s # Intervalo entre tentativas
-      start_period: 10s # Tempo de delay antes de começar a checagem
+      timeout: 30s # Tempo limite de espera antes de assumir como falha
+      retries: 3 # Quantidade de tentativas
+      interval: 30s # Intervalo entre tentativas
+      start_period: 30s # Tempo de delay antes de começar a checagem
 
 
