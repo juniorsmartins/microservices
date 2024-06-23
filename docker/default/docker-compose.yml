@@ -63,7 +63,6 @@ services:
 
 
   rabbit:
-#    image: rabbitmq:3.12-management
     image: rabbitmq:3.13.3-alpine
     hostname: rabbitmq
     ports:
@@ -72,10 +71,10 @@ services:
     healthcheck:
 #      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       test: rabbitmq-diagnostics check_port_connectivity
-      interval: 15s
+      interval: 10s
       timeout: 10s
       retries: 2
-      start_period: 20s
+      start_period: 15s
     networks:
       - comunicacao_geral
     restart: unless-stopped
@@ -101,18 +100,11 @@ services:
       rabbit:
         condition: service_healthy
     healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost:8888/ping"]
-#      test: "curl --silent --fail localhost:8888/actuator/health || exit 1"
-#      test: ["CMD", "curl", "--silent", "--fail", "localhost:8888/actuator/health/readiness"]
-#      test: [ "CMD-SHELL", "curl --fail http://localhost:8888/health/readiness || exit 1" ]
-#      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
-#      test: ["CMD", "curl", "-f", "http://configserver:8888/actuator/health/readiness"]
-#      test: ["CMD", "curl", "-f", "http://configserver:8888/actuator/health"]
       test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
       interval: 30s
       timeout: 30s
       retries: 3
-      start_period: 50s
+      start_period: 30s
     networks:
       - comunicacao_geral
     environment:
