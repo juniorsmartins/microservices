@@ -1,29 +1,41 @@
-# Estágio de construção - 1
-FROM gradle:8.7.0-jdk21-alpine AS builder
+ARG IMAGE_BUILD="eclipse-temurin:21.0.3_9-jdk-alpine"
+ARG IMAGE_RUN="eclipse-temurin:21.0.3_9-jre-alpine"
 
-# Autoria
-LABEL authors="juniormartins"
+# 1 - Estágio de construção/build
+FROM ${IMAGE_BUILD} AS builder
 
-# Criar e entrar no diretório
-WORKDIR /compilar
+# Copiar todos os arquivos da raíz do projeto (origem) para dentro da imagem (destino)
+COPY . .
 
-# Copia os arquivos Gradle e o código-fonte
-#COPY ./micro_configserver/. /compile
-COPY . /compilar
-
-# Compila o projeto com o Gradle
+## Constrói o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
 
 
-# Estágio de execução - 2
-FROM amazoncorretto:21-alpine3.16-jdk
+# 2 - Estágio de execução
+FROM ${IMAGE_RUN} AS runner
 
-EXPOSE 8671
+# Variáveis de tempo de construção (com valor default - opcional)
+ARG APP_NAME="microsserviços"
+ARG APP_VERSION="v1.0.0"
+ARG APP_DESCRIPTION="Microsserviços em Java (21Lts) e Spring Boot (3.3.0)."
 
-WORKDIR /executar
+ARG DEVELOPER="juniorsmartins"
+ARG MAINTAINER="juniorsmartins"
+ARG CONTATO="juniorsoaresmartins@gmail.com"
 
-COPY --from=builder /compilar/build/libs/micro_eurekaserver-0.0.1-SNAPSHOT.jar app.jar
+# Metadados
+LABEL aplication=${APP_NAME} \
+    version=${APP_VERSION} \
+    description=${APP_DESCRIPTION} \
+    authors=${DEVELOPER} \
+    maintainer=${MAINTAINER} \
+    contato=${CONTATO}
+
+# Instala o curl
+RUN apk add --no-cache curl
+
+COPY --from=builder /build/libs/*.jar app.jar
 
 # Comandos
-CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/executar/app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
 

@@ -27,9 +27,9 @@ services:
     image: mysql:8.0.29
     environment:
       TZ: UTC
-#      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_USER: mysql
+#      MYSQL_PASSWORD: mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 30s # Tempo limite de espera antes de assumir como falha

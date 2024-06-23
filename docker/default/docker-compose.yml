@@ -8,7 +8,8 @@ services:
     ports:
       - "5501:5432"
     networks:
-      - comunicacao_db_customers
+      - comunicacao
+      - comunicacao_customers
     environment:
       - POSTGRES_DB=microcustomers
 #      - POSTGRES_USER=postgres
@@ -31,7 +32,8 @@ services:
     ports:
       - "5502:5432"
     networks:
-      - comunicacao_db_empresas
+      - comunicacao
+      - comunicacao_empresas
     environment:
       - POSTGRES_DB=microempresas
     extends:
@@ -49,17 +51,16 @@ services:
     expose:
       - 3308
     networks:
-      - comunicacao_db_emails
+      - comunicacao
+      - comunicacao_emails
     environment:
       MYSQL_DATABASE: microemails
-#      MYSQL_ROOT_HOST: '%'
-      MYSQL_TCP_PORT: 3308
     extends:
       file: common-config.yml
       service: microservice-mysql8-config
     volumes:
       - microemails-mysql-data:/var/lib/mysql
-    restart: always
+    restart: unless-stopped
 
 
   rabbit:
@@ -76,7 +77,7 @@ services:
       retries: 2
       start_period: 15s
     networks:
-      - comunicacao_geral
+      - comunicacao
     restart: unless-stopped
 
   configserver:
@@ -106,7 +107,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - comunicacao_geral
+      - comunicacao
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -117,7 +118,14 @@ services:
 
   eurekaserver:
     container_name: eurekaserver
-    image: juniorsmartins/eurekaserver:latest
+    image: juniorsmartins/eurekaserver:v1.0.1
+    build:
+      context: ../../micro_eurekaserver/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "eurekaserver"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Gerenciar a comunicação e a descoberta de serviços."
     ports:
       - "8671:8671"
     deploy:
@@ -136,7 +144,7 @@ services:
       start_period: 60s # efetua a verificação após segundos do período de arranque
     restart: always
     networks:
-      - comunicacao_geral
+      - comunicacao
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -159,8 +167,8 @@ services:
           memory: 512M
     restart: always
     networks:
-      - comunicacao_geral
-      - comunicacao_db_customers
+      - comunicacao
+      - comunicacao_customers
     environment:
       DB_HOST: microcustomers_postgres16
       DB_PORT: 5432
@@ -201,8 +209,8 @@ services:
           memory: 512M
     restart: always
     networks:
-      - comunicacao_geral
-      - comunicacao_db_empresas
+      - comunicacao
+      - comunicacao_empresas
     environment:
       DB_HOST: microempresas_postgres16
       DB_PORT: 5432
@@ -238,13 +246,10 @@ services:
           memory: 512M
     restart: always
     networks:
-      - comunicacao_geral
-      - comunicacao_db_emails
+      - comunicacao
+      - comunicacao_emails
     environment:
       TZ: UTC
-      DB_HOST: microemails_mysql8
-      DB_PORT: 3308
-      DB_NAME: microemails
       DB_USERNAME: root
       DB_PASSWORD: root
       SPRING_APPLICATION_NAME: "microemails"
@@ -286,7 +291,7 @@ services:
         condition: service_healthy
     restart: always
     networks:
-      - comunicacao_geral
+      - comunicacao
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -488,17 +493,17 @@ volumes:
 #    name: grafana-storage
 
 networks:
-  comunicacao_geral:
-    name: comunicacao_geral
+  comunicacao:
+    name: comunicacao
     driver: bridge
-  comunicacao_db_customers:
-    name: comunicacao_db_customers
+  comunicacao_customers:
+    name: comunicacao_customers
     driver: bridge
-  comunicacao_db_empresas:
-    name: comunicacao_db_empresas
+  comunicacao_empresas:
+    name: comunicacao_empresas
     driver: bridge
-  comunicacao_db_emails:
-    name: comunicacao_db_emails
+  comunicacao_emails:
+    name: comunicacao_emails
     driver: bridge
 
 # PORTAS
