@@ -154,10 +154,14 @@ services:
 
   microcustomers:
     container_name: microcustomers
-    image: juniorsmartins/microcustomers:latest
-#    build:
-#      context: .
-#      dockerfile: ../../micro_customers/Dockerfile
+    image: juniorsmartins/microcustomers:v1.0.1
+    build:
+      context: ../../micro_customers/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "microcustomers"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Gerenciar clientes Pessoa Física."
     ports:
       - "9101:9101"
     deploy:
@@ -199,7 +203,14 @@ services:
 
   microempresas:
     container_name: microempresas
-    image: juniorsmartins/microempresas:latest
+    image: juniorsmartins/microempresas:v1.0.1
+    build:
+      context: ../../micro_empresas/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "microempresas"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Gerenciar clientes Pessoa Jurídica."
     ports:
       - "9102:9102"
     deploy:
@@ -236,7 +247,14 @@ services:
 
   microemails:
     container_name: microemails
-    image: juniorsmartins/microemails:latest
+    image: juniorsmartins/microemails:v1.0.1
+    build:
+      context: ../../micro_emails/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "microemails"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Gerenciar notificações via email."
     ports:
       - "9103:9103"
     deploy:
