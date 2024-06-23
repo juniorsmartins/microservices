@@ -1,27 +1,42 @@
-# Estágio de construção - 1
-FROM gradle:jdk21-alpine AS builder
+# Variáveis de tempo de construção (com valor default - opcional)
+ARG IMAGE_BUILD="eclipse-temurin:21.0.3_9-jdk-alpine"
+ARG IMAGE_RUN="eclipse-temurin:21.0.3_9-jre-alpine"
 
-LABEL authors="juniormartins"
+# 1 - Estágio de construção/build
+FROM ${IMAGE_BUILD} AS builder
 
-WORKDIR /compile
+# Copiar todos os arquivos da raíz do projeto (origem) para dentro da imagem (destino)
+COPY . .
 
-# Copia os arquivos Gradle e o código-fonte
-#COPY ./micro_empresas/. /compile
-COPY . /compile
-
-# Compila o projeto com o Gradle
+## Constrói o projeto com o Gradle
 RUN ./gradlew clean build -x test --no-daemon
 
 
-# Estágio de execução - 2
-FROM amazoncorretto:21.0.3-al2023-headless
+# 2 - Estágio de execução
+FROM ${IMAGE_RUN} AS runner
 
-WORKDIR /app
-VOLUME /tmp
+# Variáveis de tempo de construção (com valor default - opcional)
+ARG APP_NAME="microsserviços"
+ARG APP_VERSION="v1.0.0"
+ARG APP_DESCRIPTION="Microsserviços em Java (21Lts) e Spring Boot (3.3.0)."
 
-# Copia o arquivo JAR gerado pelo estágio anterior
-COPY --from=builder /compile/build/libs/micro_empresas-0.0.1-SNAPSHOT.jar api.jar
+ARG DEVELOPER="juniorsmartins"
+ARG MAINTAINER="juniorsmartins"
+ARG CONTATO="juniorsoaresmartins@gmail.com"
 
-# Define o comando de entrada para executar o aplicativo
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/api.jar"]
+# Metadados
+LABEL aplication=${APP_NAME} \
+    version=${APP_VERSION} \
+    description=${APP_DESCRIPTION} \
+    authors=${DEVELOPER} \
+    maintainer=${MAINTAINER} \
+    contato=${CONTATO}
+
+# Instala o curl
+RUN apk add --no-cache curl
+
+COPY --from=builder /build/libs/*.jar app.jar
+
+# Comandos
+ENTRYPOINT ["java","-jar","app.jar"]
 
