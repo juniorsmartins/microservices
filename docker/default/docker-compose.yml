@@ -141,7 +141,7 @@ services:
       interval: 30s # intervalo de segundos após uma verificação anterior
       timeout: 30s
       retries: 3 # quantas tentativas deve fazer
-      start_period: 60s # efetua a verificação após segundos do período de arranque
+      start_period: 55s # efetua a verificação após segundos do período de arranque
     restart: always
     networks:
       - comunicacao
@@ -167,7 +167,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
     restart: always
     networks:
@@ -187,16 +187,18 @@ services:
 #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       microcustomers_postgres16:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9101/actuator/health/readiness | grep UP || exit 1"
-      interval: 30s # intervalo de segundos após uma verificação anterior
-      timeout: 10s
-      retries: 2 # quantas tentativas deve fazer
-      start_period: 15s # efetua a verificação após segundos do período de arranque
+      interval: 30s # Intervalo de segundos após uma verificação anterior
+      timeout: 15s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder em 10 segundos, ela será considerada malsucedida.
+      retries: 3 # Quantas tentativas deve fazer
+      start_period: 60s # Efetua a verificação após segundos do período de arranque
 #    extends:
 #      file: common-config.yml
 #      service: microservice-config
@@ -240,10 +242,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9102/actuator/health/readiness | grep UP || exit 1"
-      interval: 30s # intervalo de segundos após uma verificação anterior
-      timeout: 10s
-      retries: 2 # quantas tentativas deve fazer
-      start_period: 15s # efetua a verificação após segundos do período de arranque
+      interval: 30s # Intervalo de segundos após uma verificação anterior
+      timeout: 15s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder em 10 segundos, ela será considerada malsucedida.
+      retries: 3 # Quantas tentativas deve fazer
+      start_period: 60s # Efetua a verificação após segundos do período de arranque
 
   microemails:
     container_name: microemails
@@ -268,6 +270,9 @@ services:
       - comunicacao_emails
     environment:
       TZ: UTC
+      DB_HOST: microemails_mysql8
+      DB_PORT: 3308
+      DB_NAME: microemails
       DB_USERNAME: root
       DB_PASSWORD: root
       SPRING_APPLICATION_NAME: "microemails"
@@ -276,16 +281,18 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
+      configserver:
+        condition: service_healthy
       eurekaserver:
         condition: service_healthy
       microemails_mysql8:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
-      interval: 30s # intervalo de segundos após uma verificação anterior
-      timeout: 10s
-      retries: 2 # quantas tentativas deve fazer
-      start_period: 15s # efetua a verificação após segundos do período de arranque
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
 
 
   gatewayserver:

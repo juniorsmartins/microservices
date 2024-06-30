@@ -19,7 +19,7 @@ services:
       timeout: 10s # Tempo limite de espera antes de assumir como falha
       retries: 10 # Quantidade de tentativas
       interval: 10s # Intervalo entre tentativas
-      start_period: 10s # Tempo de delay antes de começar a checagem
+      start_period: 15s # Tempo de delay antes de começar a checagem
 
   microservice-mysql8-config:
     extends:
