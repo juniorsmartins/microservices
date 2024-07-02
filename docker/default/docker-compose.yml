@@ -297,7 +297,14 @@ services:
 
   gatewayserver:
     container_name: gatewayserver
-    image: juniorsmartins/gatewayserver:latest
+    image: juniorsmartins/gatewayserver:v1.0.1
+    build:
+      context: ../../micro_gatewayserver/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "gatewayserver"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Ponto de entrada único e centralizado para todas as requisições de clientes externos."
     ports:
       - "8125:8125"
     deploy:
