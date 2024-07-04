@@ -1,5 +1,5 @@
-#server:
-#  port: ${SERVER_PORT:8125}
+server:
+  port: ${SERVER_PORT:8125}
 
 spring:
 
@@ -7,12 +7,18 @@ spring:
     name: "gatewayserver"
 
   config:
-    import: "optional:configserver:http://localhost:8071/"
+    import: "optional:configserver:http://localhost:8888/"
   cloud: # Essa seção, em conjunto com outras, define como a API Gateway se conecta e gerencia seus microsserviços.
     config:
+      profile: default
       refresh:
         enabled: true # Permite buscar automaticamente as configurações atualizadas do servidor de configuração quando houver uma alteração, sem precisar reiniciar o aplicativo.
-      fail-fast: true
+#      fail-fast: true
+      fail-fast: false
+      retry: # Este bloco de configuração define os parâmetros de retentativa, ou seja, como o cliente deve tentar novamente se a comunicação com o servidor de configuração falhar.
+        initial-interval: 3000 # Especifica o intervalo inicial entre as tentativas de retentativa. Neste exemplo, está definido como 3000 milissegundos (ou 3 segundos). Isso significa que o cliente esperará 3 segundos antes de tentar a primeira retentativa após uma falha na comunicação.
+        max-interval: 9000 # Define o intervalo máximo entre as tentativas de retentativa. Aqui, está definido como 9000 milissegundos (ou 9 segundos). Isso significa que o intervalo entre as tentativas aumentará progressivamente até atingir esse valor, se a retentativa for necessária várias vezes.
+        max-attempts: 5 # Especifica o número máximo de tentativas de retentativa que o cliente fará antes de desistir. Neste caso, está definido como 3. Isso significa que o cliente tentará novamente a comunicação com o servidor de configuração no máximo três vezes antes de desistir.
     gateway: # Essa seção define as configurações específicas da API Gateway, que atua como ponto de entrada único para seus microsserviços.
       discovery: # Essa seção define como a API Gateway descobre os microsserviços que ela deve rotear o tráfego.
         locator: # Essa seção define o mecanismo de descoberta de serviço que a API Gateway utilizará.
@@ -31,6 +37,11 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
       exposure:
         include: "*"
 #        include: health,refresh,busrefresh,shutdown,info,prometheus
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
   endpoint:
     gateway:
       enabled: true
@@ -52,7 +63,7 @@ info: # Este bloco define informações sobre a sua aplicação que serão exibi
   app:
     name: "GatewayServer"
     description: "Microsserviços de API Gateway ou Edge Server (Ponto único de entrada)."
-    version: "1.0.0.0"
+    version: "v1.0.1"
 
 logging:
   level:

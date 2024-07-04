@@ -70,11 +70,10 @@ services:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
-#      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 10s
-      retries: 2
+      retries: 3
       start_period: 15s
     networks:
       - comunicacao
@@ -312,6 +311,15 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+    restart: always
+    networks:
+      - comunicacao
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -321,14 +329,12 @@ services:
         condition: service_healthy
       microemails:
         condition: service_healthy
-    restart: always
-    networks:
-      - comunicacao
-    environment:
-      SPRING_APPLICATION_NAME: "gatewayserver"
-      SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+    healthcheck:
+      test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
 
 #  sonarqube_postgres16:
 #    container_name: sonarqube_postgres16

@@ -60,7 +60,7 @@ spring:
         jdbc:
           log: # Controla o registro de logs do JDBC
             non_contextual_creation: true
-#    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false # Desativa a manutenção de objetos de sessão do Hibernate na camada de visualização, o que é recomendado para desempenho e gerenciamento de recursos.
     generate-ddl: true # Gerará o schema quando o aplicativo for iniciado. Coligado com ddl-auto update.
     show-sql: true # Habilita o registro das instruções SQL geradas durante a execução do aplicativo, o que pode ser útil para depuração e compreensão das interações com o banco de dados.
