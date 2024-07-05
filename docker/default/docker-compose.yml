@@ -271,6 +271,7 @@ services:
       TZ: UTC
       DB_HOST: microemails_mysql8
       DB_PORT: 3308
+      DB_DATABASE: microemails
       DB_USERNAME: mysql
       DB_PASSWORD: mysql
       SPRING_APPLICATION_NAME: "microemails"
