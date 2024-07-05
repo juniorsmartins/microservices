@@ -14,6 +14,5 @@ public class MicroEmailsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MicroEmailsApplication.class, args);
 	}
-
 }
 

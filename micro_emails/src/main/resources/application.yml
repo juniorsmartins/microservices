@@ -49,21 +49,23 @@ spring:
       ddl-auto: update
       naming: # Controla como o Hibernate nomeia tabelas e colunas
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estratégia padrão, snake_case para nomes
+      dialect: org.hibernate.dialect.MySQLDialect
     properties: # Define propriedades específicas do Hibernate
       hibernate:
-#        dialect: org.hibernate.dialect.MySQLDialect # Garante compatibilidade com tipo de dados e geração de SQL / O log de inicialização diz não precisar dessa informação
-        format_sql: true # Habilita a formatação das instruções SQL para melhor legibilidade
-        use_sql_comments: true # Diz ao Hibernate para adicionar comentários ao SQL gerado para ajudar na compreensão
-        type: # Define mapeamento de tipo personalizado
+        dialect: org.hibernate.dialect.MySQLDialect # Garante compatibilidade com tipo de dados e geração de SQL / O log de inicialização diz não precisar dessa informação
+        show-sql: true # Habilita o registro das instruções SQL geradas durante a execução do aplicativo, o que pode ser útil para depuração e compreensão das interações com o banco de dados. - Desativar em PROD
+        format_sql: true # Habilita a formatação das instruções SQL para melhor legibilidade - desabilitar para PROD
+        use_sql_comments: true # Diz ao Hibernate para adicionar comentários ao SQL gerado para ajudar na compreensão - desabilitar para PROD
+        type:
           enumType:
-            type: pgsql_enum
+            type: string # Valor padrão para enums em MySQL
         jdbc:
           log: # Controla o registro de logs do JDBC
             non_contextual_creation: true
     database-platform: org.hibernate.dialect.MySQLDialect
-    open-in-view: false # Desativa a manutenção de objetos de sessão do Hibernate na camada de visualização, o que é recomendado para desempenho e gerenciamento de recursos.
-    generate-ddl: true # Gerará o schema quando o aplicativo for iniciado. Coligado com ddl-auto update.
-    show-sql: true # Habilita o registro das instruções SQL geradas durante a execução do aplicativo, o que pode ser útil para depuração e compreensão das interações com o banco de dados.
+    open-in-view: false # Desativa a manutenção de objetos de sessão do Hibernate na camada de visualização, o que é recomendado para desempenho e gerenciamento de recursos. - Desativar em PROD
+    generate-ddl: false # Gerará o schema quando o aplicativo for iniciado. Coligado com ddl-auto update. - Desativar em PROD
+
 
 #  sql: # Define scripts SQL a serem executados durante a inicialização do aplicativo. Ou seja, schema.sql disponível em resources
 #    init: # Configura o comportamento de inicialização.
