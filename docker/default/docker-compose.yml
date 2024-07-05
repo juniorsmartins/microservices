@@ -271,9 +271,8 @@ services:
       TZ: UTC
       DB_HOST: microemails_mysql8
       DB_PORT: 3308
-      DB_NAME: microemails
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_USERNAME: mysql
+      DB_PASSWORD: mysql
       SPRING_APPLICATION_NAME: "microemails"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
