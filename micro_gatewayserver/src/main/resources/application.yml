@@ -76,5 +76,5 @@ resilience4j.circuitbreaker:
       slidingWindowSize: 10 # Define quantas solicitações deve monitorar antes de tentar alterar o status de fechado para aberto
       permittedNumberOfCallsInHalfOpenState: 2 # Número permitido de chamadas no status semiaberto. Com base nesse número permitido, o CB pode decidir se vai para o status aberto ou fechado
       failureRateThreshold: 30 # Limite de taxa de falha em porcentagem. Se falhar nesse limite, o CB poderá passar do status fechado para o aberto
-      waitDurationInOpenState: 10000 # Duração da espera no status aberto em milisegundos. Ou seja, aguardará esse tempo sempre que tentar passar para o status semiaberto e permitir o tráfego parcial
+      waitDurationInOpenState: 20000 # Duração da espera no status aberto em milisegundos. Ou seja, aguardará esse tempo sempre que tentar passar para o status semiaberto e permitir o tráfego parcial
 
