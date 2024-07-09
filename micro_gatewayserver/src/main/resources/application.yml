@@ -24,6 +24,9 @@ spring:
         locator: # Essa seção define o mecanismo de descoberta de serviço que a API Gateway utilizará.
           enabled: false # Essa configuração indica que a descoberta de serviço está ativada. Isso significa que a API Gateway buscará ativamente seus microsserviços em um repositório de descoberta.
           lowerCaseServiceId: true
+      httpclient:
+        connect-timeout: 3000 # Limite de tempo de conexão entre Gateway e Microsserviços
+        response-timeout: 5s # Limite de tempo de resposta da requisição
 
   rabbitmq:
     host: "localhost"
