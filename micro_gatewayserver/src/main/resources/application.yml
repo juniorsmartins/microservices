@@ -25,8 +25,8 @@ spring:
           enabled: false # Essa configuração indica que a descoberta de serviço está ativada. Isso significa que a API Gateway buscará ativamente seus microsserviços em um repositório de descoberta.
           lowerCaseServiceId: true
       httpclient:
-        connect-timeout: 3000 # Limite de tempo de conexão entre Gateway e Microsserviços
-        response-timeout: 5s # Limite de tempo de resposta da requisição
+        connect-timeout: 3000 # Limite de tempo de conexão entre Gateway e Microsserviços (definição global)
+        response-timeout: 5s # Limite de tempo de resposta da requisição (definição global)
 
   rabbitmq:
     host: "localhost"

@@ -217,7 +217,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
     restart: always
     networks:
@@ -244,7 +244,7 @@ services:
       interval: 30s # Intervalo de segundos após uma verificação anterior
       timeout: 15s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder em 10 segundos, ela será considerada malsucedida.
       retries: 3 # Quantas tentativas deve fazer
-      start_period: 60s # Efetua a verificação após segundos do período de arranque
+      start_period: 65s # Efetua a verificação após segundos do período de arranque
 
   microemails:
     container_name: microemails
@@ -261,7 +261,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
     restart: always
     networks:
@@ -291,7 +291,7 @@ services:
       interval: 30s
       timeout: 15s
       retries: 3
-      start_period: 60s
+      start_period: 65s
 
 
   gatewayserver:
@@ -334,7 +334,7 @@ services:
       interval: 30s
       timeout: 15s
       retries: 3
-      start_period: 60s
+      start_period: 70s
 
 #  sonarqube_postgres16:
 #    container_name: sonarqube_postgres16
