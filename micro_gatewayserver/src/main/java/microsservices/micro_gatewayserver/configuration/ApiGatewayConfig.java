@@ -28,7 +28,7 @@ public class ApiGatewayConfig {
                     .circuitBreaker(config -> config.setName("microcustomersCircuitBreaker") // Pode usar qualquer nome para o Circuit Breaker
                         .setFallbackUri("forward:/contactSupport"))) // Será acionado o fallback sempre que ocorrer erro
                         .metadata(CONNECT_TIMEOUT_ATTR, 3000) // Tempo máximo que o Gateway espera para estabelecer uma conexão com o serviço de destino
-                        .metadata(RESPONSE_TIMEOUT_ATTR, 12000) // Tempo máximo que o Gateway espera para receber uma resposta do serviço de destino após a conexão ser estabelecida
+                        .metadata(RESPONSE_TIMEOUT_ATTR, 15000) // Tempo máximo que o Gateway espera para receber uma resposta do serviço de destino após a conexão ser estabelecida
                 .uri("lb://MICROCUSTOMERS")
             )
             .route(rota ->
