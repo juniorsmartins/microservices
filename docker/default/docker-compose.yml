@@ -63,6 +63,21 @@ services:
     restart: unless-stopped
 
 
+  redis:
+    image: redis:7.2.1-bookworm
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      timeout: 10s
+      retries: 5
+    networks:
+      - comunicacao
+    volumes:
+      - cache-redis:/data
+
   rabbit:
     image: rabbitmq:3.13.3-alpine
     hostname: rabbitmq
@@ -78,6 +93,7 @@ services:
     networks:
       - comunicacao
     restart: unless-stopped
+
 
   configserver:
     container_name: configserver
@@ -294,17 +310,6 @@ services:
       start_period: 65s
 
 
-  redis:
-    image: redis:7.2.1-bookworm
-    container_name: redis
-    ports:
-      - "6379:6379"
-    restart: always
-    networks:
-      - comunicacao
-    volumes:
-      - cache-redis:/data
-
   gatewayserver:
     container_name: gatewayserver
     image: juniorsmartins/gatewayserver:v1.0.1
@@ -331,6 +336,10 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      SPRING_DATA_REDIS_CONNECT-TIMEOUT: 2s
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_TIMEOUT: 1s
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -341,7 +350,7 @@ services:
       microemails:
         condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
       interval: 30s
