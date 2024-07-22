@@ -27,6 +27,12 @@ spring:
       httpclient:
         connect-timeout: 3000 # Limite de tempo de conexão entre Gateway e Microsserviços (definição global)
         response-timeout: 5s # Limite de tempo de resposta da requisição (definição global)
+  data:
+    redis:
+      connect-timeout: 2s
+      host: localhost
+      port: 6379
+      timeout: 1s
 
   rabbitmq:
     host: "localhost"

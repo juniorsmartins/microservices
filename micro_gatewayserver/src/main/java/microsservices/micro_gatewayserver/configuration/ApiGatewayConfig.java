@@ -1,10 +1,13 @@
 package microsservices.micro_gatewayserver.configuration;
 
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -22,6 +25,7 @@ public class ApiGatewayConfig {
                 .path("/microcustomers/**")
                 .filters(filtro -> filtro.rewritePath("/microcustomers/(?<segment>.*)","/${segment}")
                     .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                        .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver())) // RateLimiter com Redis - limita número de requisições para manter disponibildiade e impedir ataques Ddos.
                     .retry(retryConfig -> retryConfig.setRetries(2) // Define o número máximo de tentativas automáticas de requisições em caso de falhas
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH) // Diz que o retry será aplicado somente aos métodos especificados
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true)) // Define a estratégia de backoff exponencial. O Gateway aumentará o tempo de espera entre tentativas (de 100ms para 1000ms) até a tentativa final, dobrando o tempo a cada tentativa. O parâmetro true indica que o tempo máximo de backoff será multiplicado pelo fator de multiplicação em cada tentativa.
@@ -35,6 +39,7 @@ public class ApiGatewayConfig {
                 rota.path("/microempresas/**")
                 .filters(filtro -> filtro.rewritePath("/microempresas/(?<segment>.*)", "/${segment}")
                     .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                        .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(2)
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH)
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
@@ -48,6 +53,7 @@ public class ApiGatewayConfig {
                 rota.path("/microemails/**")
                 .filters(filtro -> filtro.rewritePath("/microemails/(?<segment>.*)", "/${segment}")
                     .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                        .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(2)
                         .setMethods(HttpMethod.GET, HttpMethod.POST)
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
@@ -57,6 +63,17 @@ public class ApiGatewayConfig {
                         .metadata(RESPONSE_TIMEOUT_ATTR, 4000)
                 .uri("lb://MICROEMAILS")
             ).build();
+    }
+
+    @Bean
+    public RedisRateLimiter redisRateLimiter() { // Uso do Redis como RateLimiter, com valores para ReplenishRate, BurstCapacity e RequestedTokens
+        return new RedisRateLimiter(1, 1, 1);
+    }
+
+    @Bean
+    KeyResolver userKeyResolver() { // RateLimiter - estratégia de limitar requisições por usuário conectado
+        return exchange -> Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst("user"))
+                .defaultIfEmpty("anonymous");
     }
 }
 
