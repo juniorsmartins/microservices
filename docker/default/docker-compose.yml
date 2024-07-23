@@ -182,8 +182,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: 512M
+          cpus: '0.9'
+          memory: 964M
     restart: always
     networks:
       - comunicacao
@@ -325,8 +325,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: 512M
+          cpus: '0.9'
+          memory: 964M
     restart: always
     networks:
       - comunicacao
