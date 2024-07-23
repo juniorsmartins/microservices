@@ -32,7 +32,7 @@ public class ApiGatewayConfig {
                     .circuitBreaker(config -> config.setName("microcustomersCircuitBreaker") // Pode usar qualquer nome para o Circuit Breaker
                         .setFallbackUri("forward:/contactSupport"))) // Será acionado o fallback sempre que ocorrer erro
                         .metadata(CONNECT_TIMEOUT_ATTR, 5000) // Tempo máximo que o Gateway espera para edockerstabelecer uma conexão com o serviço de destino
-                        .metadata(RESPONSE_TIMEOUT_ATTR, 20000) // Tempo máximo que o Gateway espera para receber uma resposta do serviço de destino após a conexão ser estabelecida
+                        .metadata(RESPONSE_TIMEOUT_ATTR, 25000) // Tempo máximo que o Gateway espera para receber uma resposta do serviço de destino após a conexão ser estabelecida
                 .uri("lb://MICROCUSTOMERS")
             )
             .route(rota ->
@@ -42,7 +42,7 @@ public class ApiGatewayConfig {
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(2)
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH)
-                        .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
+                        .setBackoff(Duration.ofMillis(200), Duration.ofMillis(1000), 2, true))
                     .circuitBreaker(config -> config.setName("microempresasCircuitBreaker")
                         .setFallbackUri("forward:/contactSupport")))
                         .metadata(CONNECT_TIMEOUT_ATTR, 3500)
@@ -56,7 +56,7 @@ public class ApiGatewayConfig {
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(2)
                         .setMethods(HttpMethod.GET, HttpMethod.POST)
-                        .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
+                        .setBackoff(Duration.ofMillis(200), Duration.ofMillis(1000), 2, true))
                     .circuitBreaker(config -> config.setName("microemailsCircuitBreaker")
                         .setFallbackUri("forward:/contactSupport")))
                         .metadata(CONNECT_TIMEOUT_ATTR, 3500)
@@ -67,10 +67,10 @@ public class ApiGatewayConfig {
 
     @Bean
     public RedisRateLimiter redisRateLimiter() { // Uso do Redis como RateLimiter, com valores para ReplenishRate, BurstCapacity e RequestedTokens
-        return new RedisRateLimiter(1, 2, 5);
-        // ReplenishRate - define a taxa de atualização (replenish rate) em unidades por segundo. Nesse caso, significa que 1 token é liberado por segundo.
-        // BurstCapacity - define a capacidade de burst. Indica quantas requisições podem ser feitas acima da taxa limite em um curto período. Nesse caso, permite apenas 1 requisição acima da taxa limite.
-        // RequestedTokens - define o tempo de retenção dos tokens em segundos. Nesse caso, os tokens expiram após 5 segundos.
+        return new RedisRateLimiter(5, 10, 10);
+        // ReplenishRate - define a taxa de atualização (replenish rate) em unidades por segundo.
+        // BurstCapacity - define a capacidade de burst. Indica quantas requisições podem ser feitas acima da taxa limite em curto período.
+        // RequestedTokens - define o tempo de retenção dos tokens em segundos.
     }
 
     @Bean
