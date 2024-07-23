@@ -513,6 +513,7 @@ services:
 
 
   read:
+    container_name: read
     image: grafana/loki:3.0.0
     command: "-config.file=/etc/loki/config.yaml -target=read"
     ports:
@@ -526,14 +527,15 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
       interval: 10s
-      timeout: 5s
-      retries: 5
+      timeout: 10s
+      retries: 3
     networks: &loki-dns
       comunicacao:
         aliases:
           - loki
 
   write:
+    container_name: write
     image: grafana/loki:3.0.0
     command: "-config.file=/etc/loki/config.yaml -target=write"
     ports:
@@ -545,14 +547,15 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
       interval: 10s
-      timeout: 5s
-      retries: 5
+      timeout: 10s
+      retries: 3
     depends_on:
       - minio
     networks:
       <<: *loki-dns
 
   alloy:
+    container_name: alloy
     image: grafana/alloy-dev:latest
     volumes:
       - ../observability/alloy/alloy-local-config.yaml:/etc/alloy/config.alloy:ro
@@ -566,6 +569,7 @@ services:
       - comunicacao
 
   minio:
+    container_name: minio
     image: minio/minio
     entrypoint:
       - sh
@@ -587,11 +591,12 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
       interval: 15s
       timeout: 20s
-      retries: 5
+      retries: 3
     networks:
       - comunicacao
 
   grafana:
+    container_name: grafana
     image: grafana/grafana:latest
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
@@ -622,12 +627,13 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
       interval: 10s
-      timeout: 5s
-      retries: 5
+      timeout: 10s
+      retries: 3
     networks:
       - comunicacao
 
   gateway:
+    container_name: gateway
     image: nginx:latest
     depends_on:
       - read
@@ -691,7 +697,7 @@ services:
     healthcheck:
       test: ["CMD", "service", "nginx", "status"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 3
     networks:
       - comunicacao
