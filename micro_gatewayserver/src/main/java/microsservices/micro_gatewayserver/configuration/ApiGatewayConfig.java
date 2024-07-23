@@ -28,10 +28,10 @@ public class ApiGatewayConfig {
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver())) // RateLimiter com Redis - limita número de requisições para manter disponibildiade e impedir ataques Ddos.
                     .retry(retryConfig -> retryConfig.setRetries(2) // Define o número máximo de tentativas automáticas de requisições em caso de falhas
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH) // Diz que o retry será aplicado somente aos métodos especificados
-                        .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true)) // Define a estratégia de backoff exponencial. O Gateway aumentará o tempo de espera entre tentativas (de 100ms para 1000ms) até a tentativa final, dobrando o tempo a cada tentativa. O parâmetro true indica que o tempo máximo de backoff será multiplicado pelo fator de multiplicação em cada tentativa.
+                        .setBackoff(Duration.ofMillis(200), Duration.ofMillis(1000), 2, true)) // Define a estratégia de backoff exponencial. O Gateway aumentará o tempo de espera entre tentativas (de 100ms para 1000ms) até a tentativa final, dobrando o tempo a cada tentativa. O parâmetro true indica que o tempo máximo de backoff será multiplicado pelo fator de multiplicação em cada tentativa.
                     .circuitBreaker(config -> config.setName("microcustomersCircuitBreaker") // Pode usar qualquer nome para o Circuit Breaker
                         .setFallbackUri("forward:/contactSupport"))) // Será acionado o fallback sempre que ocorrer erro
-                        .metadata(CONNECT_TIMEOUT_ATTR, 4000) // Tempo máximo que o Gateway espera para edockerstabelecer uma conexão com o serviço de destino
+                        .metadata(CONNECT_TIMEOUT_ATTR, 5000) // Tempo máximo que o Gateway espera para edockerstabelecer uma conexão com o serviço de destino
                         .metadata(RESPONSE_TIMEOUT_ATTR, 20000) // Tempo máximo que o Gateway espera para receber uma resposta do serviço de destino após a conexão ser estabelecida
                 .uri("lb://MICROCUSTOMERS")
             )

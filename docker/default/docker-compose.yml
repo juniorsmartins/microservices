@@ -97,13 +97,13 @@ services:
 
   configserver:
     container_name: configserver
-    image: juniorsmartins/configserver:v1.0.1
+    image: juniorsmartins/configserver:v1.0.2
     build:
       context: ../../micro_configserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "configserver"
-        APP_VERSION: "v1.0.1"
+        APP_VERSION: "v1.0.2"
         APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações eficientemente."
     ports:
       - "8888:8888"
@@ -133,13 +133,13 @@ services:
 
   eurekaserver:
     container_name: eurekaserver
-    image: juniorsmartins/eurekaserver:v1.0.1
+    image: juniorsmartins/eurekaserver:v1.0.2
     build:
       context: ../../micro_eurekaserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "eurekaserver"
-        APP_VERSION: "v1.0.1"
+        APP_VERSION: "v1.0.2"
         APP_DESCRIPTION: "Gerenciar a comunicação e a descoberta de serviços."
     ports:
       - "8671:8671"
@@ -312,13 +312,13 @@ services:
 
   gatewayserver:
     container_name: gatewayserver
-    image: juniorsmartins/gatewayserver:v1.0.1
+    image: juniorsmartins/gatewayserver:v1.0.2
     build:
       context: ../../micro_gatewayserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "gatewayserver"
-        APP_VERSION: "v1.0.1"
+        APP_VERSION: "v1.0.2"
         APP_DESCRIPTION: "Ponto de entrada único e centralizado às requisições de clientes externos."
     ports:
       - "8125:8125"
