@@ -63,6 +63,21 @@ services:
     restart: unless-stopped
 
 
+  redis:
+    image: redis:7.2.1-bookworm
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      timeout: 10s
+      retries: 5
+    networks:
+      - comunicacao
+    volumes:
+      - cache-redis:/data
+
   rabbit:
     image: rabbitmq:3.13.3-alpine
     hostname: rabbitmq
@@ -70,25 +85,25 @@ services:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
-#      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 10s
-      retries: 2
+      retries: 3
       start_period: 15s
     networks:
       - comunicacao
     restart: unless-stopped
 
+
   configserver:
     container_name: configserver
-    image: juniorsmartins/configserver:v1.0.1
+    image: juniorsmartins/configserver:v1.0.2
     build:
       context: ../../micro_configserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "configserver"
-        APP_VERSION: "v1.0.1"
+        APP_VERSION: "v1.0.2"
         APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações eficientemente."
     ports:
       - "8888:8888"
@@ -118,13 +133,13 @@ services:
 
   eurekaserver:
     container_name: eurekaserver
-    image: juniorsmartins/eurekaserver:v1.0.1
+    image: juniorsmartins/eurekaserver:v1.0.2
     build:
       context: ../../micro_eurekaserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "eurekaserver"
-        APP_VERSION: "v1.0.1"
+        APP_VERSION: "v1.0.2"
         APP_DESCRIPTION: "Gerenciar a comunicação e a descoberta de serviços."
     ports:
       - "8671:8671"
@@ -218,7 +233,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
     restart: always
     networks:
@@ -245,7 +260,7 @@ services:
       interval: 30s # Intervalo de segundos após uma verificação anterior
       timeout: 15s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder em 10 segundos, ela será considerada malsucedida.
       retries: 3 # Quantas tentativas deve fazer
-      start_period: 60s # Efetua a verificação após segundos do período de arranque
+      start_period: 65s # Efetua a verificação após segundos do período de arranque
 
   microemails:
     container_name: microemails
@@ -262,7 +277,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
     restart: always
     networks:
@@ -272,9 +287,9 @@ services:
       TZ: UTC
       DB_HOST: microemails_mysql8
       DB_PORT: 3308
-      DB_NAME: microemails
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_DATABASE: microemails
+      DB_USERNAME: mysql
+      DB_PASSWORD: mysql
       SPRING_APPLICATION_NAME: "microemails"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
@@ -292,12 +307,19 @@ services:
       interval: 30s
       timeout: 15s
       retries: 3
-      start_period: 60s
+      start_period: 65s
 
 
   gatewayserver:
     container_name: gatewayserver
-    image: juniorsmartins/gatewayserver:latest
+    image: juniorsmartins/gatewayserver:v1.0.2
+    build:
+      context: ../../micro_gatewayserver/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "gatewayserver"
+        APP_VERSION: "v1.0.2"
+        APP_DESCRIPTION: "Ponto de entrada único e centralizado às requisições de clientes externos."
     ports:
       - "8125:8125"
     deploy:
@@ -305,6 +327,19 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+    restart: always
+    networks:
+      - comunicacao
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      SPRING_DATA_REDIS_CONNECT-TIMEOUT: 3s
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_TIMEOUT: 3s
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -314,14 +349,14 @@ services:
         condition: service_healthy
       microemails:
         condition: service_healthy
-    restart: always
-    networks:
-      - comunicacao
-    environment:
-      SPRING_APPLICATION_NAME: "gatewayserver"
-      SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 70s
 
 #  sonarqube_postgres16:
 #    container_name: sonarqube_postgres16
@@ -487,6 +522,9 @@ volumes:
 
   microemails-mysql-data:
     name: microemails-mysql-data
+
+  cache-redis:
+    name: cache-redis
 
 #  sonarqube-postgresql:
 #    name: sonarqube-postgresql

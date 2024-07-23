@@ -108,7 +108,7 @@ info: # Este bloco define informações sobre a sua aplicação que serão exibi
   app:
     name: "MicroCustomers"
     description: "Microsserviços para gerenciar clientes (Pessoa física - PF)."
-    version: "1.0.0"
+    version: "v1.0.1"
 
 logging:
   level:

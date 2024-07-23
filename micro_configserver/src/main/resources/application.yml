@@ -12,11 +12,11 @@ spring:
     config:
       server:
         git:
-          uri: "https://github.com/juniorsmartins/configserver.git"
+          uri: "https://github.com/juniorsmartins/configserver"
 #          username: username-de-repositório-privado
 #          password: password-de-repositório-privado
           default-label: master
-          timeout: 10
+          timeout: 5
           clone-on-start: true
           force-pull: true
           search-paths:

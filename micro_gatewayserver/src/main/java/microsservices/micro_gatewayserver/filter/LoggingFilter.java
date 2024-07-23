@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-@Order(2)
+@Order(2) // Define a ordem dos filtros, em caso de haver vários
 @Component
 public class LoggingFilter implements GlobalFilter {
 
-    private Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
+    private final Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
