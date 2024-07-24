@@ -1,15 +1,17 @@
+name: microservices_app
+
 services:
 
-  micro_customers_postgres16:
-    container_name: micro_customers_postgres16
+  microcustomers_postgres16:
+    container_name: microcustomers_postgres16
 #    image: postgres:16.0
     ports:
-      - "5401:5432"
-    restart: always
+      - "5501:5432"
     networks:
-      - mercado_financeiro_net
+      - comunicacao
+      - comunicacao_customers
     environment:
-      - POSTGRES_DB=micro_customers
+      - POSTGRES_DB=microcustomers
 #      - POSTGRES_USER=postgres
 #      - POSTGRES_PASSWORD=postgres
 #    healthcheck:
@@ -22,41 +24,62 @@ services:
       file: common-config.yml
       service: microservice-postgres16-config
     volumes:
-      - micro_customers-postgresql-data:/var/lib/postgresql/data
-
-  micro_empresas_postgres16:
-    container_name: micro_empresas_postgres16
-    ports:
-      - "5402:5432"
+      - microcustomers-postgresql-data:/var/lib/postgresql/data
     restart: always
+
+  microempresas_postgres16:
+    container_name: microempresas_postgres16
+    ports:
+      - "5502:5432"
     networks:
-      - mercado_financeiro_net
+      - comunicacao
+      - comunicacao_empresas
     environment:
-      - POSTGRES_DB=micro_empresas
+      - POSTGRES_DB=microempresas
     extends:
       file: common-config.yml
       service: microservice-postgres16-config
     volumes:
-      - micro_empresas-postgresql-data:/var/lib/postgresql/data
-
-  micro_emails_mysql8:
-    container_name: micro_emails_mysql8
-    ports:
-      - "5403:3306"
+      - microempresas-postgresql-data:/var/lib/postgresql/data
     restart: always
+
+  microemails_mysql8:
+    container_name: microemails_mysql8
+#    command: mysqld --default_authentication_plugin=mysql_native_password
+    ports:
+      - "3308:3308"
+    expose:
+      - 3308
     networks:
-      - mercado_financeiro_net
+      - comunicacao
+      - comunicacao_emails
     environment:
-      - MYSQL_DATABASE=micro_emails
+      MYSQL_DATABASE: microemails
     extends:
       file: common-config.yml
       service: microservice-mysql8-config
     volumes:
-      - micro_emails-mysql-data:/var/lib/mysql
+      - microemails-mysql-data:/var/lib/mysql
+    restart: unless-stopped
 
+
+  redis:
+    image: redis:7.2.1-bookworm
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      timeout: 10s
+      retries: 5
+    networks:
+      - comunicacao
+    volumes:
+      - cache-redis:/data
 
   rabbit:
-    image: rabbitmq:3.12-management
+    image: rabbitmq:3.13.3-alpine
     hostname: rabbitmq
     ports:
       - "5672:5672"
@@ -64,131 +87,117 @@ services:
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 5s
-    restart: always
+      timeout: 10s
+      retries: 3
+      start_period: 15s
     networks:
-      - mercado_financeiro_net
+      - comunicacao
+    restart: unless-stopped
+
 
   configserver:
     container_name: configserver
-    image: juniorsmartins/configserver:latest
+    image: juniorsmartins/configserver:v1.0.2
+    build:
+      context: ../../micro_configserver/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "configserver"
+        APP_VERSION: "v1.0.2"
+        APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações eficientemente."
     ports:
-      - "8071:8071"
+      - "8888:8888"
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 512M
+          cpus: '0.9'
+          memory: 964M
     depends_on:
       rabbit:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    restart: always
+      test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
     networks:
-      - mercado_financeiro_net
+      - comunicacao
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
+    restart: unless-stopped
 #    extends:
 #      file: common-config.yml
 #      service: microservice-resources-config
 
   eurekaserver:
     container_name: eurekaserver
-    image: juniorsmartins/eurekaserver:latest
+    image: juniorsmartins/eurekaserver:v1.0.2
+    build:
+      context: ../../micro_eurekaserver/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "eurekaserver"
+        APP_VERSION: "v1.0.2"
+        APP_DESCRIPTION: "Gerenciar a comunicação e a descoberta de serviços."
     ports:
       - "8671:8671"
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 512M
+          cpus: '0.9'
+          memory: 964M
     depends_on:
       configserver:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+      interval: 30s # intervalo de segundos após uma verificação anterior
+      timeout: 30s
+      retries: 3 # quantas tentativas deve fazer
+      start_period: 30s # efetua a verificação após segundos do período de arranque
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://configserver:8071/"
-#    extends:
-#      file: common-config.yml
-#      service: microservice-eureka-config
-
-  gatewayserver:
-    container_name: gatewayserver
-    image: juniorsmartins/gatewayserver:latest
-    ports:
-      - "8125:8125"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-    depends_on:
-      configserver:
-        condition: service_healthy
-      eurekaserver:
-        condition: service_healthy
-      microcustomers:
-        condition: service_healthy
-      microempresas:
-        condition: service_healthy
-      microemails:
-        condition: service_healthy
-    restart: always
-    networks:
-      - mercado_financeiro_net
-    environment:
-      SPRING_APPLICATION_NAME: "gatewayserver"
-      SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
 
 
   microcustomers:
     container_name: microcustomers
-    image: juniorsmartins/microcustomers:latest
-#    build:
-#      context: .
-#      dockerfile: ../../micro_customers/Dockerfile
+    image: juniorsmartins/microcustomers:v1.0.1
+    build:
+      context: ../../micro_customers/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "microcustomers"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Gerenciar clientes Pessoa Física."
     ports:
       - "9101:9101"
     deploy:
       resources:
         limits:
-          cpus: '0.3'
-          memory: 512M
+          cpus: '0.9'
+          memory: 964M
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao
+      - comunicacao_customers
     environment:
-      DB_HOST: micro_customers_postgres16
+      DB_HOST: microcustomers_postgres16
       DB_PORT: 5432
-      DB_NAME: micro_customers
+      DB_NAME: microcustomers
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: "microcustomers"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: prod
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
 #    env_file:
 #      - ./micro_customers/env/app.env
@@ -197,97 +206,157 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      micro_customers_postgres16:
+      microcustomers_postgres16:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9101/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+      interval: 30s # Intervalo de segundos após uma verificação anterior
+      timeout: 30s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder em 10 segundos, ela será considerada malsucedida.
+      retries: 3 # Quantas tentativas deve fazer
+      start_period: 30s # Efetua a verificação após segundos do período de arranque
 #    extends:
 #      file: common-config.yml
 #      service: microservice-config
 
   microempresas:
     container_name: microempresas
-    image: juniorsmartins/microempresas:latest
+    image: juniorsmartins/microempresas:v1.0.1
+    build:
+      context: ../../micro_empresas/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "microempresas"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Gerenciar clientes Pessoa Jurídica."
     ports:
       - "9102:9102"
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao
+      - comunicacao_empresas
     environment:
-      DB_HOST: micro_empresas_postgres16
+      DB_HOST: microempresas_postgres16
       DB_PORT: 5432
-      DB_NAME: micro_empresas
+      DB_NAME: microempresas
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: "microempresas"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: prod
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
-      configserver:
-        condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      micro_empresas_postgres16:
+      microempresas_postgres16:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9102/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-#    extends:
-#      file: common-config.yml
-#      service: microservice-config
+      interval: 30s # Intervalo de segundos após uma verificação anterior
+      timeout: 30s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder, ela será considerada malsucedida.
+      retries: 3 # Quantas tentativas deve fazer
+      start_period: 30s # Efetua a verificação após segundos do período de arranque
 
   microemails:
     container_name: microemails
-    image: juniorsmartins/microemails:latest
+    image: juniorsmartins/microemails:v1.0.1
+    build:
+      context: ../../micro_emails/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "microemails"
+        APP_VERSION: "v1.0.1"
+        APP_DESCRIPTION: "Gerenciar notificações via email."
     ports:
       - "9103:9103"
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
     restart: always
     networks:
-      - mercado_financeiro_net
+      - comunicacao
+      - comunicacao_emails
     environment:
-      DB_HOST: micro_emails_mysql8
-      DB_PORT: 3306
-      DB_NAME: micro_emails
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      TZ: UTC
+      DB_HOST: microemails_mysql8
+      DB_PORT: 3308
+      DB_DATABASE: microemails
+      DB_USERNAME: mysql
+      DB_PASSWORD: mysql
       SPRING_APPLICATION_NAME: "microemails"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: prod
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
     depends_on:
       configserver:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      micro_emails_mysql8:
+      microemails_mysql8:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
 
+
+  gatewayserver:
+    container_name: gatewayserver
+    image: juniorsmartins/gatewayserver:v1.0.2
+    build:
+      context: ../../micro_gatewayserver/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "gatewayserver"
+        APP_VERSION: "v1.0.2"
+        APP_DESCRIPTION: "Ponto de entrada único e centralizado às requisições de clientes externos."
+    ports:
+      - "8125:8125"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.9'
+          memory: 964M
+    restart: always
+    networks:
+      - comunicacao
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      SPRING_DATA_REDIS_CONNECT-TIMEOUT: 5s
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_TIMEOUT: 5s
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+      microcustomers:
+        condition: service_healthy
+      microempresas:
+        condition: service_healthy
+      microemails:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 60s
 
 #  sonarqube_postgres16:
 #    container_name: sonarqube_postgres16
@@ -443,16 +512,223 @@ services:
 #      - prometheus
 
 
+  read:
+    container_name: read
+    image: grafana/loki:3.0.0
+    command: "-config.file=/etc/loki/config.yaml -target=read"
+    ports:
+      - 3101:3100
+      - 7946
+      - 9095
+    volumes:
+      - ../observability/loki/loki-config.yaml:/etc/loki/config.yaml
+    depends_on:
+      - minio
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks: &loki-dns
+      comunicacao:
+        aliases:
+          - loki
+
+  write:
+    container_name: write
+    image: grafana/loki:3.0.0
+    command: "-config.file=/etc/loki/config.yaml -target=write"
+    ports:
+      - 3102:3100
+      - 7946
+      - 9095
+    volumes:
+      - ../observability/loki/loki-config.yaml:/etc/loki/config.yaml
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    depends_on:
+      - minio
+    networks:
+      <<: *loki-dns
+
+  alloy:
+    container_name: alloy
+    image: grafana/alloy-dev:latest
+    volumes:
+      - ../observability/alloy/alloy-local-config.yaml:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:  run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+    ports:
+      - 12345:12345
+    depends_on:
+      - gateway
+    networks:
+      - comunicacao
+
+  minio:
+    container_name: minio
+    image: minio/minio
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /data/loki-data && \
+        mkdir -p /data/loki-ruler && \
+        minio server /data
+    environment:
+      - MINIO_ROOT_USER=loki
+      - MINIO_ROOT_PASSWORD=supersecret
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+      - MINIO_UPDATE=off
+    ports:
+      - 9000
+    volumes:
+      - ./.data/minio:/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      - comunicacao
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - gateway
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://gateway:3100
+            jsonData:
+              httpHeaderName1: "X-Scope-OrgID"
+            secureJsonData:
+              httpHeaderValue1: "tenant1"
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      - comunicacao
+
+  gateway:
+    container_name: gateway
+    image: nginx:latest
+    depends_on:
+      - read
+      - write
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        cat <<EOF > /etc/nginx/nginx.conf
+        user  nginx;
+        worker_processes  5;  ## Default: 1
+
+        events {
+          worker_connections   1000;
+        }
+
+        http {
+          resolver 127.0.0.11;
+
+          server {
+            listen             3100;
+
+            location = / {
+              return 200 'OK';
+              auth_basic off;
+            }
+
+            location = /api/prom/push {
+              proxy_pass       http://write:3100\$$request_uri;
+            }
+
+            location = /api/prom/tail {
+              proxy_pass       http://read:3100\$$request_uri;
+              proxy_set_header Upgrade \$$http_upgrade;
+              proxy_set_header Connection "upgrade";
+            }
+
+            location ~ /api/prom/.* {
+              proxy_pass       http://read:3100\$$request_uri;
+            }
+
+            location = /loki/api/v1/push {
+              proxy_pass       http://write:3100\$$request_uri;
+            }
+
+            location = /loki/api/v1/tail {
+              proxy_pass       http://read:3100\$$request_uri;
+              proxy_set_header Upgrade \$$http_upgrade;
+              proxy_set_header Connection "upgrade";
+            }
+
+            location ~ /loki/api/.* {
+              proxy_pass       http://read:3100\$$request_uri;
+            }
+          }
+        }
+        EOF
+        /docker-entrypoint.sh nginx -g "daemon off;"
+    ports:
+      - "3100:3100"
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      - comunicacao
+
+  backend:
+    container_name: backend
+    image: grafana/loki:3.0.0
+    volumes:
+      - ../observability/loki/loki-config.yaml:/etc/loki/config.yaml
+    ports:
+      - "3100"
+      - "7946"
+    command: "-config.file=/etc/loki/config.yaml -target=backend -legacy-read-mode=false"
+    depends_on:
+      - gateway
+    networks:
+      - comunicacao
+
 
 volumes:
-  micro_customers-postgresql-data:
-    name: micro_customers-postgresql-data
+  microcustomers-postgresql-data:
+    name: microcustomers-postgresql-data
 
-  micro_empresas-postgresql-data:
-    name: micro_empresas-postgresql-data
+  microempresas-postgresql-data:
+    name: microempresas-postgresql-data
 
-  micro_emails-mysql-data:
-    name: micro_emails-mysql-data
+  microemails-mysql-data:
+    name: microemails-mysql-data
+
+  cache-redis:
+    name: cache-redis
 
 #  sonarqube-postgresql:
 #    name: sonarqube-postgresql
@@ -484,10 +760,21 @@ volumes:
 #    name: grafana-storage
 
 networks:
-  mercado_financeiro_net:
-    name: mercado_financeiro_net
+  comunicacao:
+    name: comunicacao
     driver: bridge
 
+  comunicacao_customers:
+    name: comunicacao_customers
+    driver: bridge
+
+  comunicacao_empresas:
+    name: comunicacao_empresas
+    driver: bridge
+
+  comunicacao_emails:
+    name: comunicacao_emails
+    driver: bridge
 
 # PORTAS
 # Configserver - 8071
