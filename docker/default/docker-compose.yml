@@ -8,7 +8,7 @@ services:
     ports:
       - "5501:5432"
     networks:
-      - comunicacao
+      - comunicacao_geral
       - comunicacao_customers
     environment:
       - POSTGRES_DB=microcustomers
@@ -32,7 +32,7 @@ services:
     ports:
       - "5502:5432"
     networks:
-      - comunicacao
+      - comunicacao_geral
       - comunicacao_empresas
     environment:
       - POSTGRES_DB=microempresas
@@ -51,7 +51,7 @@ services:
     expose:
       - 3308
     networks:
-      - comunicacao
+      - comunicacao_geral
       - comunicacao_emails
     environment:
       MYSQL_DATABASE: microemails
@@ -74,7 +74,7 @@ services:
       timeout: 10s
       retries: 5
     networks:
-      - comunicacao
+      - comunicacao_geral
     volumes:
       - cache-redis:/data
 
@@ -91,7 +91,7 @@ services:
       retries: 3
       start_period: 15s
     networks:
-      - comunicacao
+      - comunicacao_geral
     restart: unless-stopped
 
 
@@ -122,7 +122,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - comunicacao
+      - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -159,7 +159,7 @@ services:
       start_period: 30s # efetua a verificação após segundos do período de arranque
     restart: always
     networks:
-      - comunicacao
+      - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -186,7 +186,7 @@ services:
           memory: 964M
     restart: always
     networks:
-      - comunicacao
+      - comunicacao_geral
       - comunicacao_customers
     environment:
       DB_HOST: microcustomers_postgres16
@@ -237,7 +237,7 @@ services:
           memory: 512M
     restart: always
     networks:
-      - comunicacao
+      - comunicacao_geral
       - comunicacao_empresas
     environment:
       DB_HOST: microempresas_postgres16
@@ -281,7 +281,7 @@ services:
           memory: 512M
     restart: always
     networks:
-      - comunicacao
+      - comunicacao_geral
       - comunicacao_emails
     environment:
       TZ: UTC
@@ -329,7 +329,7 @@ services:
           memory: 964M
     restart: always
     networks:
-      - comunicacao
+      - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
       SPRING_RABBITMQ_HOST: "rabbit"
@@ -530,7 +530,7 @@ services:
       timeout: 30s
       retries: 3
     networks: &loki-dns
-      comunicacao:
+      comunicacao_geral:
         aliases:
           - loki
 
@@ -564,9 +564,9 @@ services:
     ports:
       - 12345:12345
     depends_on:
-      - gateway
+      - gatewaygrafana
     networks:
-      - comunicacao
+      - comunicacao_geral
 
   minio:
     container_name: minio
@@ -593,7 +593,7 @@ services:
       timeout: 30s
       retries: 3
     networks:
-      - comunicacao
+      - comunicacao_geral
 
   grafana:
     container_name: grafana
@@ -603,7 +603,7 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     depends_on:
-      - gateway
+      - gatewaygrafana
     entrypoint:
       - sh
       - -euc
@@ -615,7 +615,7 @@ services:
           - name: Loki
             type: loki
             access: proxy
-            url: http://gateway:3100
+            url: http://gatewaygrafana:3100
             jsonData:
               httpHeaderName1: "X-Scope-OrgID"
             secureJsonData:
@@ -630,10 +630,10 @@ services:
       timeout: 30s
       retries: 3
     networks:
-      - comunicacao
+      - comunicacao_geral
 
-  gateway:
-    container_name: gateway
+  gatewaygrafana:
+    container_name: gatewaygrafana
     image: nginx:latest
     depends_on:
       - read
@@ -700,7 +700,7 @@ services:
       timeout: 30s
       retries: 3
     networks:
-      - comunicacao
+      - comunicacao_geral
 
   backend:
     container_name: backend
@@ -712,9 +712,9 @@ services:
       - "7946"
     command: "-config.file=/etc/loki/config.yaml -target=backend -legacy-read-mode=false"
     depends_on:
-      - gateway
+      - gatewaygrafana
     networks:
-      - comunicacao
+      - comunicacao_geral
 
 
 volumes:
@@ -760,8 +760,8 @@ volumes:
 #    name: grafana-storage
 
 networks:
-  comunicacao:
-    name: comunicacao
+  comunicacao_geral:
+    name: comunicacao_geral
     driver: bridge
 
   comunicacao_customers:
