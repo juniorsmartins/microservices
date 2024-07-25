@@ -7,6 +7,7 @@ services:
 #    image: postgres:16.0
     ports:
       - "5501:5432"
+    restart: always
     networks:
       - comunicacao_geral
       - comunicacao_customers
@@ -25,12 +26,12 @@ services:
       service: microservice-postgres16-config
     volumes:
       - microcustomers-postgresql-data:/var/lib/postgresql/data
-    restart: always
 
   microempresas_postgres16:
     container_name: microempresas_postgres16
     ports:
       - "5502:5432"
+    restart: always
     networks:
       - comunicacao_geral
       - comunicacao_empresas
@@ -41,26 +42,38 @@ services:
       service: microservice-postgres16-config
     volumes:
       - microempresas-postgresql-data:/var/lib/postgresql/data
-    restart: always
 
-  microemails_mysql8:
-    container_name: microemails_mysql8
-#    command: mysqld --default_authentication_plugin=mysql_native_password
+  microemails_postgres16:
+    container_name: microemails_postgres16
     ports:
-      - "3308:3308"
-    expose:
-      - 3308
+      - "5503:5432"
+    restart: always
     networks:
       - comunicacao_geral
       - comunicacao_emails
     environment:
-      MYSQL_DATABASE: microemails
+      - POSTGRES_DB=microemails
     extends:
       file: common-config.yml
-      service: microservice-mysql8-config
+      service: microservice-postgres16-config
     volumes:
-      - microemails-mysql-data:/var/lib/mysql
-    restart: unless-stopped
+      - microemails-postgresql-data:/var/lib/postgresql/data
+#  microemails_mysql8:
+#    container_name: microemails_mysql8
+##    command: mysqld --default_authentication_plugin=mysql_native_password
+#    ports:
+#      - "3308:3308"
+#    restart: unless-stopped
+#    networks:
+#      - comunicacao_geral
+#      - comunicacao_emails
+#    environment:
+#      MYSQL_DATABASE: microemails
+#    extends:
+#      file: common-config.yml
+#      service: microservice-mysql8-config
+#    volumes:
+#      - microemails-mysql-data:/var/lib/mysql
 
 
   redis:
@@ -286,12 +299,17 @@ services:
       - comunicacao_geral
       - comunicacao_emails
     environment:
-      TZ: UTC
-      DB_HOST: microemails_mysql8
-      DB_PORT: 3308
-      DB_DATABASE: microemails
-      DB_USERNAME: mysql
-      DB_PASSWORD: mysql
+#      TZ: UTC
+#      DB_HOST: microemails_postgres16
+#      DB_PORT: 3308
+#      DB_DATABASE: microemails
+#      DB_USERNAME: mysql
+#      DB_PASSWORD: mysql
+      DB_HOST: microemails_postgres16
+      DB_PORT: 5432
+      DB_NAME: microemails
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
       SPRING_APPLICATION_NAME: "microemails"
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
@@ -302,8 +320,10 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-      microemails_mysql8:
+      microemails_postgres16:
         condition: service_healthy
+#      microemails_mysql8:
+#        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
       interval: 30s
@@ -726,8 +746,11 @@ volumes:
   microempresas-postgresql-data:
     name: microempresas-postgresql-data
 
-  microemails-mysql-data:
-    name: microemails-mysql-data
+  microemails-postgresql-data:
+    name: microemails-postgresql-data
+
+#  microemails-mysql-data:
+#    name: microemails-mysql-data
 
   cache-redis:
     name: cache-redis
