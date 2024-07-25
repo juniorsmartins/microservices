@@ -78,14 +78,16 @@ logging:
   level:
     microsservices:
       micro_gatewayserver: DEBUG
+      gatewayserver: DEBUG
+    io.github.resilience4j: DEBUG
 
 resilience4j.circuitbreaker:
   configs:
     default: # Usar default significa que as propriedades definidas abaixo se aplicarão em todos os CircuitBreakers. Porém, pode usar os nomes dos CBs para definir propriedades específicas para cada CB. Esses nomes foram definidos no ApiGatewayConfig
-      slidingWindowSize: 10 # Define quantas solicitações deve monitorar antes de tentar alterar o status de fechado para aberto
-      permittedNumberOfCallsInHalfOpenState: 5 # Número permitido de chamadas no status semiaberto. Com base nesse número permitido, o CB pode decidir se vai para o status aberto ou fechado
-      failureRateThreshold: 30 # Limite de taxa de falha em porcentagem. Se falhar nesse limite, o CB poderá passar do status fechado para o aberto
-      waitDurationInOpenState: 20000 # Duração da espera no status aberto em milisegundos. Ou seja, aguardará esse tempo sempre que tentar passar para o status semiaberto e permitir o tráfego parcial
+      slidingWindowSize: 50 # Define quantas solicitações deve monitorar antes de tentar alterar o status de fechado para aberto
+      permittedNumberOfCallsInHalfOpenState: 25 # Número permitido de chamadas no status semiaberto. Com base nesse número permitido, o CB pode decidir se vai para o status aberto ou fechado
+      failureRateThreshold: 40 # Limite de taxa de falha em porcentagem. Se falhar nesse limite, o CB poderá passar do status fechado para o aberto
+      waitDurationInOpenState: 80000 # Duração da espera no status aberto em milisegundos. Ou seja, aguardará esse tempo sempre que tentar passar para o status semiaberto e permitir o tráfego parcial
       eventConsumerBufferSize: 50 # Tamanho do buffer do consumidor de eventos. Define o número máximo de eventos que podem ser armazenados no buffer antes de serem processados.
       registerHealthIndicator: true # Indica se um indicador de saúde deve ser registrado. Permite que o estado do CircuitBreaker seja monitorado através de ferramentas de monitoramento.
 

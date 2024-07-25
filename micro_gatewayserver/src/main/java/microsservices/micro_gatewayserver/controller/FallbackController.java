@@ -11,12 +11,27 @@ public class FallbackController {
 
     private static final Logger log = LoggerFactory.getLogger(FallbackController.class);
 
-    @RequestMapping("/contactSupport")
-    public Mono<String> contactSupport() {
+    private static final String MSG_CONTATO_SUPORTE = "Aconteceu um erro! Por favor, tente novamente ou entre em contato com o suporte.";
 
-        log.error("Circuit Breaker aciona fallback em /contactSupport");
+    @RequestMapping("/customersContactSupport")
+    public Mono<String> customersContactSupport() {
 
-        return Mono.just("Aconteceu um erro! Por favor, tente novamente ou entre em contato com o suporte.");
+        log.error("Circuit Breaker aciona fallback em /customersContactSupport");
+        return Mono.just(MSG_CONTATO_SUPORTE);
+    }
+
+    @RequestMapping("/empresasContactSupport")
+    public Mono<String> empresasContactSupport() {
+
+        log.error("Circuit Breaker aciona fallback em /empresasContactSupport");
+        return Mono.just(MSG_CONTATO_SUPORTE);
+    }
+
+    @RequestMapping("/emailsContactSupport")
+    public Mono<String> emailsContactSupport() {
+
+        log.error("Circuit Breaker aciona fallback em /emailsContactSupport");
+        return Mono.just(MSG_CONTATO_SUPORTE);
     }
 }
 
