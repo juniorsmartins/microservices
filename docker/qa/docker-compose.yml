@@ -333,7 +333,7 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      SPRING_PROFILES_ACTIVE: qa
+      SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
       SPRING_DATA_REDIS_CONNECT-TIMEOUT: 5s

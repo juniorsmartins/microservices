@@ -14,7 +14,7 @@ public class FallbackController {
     @RequestMapping("/contactSupport")
     public Mono<String> contactSupport() {
 
-        log.error("Tentativa (retry) acionada em /contactSupport");
+        log.error("Circuit Breaker aciona fallback em /contactSupport");
 
         return Mono.just("Aconteceu um erro! Por favor, tente novamente ou entre em contato com o suporte.");
     }
