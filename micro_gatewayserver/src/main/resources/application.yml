@@ -40,7 +40,14 @@ spring:
     username: "guest"
     password: "guest"
 
-management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados (Actuator).
+  task: # Configuração de Threads
+    execution:
+      pool:
+        core-size: 5 # Mínimo de threads sempre disponíveis.
+        max-size: 20 # Máximo de threads que podem ser criadas.
+        queue-capacity: 100 # A fila pode armazenar até 200 tarefas antes de rejeitar novas.
+
+management: # Este bloco define configurações de gerenciamento da aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados (Actuator).
   endpoints:
     web:
       exposure:
@@ -84,10 +91,12 @@ logging:
 resilience4j.circuitbreaker:
   configs:
     default: # Usar default significa que as propriedades definidas abaixo se aplicarão em todos os CircuitBreakers. Porém, pode usar os nomes dos CBs para definir propriedades específicas para cada CB. Esses nomes foram definidos no ApiGatewayConfig
-      slidingWindowSize: 50 # Define quantas solicitações deve monitorar antes de tentar alterar o status de fechado para aberto
-      permittedNumberOfCallsInHalfOpenState: 25 # Número permitido de chamadas no status semiaberto. Com base nesse número permitido, o CB pode decidir se vai para o status aberto ou fechado
+      slidingWindowSize: 10 # Define quantas solicitações deve monitorar antes de tentar alterar o status de fechado para aberto
+      permittedNumberOfCallsInHalfOpenState: 15 # Número permitido de chamadas no status semiaberto. Com base nesse número permitido, o CB pode decidir se vai para o status aberto ou fechado
       failureRateThreshold: 40 # Limite de taxa de falha em porcentagem. Se falhar nesse limite, o CB poderá passar do status fechado para o aberto
-      waitDurationInOpenState: 80000 # Duração da espera no status aberto em milisegundos. Ou seja, aguardará esse tempo sempre que tentar passar para o status semiaberto e permitir o tráfego parcial
-      eventConsumerBufferSize: 50 # Tamanho do buffer do consumidor de eventos. Define o número máximo de eventos que podem ser armazenados no buffer antes de serem processados.
+      waitDurationInOpenState: 5000 # Duração da espera no status aberto em milisegundos. Ou seja, aguardará esse tempo sempre que tentar passar para o status semiaberto e permitir o tráfego parcial
+      timeoutDurationInMilliseconds: 10000 # Define o tempo máximo de espera para uma resposta antes de considerar a chamada como falha
       registerHealthIndicator: true # Indica se um indicador de saúde deve ser registrado. Permite que o estado do CircuitBreaker seja monitorado através de ferramentas de monitoramento.
+      eventConsumerBufferSize: 50 # Tamanho do buffer do consumidor de eventos. Define o número máximo de eventos que podem ser armazenados no buffer antes de serem processados.
+
 

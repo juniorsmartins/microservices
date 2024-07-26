@@ -347,8 +347,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 1G
+          cpus: '1.5'
+          memory: 2G
     restart: unless-stopped
     networks:
       - comunicacao_geral
