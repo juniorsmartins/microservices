@@ -65,6 +65,14 @@ public class ApiGatewayConfig {
             ).build();
     }
 
+//    @Bean
+//    public Customizer<ReactiveResilience4JCircuitBreakerFactory> defaultCustomizer() {
+//        return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
+//                .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
+//                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(10))
+//                        .build()).build());
+//    }
+
     @Bean
     public RedisRateLimiter redisRateLimiter() { // Uso de Redis como RateLimiter, com valores para ReplenishRate, BurstCapacity e RequestedTokens
         // ReplenishRate - define a taxa de atualização (replenish rate) em unidades por segundo.

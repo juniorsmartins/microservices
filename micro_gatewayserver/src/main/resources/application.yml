@@ -88,25 +88,20 @@ logging:
       gatewayserver: DEBUG
     io.github.resilience4j: DEBUG
 
-resilience4j.circuitbreaker:
+resilience4j.circuitbreaker: # https://resilience4j.readme.io/docs/circuitbreaker
   configs:
     default: # Usar default significa que as propriedades definidas abaixo se aplicarão em todos os CircuitBreakers. Porém, pode usar os nomes dos CBs para definir propriedades específicas para cada CB (só trocar default pelo nome do CB). Esses nomes foram definidos no ApiGatewayConfig
       registerHealthIndicator: true # Indica se um indicador de saúde deve ser registrado. Permite que o estado do CircuitBreaker seja monitorado através de ferramentas de monitoramento.
-
       slidingWindowType: COUNT_BASED # Configura o tipo da janela deslizante usada para gravar o resultado das chamadas quando o CircuitBreaker está fechado. A janela deslizante pode ser baseada em contagem ou baseada no tempo. Se a janela de correr é COUNT_BASED, o último slidingWindowSizeAs chamadas são gravadas e agregadas. Se a janela de correr for TIME_BASED, as chamadas do último slidingWindowSizesegundos registrados e agregados.
       slidingWindowSize: 100 # Define quantas solicitações deve monitorar antes de tentar alterar o status de fechado para aberto
-
-      minimumNumberOfCalls: 5 #
-
+      minimumNumberOfCalls: 5 # Configura o número mínimo de chamadas que são necessárias (por período de janela deslizante) antes que o CircuitBreaker possa calcular a taxa de erro ou a taxa de chamada lenta. Por exemplo, se o mínimoNumberOfCalls for 10, pelo menos 10 chamadas devem ser registradas, antes que a taxa de falha possa ser calculada.
       permittedNumberOfCallsInHalfOpenState: 10 # Número permitido de chamadas no status semiaberto. Com base nesse número permitido, o CB pode decidir se vai para o status aberto ou fechado
       maxWaitDurationInHalfOpenState: 0 # Configura uma duração máxima de espera que controla a maior quantidade de tempo que um CircuitBreaker pode permanecer no estado Half Open, antes de alternar para abrir. Valor 0 significa que o Disjuntor esperaria infinitamente no Estado MeioAberto até que todas as chamadas permitidas fossem concluídas.
-      automaticTransitionFromOpenToHalfOpenEnabled: true #
-
+#      automaticTransitionFromOpenToHalfOpenEnabled: true # Se definido como verdadeiro, significa que o CircuitBreaker fará a transição automática de estado aberto para estado semi-aberto e nenhuma chamada é necessária para acionar a transição. Um thread é criado para monitorar todas as instâncias dos CircuitBreakers para fazer a transição para HALF_OPEN assim que o waitDurationInOpenState passar.
       waitDurationInOpenState: 5000 # Duração da espera no status aberto em milisegundos. Ou seja, aguardará esse tempo sempre que tentar passar para o status semiaberto e permitir o tráfego parcial
       failureRateThreshold: 50 # Limite de taxa de falha em porcentagem. Se falhar nesse limite, o CB poderá passar do status fechado para o aberto
 #      slowCallRateThreshold: 100 # Configura limite em percentagem. O CircuitBreaker considera uma chamada como lenta quando a duração da chamada é maior. Quando a porcentagem de chamadas lentas é igual ou maior o limite, o CircuitBreaker transita para abrir e iniciar chamadas de curto-circuito.
       slowCallDurationThreshold: 60000 # Configura o limite de duração acima do qual as chamadas são consideradas lentas e aumenta a taxa de chamadas lentas.
-
       timeoutDurationInMilliseconds: 10000 # Define o tempo máximo de espera para uma resposta antes de considerar a chamada como falha
       eventConsumerBufferSize: 50 # Tamanho do buffer do consumidor de eventos. Define o número máximo de eventos que podem ser armazenados no buffer antes de serem processados.
 
