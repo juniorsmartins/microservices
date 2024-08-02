@@ -15,21 +15,18 @@ public class FallbackController {
 
     @RequestMapping("/customersContactSupport")
     public Mono<String> customersContactSupport() {
-
         log.error("Circuit Breaker aciona fallback em /customersContactSupport");
         return Mono.just(MSG_CONTATO_SUPORTE);
     }
 
     @RequestMapping("/empresasContactSupport")
     public Mono<String> empresasContactSupport() {
-
         log.error("Circuit Breaker aciona fallback em /empresasContactSupport");
         return Mono.just(MSG_CONTATO_SUPORTE);
     }
 
     @RequestMapping("/emailsContactSupport")
     public Mono<String> emailsContactSupport() {
-
         log.error("Circuit Breaker aciona fallback em /emailsContactSupport");
         return Mono.just(MSG_CONTATO_SUPORTE);
     }
