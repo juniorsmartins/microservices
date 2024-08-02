@@ -60,7 +60,7 @@ public class ApiGatewayConfig {
                     .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(2)
-                        .setMethods(HttpMethod.GET, HttpMethod.POST)
+                        .setMethods(HttpMethod.GET)
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
                     .circuitBreaker(config -> config.setName("microemailsCircuitBreaker")
                         .setFallbackUri("forward:/emailsContactSupport")))
@@ -70,11 +70,11 @@ public class ApiGatewayConfig {
             ).build();
     }
 
-    @Bean
+    @Bean // Fallback padrão do CB
     public Customizer<ReactiveResilience4JCircuitBreakerFactory> defaultCustomizer() {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
                 .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
-                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(60))
+                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(15))
                         .build()).build());
     }
 
