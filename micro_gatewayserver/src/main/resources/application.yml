@@ -102,7 +102,7 @@ resilience4j.circuitbreaker: # https://resilience4j.readme.io/docs/circuitbreake
       failureRateThreshold: 50 # Limite de taxa de falha em porcentagem. Se falhar nesse limite, o CB poderá passar do status fechado para o aberto
 #      slowCallRateThreshold: 100 # Configura limite em percentagem. O CircuitBreaker considera uma chamada como lenta quando a duração da chamada é maior. Quando a porcentagem de chamadas lentas é igual ou maior o limite, o CircuitBreaker transita para abrir e iniciar chamadas de curto-circuito.
       slowCallDurationThreshold: 60000 # Configura o limite de duração acima do qual as chamadas são consideradas lentas e aumenta a taxa de chamadas lentas.
-      timeoutDurationInMilliseconds: 15000 # Define o tempo máximo de espera para uma resposta antes de considerar a chamada como falha
+      timeoutDurationInMilliseconds: 20000 # Define o tempo máximo de espera para uma resposta antes de considerar a chamada como falha
       eventConsumerBufferSize: 50 # Tamanho do buffer do consumidor de eventos. Define o número máximo de eventos que podem ser armazenados no buffer antes de serem processados.
 
 

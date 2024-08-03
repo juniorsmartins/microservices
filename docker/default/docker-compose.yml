@@ -248,8 +248,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 412M
+          cpus: '0.8'
+          memory: 1G
     restart: always
     networks:
       - comunicacao_geral
@@ -292,8 +292,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 412M
+          cpus: '0.8'
+          memory: 1G
     restart: always
     networks:
       - comunicacao_geral

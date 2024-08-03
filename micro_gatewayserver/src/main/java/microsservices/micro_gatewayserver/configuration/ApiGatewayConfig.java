@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Configuration
 public class ApiGatewayConfig {
 
-    private final int QUANTIDADE_CARACTERES = 20;
+    private final int QUANTIDADE_CARACTERES = 10;
 
     @Bean
     public RouteLocator microservicesRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
@@ -50,8 +50,6 @@ public class ApiGatewayConfig {
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
                     .circuitBreaker(config -> config.setName("microempresasCircuitBreaker")
                         .setFallbackUri("forward:/empresasContactSupport")))
-//                        .metadata(CONNECT_TIMEOUT_ATTR, 3_000)
-//                        .metadata(RESPONSE_TIMEOUT_ATTR, 3_000)
                 .uri("lb://MICROEMPRESAS")
             )
             .route(rota -> rota
@@ -64,8 +62,6 @@ public class ApiGatewayConfig {
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
                     .circuitBreaker(config -> config.setName("microemailsCircuitBreaker")
                         .setFallbackUri("forward:/emailsContactSupport")))
-//                        .metadata(CONNECT_TIMEOUT_ATTR, 3_000)
-//                        .metadata(RESPONSE_TIMEOUT_ATTR, 3_000)
                 .uri("lb://MICROEMAILS")
             ).build();
     }
@@ -74,7 +70,7 @@ public class ApiGatewayConfig {
     public Customizer<ReactiveResilience4JCircuitBreakerFactory> defaultCustomizer() {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
                 .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
-                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(15))
+                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(30))
                         .build()).build());
     }
 
@@ -83,7 +79,7 @@ public class ApiGatewayConfig {
         // ReplenishRate - define a taxa de atualização (replenish rate) em unidades por segundo.
         // BurstCapacity - define a capacidade de burst. Indica quantas requisições podem ser feitas acima da taxa limite em curto período.
         // RequestedTokens - define o tempo de retenção do tokem em segundos. (obs: deixar esse valor bem baixo, pois deu muito problema de http status 429)
-        return new RedisRateLimiter(20, 40, 1);
+        return new RedisRateLimiter(5, 10, 1);
     }
 
     @Bean
