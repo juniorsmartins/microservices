@@ -37,7 +37,8 @@ dependencies {
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-
+	// O Micrometer irá expor as métricas do Actuator num formato de Prometheus
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
 

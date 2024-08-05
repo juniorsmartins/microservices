@@ -91,6 +91,9 @@ management: # Este bloco define as configurações de gerenciamento da sua aplic
   info:
     env:
       enabled: true # Habilita a exibição de informações de ambiente na página de informações do Management.
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 endpoints: # Este bloco define configurações adicionais para endpoints da aplicação.
   shutdown: # Este sub-bloco define as configurações do endpoint de desligamento, que permite encerrar a execução da aplicação. A configuração enabled: true indica que o endpoint de desligamento está habilitado.

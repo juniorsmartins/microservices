@@ -64,6 +64,9 @@ management: # Este bloco define configurações de gerenciamento da aplicação.
   info:
     env:
       enabled: true # Habilita a exibição de informações de ambiente na página de informações do Management.
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 # colocado no servidor de configuração
 #eureka:
