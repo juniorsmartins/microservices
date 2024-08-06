@@ -1,5 +1,4 @@
 # Variáveis de tempo de construção (com valor default - opcional)
-#ARG IMAGE="amazoncorretto:21-alpine3.16-jdk"
 ARG IMAGE_BUILD="eclipse-temurin:21.0.3_9-jdk-alpine"
 ARG IMAGE_RUN="eclipse-temurin:21.0.3_9-jre-alpine"
 
@@ -18,8 +17,8 @@ FROM ${IMAGE_RUN} AS runner
 
 # Variáveis de tempo de construção (com valor default - opcional)
 ARG APP_NAME="microsserviços"
-ARG APP_VERSION="v1.0.2"
-ARG APP_DESCRIPTION="Microsserviços em Java (21Lts) e Spring Boot (3.3.0)."
+ARG APP_VERSION="v1.0.0"
+ARG APP_DESCRIPTION="Microsserviços em Java (21 LTS) e Spring Boot (3.3.0)."
 
 ARG DEVELOPER="juniorsmartins"
 ARG MAINTAINER="juniorsmartins"

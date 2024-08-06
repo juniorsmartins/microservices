@@ -57,7 +57,7 @@ public class ApiGatewayConfig {
                 .filters(filtro -> filtro.rewritePath("/microemails/(?<segment>.*)", "/${segment}")
                     .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
-                    .retry(retryConfig -> retryConfig.setRetries(2)
+                    .retry(retryConfig -> retryConfig.setRetries(3)
                         .setMethods(HttpMethod.GET)
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
                     .circuitBreaker(config -> config.setName("microemailsCircuitBreaker")

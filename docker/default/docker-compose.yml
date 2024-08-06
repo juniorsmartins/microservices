@@ -112,21 +112,21 @@ services:
 
   configserver:
     container_name: configserver
-    image: juniorsmartins/configserver:v1.0.2
+    image: juniorsmartins/configserver:v1.0.3
     build:
       context: ../../micro_configserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "configserver"
-        APP_VERSION: "v1.0.2"
-        APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações eficientemente."
+        APP_VERSION: "v1.0.3"
+        APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações."
     ports:
       - "8888:8888"
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 412M
+          cpus: '0.5'
+          memory: 512M
     depends_on:
       rabbit:
         condition: service_healthy
@@ -148,21 +148,21 @@ services:
 
   eurekaserver:
     container_name: eurekaserver
-    image: juniorsmartins/eurekaserver:v1.0.2
+    image: juniorsmartins/eurekaserver:v1.0.3
     build:
       context: ../../micro_eurekaserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "eurekaserver"
-        APP_VERSION: "v1.0.2"
+        APP_VERSION: "v1.0.3"
         APP_DESCRIPTION: "Gerenciar a comunicação e a descoberta de serviços."
     ports:
       - "8671:8671"
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 412M
+          cpus: '0.5'
+          memory: 512M
     depends_on:
       configserver:
         condition: service_healthy
@@ -334,13 +334,13 @@ services:
 
   gatewayserver:
     container_name: gatewayserver
-    image: juniorsmartins/gatewayserver:v1.0.2
+    image: juniorsmartins/gatewayserver:v1.0.3
     build:
       context: ../../micro_gatewayserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "gatewayserver"
-        APP_VERSION: "v1.0.2"
+        APP_VERSION: "v1.0.3"
         APP_DESCRIPTION: "Ponto de entrada único e centralizado às requisições de clientes externos."
     ports:
       - "8125:8125"
@@ -534,6 +534,9 @@ services:
 #      - prometheus
 
 
+# --------------------------------------------------------------------
+# --------------------------- LOGS
+# --------------------------------------------------------------------
   read:
     container_name: read
     image: grafana/loki:3.0.0
@@ -714,22 +717,11 @@ services:
       - sh
       - -euc
       - |
-        mkdir -p /etc/grafana/provisioning/datasources
-        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
-        apiVersion: 1
-        datasources:
-          - name: Loki
-            type: loki
-            access: proxy
-            url: http://gateway:3100
-            jsonData:
-              httpHeaderName1: "X-Scope-OrgID"
-            secureJsonData:
-              httpHeaderValue1: "tenant1"
-        EOF
         /run.sh
     ports:
       - "3000:3000"
+    volumes:
+      - ../observability/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
       interval: 10s
@@ -739,6 +731,24 @@ services:
       - comunicacao_geral
 
 
+# --------------------------------------------------------------------
+# --------------------------- METRICS
+# --------------------------------------------------------------------
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.51.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: always
+    networks:
+      - comunicacao_geral
+
+
+# --------------------------------------------------------------------
+# --------------------------- VOLUMES E NETWORKS
+# --------------------------------------------------------------------
 volumes:
   microcustomers-postgresql-data:
     name: microcustomers-postgresql-data
