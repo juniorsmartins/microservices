@@ -248,8 +248,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 1G
+          cpus: '0.5'
+          memory: 512M
     restart: always
     networks:
       - comunicacao_geral
@@ -292,8 +292,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 1G
+          cpus: '0.5'
+          memory: 512M
     restart: always
     networks:
       - comunicacao_geral
@@ -341,14 +341,14 @@ services:
       args:
         APP_NAME: "gatewayserver"
         APP_VERSION: "v1.0.3"
-        APP_DESCRIPTION: "Ponto de entrada único e centralizado às requisições de clientes externos."
+        APP_DESCRIPTION: "Ponto de entrada único e centralizado para as requisições de clientes externos."
     ports:
       - "8125:8125"
     deploy:
       resources:
         limits:
-          cpus: '1.5'
-          memory: 2G
+          cpus: '1.0'
+          memory: 1G
     restart: unless-stopped
     networks:
       - comunicacao_geral

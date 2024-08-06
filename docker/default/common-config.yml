@@ -4,8 +4,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 412M
+          cpus: '0.5'
+          memory: 512M
 
   microservice-postgres16-config:
     extends:
