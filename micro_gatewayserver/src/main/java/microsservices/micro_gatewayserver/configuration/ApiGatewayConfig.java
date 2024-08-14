@@ -21,15 +21,17 @@ import java.time.LocalDateTime;
 @Configuration
 public class ApiGatewayConfig {
 
-    private final int QUANTIDADE_CARACTERES = 10;
+    private static final String X_RESPONSE_TIME = "X-Response-Time";
+
+    public static final String PATH_SEGMENT = "/${segment}";
 
     @Bean
     public RouteLocator microservicesRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
         return routeLocatorBuilder.routes()
             .route(rota -> rota
                 .path("/microcustomers/**")
-                .filters(filtro -> filtro.rewritePath("/microcustomers/(?<segment>.*)","/${segment}")
-                        .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                .filters(filtro -> filtro.rewritePath("/microcustomers/(?<segment>.*)", PATH_SEGMENT)
+                        .addResponseHeader(X_RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver())) // RateLimiter com Redis - limita número de requisições para manter disponibildiade e impedir ataques Ddos.
                     .retry(retryConfig -> retryConfig.setRetries(2) // Define o número máximo de tentativas automáticas de requisições em caso de falhas
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH) // Diz que o retry será aplicado somente aos métodos especificados
@@ -42,8 +44,8 @@ public class ApiGatewayConfig {
             )
             .route(rota -> rota
                 .path("/microempresas/**")
-                .filters(filtro -> filtro.rewritePath("/microempresas/(?<segment>.*)", "/${segment}")
-                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                .filters(filtro -> filtro.rewritePath("/microempresas/(?<segment>.*)", PATH_SEGMENT)
+                    .addResponseHeader(X_RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(2)
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH)
@@ -54,8 +56,8 @@ public class ApiGatewayConfig {
             )
             .route(rota -> rota
                 .path("/microemails/**")
-                .filters(filtro -> filtro.rewritePath("/microemails/(?<segment>.*)", "/${segment}")
-                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                .filters(filtro -> filtro.rewritePath("/microemails/(?<segment>.*)", PATH_SEGMENT)
+                    .addResponseHeader(X_RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(3)
                         .setMethods(HttpMethod.GET)
@@ -87,7 +89,7 @@ public class ApiGatewayConfig {
 
         Faker faker = new Faker();
         return exchange -> Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst("user"))
-                .defaultIfEmpty(faker.lorem().characters(QUANTIDADE_CARACTERES)); // Fiz gambiarra para substituir o "anonymous" por faker randômico
+                .defaultIfEmpty(faker.lorem().characters(10)); // Fiz gambiarra para substituir o "anonymous" por faker randômico
     }
 }
 
