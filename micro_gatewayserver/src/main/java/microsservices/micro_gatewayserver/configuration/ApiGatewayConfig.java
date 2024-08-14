@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Configuration
 public class ApiGatewayConfig {
 
-    private static final String X_RESPONSE_TIME = "X-Response-Time";
+    private static final String RESPONSE_TIME = "X-Response-Time";
 
     public static final String PATH_SEGMENT = "/${segment}";
 
@@ -31,7 +31,7 @@ public class ApiGatewayConfig {
             .route(rota -> rota
                 .path("/microcustomers/**")
                 .filters(filtro -> filtro.rewritePath("/microcustomers/(?<segment>.*)", PATH_SEGMENT)
-                        .addResponseHeader(X_RESPONSE_TIME, LocalDateTime.now().toString())
+                        .addResponseHeader(RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver())) // RateLimiter com Redis - limita número de requisições para manter disponibildiade e impedir ataques Ddos.
                     .retry(retryConfig -> retryConfig.setRetries(2) // Define o número máximo de tentativas automáticas de requisições em caso de falhas
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH) // Diz que o retry será aplicado somente aos métodos especificados
@@ -45,7 +45,7 @@ public class ApiGatewayConfig {
             .route(rota -> rota
                 .path("/microempresas/**")
                 .filters(filtro -> filtro.rewritePath("/microempresas/(?<segment>.*)", PATH_SEGMENT)
-                    .addResponseHeader(X_RESPONSE_TIME, LocalDateTime.now().toString())
+                    .addResponseHeader(RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(2)
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH)
@@ -57,7 +57,7 @@ public class ApiGatewayConfig {
             .route(rota -> rota
                 .path("/microemails/**")
                 .filters(filtro -> filtro.rewritePath("/microemails/(?<segment>.*)", PATH_SEGMENT)
-                    .addResponseHeader(X_RESPONSE_TIME, LocalDateTime.now().toString())
+                    .addResponseHeader(RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
                     .retry(retryConfig -> retryConfig.setRetries(3)
                         .setMethods(HttpMethod.GET)
