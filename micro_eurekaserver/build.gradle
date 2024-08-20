@@ -28,8 +28,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp:4.1.1'
 
-	// O Micrometer irá expor as métricas do Actuator num formato de Prometheus
+	// Observability - Micrometer para expor métricas do Actuator num formato de Prometheus
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
+
+	// Observability - OpenTelemetry para Rastreamento Distribuído
+	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
