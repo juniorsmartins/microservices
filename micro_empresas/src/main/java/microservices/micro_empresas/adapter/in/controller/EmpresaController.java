@@ -46,6 +46,7 @@ public class EmpresaController {
         }
     )
     public ResponseEntity<ContactInfoDtoResponse> getContactInfo() {
+        log.debug("Acionado método getContactInfo.");
         return ResponseEntity
             .ok()
             .body(contactInfoDtoResponse);
@@ -56,11 +57,15 @@ public class EmpresaController {
         produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<EmpresaCreateDtoResponse> create(@RequestBody @Valid EmpresaCreateDtoRequest empresaCreateDtoIn) {
 
+        log.debug("Iniciado método create.");
+
         var response = Optional.ofNullable(empresaCreateDtoIn)
             .map(this.mapperIn::toEmpresa)
             .map(this.empresaCreateInputPort::create)
             .map(this.mapperIn::toEmpresaCreateDtoResponse)
             .orElseThrow();
+
+        log.debug("Concluído método create.");
 
         return ResponseEntity
             .created(URI.create("/api/v1/empresas" + response.getEmpresaId()))
@@ -70,10 +75,14 @@ public class EmpresaController {
     @DeleteMapping(path = {"/{id}"})
     public ResponseEntity<Void> delete(@PathVariable(name = "id") final Long empresaId) {
 
+        log.debug("Iniciado método delete.");
+
         Optional.ofNullable(empresaId)
             .ifPresentOrElse(this.empresaDeleteInputPort::delete,
                 () -> {throw new NoSuchElementException();}
             );
+
+        log.debug("Concluído método delete.");
 
         return ResponseEntity
             .noContent()
@@ -83,10 +92,14 @@ public class EmpresaController {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<EmpresaListDtoResponse>> list() {
 
+        log.debug("Iniciado método list.");
+
         var response = this.empresaListInputPort.list()
             .stream()
             .map(this.mapperIn::toEmpresaListDtoResponse)
             .toList();
+
+        log.debug("Concluído método list.");
 
         return ResponseEntity
             .ok()
