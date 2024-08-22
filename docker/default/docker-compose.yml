@@ -112,13 +112,13 @@ services:
 
   configserver:
     container_name: configserver
-    image: juniorsmartins/configserver:v1.0.3
+    image: juniorsmartins/configserver:v1.0.4
     build:
       context: ../../micro_configserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "configserver"
-        APP_VERSION: "v1.0.3"
+        APP_VERSION: "v1.0.4"
         APP_DESCRIPTION: "Centralizar e gerenciar configurações de aplicações."
     ports:
       - "8888:8888"
@@ -141,6 +141,10 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
+      OTEL_SERVICE_NAME: "configserver" # OpenTelemetry
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar" # OpenTelemetry
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317 # OpenTelemetry
+      OTEL_METRICS_EXPORTER: none # OpenTelemetry
     restart: unless-stopped
 #    extends:
 #      file: common-config.yml
@@ -148,13 +152,13 @@ services:
 
   eurekaserver:
     container_name: eurekaserver
-    image: juniorsmartins/eurekaserver:v1.0.3
+    image: juniorsmartins/eurekaserver:v1.0.4
     build:
       context: ../../micro_eurekaserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "eurekaserver"
-        APP_VERSION: "v1.0.3"
+        APP_VERSION: "v1.0.4"
         APP_DESCRIPTION: "Gerenciar a comunicação e a descoberta de serviços."
     ports:
       - "8671:8671"
@@ -180,6 +184,10 @@ services:
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
+      OTEL_SERVICE_NAME: "eurekaserver"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      OTEL_METRICS_EXPORTER: none
 
 
   microcustomers:
@@ -214,7 +222,11 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
-#    env_file:
+      OTEL_SERVICE_NAME: "microcustomers"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      OTEL_METRICS_EXPORTER: none
+    #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
       configserver:
@@ -265,6 +277,9 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      OTEL_METRICS_EXPORTER: none
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -315,6 +330,9 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      OTEL_METRICS_EXPORTER: none
     depends_on:
       configserver:
         condition: service_healthy
@@ -334,13 +352,13 @@ services:
 
   gatewayserver:
     container_name: gatewayserver
-    image: juniorsmartins/gatewayserver:v1.0.3
+    image: juniorsmartins/gatewayserver:v1.0.4
     build:
       context: ../../micro_gatewayserver/
       dockerfile: Dockerfile
       args:
         APP_NAME: "gatewayserver"
-        APP_VERSION: "v1.0.3"
+        APP_VERSION: "v1.0.4"
         APP_DESCRIPTION: "Ponto de entrada único e centralizado para as requisições de clientes externos."
     ports:
       - "8125:8125"
@@ -362,6 +380,9 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_TIMEOUT: 5s
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      OTEL_METRICS_EXPORTER: none
     depends_on:
       eurekaserver:
         condition: service_healthy

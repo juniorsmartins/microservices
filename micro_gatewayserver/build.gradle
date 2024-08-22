@@ -36,7 +36,8 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 
 	// Observability - OpenTelemetry para Rastreamento Distribuído
-	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
+//	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
+	implementation 'io.opentelemetry:opentelemetry-api:1.41.0'
 
 	implementation 'net.datafaker:datafaker:2.3.1'
 
