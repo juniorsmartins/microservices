@@ -768,7 +768,24 @@ services:
 
 
 # --------------------------------------------------------------------
-# --------------------------- VOLUMES E NETWORKS
+# --------------------------- TRACES
+# --------------------------------------------------------------------
+  tempo:
+    container_name: tempo
+    image: grafana/tempo
+    command:
+      - config.file /etc/tempo-config.yml
+    ports:
+      - "3110:3100"
+      - "4317:4317"
+    volumes:
+      - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
+    networks:
+      - comunicacao_geral
+
+
+# --------------------------------------------------------------------
+# --------------------------- VOLUMES
 # --------------------------------------------------------------------
 volumes:
   microcustomers-postgresql-data:
@@ -815,6 +832,9 @@ volumes:
 #  grafana-storage:
 #    name: grafana-storage
 
+# --------------------------------------------------------------------
+# --------------------------- NETWORKS
+# --------------------------------------------------------------------
 networks:
   comunicacao_geral:
     name: comunicacao_geral
@@ -831,34 +851,5 @@ networks:
   comunicacao_emails:
     name: comunicacao_emails
     driver: bridge
-
-# PORTAS
-# Configserver - 8071
-# EurekaServer - 8671
-# GatewayServer - 8125
-
-# Jenkins - 8080
-
-# Micro_customers - 9101
-# Micro_empresas - 9102
-# Micro_emails - 9103
-
-# Micro_customers-postgres16 - 5401
-# Micro_empresas-postgres16 - 5402
-# Micro_emails_mysql8 - 5403
-
-
-
-# Actuator micro_emails - 9092
-# Actuator micro_empresas - 9091
-
-# Prometheus - 9090
-# Grafana - 3000
-# Sonarqube - 9000
-
-# Artifactory - 8082
-# Artifactory - 8081
-
-
 
 
