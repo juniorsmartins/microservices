@@ -41,8 +41,7 @@ dependencies {
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
 	// Observability - OpenTelemetry para Rastreamento Distribuído
-//	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
-	implementation 'io.opentelemetry:opentelemetry-api:1.41.0'
+	implementation 'io.opentelemetry:opentelemetry-api:1.32.0'
 
 	runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.15.0'
 	runtimeOnly 'org.postgresql:postgresql'

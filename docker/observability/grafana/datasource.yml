@@ -27,8 +27,13 @@ datasources:
     editable: true
     jsonData:
       httpHeaderName1: "X-Scope-OrgID"
-    secureJsonData:
-      httpHeaderValue1: "tenant1"
+      derivedFields:
+        - datasourceUid: tempo
+          matcherRegex: "\\[.+,(.+),.+\\]"
+          name: TraceID
+          url: '$${__value.raw}'
+      secureJsonData:
+        httpHeaderValue1: "tenant1"
   - name: Tempo
     type: tempo
     uid: tempo
@@ -41,4 +46,6 @@ datasources:
     editable: true
     jsonData:
       httpMethod: GET
+      serviceMap:
+        datasourceUid: 'prometheus'
 

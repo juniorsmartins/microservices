@@ -42,8 +42,7 @@ dependencies {
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
 	// Observability - OpenTelemetry para Rastreamento Distribuído
-//	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
-	implementation 'io.opentelemetry:opentelemetry-api:1.41.0'
+	implementation 'io.opentelemetry:opentelemetry-api:1.32.0'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'

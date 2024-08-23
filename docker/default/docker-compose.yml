@@ -86,7 +86,7 @@ services:
       test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
       interval: 30s
       timeout: 30s
-      retries: 3
+      retries: 5
       start_period: 30s
     networks:
       - comunicacao_geral
@@ -103,7 +103,7 @@ services:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 30s
       timeout: 30s
-      retries: 3
+      retries: 5
       start_period: 30s
     networks:
       - comunicacao_geral
@@ -132,19 +132,19 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
-      interval: 30s
+      interval: 60s
       timeout: 30s
-      retries: 3
+      retries: 10
       start_period: 30s
     networks:
       - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      OTEL_SERVICE_NAME: "configserver" # OpenTelemetry
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar" # OpenTelemetry
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317 # OpenTelemetry
-      OTEL_METRICS_EXPORTER: none # OpenTelemetry
+      OTEL_SERVICE_NAME: "configserver"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      OTEL_METRICS_EXPORTER: none
     restart: unless-stopped
 #    extends:
 #      file: common-config.yml
@@ -174,7 +174,7 @@ services:
       test: "curl --fail --silent localhost:8671/actuator/health/readiness | grep UP || exit 1"
       interval: 30s # intervalo de segundos após uma verificação anterior
       timeout: 30s
-      retries: 3 # quantas tentativas deve fazer
+      retries: 10 # quantas tentativas deve fazer
       start_period: 30s # efetua a verificação após segundos do período de arranque
     restart: always
     networks:
@@ -185,7 +185,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       OTEL_SERVICE_NAME: "eurekaserver"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
 
@@ -223,7 +223,7 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
       OTEL_SERVICE_NAME: "microcustomers"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
     #    env_file:
@@ -239,7 +239,7 @@ services:
       test: "curl --fail --silent localhost:9101/actuator/health/readiness | grep UP || exit 1"
       interval: 30s # Intervalo de segundos após uma verificação anterior
       timeout: 30s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder em 10 segundos, ela será considerada malsucedida.
-      retries: 3 # Quantas tentativas deve fazer
+      retries: 10 # Quantas tentativas deve fazer
       start_period: 30s # Efetua a verificação após segundos do período de arranque
 #    extends:
 #      file: common-config.yml
@@ -277,7 +277,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
     depends_on:
@@ -289,7 +289,7 @@ services:
       test: "curl --fail --silent localhost:9102/actuator/health/readiness | grep UP || exit 1"
       interval: 30s # Intervalo de segundos após uma verificação anterior
       timeout: 30s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder, ela será considerada malsucedida.
-      retries: 3 # Quantas tentativas deve fazer
+      retries: 10 # Quantas tentativas deve fazer
       start_period: 30s # Efetua a verificação após segundos do período de arranque
 
   microemails:
@@ -330,7 +330,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
     depends_on:
@@ -346,7 +346,7 @@ services:
       test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
       interval: 30s
       timeout: 30s
-      retries: 3
+      retries: 10
       start_period: 30s
 
 
@@ -380,7 +380,7 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_TIMEOUT: 5s
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.41.0.jar"
+      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
     depends_on:
@@ -398,7 +398,7 @@ services:
       test: "curl --fail --silent localhost:8125/actuator/health/readiness | grep UP || exit 1"
       interval: 30s
       timeout: 30s
-      retries: 3
+      retries: 10
       start_period: 30s
 
 #  sonarqube_postgres16:
@@ -572,8 +572,8 @@ services:
       - minio
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 30s
       retries: 5
     networks: &loki-dns
       comunicacao_geral:
@@ -592,8 +592,8 @@ services:
       - ../observability/loki/loki-config.yaml:/etc/loki/config.yaml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 30s
       retries: 5
     depends_on:
       - minio
@@ -635,8 +635,8 @@ services:
       - ./.data/minio:/data
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
-      interval: 15s
-      timeout: 20s
+      interval: 30s
+      timeout: 30s
       retries: 5
     networks:
       - comunicacao_geral
@@ -705,8 +705,8 @@ services:
       - "3100:3100"
     healthcheck:
       test: [ "CMD", "service", "nginx", "status" ]
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 30s
       retries: 5
     networks:
       - comunicacao_geral
@@ -745,8 +745,8 @@ services:
       - ../observability/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 30s
       retries: 5
     networks:
       - comunicacao_geral
