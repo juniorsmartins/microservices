@@ -277,6 +277,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      OTEL_SERVICE_NAME: "microempresas"
       JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
@@ -330,6 +331,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
+      OTEL_SERVICE_NAME: "microemails"
       JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
@@ -380,6 +382,7 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_TIMEOUT: 5s
+      OTEL_SERVICE_NAME: "gatewayserver"
       JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
       OTEL_METRICS_EXPORTER: none
@@ -635,8 +638,8 @@ services:
       - ./.data/minio:/data
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
-      interval: 30s
-      timeout: 30s
+      interval: 20s
+      timeout: 20s
       retries: 5
     networks:
       - comunicacao_geral
@@ -772,9 +775,8 @@ services:
 # --------------------------------------------------------------------
   tempo:
     container_name: tempo
-    image: grafana/tempo
-    command:
-      - config.file /etc/tempo-config.yml
+    image: grafana/tempo:2.4.2
+    command: -config.file /etc/tempo-config.yml
     ports:
       - "3110:3100"
       - "4317:4317"
