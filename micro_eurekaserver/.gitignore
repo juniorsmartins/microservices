@@ -45,6 +45,7 @@ idea/
 .idea/
 .project
 .classpath
+docker/default/.data/
 
 # Arquivos para ignorar
 *.iml
@@ -54,6 +55,7 @@ idea/
 *.bat
 *.sh
 *.DS_Store
+*.meta.bkp
 
 # Arquivos específicos do Gradle
 *.cache
