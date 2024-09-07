@@ -132,19 +132,15 @@ services:
         condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8888/actuator/health/readiness | grep UP || exit 1"
-      interval: 560s
+      interval: 30s
       timeout: 30s
-      retries: 10
+      retries: 20
       start_period: 30s
     networks:
       - comunicacao_geral
     environment:
       SPRING_APPLICATION_NAME: "configserver"
       SPRING_RABBITMQ_HOST: "rabbit"
-      OTEL_SERVICE_NAME: "configserver"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
-      OTEL_METRICS_EXPORTER: none
     restart: unless-stopped
 #    extends:
 #      file: common-config.yml
@@ -184,10 +180,6 @@ services:
       SPRING_RABBITMQ_HOST: "rabbit"
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
-      OTEL_SERVICE_NAME: "eurekaserver"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
-      OTEL_METRICS_EXPORTER: none
 
 
   microcustomers:
@@ -222,10 +214,6 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
-      OTEL_SERVICE_NAME: "microcustomers"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
-      OTEL_METRICS_EXPORTER: none
     #    env_file:
 #      - ./micro_customers/env/app.env
     depends_on:
@@ -277,10 +265,6 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
-      OTEL_SERVICE_NAME: "microempresas"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
-      OTEL_METRICS_EXPORTER: none
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -331,10 +315,6 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
-      OTEL_SERVICE_NAME: "microemails"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
-      OTEL_METRICS_EXPORTER: none
     depends_on:
       configserver:
         condition: service_healthy
@@ -382,10 +362,6 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_TIMEOUT: 5s
-      OTEL_SERVICE_NAME: "gatewayserver"
-      JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
-      OTEL_METRICS_EXPORTER: none
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -773,17 +749,17 @@ services:
 # --------------------------------------------------------------------
 # --------------------------- TRACES
 # --------------------------------------------------------------------
-  tempo:
-    container_name: tempo
-    image: grafana/tempo:2.4.2
-    command: -config.file /etc/tempo-config.yml
-    ports:
-      - "3110:3100"
-      - "4317:4317"
-    volumes:
-      - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
-    networks:
-      - comunicacao_geral
+#  tempo:
+#    container_name: tempo
+#    image: grafana/tempo:2.4.2
+#    command: -config.file /etc/tempo-config.yml
+#    ports:
+#      - "3110:3100"
+#      - "4317:4317"
+#    volumes:
+#      - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
+#    networks:
+#      - comunicacao_geral
 
 
 # --------------------------------------------------------------------

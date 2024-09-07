@@ -58,6 +58,5 @@ logging:
   level:
     microservices:
       eurekaserver: DEBUG
-  pattern: # OpentTelemetry - Fornece padrão para o rastreamento distribuído
-    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+
 

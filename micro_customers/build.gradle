@@ -41,9 +41,6 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
-	// Observability - OpenTelemetry para Rastreamento Distribuído
-	implementation 'io.opentelemetry:opentelemetry-api:1.32.0'
-
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 	implementation 'org.apache.commons:commons-lang3'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

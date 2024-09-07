@@ -31,9 +31,6 @@ dependencies {
 	// Observability - Micrometer para expor métricas do Actuator num formato de Prometheus
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 
-	// Observability - OpenTelemetry para Rastreamento Distribuído
-	implementation 'io.opentelemetry:opentelemetry-api:1.32.0'
-
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

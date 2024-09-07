@@ -90,8 +90,7 @@ logging:
       micro_gatewayserver: DEBUG
       gatewayserver: DEBUG
     io.github.resilience4j: DEBUG
-  pattern: # OpentTelemetry - Fornece padrão para o rastreamento distribuído
-    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+
 
 resilience4j.circuitbreaker: # https://resilience4j.readme.io/docs/circuitbreaker
   configs:
