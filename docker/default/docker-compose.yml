@@ -4,7 +4,6 @@ services:
 
   microcustomers_postgres16:
     container_name: microcustomers_postgres16
-#    image: postgres:16.0
     ports:
       - "5501:5432"
     restart: always
@@ -13,14 +12,6 @@ services:
       - comunicacao_customers
     environment:
       - POSTGRES_DB=microcustomers
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#    healthcheck:
-#      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
-#      timeout: 10s # Tempo limite de espera antes de assumir como falha
-#      retries: 10 # Quantidade de tentativas
-#      interval: 10s # Intervalo entre tentativas
-#      start_period: 10s # Tempo de delay antes de começar a checagem
     extends:
       file: common-config.yml
       service: microservice-postgres16-config
@@ -58,22 +49,6 @@ services:
       service: microservice-postgres16-config
     volumes:
       - microemails-postgresql-data:/var/lib/postgresql/data
-#  microemails_mysql8:
-#    container_name: microemails_mysql8
-##    command: mysqld --default_authentication_plugin=mysql_native_password
-#    ports:
-#      - "3308:3308"
-#    restart: unless-stopped
-#    networks:
-#      - comunicacao_geral
-#      - comunicacao_emails
-#    environment:
-#      MYSQL_DATABASE: microemails
-#    extends:
-#      file: common-config.yml
-#      service: microservice-mysql8-config
-#    volumes:
-#      - microemails-mysql-data:/var/lib/mysql
 
 
   redis:
@@ -214,8 +189,6 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8888/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8671/eureka/
-    #    env_file:
-#      - ./micro_customers/env/app.env
     depends_on:
       configserver:
         condition: service_healthy
@@ -229,9 +202,6 @@ services:
       timeout: 30s # Define o tempo máximo permitido para a execução do comando de teste. Se a verificação de saúde não responder em 10 segundos, ela será considerada malsucedida.
       retries: 10 # Quantas tentativas deve fazer
       start_period: 30s # Efetua a verificação após segundos do período de arranque
-#    extends:
-#      file: common-config.yml
-#      service: microservice-config
 
   microempresas:
     container_name: microempresas
@@ -299,12 +269,6 @@ services:
       - comunicacao_geral
       - comunicacao_emails
     environment:
-#      TZ: UTC
-#      DB_HOST: microemails_postgres16
-#      DB_PORT: 3308
-#      DB_DATABASE: microemails
-#      DB_USERNAME: mysql
-#      DB_PASSWORD: mysql
       DB_HOST: microemails_postgres16
       DB_PORT: 5432
       DB_NAME: microemails
@@ -322,8 +286,6 @@ services:
         condition: service_healthy
       microemails_postgres16:
         condition: service_healthy
-#      microemails_mysql8:
-#        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:9103/actuator/health/readiness | grep UP || exit 1"
       interval: 30s
@@ -379,159 +341,6 @@ services:
       timeout: 30s
       retries: 10
       start_period: 30s
-
-#  sonarqube_postgres16:
-#    container_name: sonarqube_postgres16
-#    image: postgres:16.0
-#    networks:
-#      - mercado_financeiro_net
-#    environment:
-#      - POSTGRES_DB=sonarqube
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#    volumes:
-#      - sonarqube-postgresql:/var/lib/postgresql
-#      - sonarqube-postgresql-data:/var/lib/postgresql/data
-#
-#  sonarqube:
-#    container_name: sonarqube
-#    image: sonarqube:9.9.4-community
-#    ports:
-#      - "9000:9000"
-#    networks:
-#      - mercado_financeiro_net
-#    environment:
-#      - sonar.jdbc.url=jdbc:postgresql://sonarqube_postgres16:5432/sonarqube
-#    volumes:
-#      - sonarqube_conf:/opt/sonarqube/conf
-#      - sonarqube_data:/opt/sonarqube/data
-#      - sonarqube_extensions:/opt/sonarqube/extensions
-#      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
-#    depends_on:
-#      - sonarqube_postgres16
-
-
-#  artifactory_postgres16:
-#    container_name: artifactory_postgres16
-#    image: postgres:16.0
-#    environment:
-#      - POSTGRES_DB=artifactory
-#      - POSTGRES_USER=artifactory
-#      - POSTGRES_PASSWORD=artifactory
-#    ports:
-#      - "5532:5432"
-#    restart: always
-#    networks:
-#      - mercado_financeiro_net
-#    volumes:
-#      - artifactory-postgresql-data:/var/lib/postgresql/data
-#      - /etc/localtime:/etc/localtime:ro
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: "1.0"
-#          memory: 500m
-#    logging:
-#      driver: json-file
-#      options:
-#        max-size: "50m"
-#        max-file: "10"
-#    ulimits:
-#      nproc: 65535
-#      nofile:
-#        soft: 32000
-#        hard: 40000
-#
-#  artifactory:
-#    container_name: artifactory
-#    image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.77.8
-#    environment:
-#      - ENABLE_MIGRATION=y
-#      - JF_SHARED_DATABASE_TYPE=postgresql
-#      - JF_SHARED_DATABASE_USERNAME=artifactory
-#      - JF_SHARED_DATABASE_PASSWORD=artifactory
-#      - JF_SHARED_DATABASE_URL=jdbc:postgresql://artifactory_postgres16:5432/artifactory
-#      - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
-#      - JF_SHARED_NODE_IP=${JF_SHARED_NODE_IP}
-#      - JF_SHARED_NODE_ID=${JF_SHARED_NODE_ID}
-#      - JF_SHARED_NODE_NAME=${JF_SHARED_NODE_NAME}
-#      - JF_ROUTER_ENTRYPOINTS_EXTERNALPORT=${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
-#    ports:
-#      - ${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}:${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
-#      - "8081:8081"
-#    volumes:
-#      - artifactory-storage:/var/opt/jfrog/artifactory
-#      - /etc/localtime:/etc/localtime:ro
-#    restart: always
-#    networks:
-#      - mercado_financeiro_net
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: "2.0"
-#          memory: 4G
-#    logging:
-#      driver: json-file
-#      options:
-#        max-size: "50m"
-#        max-file: "10"
-#    ulimits:
-#      nproc: 65535
-#      nofile:
-#        soft: 32000
-#        hard: 40000
-#    depends_on:
-#      - artifactory_postgres16
-
-#  jenkins:
-#    container_name: jenkins
-#    image: jenkins/jenkins:2.440.2-lts-jdk21
-#    privileged: true
-#    user: root
-#    ports:
-#      - "8080:8080"
-#      - "50000:50000"
-#    volumes:
-#      - jenkins-docker-certs:/certs/client
-#      - jenkins-home:/var/jenkins_home
-#      - /var/run/docker.sock:/var/run/docker.sock
-#    restart: always
-#    networks:
-#      - mercado_financeiro_net
-#    depends_on:
-#      - sonarqube
-#      - artifactory
-
-
-
-#  prometheus:
-#    container_name: prometheus
-#    image: prom/prometheus:v2.51.0
-#    ports:
-#      - "9090:9090"
-#    volumes:
-#      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
-#      - prometheus-storage:/prometheus
-#    command:
-#      - "--config.file=/etc/prometheus/prometheus.yaml"
-#    restart: always
-#    networks:
-#      - mercado_financeiro_net
-#
-#  grafana:
-#    container_name: grafana
-#    image: grafana/grafana:10.3.5-ubuntu
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      - grafana-storage:/var/lib/grafana
-#    environment:
-#      - GF_SECURITY_ADMIN_USER=admin
-#      - GF_SECURITY_ADMIN_PASSWORD=admin
-#    networks:
-#      - mercado_financeiro_net
-#    depends_on:
-#      - prometheus
 
 
 # --------------------------------------------------------------------
@@ -775,40 +584,9 @@ volumes:
   microemails-postgresql-data:
     name: microemails-postgresql-data
 
-#  microemails-mysql-data:
-#    name: microemails-mysql-data
-
   cache-redis:
     name: cache-redis
 
-#  sonarqube-postgresql:
-#    name: sonarqube-postgresql
-#  sonarqube-postgresql-data:
-#    name: sonarqube-postgresql-data
-
-#  sonarqube_conf:
-#    name: sonarqube_conf
-#  sonarqube_data:
-#    name: sonarqube_data
-#  sonarqube_extensions:
-#    name: sonarqube_extensions
-#  sonarqube_bundled-plugins:
-#    name: sonarqube_bundled-plugins
-
-#  artifactory-postgresql-data:
-#    name: artifactory-postgresql-data
-#  artifactory-storage:
-#    name: artifactory-storage
-
-#  jenkins-docker-certs:
-#    name: jenkins-docker-certs
-#  jenkins-home:
-#    name: jenkins-home
-
-#  prometheus-storage:
-#    name: prometheus-storage
-#  grafana-storage:
-#    name: grafana-storage
 
 # --------------------------------------------------------------------
 # --------------------------- NETWORKS
