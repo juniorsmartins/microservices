@@ -23,7 +23,7 @@ public class ApiGatewayConfig {
 
     private static final String RESPONSE_TIME = "X-Response-Time";
 
-    public static final String PATH_SEGMENT = "/${segment}";
+    private static final String PATH_SEGMENT = "/${segment}";
 
     @Bean
     public RouteLocator microservicesRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
@@ -33,7 +33,7 @@ public class ApiGatewayConfig {
                 .filters(filtro -> filtro.rewritePath("/microcustomers/(?<segment>.*)", PATH_SEGMENT)
                         .addResponseHeader(RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver())) // RateLimiter com Redis - limita número de requisições para manter disponibildiade e impedir ataques Ddos.
-                    .retry(retryConfig -> retryConfig.setRetries(2) // Define o número máximo de tentativas automáticas de requisições em caso de falhas
+                    .retry(retryConfig -> retryConfig.setRetries(3) // Define o número máximo de tentativas automáticas de requisições em caso de falhas
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH) // Diz que o retry será aplicado somente aos métodos especificados
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true)) // Define a estratégia de backoff exponencial. O Gateway aumentará o tempo de espera entre tentativas até a tentativa final, dobrando o tempo a cada tentativa. O parâmetro true indica que o tempo máximo de backoff será multiplicado pelo fator de multiplicação em cada tentativa.
                     .circuitBreaker(config -> config.setName("microcustomersCircuitBreaker"))) // Pode usar qualquer nome para o Circuit Breaker
