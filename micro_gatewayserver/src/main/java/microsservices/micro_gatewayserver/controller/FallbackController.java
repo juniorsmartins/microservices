@@ -11,7 +11,7 @@ public class FallbackController {
 
     private static final Logger log = LoggerFactory.getLogger(FallbackController.class);
 
-    private static final String MSG_CONTATO_SUPORTE = "Aconteceu um erro! Por favor, tente novamente ou entre em contato com o suporte. ";
+    private static final String MSG_CONTATO_SUPORTE = "Algo deu errado! Por favor, tente novamente ou fale com o suporte. ";
 
     @RequestMapping("/customersContactSupport")
     public Mono<String> customersContactSupport() {

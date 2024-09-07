@@ -36,8 +36,8 @@ public class ApiGatewayConfig {
                     .retry(retryConfig -> retryConfig.setRetries(2) // Define o número máximo de tentativas automáticas de requisições em caso de falhas
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH) // Diz que o retry será aplicado somente aos métodos especificados
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true)) // Define a estratégia de backoff exponencial. O Gateway aumentará o tempo de espera entre tentativas até a tentativa final, dobrando o tempo a cada tentativa. O parâmetro true indica que o tempo máximo de backoff será multiplicado pelo fator de multiplicação em cada tentativa.
-                    .circuitBreaker(config -> config.setName("microcustomersCircuitBreaker") // Pode usar qualquer nome para o Circuit Breaker
-                        .setFallbackUri("forward:/customersContactSupport"))) // Será acionado o fallback sempre que ocorrer erro
+                    .circuitBreaker(config -> config.setName("microcustomersCircuitBreaker"))) // Pode usar qualquer nome para o Circuit Breaker
+//                        .setFallbackUri("forward:/customersContactSupport"))) // Será acionado o fallback sempre que ocorrer erro
     //                  .metadata(CONNECT_TIMEOUT_ATTR, 3_000) // Tempo máximo que o Gateway espera para estabelecer uma conexão com o serviço de destino
     //                  .metadata(RESPONSE_TIMEOUT_ATTR, 3_000) // Tempo máximo que o Gateway espera para receber uma resposta do serviço de destino após a conexão ser estabelecida
                 .uri("lb://MICROCUSTOMERS")
@@ -47,11 +47,11 @@ public class ApiGatewayConfig {
                 .filters(filtro -> filtro.rewritePath("/microempresas/(?<segment>.*)", PATH_SEGMENT)
                     .addResponseHeader(RESPONSE_TIME, LocalDateTime.now().toString())
                         .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))
-                    .retry(retryConfig -> retryConfig.setRetries(2)
+                    .retry(retryConfig -> retryConfig.setRetries(3)
                         .setMethods(HttpMethod.GET, HttpMethod.PUT, HttpMethod.PATCH)
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
-                    .circuitBreaker(config -> config.setName("microempresasCircuitBreaker")
-                        .setFallbackUri("forward:/empresasContactSupport")))
+                    .circuitBreaker(config -> config.setName("microempresasCircuitBreaker")))
+//                        .setFallbackUri("forward:/empresasContactSupport")))
                 .uri("lb://MICROEMPRESAS")
             )
             .route(rota -> rota
@@ -62,8 +62,8 @@ public class ApiGatewayConfig {
                     .retry(retryConfig -> retryConfig.setRetries(3)
                         .setMethods(HttpMethod.GET)
                         .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
-                    .circuitBreaker(config -> config.setName("microemailsCircuitBreaker")
-                        .setFallbackUri("forward:/emailsContactSupport")))
+                    .circuitBreaker(config -> config.setName("microemailsCircuitBreaker")))
+//                        .setFallbackUri("forward:/emailsContactSupport")))
                 .uri("lb://MICROEMAILS")
             ).build();
     }
