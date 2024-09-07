@@ -4,21 +4,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
           memory: 512M
-
-  microservice-eureka-config:
-    extends:
-      service: microservice-resources-config
-#    environment:
-#      SPRING_PROFILES_ACTIVE: default
-#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-
-  microservice-config:
-    extends:
-      service: microservice-eureka-config
-#    environment:
-#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 
   microservice-postgres16-config:
     extends:
@@ -29,22 +16,26 @@ services:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
-      timeout: 10s # Tempo limite de espera antes de assumir como falha
-      retries: 10 # Quantidade de tentativas
-      interval: 10s # Intervalo entre tentativas
-      start_period: 10s # Tempo de delay antes de começar a checagem
+      timeout: 30s # Tempo limite de espera antes de assumir como falha
+      interval: 30s # Intervalo entre tentativas
+      retries: 3 # Quantidade de tentativas
+      start_period: 30s # Tempo de delay antes de começar a checagem
 
   microservice-mysql8-config:
     extends:
       service: microservice-resources-config
-    image: mysql:8.0.17
+    image: mysql:8.0.29
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      TZ: UTC
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 10s # Tempo limite de espera antes de assumir como falha
-      retries: 10 # Quantidade de tentativas
-      interval: 10s # Intervalo entre tentativas
-      start_period: 10s # Tempo de delay antes de começar a checagem
+      timeout: 30s # Tempo limite de espera antes de assumir como falha
+      interval: 30s # Intervalo entre tentativas
+      retries: 3 # Quantidade de tentativas
+      start_period: 30s # Tempo de delay antes de começar a checagem
 
 

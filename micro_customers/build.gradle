@@ -37,9 +37,9 @@ dependencies {
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-
+	// Observability - Micrometer para expor métricas do Actuator num formato de Prometheus
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-
 
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 	implementation 'org.apache.commons:commons-lang3'
