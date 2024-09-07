@@ -25,34 +25,27 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp:4.1.1'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
 	// Observability - Micrometer para expor métricas do Actuator num formato de Prometheus
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
-	runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.15.0'
-	runtimeOnly 'org.postgresql:postgresql'
-
-
-//	implementation "gradle.plugin.com.jfrog.artifactory:artifactory-gradle-plugin:5.1.14"
-//	implementation group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '5.2.0'
-
-//	implementation('org.jfrog.buildinfo:build-info-extractor-gradle:5.2.0') {
-//		exclude group: 'org.jfrog.buildinfo', module: 'build-info-extractor'
-//	}
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.15.0'
+	runtimeOnly 'org.postgresql:postgresql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.4.0'
