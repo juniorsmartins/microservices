@@ -27,10 +27,14 @@ em construção.....
 
 7. __Spring Cloud Config Monitor__: é componente crucial na arquitetura de microsserviços, desempenhando um papel vital na gestão dinâmica das configurações para seus microsserviços distribuídos. O monitor detecta e notifica sobre qualquer mudança nas configurações armazenadas no Spring Cloud Config Server.
 
-8. 
-9. 
+
+8. __Micrometer__: O Micrometer é uma biblioteca de instrumentação que desempenha um papel fundamental na coleta e monitoramento de métricas em arquiteturas de microsserviços. O Micrometer oferece uma API unificada para coletar métricas de diversas fontes, como sistemas operacionais, bibliotecas, frameworks e aplicações. Isso permite que você tenha uma visão consolidada das métricas de toda a sua aplicação.
+
+
+9. __JUnit__: O JUnit é um framework open-source amplamente utilizado no desenvolvimento de software em Java para criar e executar testes unitários. Através de testes unitários, o JUnit permite verificar se cada unidade de código (geralmente um método) funciona de acordo com o esperado, isolando e testando cada parte do software individualmente.
 10. 
 11. 
+
 
 ### DIAGRAMAS
 
