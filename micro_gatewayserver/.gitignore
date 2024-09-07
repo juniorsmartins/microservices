@@ -45,6 +45,8 @@ idea/
 .idea/
 .project
 .classpath
+docker/default/.data/
+
 
 # Arquivos para ignorar
 *.iml
