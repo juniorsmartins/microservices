@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"empresaId"})
+@EqualsAndHashCode(of = {"empresaId"}, callSuper = false)
 public final class EmpresaEntity extends BaseEntity implements Serializable {
 
     @Serial

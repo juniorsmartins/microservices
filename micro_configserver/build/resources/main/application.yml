@@ -4,7 +4,7 @@ server:
 spring:
 
   application:
-    name: "configserver"
+    name: configserver
 
   profiles:
     active: git
@@ -12,7 +12,7 @@ spring:
     config:
       server:
         git:
-          uri: "https://github.com/juniorsmartins/configserver.git"
+          uri: "https://github.com/juniorsmartins/configserver"
 #          username: username-de-repositório-privado
 #          password: password-de-repositório-privado
           default-label: master

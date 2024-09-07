@@ -66,6 +66,7 @@ public class CustomerController {
         }
     )
     public ResponseEntity<ContactInfoDtoResponse> getContactInfo() {
+        log.debug("Acionado método getContactInfo.");
         return ResponseEntity
             .ok()
             .body(contactInfoDtoResponse);
@@ -99,13 +100,15 @@ public class CustomerController {
         @Parameter(name = "customerCreateDtoRequest", description = "Dados para cadastrar novo Customer.", required = true)
         @Valid @RequestBody CustomerCreateDtoRequest customerCreateDtoRequest) {
 
-        log.debug("rastreamento-id encontrado: {}", rastreamentoId);
+        log.debug("Iniciado método create.");
 
         var response = Optional.ofNullable(customerCreateDtoRequest)
             .map(this.mapperIn::toCustomerCreate)
             .map(this.customerCreateInputPort::create)
             .map(this.mapperIn::toCustomerCreateDtoResponse)
             .orElseThrow();
+
+        log.debug("Concluído método create.");
 
         return ResponseEntity
             .created(URI.create("/api/v1/customers" + response.customerId()))
@@ -136,9 +139,13 @@ public class CustomerController {
         @PageableDefault(sort = "customerId", direction = Sort.Direction.DESC, size = Constantes.PAGE_SIZE)
         final Pageable paginacao) {
 
+        log.debug("Iniciado método search.");
+
         var response = Optional.ofNullable(customerFilter)
             .map(filter -> this.customerSearchOutputPort.search(filter, paginacao))
             .orElseThrow();
+
+        log.debug("Concluído método search.");
 
         return ResponseEntity
             .ok()
@@ -174,10 +181,14 @@ public class CustomerController {
         @Parameter(name = "customerId", description = "Identificador do Customer no banco de dados.", example = "22", required = true)
         @PathVariable(name = "id") @Positive final Long customerId) {
 
+        log.debug("Iniciado método deleteById.");
+
         Optional.ofNullable(customerId)
             .ifPresentOrElse(this.customerDeleteInputPort::delete,
                 () -> {throw new NoSuchElementException();}
             );
+
+        log.debug("Concluído método deleteById.");
 
         return ResponseEntity
             .noContent()
@@ -216,16 +227,19 @@ public class CustomerController {
         @Parameter(name = "customerUpdateDtoRequest", description = "Dados para atualizar Customer.", required = true)
         @Valid @RequestBody CustomerUpdateDtoRequest customerUpdateDtoRequest) {
 
+        log.debug("Iniciado método update.");
+
         var response = Optional.ofNullable(customerUpdateDtoRequest)
             .map(this.mapperIn::toCustomerUpdate)
             .map(this.customerUpdateInputPort::update)
             .map(this.mapperIn::toCustomerUpdateDtoResponse)
             .orElseThrow();
 
+        log.debug("Concluído método update.");
+
         return ResponseEntity
             .ok()
             .body(response);
     }
-
 }
 

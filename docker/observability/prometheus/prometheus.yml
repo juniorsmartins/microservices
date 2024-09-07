@@ -1,0 +1,30 @@
+global: # Configurações globais
+  scrape_interval: 5s # Determina o tempo/periodicidade em que o Prometheus deve pegar as métricas do Micrometer/Actuator. Pode ser em minutos (1m) ou segundos (5s)
+  evaluation_interval: 5s # Determina o tempo/periodicidade em que o Prometheus deve mostrar as métricas nos painéis
+
+scrape_configs:
+  - job_name: 'configserver'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'configserver:8888' ]
+  - job_name: 'eurekaserver'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'eurekaserver:8671' ]
+  - job_name: 'microcustomers'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'microcustomers:9101' ]
+  - job_name: 'microempresas'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'microempresas:9102' ]
+  - job_name: 'microemails'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'microemails:9103' ]
+  - job_name: 'gatewayserver'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'gatewayserver:8125' ]
+

@@ -1,8 +1,9 @@
 # Variáveis de tempo de construção (com valor default - opcional)
-ARG IMAGE="amazoncorretto:21-alpine3.16-jdk"
+ARG IMAGE_BUILD="eclipse-temurin:21.0.3_9-jdk-alpine"
+ARG IMAGE_RUN="eclipse-temurin:21.0.3_9-jre-alpine"
 
 # 1 - Estágio de construção/build
-FROM ${IMAGE} AS builder
+FROM ${IMAGE_BUILD} AS builder
 
 # Copiar todos os arquivos da raíz do projeto (origem) para dentro da imagem (destino)
 COPY . .
@@ -12,15 +13,15 @@ RUN ./gradlew clean build -x test --no-daemon
 
 
 # 2 - Estágio de execução
-FROM ${IMAGE} AS runner
+FROM ${IMAGE_RUN} AS runner
 
 # Variáveis de tempo de construção (com valor default - opcional)
-ARG APP_NAME
+ARG APP_NAME="microsserviços"
 ARG APP_VERSION="v1.0.0"
-ARG APP_DESCRIPTION="Microsserviço em Java e Spring Boot."
+ARG APP_DESCRIPTION="Microsserviços em Java (21 LTS) e Spring Boot (3.3.0)."
 
 ARG DEVELOPER="juniorsmartins"
-ARG MAIINTAINER="juniorsmartins"
+ARG MAINTAINER="juniorsmartins"
 ARG CONTATO="juniorsoaresmartins@gmail.com"
 
 # Metadados
@@ -30,6 +31,9 @@ LABEL aplication=${APP_NAME} \
     authors=${DEVELOPER} \
     maintainer=${MAINTAINER} \
     contato=${CONTATO}
+
+# Instala o curl
+RUN apk add --no-cache curl
 
 COPY --from=builder /build/libs/*.jar app.jar
 

@@ -30,10 +30,10 @@ public class EmailsController {
         }
     )
     public ResponseEntity<ContactInfoDtoResponse> getContactInfo() {
+        log.debug("Acionado método getContactInfo.");
         return ResponseEntity
             .ok()
             .body(contactInfoDtoResponse);
     }
-
 }
 
