@@ -30,11 +30,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp:4.1.1'
 
+	// EurekaClient - comunicação com o EurekaServer
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 	// Observability - Micrometer para expor métricas do Actuator num formato de Prometheus
 	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 
+	// Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+	// Security - Resource Server
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	// Security
+	implementation 'org.springframework.security:spring-security-oauth2-jose:6.3.3'
+
+	// Test - fornece dados falsos para testes
 	implementation 'net.datafaker:datafaker:2.3.1'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -34,6 +34,12 @@ spring:
       port: 6379
       timeout: 5s
 
+  security: # Configuração de Security
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs" # Endereço do jwks_uri do SecurityServer - Essa URL permitirá fazer download de certificado público do Keycloak. Usando esse certificado, o servidor de recursos (GatewayServer) pode validar se um determinado token de acesso é realmente emitido pelo servidor Keycloak. Dessa forma, saber ser o token de acesso é válido ou inválido.
+
   rabbitmq:
     host: "localhost"
     port: 5672
